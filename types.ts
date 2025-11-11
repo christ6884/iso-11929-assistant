@@ -6,7 +6,7 @@ export enum Language {
     ES = 'es',
 }
 
-export type View = 'calculator' | 'spectro' | 'sources';
+export type View = 'calculator' | 'spectro' | 'sources' | 'history';
 
 export type AnalysisMode = 'standard' | 'spectrometry' | 'surface' | 'chambre' | 'linge';
 
@@ -236,4 +236,28 @@ export interface N42AnalysisResult {
 export interface ROI {
     startChannel: number;
     endChannel: number;
+}
+
+// For Analysis History / Lab Book
+export interface N42AnalysisData {
+  parsedData: ParsedN42Data;
+  selectedSpectrumId: string;
+  analysisResult: N42AnalysisResult;
+}
+
+export interface ImageAnalysisData {
+  imageDataUrl: string;
+  spectrumPoints: Point[];
+  calibrationPoints: CalibrationPoint[];
+  calibrationFunction: CalibrationFunction;
+  analysisResult: AnalysisResult;
+}
+
+export interface AnalysisRecord {
+  id: string;
+  name: string;
+  date: string; // ISO string
+  sourceId?: string;
+  analysisType: 'n42' | 'image';
+  data: N42AnalysisData | ImageAnalysisData;
 }

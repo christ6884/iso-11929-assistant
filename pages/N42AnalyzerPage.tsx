@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { parseN42File } from '../services/n42ParserService';
-import { ParsedN42Data, N42AnalysisResult, DetectedPeak, N42Spectrum, ROI } from '../types';
+import { ParsedN42Data, N42AnalysisResult, DetectedPeak, N42Spectrum, ROI, N42AnalysisData } from '../types';
 import { identifyPeaks } from '../services/peakIdentifierService';
 import Card from '../components/Card';
 import SpectrumPlot from '../components/n42-analyzer/SpectrumPlot';
@@ -42,6 +42,7 @@ interface N42AnalyzerPageProps {
     onBack: () => void;
     onOpenPeakIdentifier: () => void;
     analysisType: 'gamma' | 'alpha';
+    dataToLoad?: N42AnalysisData;
 }
 
 const N42FileUploader: React.FC<{ onFileLoaded: (file: File, data: ParsedN42Data) => void, label: string, file: File | null }> = ({ onFileLoaded, label, file }) => {
@@ -65,7 +66,7 @@ const N42FileUploader: React.FC<{ onFileLoaded: (file: File, data: ParsedN42Data
     );
 }
 
-const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisType, onOpenPeakIdentifier }) => {
+const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisType, onOpenPeakIdentifier, dataToLoad }) => {
     const [file, setFile] = useState<File | null>(null);
     const [parsedData, setParsedData] = useState<ParsedN42Data | null>(null);
     const [selectedSpectrumId, setSelectedSpectrumId] = useState<string | null>(null);
@@ -80,6 +81,14 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
 
     const [yZoom, setYZoom] = useState(1.0);
     const [clippingLevel, setClippingLevel] = useState(1.0);
+
+    useEffect(() => {
+        if (dataToLoad) {
+            setParsedData(dataToLoad.parsedData);
+            setSelectedSpectrumId(dataToLoad.selectedSpectrumId);
+            setAnalysisResult(dataToLoad.analysisResult);
+        }
+    }, [dataToLoad]);
 
     const selectedSpectrum = useMemo(() => {
         return parsedData?.spectra.find(s => s.id === selectedSpectrumId) || null;

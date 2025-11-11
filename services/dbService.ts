@@ -1,8 +1,9 @@
-import { Source } from '../types';
+import { Source, AnalysisRecord } from '../types';
 
 const DB_NAME = 'ISOAssistantDB';
-const DB_VERSION = 1;
-const STORE_NAME = 'sources';
+const DB_VERSION = 2; // Incremented version for schema change
+const SOURCES_STORE_NAME = 'sources';
+const ANALYSES_STORE_NAME = 'analyses';
 
 class DBService {
     private db: IDBDatabase | null = null;
@@ -31,8 +32,11 @@ class DBService {
 
             request.onupgradeneeded = (event) => {
                 const db = (event.target as IDBOpenDBRequest).result;
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                if (!db.objectStoreNames.contains(SOURCES_STORE_NAME)) {
+                    db.createObjectStore(SOURCES_STORE_NAME, { keyPath: 'id' });
+                }
+                if (!db.objectStoreNames.contains(ANALYSES_STORE_NAME)) {
+                    db.createObjectStore(ANALYSES_STORE_NAME, { keyPath: 'id' });
                 }
             };
         });
@@ -45,11 +49,13 @@ class DBService {
         return this.db!;
     }
 
+    // --- Source Management ---
+
     public async addSource(sourceData: Omit<Source, 'id'>): Promise<void> {
         const db = await this.getDb();
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
+            const transaction = db.transaction(SOURCES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(SOURCES_STORE_NAME);
             const newSource: Source = {
                 id: crypto.randomUUID(),
                 ...sourceData,
@@ -63,8 +69,8 @@ class DBService {
     public async updateSource(source: Source): Promise<void> {
         const db = await this.getDb();
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
+            const transaction = db.transaction(SOURCES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(SOURCES_STORE_NAME);
             const request = store.put(source);
             transaction.oncomplete = () => resolve();
             transaction.onerror = () => reject(transaction.error);
@@ -74,8 +80,8 @@ class DBService {
     public async getAllSources(): Promise<Source[]> {
         const db = await this.getDb();
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readonly');
-            const store = transaction.objectStore(STORE_NAME);
+            const transaction = db.transaction(SOURCES_STORE_NAME, 'readonly');
+            const store = transaction.objectStore(SOURCES_STORE_NAME);
             const request = store.getAll();
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
@@ -85,8 +91,52 @@ class DBService {
     public async deleteSource(id: string): Promise<void> {
         const db = await this.getDb();
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
+            const transaction = db.transaction(SOURCES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(SOURCES_STORE_NAME);
+            const request = store.delete(id);
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+        });
+    }
+
+    // --- Analysis History Management ---
+
+    public async addAnalysis(record: Omit<AnalysisRecord, 'id' | 'date'>): Promise<void> {
+        const db = await this.getDb();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(ANALYSES_STORE_NAME);
+            const newRecord: AnalysisRecord = {
+                id: crypto.randomUUID(),
+                date: new Date().toISOString(),
+                ...record,
+            };
+            const request = store.add(newRecord);
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+        });
+    }
+    
+    public async getAllAnalyses(): Promise<AnalysisRecord[]> {
+        const db = await this.getDb();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(ANALYSES_STORE_NAME, 'readonly');
+            const store = transaction.objectStore(ANALYSES_STORE_NAME);
+            const request = store.getAll();
+            request.onsuccess = () => {
+                // Sort by date descending
+                const sorted = request.result.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                resolve(sorted);
+            }
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    public async deleteAnalysis(id: string): Promise<void> {
+        const db = await this.getDb();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(ANALYSES_STORE_NAME);
             const request = store.delete(id);
             transaction.oncomplete = () => resolve();
             transaction.onerror = () => reject(transaction.error);

@@ -20,6 +20,7 @@ interface AnalysisResultsProps {
   onImageClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   onTogglePeakGroup: (peakIndex: number) => void;
   onExportCsv: () => void;
+  onSaveAnalysis: () => void;
 }
 
 const Marker: React.FC<{ position: Point, text: string, type: 'auto' | 'manual', group?: 'A' | 'B' }> = ({ position, text, type, group }) => {
@@ -67,7 +68,7 @@ const Tooltip: React.FC<{ eventCoords: Point, text: string }> = ({ eventCoords, 
 const AnalysisResults: React.FC<AnalysisResultsProps> = ({
     imageSrc, imageRef, analysisResult, spectrumPoints, calibrationFunction, interactivePoint, sidebar, t,
     analysisStatus, step,
-    onMouseMove, onMouseLeave, onImageClick, onTogglePeakGroup, onExportCsv
+    onMouseMove, onMouseLeave, onImageClick, onTogglePeakGroup, onExportCsv, onSaveAnalysis
 }) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number; naturalWidth: number; naturalHeight: number } | null>(null);
 
@@ -175,10 +176,16 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                     <span>{t('analysisResultsTitle')}</span>
                     <div className="flex items-center space-x-4 no-print">
                          {analysisStatus === 'complete' && (
-                            <button onClick={onExportCsv} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                                <span>{t('exportCsv')}</span>
-                            </button>
+                            <>
+                                <button onClick={onSaveAnalysis} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v10l-5-4-5 4V4z" /></svg>
+                                    <span>{t('saveAnalysis')}</span>
+                                </button>
+                                <button onClick={onExportCsv} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                    <span>{t('exportCsv')}</span>
+                                </button>
+                            </>
                         )}
                         <button onClick={() => window.print()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>

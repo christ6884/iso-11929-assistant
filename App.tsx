@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 // Fix: Corrected import paths
-import { Language, View, AnalysisMode, Inputs, Results, Detector, CountUnit, TargetUnit, DetectionLimitMode } from './types';
+import { Language, View, AnalysisMode, Inputs, Results, Detector, CountUnit, TargetUnit, DetectionLimitMode, AnalysisRecord } from './types';
 import InputPanel from './components/InputPanel';
 import ResultsPanel from './components/ResultsPanel';
 import ChartPanel from './components/ChartPanel';
@@ -15,6 +15,7 @@ import ProAccessModal from './components/ProAccessModal';
 import UnitConverterModal from './components/UnitConverterModal';
 import SpectroPage from './pages/SpectroPage';
 import SourceManagementPage from './pages/SourceManagementPage';
+import AnalysisHistoryPage from './pages/AnalysisHistoryPage';
 import BackgroundSubtractionPage from './pages/BackgroundSubtractionPage';
 import UpdateNotification from './components/UpdateNotification';
 // Fix: Corrected import paths
@@ -96,6 +97,8 @@ const App: React.FC = () => {
 
     const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
     const waitingWorkerRef = useRef<ServiceWorker | null>(null);
+
+    const [analysisToLoad, setAnalysisToLoad] = useState<AnalysisRecord | null>(null);
 
     const toolsMenuRef = useRef<HTMLDivElement>(null);
 
@@ -357,6 +360,11 @@ const App: React.FC = () => {
         setIsDecayCalculatorOpen(false);
     };
 
+    const handleLoadAnalysis = (record: AnalysisRecord) => {
+        setAnalysisToLoad(record);
+        setView('spectro');
+    };
+
     const renderCalculatorView = () => (
         <>
             <div className="flex justify-center mb-6">
@@ -406,7 +414,7 @@ const App: React.FC = () => {
     );
 
     const handleNavItemClick = (targetView: View) => {
-        const lockedViews: View[] = ['spectro']; 
+        const lockedViews: View[] = ['spectro', 'history']; 
         if (lockedViews.includes(targetView) && !isProUser) {
             setIsProModalOpen(true);
         } else {
@@ -419,9 +427,11 @@ const App: React.FC = () => {
             case 'calculator':
                 return renderCalculatorView();
             case 'spectro':
-                return <SpectroPage t={t} onOpenPeakIdentifier={() => setIsPeakIdentifierOpen(true)} />;
+                return <SpectroPage t={t} onOpenPeakIdentifier={() => setIsPeakIdentifierOpen(true)} analysisToLoad={analysisToLoad} clearAnalysisToLoad={() => setAnalysisToLoad(null)} />;
             case 'sources':
                 return <SourceManagementPage t={t} />;
+            case 'history':
+                return <AnalysisHistoryPage t={t} onLoadAnalysis={handleLoadAnalysis} />;
             default:
                 return renderCalculatorView();
         }
@@ -431,6 +441,7 @@ const App: React.FC = () => {
         { key: 'calculator', label: t('isoCalculator'), locked: false },
         { key: 'spectro', label: t('spectrometryTools'), locked: true },
         { key: 'sources', label: t('sourceManagement'), locked: false },
+        { key: 'history', label: t('analysisHistory'), locked: true },
     ];
 
     return (

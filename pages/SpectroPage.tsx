@@ -1,29 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SpectrumAnalyzerPage from './SpectrumAnalyzerPage';
 import N42AnalyzerPage from './N42AnalyzerPage';
 import BackgroundSubtractionPage from './BackgroundSubtractionPage';
 import Card from '../components/Card';
 import InfoTooltip from '../components/InfoTooltip';
+import { AnalysisRecord } from '../types';
 
 interface SpectroPageProps {
     t: any;
     onOpenPeakIdentifier: () => void;
+    analysisToLoad: AnalysisRecord | null;
+    clearAnalysisToLoad: () => void;
 }
 
-const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier }) => {
+const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, analysisToLoad, clearAnalysisToLoad }) => {
     const [mode, setMode] = useState<'selection' | 'image' | 'n42' | 'bkg'>('selection');
     const [analysisType, setAnalysisType] = useState<'gamma' | 'alpha'>('gamma');
 
+    useEffect(() => {
+        if (analysisToLoad) {
+            setMode(analysisToLoad.analysisType);
+            // The data will be consumed by the specific analyzer page, 
+            // and we clear it here so it's not re-loaded on subsequent renders.
+        }
+    }, [analysisToLoad]);
+
+    const handleBack = () => {
+        setMode('selection');
+        if (analysisToLoad) {
+            clearAnalysisToLoad();
+        }
+    }
+
     if (mode === 'image') {
-        return <SpectrumAnalyzerPage t={t} onBack={() => setMode('selection')} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} />;
+        const dataToLoad = analysisToLoad?.analysisType === 'image' ? analysisToLoad.data : undefined;
+        return <SpectrumAnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }
 
     if (mode === 'n42') {
-        return <N42AnalyzerPage t={t} onBack={() => setMode('selection')} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} />;
+        const dataToLoad = analysisToLoad?.analysisType === 'n42' ? analysisToLoad.data : undefined;
+        return <N42AnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }
     
     if (mode === 'bkg') {
-        return <BackgroundSubtractionPage t={t} onBack={() => setMode('selection')} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} />;
+        return <BackgroundSubtractionPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} />;
     }
     
     const handleKeyDown = (e: React.KeyboardEvent, newMode: 'image' | 'n42' | 'bkg') => {

@@ -6,8 +6,10 @@ import CalibrationSidebar from '../components/spectrum-analyzer/CalibrationSideb
 import AnalysisResults from '../components/spectrum-analyzer/AnalysisResults';
 import CalibrationPointModal from '../components/spectrum-analyzer/CalibrationPointModal';
 import PeakPositionAdjusterModal from '../components/PeakPositionAdjusterModal';
+import SaveAnalysisModal from '../components/SaveAnalysisModal';
+import { db } from '../services/dbService';
 // Fix: Corrected import path
-import { CalibrationPoint, Point, CalibrationFunction, AnalysisResult, DetectedPeak, InteractivePeak } from '../types';
+import { CalibrationPoint, Point, CalibrationFunction, AnalysisResult, DetectedPeak, InteractivePeak, ImageAnalysisData } from '../types';
 import { analyzeSpectrum } from '../services/spectrumAnalyzerService';
 import { identifyPeaks } from '../services/peakIdentifierService';
 // Fix: Corrected import path
@@ -18,9 +20,10 @@ interface SpectrumAnalyzerPageProps {
   onBack: () => void;
   onOpenPeakIdentifier: () => void;
   analysisType: 'gamma' | 'alpha';
+  dataToLoad?: ImageAnalysisData;
 }
 
-const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, onOpenPeakIdentifier, analysisType }) => {
+const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, onOpenPeakIdentifier, analysisType, dataToLoad }) => {
   // State for the core data and process
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
   const [calibrationPoints, setCalibrationPoints] = useState<CalibrationPoint[]>([]);
@@ -41,8 +44,21 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
   const [isAdjusterOpen, setIsAdjusterOpen] = useState(false);
   const [adjusterInitialX, setAdjusterInitialX] = useState(0);
   const adjusterCallback = useRef<(x: number) => void>();
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
 
   const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (dataToLoad) {
+        setImageDataUrl(dataToLoad.imageDataUrl);
+        setSpectrumPoints(dataToLoad.spectrumPoints);
+        setCalibrationPoints(dataToLoad.calibrationPoints);
+        setCalibrationFunction(dataToLoad.calibrationFunction);
+        setAnalysisResult(dataToLoad.analysisResult);
+        setStep('analyze');
+        setAnalysisStatus('complete');
+    }
+  }, [dataToLoad]);
 
   const resetState = useCallback(() => {
     setImageDataUrl(null);
@@ -58,7 +74,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
   }, []);
 
   const handleImageLoaded = async (dataUrl: string) => {
-// Fix: The original error message "Expected 1 arguments, but got 0" was misleading. The actual issue was in how the `onReset` prop (which uses `resetState`) was called in a child component. This function call is correct.
     resetState();
     setImageDataUrl(dataUrl);
     setIsCameraOpen(false);
@@ -262,6 +277,34 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
     document.body.removeChild(link);
   };
 
+  const handleSaveAnalysis = async (name: string, sourceId?: string) => {
+    if (!analysisResult || !imageDataUrl || !spectrumPoints || !calibrationFunction) {
+        alert('Cannot save: analysis data is not complete.');
+        return;
+    }
+
+    try {
+        await db.addAnalysis({
+            name,
+            sourceId,
+            analysisType: 'image',
+            data: {
+                imageDataUrl,
+                spectrumPoints,
+                calibrationPoints,
+                calibrationFunction,
+                analysisResult,
+            }
+        });
+        alert('Analysis saved successfully!');
+    } catch (error) {
+        console.error("Failed to save analysis:", error);
+        alert('Failed to save analysis.');
+    } finally {
+        setIsSaveModalOpen(false);
+    }
+  };
+
 
   return (
     <div>
@@ -299,11 +342,12 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
             t={t}
             analysisStatus={analysisStatus}
             step={step}
-            onMouseMove={handleMouseMove}
+            onMouseMove={onMouseMove}
             onMouseLeave={() => setInteractivePoint(null)}
-            onImageClick={handleImageClick}
+            onImageClick={onImageClick}
             onTogglePeakGroup={togglePeakGroup}
             onExportCsv={handleExportCsv}
+            onSaveAnalysis={() => setIsSaveModalOpen(true)}
             sidebar={
                 <CalibrationSidebar
                     imageLoaded={!!imageDataUrl}
@@ -345,6 +389,12 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
         title={step === 'add' ? t('peakPositionAdjusterTitle') : t('addPeakManually')}
         confirmText={step === 'add' ? t('confirmPosition') : t('addPeak')}
         analysisType={analysisType}
+      />
+      <SaveAnalysisModal
+          isOpen={isSaveModalOpen}
+          onClose={() => setIsSaveModalOpen(false)}
+          onSave={handleSaveAnalysis}
+          t={t}
       />
     </div>
   );
