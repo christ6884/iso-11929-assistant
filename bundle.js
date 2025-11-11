@@ -24436,10 +24436,10 @@
             }
           }
           var jsx39 = jsxWithValidationDynamic;
-          var jsxs37 = jsxWithValidationStatic;
+          var jsxs38 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
           exports.jsx = jsx39;
-          exports.jsxs = jsxs37;
+          exports.jsxs = jsxs38;
         })();
       }
     }
@@ -24749,84 +24749,87 @@
         ] })
       ] }) }) }) })
     ] });
-    const renderChambreLingeInputs = () => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("detectorSetup"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-2 max-h-80 overflow-y-auto", children: inputs.detectors.map((detector, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "bg-gray-700 p-2 rounded-md space-y-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h4", { className: "font-semibold", children: [
-            t("detector"),
-            " ",
-            i + 1
+    const renderChambreLingeInputs = () => {
+      const detectorLimit = mode === "chambre" ? 6 : 9;
+      return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("detectorSetup"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-2 max-h-80 overflow-y-auto", children: inputs.detectors.slice(0, detectorLimit).map((detector, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "bg-gray-700 p-2 rounded-md space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h4", { className: "font-semibold", children: [
+              t("detector"),
+              " ",
+              i + 1
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-2 text-sm cursor-pointer", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("enabled") }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "checkbox", checked: detector.enabled, onChange: (e) => onDetectorChange(i, "enabled", e.target.checked) })
+            ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-2 text-sm cursor-pointer", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("enabled") }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "checkbox", checked: detector.enabled, onChange: (e) => onDetectorChange(i, "enabled", e.target.checked) })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2 text-xs items-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { children: t("detectorType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-            "select",
-            {
-              value: detector.type,
-              onChange: (e) => onDetectorChange(i, "type", e.target.value),
-              className: "bg-gray-800 p-1 rounded text-white text-xs",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "beta", children: "Beta" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "gamma", children: "Gamma" })
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { children: [
-            t("efficiency"),
-            " (%)"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.efficiency, onChange: (e) => onDetectorChange(i, "efficiency", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { children: t("background") }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-1", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.background, onChange: (e) => onDetectorChange(i, "background", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2 text-xs items-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { children: t("detectorType") }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
               "select",
               {
-                value: detector.backgroundUnit,
-                onChange: (e) => onDetectorChange(i, "backgroundUnit", e.target.value),
+                value: detector.type,
+                onChange: (e) => onDetectorChange(i, "type", e.target.value),
                 className: "bg-gray-800 p-1 rounded text-white text-xs",
-                children: rateUnitOptions.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: opt.value, children: opt.label }, opt.value))
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "beta", children: "Beta" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "gamma", children: "Gamma" })
+                ]
               }
-            )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-1", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("detectorDimLength") }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: t("detectorDimLengthTooltip") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.length, onChange: (e) => onDetectorChange(i, "length", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-1", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("detectorDimWidth") }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: t("detectorDimWidthTooltip") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.width, onChange: (e) => onDetectorChange(i, "width", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" })
-        ] })
-      ] }, i)) }) }) }),
-      mode === "linge" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("conveyorSetup"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("conveyorSpeed"), tooltipText: t("conveyorSpeedTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "conveyorSpeed", value: inputs.conveyorSpeed, onChange: onInputChange }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UnitSelect, { name: "conveyorSpeedUnit", value: inputs.conveyorSpeedUnit, onChange: onInputChange, options: [{ value: "cm_min", label: "cm/min" }, { value: "m_min", label: "m/min" }] })
-      ] }) }) }) }),
-      mode === "chambre" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("measurementConditions"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("measurementTime"), tooltipText: t("measurementTimeTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "chambreLingeTime", value: inputs.chambreLingeTime, onChange: onInputChange }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-sm text-gray-400", children: "s" })
-      ] }) }) }) }),
-      renderCalibrationSection(),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("targetActivity"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("targetValue"), tooltipText: t("targetValueTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "chambreLingeTarget", value: inputs.chambreLingeTarget, onChange: onInputChange }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UnitSelect, { name: "chambreLingeTargetUnit", value: inputs.chambreLingeTargetUnit, onChange: onInputChange, options: [
-          { value: "Bq" /* BQ */, label: "Bq" /* BQ */ },
-          { value: "Bq/cm\xB2" /* BQ_CM2 */, label: "Bq/cm\xB2" /* BQ_CM2 */ },
-          { value: "dpm" /* DPM */, label: "dpm" /* DPM */ },
-          { value: "dpm/cm\xB2" /* DPM_CM2 */, label: "dpm/cm\xB2" },
-          { value: "\xB5Ci" /* UCI */, label: "\xB5Ci" /* UCI */ },
-          { value: "\xB5Ci/cm\xB2" /* UCI_CM2 */, label: "\xB5Ci/cm\xB2" /* UCI_CM2 */ }
-        ] })
-      ] }) }) }) })
-    ] });
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { children: [
+              t("efficiency"),
+              " (%)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.efficiency, onChange: (e) => onDetectorChange(i, "efficiency", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { children: t("background") }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.background, onChange: (e) => onDetectorChange(i, "background", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "select",
+                {
+                  value: detector.backgroundUnit,
+                  onChange: (e) => onDetectorChange(i, "backgroundUnit", e.target.value),
+                  className: "bg-gray-800 p-1 rounded text-white text-xs",
+                  children: rateUnitOptions.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: opt.value, children: opt.label }, opt.value))
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("detectorDimLength") }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: t("detectorDimLengthTooltip") })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.length, onChange: (e) => onDetectorChange(i, "length", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "flex items-center space-x-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("detectorDimWidth") }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: t("detectorDimWidthTooltip") })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "number", value: detector.width, onChange: (e) => onDetectorChange(i, "width", parseFloat(e.target.value)), className: "bg-gray-800 p-1 rounded font-mono text-right text-white" })
+          ] })
+        ] }, i)) }) }) }),
+        mode === "linge" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("conveyorSetup"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("conveyorSpeed"), tooltipText: t("conveyorSpeedTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "conveyorSpeed", value: inputs.conveyorSpeed, onChange: onInputChange }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UnitSelect, { name: "conveyorSpeedUnit", value: inputs.conveyorSpeedUnit, onChange: onInputChange, options: [{ value: "cm_min", label: "cm/min" }, { value: "m_min", label: "m/min" }] })
+        ] }) }) }) }),
+        mode === "chambre" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("measurementConditions"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("measurementTime"), tooltipText: t("measurementTimeTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "chambreLingeTime", value: inputs.chambreLingeTime, onChange: onInputChange }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-sm text-gray-400", children: "s" })
+        ] }) }) }) }),
+        renderCalibrationSection(),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("targetActivity"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("targetValue"), tooltipText: t("targetValueTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "chambreLingeTarget", value: inputs.chambreLingeTarget, onChange: onInputChange }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UnitSelect, { name: "chambreLingeTargetUnit", value: inputs.chambreLingeTargetUnit, onChange: onInputChange, options: [
+            { value: "Bq" /* BQ */, label: "Bq" /* BQ */ },
+            { value: "Bq/cm\xB2" /* BQ_CM2 */, label: "Bq/cm\xB2" /* BQ_CM2 */ },
+            { value: "dpm" /* DPM */, label: "dpm" /* DPM */ },
+            { value: "dpm/cm\xB2" /* DPM_CM2 */, label: "dpm/cm\xB2" },
+            { value: "\xB5Ci" /* UCI */, label: "\xB5Ci" /* UCI */ },
+            { value: "\xB5Ci/cm\xB2" /* UCI_CM2 */, label: "\xB5Ci/cm\xB2" /* UCI_CM2 */ }
+          ] })
+        ] }) }) }) })
+      ] });
+    };
     const renderExpertInputs = () => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-4", children: [
       /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("riskParameters"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-3 p-2", children: [
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: "k(1-\u03B1)", tooltipText: t("k1alphaTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-col", children: [
@@ -25727,11 +25730,11 @@
   // components/ModeSelector.tsx
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
   var modes = [
-    { id: "standard", label: "standard" },
-    { id: "spectrometry", label: "spectrometry" },
-    { id: "surface", label: "surfaceControl" },
-    { id: "chambre", label: "chambre" },
-    { id: "linge", label: "linge" }
+    { id: "standard", label: "standard", tooltipKey: "standardTooltip" },
+    { id: "spectrometry", label: "spectrometry", tooltipKey: "spectrometryTooltip" },
+    { id: "surface", label: "surfaceControl", tooltipKey: "surfaceControlTooltip" },
+    { id: "chambre", label: "chambre", tooltipKey: "chambreTooltip" },
+    { id: "linge", label: "linge", tooltipKey: "lingeTooltip" }
   ];
   var ModeSelector = ({ currentMode, onModeChange, t }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex flex-wrap justify-center gap-2 bg-gray-900/50 p-2 rounded-lg", children: modes.map((mode) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -25739,7 +25742,10 @@
       {
         onClick: () => onModeChange(mode.id),
         className: `px-4 py-2 text-sm font-semibold rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400 ${currentMode === mode.id ? "bg-cyan-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`,
-        children: t(mode.label)
+        children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: t(mode.label) }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(InfoTooltip_default, { text: t(mode.tooltipKey) })
+        ] })
       },
       mode.id
     )) });
@@ -30288,6 +30294,11 @@
       surfaceControl: "Contr\xF4le surfacique",
       chambre: "Chambre",
       linge: "Linge",
+      standardTooltip: "Pour les mesures simples avec un comptage brut et un comptage de bruit de fond.",
+      spectrometryTooltip: "Pour l'analyse d'un pic dans une R\xE9gion d'Int\xE9r\xEAt (ROI), en tenant compte de la mise \xE0 l'\xE9chelle du bruit de fond.",
+      surfaceControlTooltip: "Pour les contr\xF4les de contamination de surface, visant une activit\xE9 par unit\xE9 de surface (ex: Bq/cm\xB2).",
+      chambreTooltip: "Pour les syst\xE8mes de mesure fixes (ex: portiques \xE0 personnes) avec un temps de mesure fixe.",
+      lingeTooltip: "Pour les syst\xE8mes \xE0 convoyeur (ex: contr\xF4leurs de linge) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement.",
       isoCalculator: "Calculateur ISO",
       spectrometryTools: "Outils Spectro",
       sourceManagement: "Gestion des sources",
@@ -30693,8 +30704,8 @@
       guide_main_calc_modes_li1: "Pour les mesures simples avec un comptage brut et un comptage de bruit de fond.",
       guide_main_calc_modes_li2: "Pour l'analyse d'un pic dans une R\xE9gion d'Int\xE9r\xEAt (ROI), en tenant compte de la mise \xE0 l'\xE9chelle du bruit de fond.",
       guide_main_calc_modes_li3_surface: "Pour les contr\xF4les de contamination de surface, visant une activit\xE9 par unit\xE9 de surface.",
-      guide_main_calc_modes_li3_chambre: "Pour les syst\xE8mes de mesure fixes (ex: portiques \xE0 personnes) avec un temps de mesure fixe.",
-      guide_main_calc_modes_li3_linge: "Pour les syst\xE8mes \xE0 convoyeur (ex: contr\xF4leurs de linge) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement.",
+      guide_main_calc_modes_li3_chambre: "Pour les syst\xE8mes de mesure fixes (ex: portiques \xE0 personnes) avec un temps de mesure fixe. Limit\xE9 \xE0 6 d\xE9tecteurs.",
+      guide_main_calc_modes_li3_linge: "Pour les syst\xE8mes \xE0 convoyeur (ex: contr\xF4leurs de linge) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement. Limit\xE9 \xE0 9 d\xE9tecteurs.",
       guide_main_calc_inputs_title: "Param\xE8tres d'Entr\xE9e",
       guide_main_calc_inputs_p1: "Les valeurs que vous fournissez pour effectuer le calcul.",
       guide_main_calc_inputs_li1: "Informations sur les comptages mesur\xE9s.",
@@ -30749,6 +30760,11 @@
       surfaceControl: "Surface Control",
       chambre: "Chamber",
       linge: "Laundry",
+      standardTooltip: "For simple measurements with a gross count and a background count.",
+      spectrometryTooltip: "For analyzing a peak in a Region of Interest (ROI), taking into account background scaling.",
+      surfaceControlTooltip: "For surface contamination checks, targeting an activity per unit area (e.g., Bq/cm\xB2).",
+      chambreTooltip: "For fixed measurement systems (e.g., personnel portals) with a fixed measurement time.",
+      lingeTooltip: "For conveyor-based systems (e.g., laundry monitors) where measurement time depends on the transit speed.",
       isoCalculator: "ISO Calculator",
       spectrometryTools: "Spectro Tools",
       sourceManagement: "Source Management",
@@ -31133,8 +31149,8 @@
       guide_main_calc_modes_li1: "For simple measurements with a gross count and a background count.",
       guide_main_calc_modes_li2: "For analyzing a peak in a Region of Interest (ROI), taking into account background scaling.",
       guide_main_calc_modes_li3_surface: "For surface contamination checks, targeting an activity per unit area.",
-      guide_main_calc_modes_li3_chambre: "For fixed measurement systems (e.g., personnel portals) with a fixed measurement time.",
-      guide_main_calc_modes_li3_linge: "For conveyor-based systems (e.g., laundry monitors) where measurement time depends on the transit speed.",
+      guide_main_calc_modes_li3_chambre: "For fixed measurement systems (e.g., personnel portals) with a fixed measurement time. Limited to 6 detectors.",
+      guide_main_calc_modes_li3_linge: "For conveyor-based systems (e.g., laundry monitors) where measurement time depends on the transit speed. Limited to 9 detectors.",
       guide_main_calc_inputs_title: "Input Parameters",
       guide_main_calc_inputs_p1: "The values you provide to perform the calculation.",
       guide_main_calc_inputs_li1: "Information on the measured counts.",
@@ -31189,6 +31205,11 @@
       surfaceControl: "Oberfl\xE4chenkontrolle",
       chambre: "Kammer",
       linge: "W\xE4sche",
+      standardTooltip: "F\xFCr einfache Messungen mit einer Brutto- und einer Hintergrundz\xE4hlung.",
+      spectrometryTooltip: "Zur Analyse eines Peaks in einem Interessenbereich (ROI), unter Ber\xFCcksichtigung der Hintergrundskalierung.",
+      surfaceControlTooltip: "F\xFCr Oberfl\xE4chenkontaminationspr\xFCfungen, die auf eine fl\xE4chenbezogene Aktivit\xE4t abzielen (z. B. Bq/cm\xB2).",
+      chambreTooltip: "F\xFCr feste Messsysteme (z. B. Personenportale) mit einer festen Messzeit.",
+      lingeTooltip: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. W\xE4schemonitore), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt.",
       isoCalculator: "ISO-Rechner",
       spectrometryTools: "Spektro-Werkzeuge",
       sourceManagement: "Quellenverwaltung",
@@ -31573,8 +31594,8 @@
       guide_main_calc_modes_li1: "F\xFCr einfache Messungen mit einer Brutto- und einer Hintergrundz\xE4hlung.",
       guide_main_calc_modes_li2: "Zur Analyse eines Peaks in einem Interessenbereich (ROI), unter Ber\xFCcksichtigung der Hintergrundskalierung.",
       guide_main_calc_modes_li3_surface: "F\xFCr Oberfl\xE4chenkontaminationspr\xFCfungen, die auf eine fl\xE4chenbezogene Aktivit\xE4t abzielen.",
-      guide_main_calc_modes_li3_chambre: "F\xFCr feste Messsysteme (z. B. Personenportale) mit einer festen Messzeit.",
-      guide_main_calc_modes_li3_linge: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. W\xE4schemonitore), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt.",
+      guide_main_calc_modes_li3_chambre: "F\xFCr feste Messsysteme (z. B. Personenportale) mit einer festen Messzeit. Begrenzt auf 6 Detektoren.",
+      guide_main_calc_modes_li3_linge: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. W\xE4schemonitore), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt. Begrenzt auf 9 Detektoren.",
       guide_main_calc_inputs_title: "Eingabeparameter",
       guide_main_calc_inputs_p1: "Die Werte, die Sie zur Durchf\xFChrung der Berechnung angeben.",
       guide_main_calc_inputs_li1: "Informationen zu den gemessenen Z\xE4hlungen.",
@@ -31629,6 +31650,11 @@
       surfaceControl: "Control de Superficie",
       chambre: "C\xE1mara",
       linge: "Lavander\xEDa",
+      standardTooltip: "Para mediciones simples con un conteo bruto y un conteo de fondo.",
+      spectrometryTooltip: "Para analizar un pico en una Regi\xF3n de Inter\xE9s (ROI), teniendo en cuenta el escalado del fondo.",
+      surfaceControlTooltip: "Para controles de contaminaci\xF3n de superficie, con el objetivo de una actividad por unidad de \xE1rea (p. ej., Bq/cm\xB2).",
+      chambreTooltip: "Para sistemas de medici\xF3n fijos (p. ej., portales de personal) con un tiempo de medici\xF3n fijo.",
+      lingeTooltip: "Para sistemas basados en cintas transportadoras (p. ej., monitores de lavander\xEDa) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito.",
       isoCalculator: "Calculadora ISO",
       spectrometryTools: "Herramientas de Espectro",
       sourceManagement: "Gesti\xF3n de Fuentes",
@@ -32013,8 +32039,8 @@
       guide_main_calc_modes_li1: "Para mediciones simples con un conteo bruto y un conteo de fondo.",
       guide_main_calc_modes_li2: "Para analizar un pico en una Regi\xF3n de Inter\xE9s (ROI), teniendo en cuenta el escalado del fondo.",
       guide_main_calc_modes_li3_surface: "Para controles de contaminaci\xF3n de superficie, con el objetivo de una actividad por unidad de \xE1rea.",
-      guide_main_calc_modes_li3_chambre: "Para sistemas de medici\xF3n fijos (p. ej., portales de personal) con un tiempo de medici\xF3n fijo.",
-      guide_main_calc_modes_li3_linge: "Para sistemas basados en cintas transportadoras (p. ej., monitores de lavander\xEDa) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito.",
+      guide_main_calc_modes_li3_chambre: "Para sistemas de medici\xF3n fijos (p. ej., portales de personal) con un tiempo de medici\xF3n fijo. Limitado a 6 detectores.",
+      guide_main_calc_modes_li3_linge: "Para sistemas basados en cintas transportadoras (p. ej., monitores de lavander\xEDa) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito. Limitado a 9 detectores.",
       guide_main_calc_inputs_title: "Par\xE1metros de Entrada",
       guide_main_calc_inputs_p1: "Los valores que proporciona para realizar el c\xE1lculo.",
       guide_main_calc_inputs_li1: "Informaci\xF3n sobre los conteos medidos.",
