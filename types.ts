@@ -253,11 +253,21 @@ export interface ImageAnalysisData {
   analysisResult: AnalysisResult;
 }
 
-export interface AnalysisRecord {
-  id: string;
-  name: string;
-  date: string; // ISO string
-  sourceId?: string;
-  analysisType: 'n42' | 'image';
-  data: N42AnalysisData | ImageAnalysisData;
-}
+// Fix: Changed AnalysisRecord to a discriminated union type to allow for proper type narrowing based on analysisType.
+export type AnalysisRecord =
+  | {
+      id: string;
+      name: string;
+      date: string; // ISO string
+      sourceId?: string;
+      analysisType: 'n42';
+      data: N42AnalysisData;
+    }
+  | {
+      id: string;
+      name: string;
+      date: string;
+      sourceId?: string;
+      analysisType: 'image';
+      data: ImageAnalysisData;
+    };

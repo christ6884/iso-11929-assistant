@@ -342,9 +342,10 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
             t={t}
             analysisStatus={analysisStatus}
             step={step}
-            onMouseMove={onMouseMove}
+// Fix: Corrected prop names to pass the correct handler functions.
+            onMouseMove={handleMouseMove}
             onMouseLeave={() => setInteractivePoint(null)}
-            onImageClick={onImageClick}
+            onImageClick={handleImageClick}
             onTogglePeakGroup={togglePeakGroup}
             onExportCsv={handleExportCsv}
             onSaveAnalysis={() => setIsSaveModalOpen(true)}

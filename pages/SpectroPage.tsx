@@ -33,12 +33,14 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
     }
 
     if (mode === 'image') {
-        const dataToLoad = analysisToLoad?.analysisType === 'image' ? analysisToLoad.data : undefined;
+        // Fix: Used logical AND (&&) instead of optional chaining (?.) to ensure TypeScript can correctly narrow the type of analysisToLoad.data.
+        const dataToLoad = (analysisToLoad && analysisToLoad.analysisType === 'image') ? analysisToLoad.data : undefined;
         return <SpectrumAnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }
 
     if (mode === 'n42') {
-        const dataToLoad = analysisToLoad?.analysisType === 'n42' ? analysisToLoad.data : undefined;
+        // Fix: Used logical AND (&&) instead of optional chaining (?.) to ensure TypeScript can correctly narrow the type of analysisToLoad.data.
+        const dataToLoad = (analysisToLoad && analysisToLoad.analysisType === 'n42') ? analysisToLoad.data : undefined;
         return <N42AnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }
     
