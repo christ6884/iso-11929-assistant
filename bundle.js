@@ -5,14 +5,7 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-  }) : x)(function(x) {
-    if (typeof require !== "undefined")
-      return require.apply(this, arguments);
-    throw new Error('Dynamic require of "' + x + '" is not supported');
-  });
-  var __commonJS = (cb, mod) => function __require2() {
+  var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __copyProps = (to, from, except, desc) => {
@@ -1091,7 +1084,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState28(initialState) {
+          function useState26(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1103,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect21(create, deps) {
+          function useEffect20(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1886,7 +1879,7 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect21;
+          exports.useEffect = useEffect20;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1887,7 @@
           exports.useMemo = useMemo12;
           exports.useReducer = useReducer;
           exports.useRef = useRef9;
-          exports.useState = useState28;
+          exports.useState = useState26;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2390,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React32 = require_react();
+          var React31 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3997,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React32.Children.forEach(props.children, function(child) {
+                  React31.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23566,7 +23559,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React32 = require_react();
+          var React31 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23592,7 +23585,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React32.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24442,11 +24435,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx40 = jsxWithValidationDynamic;
-          var jsxs38 = jsxWithValidationStatic;
+          var jsx39 = jsxWithValidationDynamic;
+          var jsxs37 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx40;
-          exports.jsxs = jsxs38;
+          exports.jsx = jsx39;
+          exports.jsxs = jsxs37;
         })();
       }
     }
@@ -24465,11 +24458,11 @@
   });
 
   // index.tsx
-  var import_react32 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // App.tsx
-  var import_react31 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
 
   // components/InputPanel.tsx
   var import_react3 = __toESM(require_react());
@@ -24618,7 +24611,7 @@
     "input",
     {
       type: "number",
-      name: String(name),
+      name,
       value,
       onChange: (e) => onChange(name, parseFloat(e.target.value)),
       min,
@@ -24630,7 +24623,7 @@
   var UnitSelect = ({ name, value, onChange, options }) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
     "select",
     {
-      name: String(name),
+      name,
       value,
       onChange: (e) => onChange(name, e.target.value),
       className: "w-full bg-gray-700 p-2 rounded-md",
@@ -25212,7 +25205,7 @@
           )
         ] })
       ] }) : null,
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: `${isCalculating ? "opacity-50 transition-opacity" : ""}`, children: renderContent() })
+      renderContent()
     ] });
   };
   var ResultsPanel_default = ResultsPanel;
@@ -25774,21 +25767,21 @@
   ] });
   var GermanyFlagIcon = () => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 5 3", children: [
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "5", height: "3", fill: "#000000" }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "5", height: "2", y: "1", fill: "#FF0000" }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "5", height: "2", y: "1", fill: "#DD0000" }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "5", height: "1", y: "2", fill: "#FFCC00" })
   ] });
   var SpainFlagIcon = () => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 3 2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "3", height: "2", fill: "#AA151B" }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "3", height: "1", y: "0.5", fill: "#F1B532" })
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "3", height: "2", fill: "#C60B1E" }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "3", height: "1", y: "0.5", fill: "#FFC400" })
   ] });
   var LanguageSelector = ({ currentLanguage, setLanguage, t }) => {
     const [isOpen, setIsOpen] = (0, import_react8.useState)(false);
     const menuRef = (0, import_react8.useRef)(null);
     const languages = [
-      { id: "fr" /* FR */, name: "Fran\xE7ais", icon: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(FranceFlagIcon, {}) },
-      { id: "en" /* EN */, name: "English", icon: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(UKFlagIcon, {}) },
-      { id: "de" /* DE */, name: "Deutsch", icon: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(GermanyFlagIcon, {}) },
-      { id: "es" /* ES */, name: "Espa\xF1ol", icon: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(SpainFlagIcon, {}) }
+      { code: "fr" /* FR */, label: "Fran\xE7ais", flag: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(FranceFlagIcon, {}) },
+      { code: "en" /* EN */, label: "English", flag: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(UKFlagIcon, {}) },
+      { code: "de" /* DE */, label: "Deutsch", flag: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(GermanyFlagIcon, {}) },
+      { code: "es" /* ES */, label: "Espa\xF1ol", flag: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(SpainFlagIcon, {}) }
     ];
     (0, import_react8.useEffect)(() => {
       if (!isOpen)
@@ -25803,33 +25796,31 @@
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isOpen]);
+    const selectedLanguage = languages.find((l) => l.code === currentLanguage);
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "relative", ref: menuRef, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-        "button",
-        {
-          onClick: () => setIsOpen(!isOpen),
-          "aria-label": t("changeLanguage"),
-          title: t("changeLanguage"),
-          className: "flex items-center space-x-2 text-gray-300 hover:text-cyan-400 p-2 rounded-md bg-gray-800 border border-gray-700 transition-colors",
-          children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }) })
-        }
-      ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: languages.map((lang) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("button", { onClick: () => setIsOpen(!isOpen), "aria-label": t("changeLanguage"), className: "flex items-center space-x-2 text-gray-300 hover:text-cyan-400 p-2 rounded-md bg-gray-800 border border-gray-700 transition-colors", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 21a9 9 0 100-18 9 9 0 000 18z" }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3.75 9h16.5m-16.5 6.75h16.5M9 3.75l.375 16.5M15 3.75l-.375 16.5" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "hidden sm:inline", children: selectedLanguage?.label })
+      ] }),
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "absolute right-0 mt-2 w-40 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: languages.map((lang) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
         "a",
         {
           href: "#",
           onClick: (e) => {
             e.preventDefault();
-            setLanguage(lang.id);
+            setLanguage(lang.code);
             setIsOpen(false);
           },
-          className: `flex items-center space-x-3 px-4 py-3 text-sm hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg ${currentLanguage === lang.id ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white"}`,
+          className: `flex items-center justify-between space-x-3 px-4 py-3 text-sm hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg ${currentLanguage === lang.code ? "text-cyan-400 font-semibold" : "text-gray-300 hover:text-white"}`,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "w-5 h-auto overflow-hidden rounded-sm", children: lang.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: lang.name })
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: lang.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "w-5 h-auto rounded-sm overflow-hidden shadow-md", children: lang.flag })
           ]
         },
-        lang.id
+        lang.code
       )) })
     ] });
   };
@@ -28049,7 +28040,7 @@
     const [interactivePoint, setInteractivePoint] = (0, import_react19.useState)(null);
     const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react19.useState)(false);
     const [adjusterInitialX, setAdjusterInitialX] = (0, import_react19.useState)(0);
-    const adjusterCallback = (0, import_react19.useRef)(void 0);
+    const adjusterCallback = (0, import_react19.useRef)();
     const imageRef = (0, import_react19.useRef)(null);
     const resetState = (0, import_react19.useCallback)(() => {
       setImageDataUrl(null);
@@ -28064,12 +28055,11 @@
       setInteractivePoint(null);
     }, []);
     const handleImageLoaded = async (dataUrl) => {
+      resetState();
       setImageDataUrl(dataUrl);
       setIsCameraOpen(false);
       try {
         const { curveData, analysisResult: analysisResult2 } = await analyzeSpectrum(dataUrl, setAnalysisStatus);
-        resetState();
-        setImageDataUrl(dataUrl);
         setSpectrumPoints(curveData);
         setInitialAnalysisResult(analysisResult2);
         setAnalysisStatus("idle");
@@ -28187,19 +28177,46 @@
         });
       }
     }, [identificationTolerance, analysisStatus, calibrationFunction, analysisType]);
+    const handleMouseMove = (e) => {
+      if (step !== "analyze" || !imageRef.current || !spectrumPoints || spectrumPoints.length === 0 || !calibrationFunction) {
+        setInteractivePoint(null);
+        return;
+      }
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const naturalX = x / imageRef.current.offsetWidth * imageRef.current.naturalWidth;
+      const closestPoint = spectrumPoints.reduce(
+        (prev, curr) => Math.abs(curr.x - naturalX) < Math.abs(prev.x - naturalX) ? curr : prev
+      );
+      const energy = calibrationFunction.slope * closestPoint.x + calibrationFunction.intercept;
+      const identificationResults = identifyPeaks([energy], identificationTolerance, analysisType);
+      const topMatch = identificationResults[0]?.matches[0];
+      setInteractivePoint({
+        point: closestPoint,
+        eventCoords: { x, y },
+        topMatch
+      });
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
         /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumAnalyzerTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: t("backButton") })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("button", { onClick: onOpenPeakIdentifier, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { fillRule: "evenodd", d: "M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "hidden sm:inline", children: t("identifyPeaks") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: t("backButton") })
+          ] })
         ] })
       ] }),
-      !imageDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex flex-col items-center justify-center space-y-4 mt-10", children: [
+      !imageDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex flex-col items-center justify-center space-y-6", children: [
         /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ImageUploader_default, { onImageLoaded: handleImageLoaded, t }),
         /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-gray-400 font-semibold", children: t("or") }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("button", { onClick: () => setIsCameraOpen(true), className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("button", { onClick: () => setIsCameraOpen(true), className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
             /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
             /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
           ] }),
@@ -28214,25 +28231,13 @@
           spectrumPoints,
           calibrationFunction,
           interactivePoint,
-          onMouseMove: (e) => {
-            if (step !== "analyze" || !calibrationFunction || !imageRef.current || !spectrumPoints)
-              return;
-            const rect = imageRef.current.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const naturalX = Math.round(x / imageRef.current.offsetWidth * imageRef.current.naturalWidth);
-            const pointOnCurve = spectrumPoints.find((p) => Math.round(p.x) === naturalX);
-            if (pointOnCurve) {
-              const energy = calibrationFunction.slope * pointOnCurve.x + calibrationFunction.intercept;
-              const topMatch = identifyPeaks([energy], identificationTolerance, analysisType)[0]?.matches[0] || null;
-              setInteractivePoint({ point: pointOnCurve, eventCoords: { x, y }, topMatch });
-            }
-          },
+          t,
+          analysisStatus,
+          step,
+          onMouseMove: handleMouseMove,
           onMouseLeave: () => setInteractivePoint(null),
           onImageClick: handleImageClick,
           onTogglePeakGroup: togglePeakGroup,
-          analysisStatus,
-          step,
           sidebar: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             CalibrationSidebar_default,
             {
@@ -28243,13 +28248,7 @@
               setCalibrationPoints,
               calibrationFunction,
               onCalibrationChange: setCalibrationFunction,
-              onLaunchAnalysis: (isRerun) => {
-                if (isRerun && analysisStatus === "complete") {
-                  runFullAnalysis();
-                } else if (!isRerun) {
-                  runFullAnalysis();
-                }
-              },
+              onLaunchAnalysis: runFullAnalysis,
               analysisStatus,
               errorMessage,
               identificationTolerance,
@@ -28257,20 +28256,11 @@
               onReset: resetState,
               t
             }
-          ),
-          t
+          )
         }
       ),
       isCameraOpen && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CameraCapture_default, { onImageCaptured: handleImageLoaded, onClose: () => setIsCameraOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-        CalibrationPointModal_default,
-        {
-          isOpen: isCalibrationModalOpen,
-          onClose: () => setIsCalibrationModalOpen(false),
-          onSubmit: handleCalibrationSubmit,
-          t
-        }
-      ),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CalibrationPointModal_default, { isOpen: isCalibrationModalOpen, onClose: () => setIsCalibrationModalOpen(false), onSubmit: handleCalibrationSubmit, t }),
       /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         PeakPositionAdjusterModal_default,
         {
@@ -29427,7 +29417,7 @@
   var SpectroPage_default = SpectroPage;
 
   // pages/SourceManagementPage.tsx
-  var import_react30 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
 
   // services/dbService.ts
   var DB_NAME = "ISOAssistantDB";
@@ -29949,222 +29939,48 @@
   };
   var CsvImportModal_default = CsvImportModal;
 
-  // components/source-management/ImageImportModal.tsx
-  var import_react28 = __toESM(require_react());
-
-  // services/geminiService.ts
-  var import_genai = __require("@google/genai");
-  async function extractSourcesFromImage(base64ImageData, t) {
-    if (!process.env.API_KEY) {
-      throw new Error("API key is not configured.");
-    }
-    const ai = new import_genai.GoogleGenAI({ apiKey: process.env.API_KEY });
-    const sourceSchema = {
-      type: import_genai.Type.OBJECT,
-      properties: {
-        id: {
-          type: import_genai.Type.STRING,
-          description: "A newly generated unique UUID for this source."
-        },
-        name: {
-          type: import_genai.Type.STRING,
-          description: "The name or identifier of the source."
-        },
-        nuclide: {
-          type: import_genai.Type.STRING,
-          description: "The radionuclide, e.g., 'Cobalt-60 (Co-60)'."
-        },
-        referenceActivity: {
-          type: import_genai.Type.NUMBER,
-          description: "The reference activity as a number, in Becquerels (Bq). Convert if necessary (e.g., 10kBq becomes 10000)."
-        },
-        referenceDate: {
-          type: import_genai.Type.STRING,
-          description: "The reference date in YYYY-MM-DD format."
-        },
-        referenceActivityUncertainty: {
-          type: import_genai.Type.NUMBER,
-          description: "The relative uncertainty of the activity, as a percentage number (e.g., 5 for 5%)."
-        },
-        location: {
-          type: import_genai.Type.STRING,
-          description: "The location of the source, if available."
-        },
-        certificateNumber: {
-          type: import_genai.Type.STRING,
-          description: "The certificate number, if available."
-        },
-        type: {
-          type: import_genai.Type.STRING,
-          description: "The source type code (e.g., 'S1', 'S2'), if available."
-        }
-      },
-      required: ["id", "name", "nuclide", "referenceActivity", "referenceDate", "referenceActivityUncertainty"]
-    };
-    const prompt = `Analyze this image which contains a list or table of radioactive sources. 
-    Extract the data for each source and return it as a valid JSON array.
-    Each object in the array must conform to the provided schema.
-    - For 'id', generate a new, unique UUID for each source.
-    - For 'referenceActivity', ensure the value is a number in Bq. Perform conversions from kBq, MBq, etc. if needed.
-    - For 'referenceDate', parse the date and format it as YYYY-MM-DD.
-    - If a value for an optional field is not present, omit the key.
-    - Pay close attention to column headers to correctly map the data.`;
-    const imagePart = {
-      inlineData: {
-        mimeType: "image/jpeg",
-        data: base64ImageData
-      }
-    };
-    const textPart = {
-      text: prompt
-    };
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: { parts: [imagePart, textPart] },
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: import_genai.Type.ARRAY,
-            items: sourceSchema
-          }
-        }
-      });
-      const jsonString = response.text.trim();
-      const parsedSources = JSON.parse(jsonString);
-      return parsedSources;
-    } catch (error) {
-      console.error("Error calling Gemini API:", error);
-      throw new Error("Failed to extract sources from image with AI.");
-    }
-  }
-
-  // components/source-management/ImageImportModal.tsx
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-  var ImageImportModal = ({ isOpen, onClose, onImportReady, t }) => {
-    const [imageDataUrl, setImageDataUrl] = (0, import_react28.useState)(null);
-    const [isCameraOpen, setIsCameraOpen] = (0, import_react28.useState)(false);
-    const [isProcessing, setIsProcessing] = (0, import_react28.useState)(false);
-    const [error, setError] = (0, import_react28.useState)(null);
-    const handleImageLoaded = (dataUrl) => {
-      setImageDataUrl(dataUrl);
-      setIsCameraOpen(false);
-      setError(null);
-    };
-    const handleProcessImage = async () => {
-      if (!imageDataUrl)
-        return;
-      setIsProcessing(true);
-      setError(null);
-      try {
-        const base64Data = imageDataUrl.split(",")[1];
-        if (!base64Data) {
-          throw new Error("Invalid image data format.");
-        }
-        const sources = await extractSourcesFromImage(base64Data, t);
-        onImportReady(sources);
-      } catch (err) {
-        setError(err.message || "An unknown error occurred during analysis.");
-      } finally {
-        setIsProcessing(false);
-      }
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Card_default, { title: t("imageImportTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "space-y-4", children: [
-        !imageDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex flex-col items-center justify-center space-y-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(ImageUploader_default, { onImageLoaded: handleImageLoaded, t }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "text-gray-400 font-semibold", children: t("or") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("button", { onClick: () => setIsCameraOpen(true), className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
-              /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { children: t("useCamera") })
-          ] })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "text-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("img", { src: imageDataUrl, alt: "Source list preview", className: "max-h-80 w-auto mx-auto rounded-md border border-gray-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { onClick: () => setImageDataUrl(null), className: "mt-2 text-sm text-yellow-400 hover:text-yellow-300", children: t("startOver") })
-        ] }),
-        error && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-red-400 text-sm text-center bg-red-900/30 p-2 rounded-md", children: error }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("button", { onClick: handleProcessImage, disabled: !imageDataUrl || isProcessing, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500 flex items-center", children: [
-            isProcessing && /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("svg", { className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("circle", { className: "opacity-25", cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "4" }),
-              /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("path", { className: "opacity-75", fill: "currentColor", d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" })
-            ] }),
-            isProcessing ? t("processingImage") : t("processImage")
-          ] })
-        ] })
-      ] }) }) }),
-      isCameraOpen && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(CameraCapture_default, { onImageCaptured: handleImageLoaded, onClose: () => setIsCameraOpen(false), t })
-    ] });
-  };
-  var ImageImportModal_default = ImageImportModal;
-
   // components/source-management/SourceTypesMemoModal.tsx
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   var SourceTypesMemoModal = ({ isOpen, onClose, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("description") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("th", { className: "py-2 px-3", children: t("description") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { className: "border-t border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: type.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("tr", { className: "border-t border-gray-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("td", { className: "py-3 px-3", children: type.description }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
         ] }, type.key)) })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
     ] }) }) });
   };
   var SourceTypesMemoModal_default = SourceTypesMemoModal;
 
-  // hooks/useOnlineStatus.ts
-  var import_react29 = __toESM(require_react());
-  var useOnlineStatus = () => {
-    const [isOnline, setIsOnline] = (0, import_react29.useState)(() => navigator.onLine);
-    (0, import_react29.useEffect)(() => {
-      const handleOnline = () => setIsOnline(true);
-      const handleOffline = () => setIsOnline(false);
-      window.addEventListener("online", handleOnline);
-      window.addEventListener("offline", handleOffline);
-      return () => {
-        window.removeEventListener("online", handleOnline);
-        window.removeEventListener("offline", handleOffline);
-      };
-    }, []);
-    return isOnline;
-  };
-
   // pages/SourceManagementPage.tsx
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
   var SourceManagementPage = ({ t }) => {
-    const [sources, setSources] = (0, import_react30.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react30.useState)(true);
-    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react30.useState)(false);
-    const [sourceToEdit, setSourceToEdit] = (0, import_react30.useState)(null);
-    const [searchTerm, setSearchTerm] = (0, import_react30.useState)("");
-    const [hoveredSource, setHoveredSource] = (0, import_react30.useState)(null);
-    const [sortConfig, setSortConfig] = (0, import_react30.useState)({ key: "name", direction: "ascending" });
-    const [isMemoOpen, setIsMemoOpen] = (0, import_react30.useState)(false);
-    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react30.useState)(false);
-    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react30.useState)(false);
-    const [isImageImportOpen, setIsImageImportOpen] = (0, import_react30.useState)(false);
-    const [sourcesToImport, setSourcesToImport] = (0, import_react30.useState)([]);
-    const isOnline = useOnlineStatus();
-    const fetchSources = (0, import_react30.useCallback)(async () => {
+    const [sources, setSources] = (0, import_react28.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react28.useState)(true);
+    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react28.useState)(false);
+    const [sourceToEdit, setSourceToEdit] = (0, import_react28.useState)(null);
+    const [searchTerm, setSearchTerm] = (0, import_react28.useState)("");
+    const [hoveredSource, setHoveredSource] = (0, import_react28.useState)(null);
+    const [sortConfig, setSortConfig] = (0, import_react28.useState)({ key: "name", direction: "ascending" });
+    const [isMemoOpen, setIsMemoOpen] = (0, import_react28.useState)(false);
+    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react28.useState)(false);
+    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react28.useState)(false);
+    const [sourcesToImport, setSourcesToImport] = (0, import_react28.useState)([]);
+    const fetchSources = (0, import_react28.useCallback)(async () => {
       setIsLoading(true);
       try {
         const allSources = await db.getAllSources();
@@ -30175,7 +29991,7 @@
         setIsLoading(false);
       }
     }, []);
-    (0, import_react30.useEffect)(() => {
+    (0, import_react28.useEffect)(() => {
       fetchSources();
     }, [fetchSources]);
     const handleSaveSource = async (source) => {
@@ -30228,7 +30044,6 @@
     const handleImportFromFile = (importedSources) => {
       setSourcesToImport(importedSources);
       setIsCsvImportOpen(false);
-      setIsImageImportOpen(false);
       setIsImportReviewOpen(true);
     };
     const handleConfirmImport = async (decisions) => {
@@ -30254,7 +30069,7 @@
         setIsLoading(false);
       }
     };
-    const calculateCurrentActivity = (0, import_react30.useCallback)((source) => {
+    const calculateCurrentActivity = (0, import_react28.useCallback)((source) => {
       const nuclideData = Object.values(radionuclides).flat().find((n) => n.name === source.nuclide);
       if (!nuclideData)
         return source.referenceActivity;
@@ -30264,12 +30079,12 @@
       const lambda = Math.log(2) / nuclideData.halfLifeSeconds;
       return source.referenceActivity * Math.exp(-lambda * elapsedTimeSeconds);
     }, []);
-    const filteredSources = (0, import_react30.useMemo)(() => {
+    const filteredSources = (0, import_react28.useMemo)(() => {
       return sources.filter(
         (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }, [sources, searchTerm]);
-    const sortedSources = (0, import_react30.useMemo)(() => {
+    const sortedSources = (0, import_react28.useMemo)(() => {
       let sortableItems = [...filteredSources];
       if (sortConfig.key) {
         sortableItems.sort((a, b) => {
@@ -30332,16 +30147,16 @@
     };
     const SortableHeader = ({ sortKey, label }) => {
       const isSorted = sortConfig.key === sortKey;
-      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: label }),
-        isSorted && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { children: label }),
+        isSorted && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
       ] }) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex items-center gap-2 flex-wrap justify-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
             "input",
             {
               type: "text",
@@ -30351,63 +30166,51 @@
               className: "bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { title: !isOnline ? t("importFromImageOfflineTooltip") : "", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
-            "button",
-            {
-              onClick: () => setIsImageImportOpen(true),
-              disabled: !isOnline,
-              className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: t("importFromImage") })
-              ]
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => {
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => {
             setSourceToEdit(null);
             setIsAddModalOpen(true);
           }, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm", children: t("addSource") })
         ] })
-      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("p", { children: [
+      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("p", { children: [
         t("loading"),
         "..."
-      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: t("currentActivity") }),
-            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { children: t("currentActivity") }),
+            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "p-3 text-center", children: t("actions") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("tbody", { children: sortedSources.map((source) => {
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("tbody", { children: sortedSources.map((source) => {
           const currentActivity = calculateCurrentActivity(source);
           const conformity = checkConformity(source, currentActivity);
-          return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.location }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.type }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
+          return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3", children: source.location }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3", children: source.type }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
               ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
             ] }) })
           ] }, source.id);
         }) })
       ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         AddSourceModal_default,
         {
           isOpen: isAddModalOpen,
@@ -30420,7 +30223,7 @@
           sourceToEdit
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         CsvImportModal_default,
         {
           isOpen: isCsvImportOpen,
@@ -30429,16 +30232,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-        ImageImportModal_default,
-        {
-          isOpen: isImageImportOpen,
-          onClose: () => setIsImageImportOpen(false),
-          onImportReady: handleImportFromFile,
-          t
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         ImportReviewModal_default,
         {
           isOpen: isImportReviewOpen,
@@ -30449,7 +30243,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         SourceTypesMemoModal_default,
         {
           isOpen: isMemoOpen,
@@ -30457,19 +30251,19 @@
           t
         }
       ),
-      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
+      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
     ] });
   };
   var SourceManagementPage_default = SourceManagementPage;
 
   // components/UpdateNotification.tsx
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   var UpdateNotification = ({ isOpen, onUpdate, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
         "button",
         {
           onClick: onUpdate,
@@ -30777,11 +30571,6 @@
       searchSource: "Rechercher une source...",
       import: "Importer",
       export: "Exporter",
-      importFromImage: "Importer depuis une image",
-      importFromImageOfflineTooltip: "Cette fonctionnalit\xE9 n\xE9cessite une connexion internet.",
-      imageImportTitle: "Importer des Sources depuis une Image",
-      processImage: "Analyser l'image",
-      processingImage: "Analyse par l'IA en cours...",
       sourceTypeMemo: "M\xE9mo des types de source",
       addSource: "Ajouter une source",
       sourceName: "Nom de la source",
@@ -31230,11 +31019,6 @@
       searchSource: "Search source...",
       import: "Import",
       export: "Export",
-      importFromImage: "Import from Image",
-      importFromImageOfflineTooltip: "This feature requires an internet connection.",
-      imageImportTitle: "Import Sources from Image",
-      processImage: "Analyze Image",
-      processingImage: "AI analysis in progress...",
       sourceTypeMemo: "Source Types Memo",
       addSource: "Add Source",
       sourceName: "Source Name",
@@ -31675,11 +31459,6 @@
       searchSource: "Quelle suchen...",
       import: "Importieren",
       export: "Exportieren",
-      importFromImage: "Von Bild importieren",
-      importFromImageOfflineTooltip: "Diese Funktion erfordert eine Internetverbindung.",
-      imageImportTitle: "Quellen aus Bild importieren",
-      processImage: "Bild analysieren",
-      processingImage: "KI-Analyse l\xE4uft...",
       sourceTypeMemo: "Memo der Quellentypen",
       addSource: "Quelle hinzuf\xFCgen",
       sourceName: "Quellenname",
@@ -32120,11 +31899,6 @@
       searchSource: "Buscar fuente...",
       import: "Importar",
       export: "Exportar",
-      importFromImage: "Importar desde imagen",
-      importFromImageOfflineTooltip: "Esta funci\xF3n requiere conexi\xF3n a internet.",
-      imageImportTitle: "Importar Fuentes desde Imagen",
-      processImage: "Analizar Imagen",
-      processingImage: "An\xE1lisis de IA en progreso...",
       sourceTypeMemo: "Memo de Tipos de Fuente",
       addSource: "Agregar Fuente",
       sourceName: "Nombre de la Fuente",
@@ -32698,7 +32472,7 @@
   }
 
   // App.tsx
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
   var defaultDetectors = Array(10).fill(null).map(() => ({
     efficiency: 50,
     background: 10,
@@ -32743,30 +32517,30 @@
     numSimulations: 1e4
   };
   var App = () => {
-    const [language, setLanguage] = (0, import_react31.useState)("fr" /* FR */);
-    const [t, setT] = (0, import_react31.useState)(() => getTranslator("fr" /* FR */));
-    const [view, setView] = (0, import_react31.useState)("calculator");
-    const [isExpertMode, setIsExpertMode] = (0, import_react31.useState)(false);
-    const [theme, setTheme] = (0, import_react31.useState)("default");
-    const [inputs, setInputs] = (0, import_react31.useState)(initialInputs);
-    const [results, setResults] = (0, import_react31.useState)(null);
-    const [mode, setMode] = (0, import_react31.useState)("standard");
-    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react31.useState)("calculate");
-    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react31.useState)(100);
-    const [isCalculating, setIsCalculating] = (0, import_react31.useState)(true);
-    const [autoW, setAutoW] = (0, import_react31.useState)(true);
-    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react31.useState)(() => !localStorage.getItem("hasSeenWelcome"));
-    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react31.useState)(false);
-    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react31.useState)(false);
-    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react31.useState)(false);
-    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react31.useState)(false);
-    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react31.useState)(false);
-    const [isProUser, setIsProUser] = (0, import_react31.useState)(false);
-    const [isProModalOpen, setIsProModalOpen] = (0, import_react31.useState)(false);
-    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react31.useState)(false);
-    const waitingWorkerRef = (0, import_react31.useRef)(null);
-    const toolsMenuRef = (0, import_react31.useRef)(null);
-    (0, import_react31.useEffect)(() => {
+    const [language, setLanguage] = (0, import_react29.useState)("fr" /* FR */);
+    const [t, setT] = (0, import_react29.useState)(() => getTranslator("fr" /* FR */));
+    const [view, setView] = (0, import_react29.useState)("calculator");
+    const [isExpertMode, setIsExpertMode] = (0, import_react29.useState)(false);
+    const [theme, setTheme] = (0, import_react29.useState)("default");
+    const [inputs, setInputs] = (0, import_react29.useState)(initialInputs);
+    const [results, setResults] = (0, import_react29.useState)(null);
+    const [mode, setMode] = (0, import_react29.useState)("standard");
+    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react29.useState)("calculate");
+    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react29.useState)(100);
+    const [isCalculating, setIsCalculating] = (0, import_react29.useState)(true);
+    const [autoW, setAutoW] = (0, import_react29.useState)(true);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react29.useState)(() => !localStorage.getItem("hasSeenWelcome"));
+    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react29.useState)(false);
+    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react29.useState)(false);
+    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react29.useState)(false);
+    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react29.useState)(false);
+    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react29.useState)(false);
+    const [isProUser, setIsProUser] = (0, import_react29.useState)(false);
+    const [isProModalOpen, setIsProModalOpen] = (0, import_react29.useState)(false);
+    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react29.useState)(false);
+    const waitingWorkerRef = (0, import_react29.useRef)(null);
+    const toolsMenuRef = (0, import_react29.useRef)(null);
+    (0, import_react29.useEffect)(() => {
       if (localStorage.getItem("isProUser") === "true") {
         setIsProUser(true);
       }
@@ -32800,14 +32574,14 @@
         });
       }
     };
-    (0, import_react31.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       localStorage.setItem("app-theme", theme);
       document.documentElement.classList.remove("theme-lab", "theme-forest");
       if (theme !== "default") {
         document.documentElement.classList.add(`theme-${theme}`);
       }
     }, [theme]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!isToolsMenuOpen)
         return;
       const handleClickOutside = (event) => {
@@ -32820,7 +32594,7 @@
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isToolsMenuOpen]);
-    const autoCalculatedW = (0, import_react31.useMemo)(() => {
+    const autoCalculatedW = (0, import_react29.useMemo)(() => {
       if (!autoW || mode !== "chambre" && mode !== "linge") {
         return null;
       }
@@ -32830,7 +32604,7 @@
       const avgEfficiency = activeDetectors.reduce((sum, d) => sum + d.efficiency / 100, 0) / activeDetectors.length;
       return avgEfficiency > 0 ? 1 / avgEfficiency : null;
     }, [autoW, mode, inputs.detectors]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (autoCalculatedW !== null && (autoCalculatedW !== inputs.calibrationFactor || inputs.calibrationFactorUnit !== "Bq/(c/s)")) {
         setInputs((prev) => ({
           ...prev,
@@ -32865,7 +32639,7 @@
       setIsProModalOpen(false);
       alert(t("proUnlockedSuccess"));
     };
-    const calculate = (0, import_react31.useCallback)(() => {
+    const calculate = (0, import_react29.useCallback)(() => {
       setIsCalculating(true);
       setTimeout(() => {
         let t_g = inputs.grossTime;
@@ -32958,7 +32732,7 @@
         setIsCalculating(false);
       }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       calculate();
     }, [calculate]);
     const handleSaveConfig = () => {
@@ -32994,10 +32768,10 @@
       setInputs((prev) => ({ ...prev, calibrationFactor: newActivity, calibrationFactorUncertainty: newUncertainty }));
       setIsDecayCalculatorOpen(false);
     };
-    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
           InputPanel_default,
           {
             inputs,
@@ -33017,8 +32791,8 @@
             onAutoWChange: setAutoW
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             ResultsPanel_default,
             {
               results,
@@ -33032,7 +32806,7 @@
               isCalculating
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             ChartPanel_default,
             {
               results: typeof results === "string" ? null : results,
@@ -33044,11 +32818,16 @@
         ] })
       ] })
     ] });
-    const handleNavItemClick = (item) => {
-      if (item.locked && !isProUser) {
-        setIsProModalOpen(true);
+    const handleNavItemClick = (targetView) => {
+      const lockedViews = ["spectro", "sources"];
+      if (lockedViews.includes(targetView)) {
+        if (isProUser) {
+          setView(targetView);
+        } else {
+          setIsProModalOpen(true);
+        }
       } else {
-        setView(item.key);
+        setView(targetView);
       }
     };
     const renderView = () => {
@@ -33056,9 +32835,9 @@
         case "calculator":
           return renderCalculatorView();
         case "spectro":
-          return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true) });
+          return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true) });
         case "sources":
-          return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SourceManagementPage_default, { t });
+          return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(SourceManagementPage_default, { t });
         default:
           return renderCalculatorView();
       }
@@ -33066,65 +32845,61 @@
     const navItems = [
       { key: "calculator", label: t("isoCalculator"), locked: false },
       { key: "spectro", label: t("spectrometryTools"), locked: true },
-      { key: "sources", label: t("sourceManagement"), locked: false }
+      { key: "sources", label: t("sourceManagement"), locked: true }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("header", { className: "mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("header", { className: "mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
-            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: t("unlockPro") })
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
+            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => setIsToolsMenuOpen((p) => !p), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M4 6h16M4 12h16M4 18h16" }) }) }),
-              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("a", { href: "#", onClick: (e) => {
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
+              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsUserGuideOpen(true);
                   setIsToolsMenuOpen(false);
-                }, className: "block px-4 py-3 text-sm text-gray-300 hover:bg-gray-700", children: t("userGuide") }),
-                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("a", { href: "#", onClick: (e) => {
+                }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("userGuide") }),
+                /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
-                  setIsPeakIdentifierOpen(true);
+                  setIsWelcomeModalOpen(true);
                   setIsToolsMenuOpen(false);
-                }, className: "block px-4 py-3 text-sm text-gray-300 hover:bg-gray-700", children: t("identifyPeaks") }),
-                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("a", { href: "#", onClick: (e) => {
-                  e.preventDefault();
-                  setIsUnitConverterOpen(true);
-                  setIsToolsMenuOpen(false);
-                }, className: "block px-4 py-3 text-sm text-gray-300 hover:bg-gray-700", children: t("unitConverter") })
+                }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("showWelcomeTooltip") })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t })
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("nav", { className: "bg-gray-800/50 rounded-lg p-2", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("ul", { className: "flex justify-center items-center space-x-2 sm:space-x-4", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
           "button",
           {
-            onClick: () => handleNavItemClick(item),
-            className: `px-3 py-2 text-sm sm:text-base font-semibold rounded-md transition-colors flex items-center space-x-2 ${view === item.key ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
+            onClick: () => handleNavItemClick(item.key),
+            className: `px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center space-x-2 ${view === item.key ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
+            title: item.locked && !isProUser ? t("lockedFeature") : item.label,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: item.label }),
-              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { children: item.label }),
+              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
             ]
-          }
-        ) }, item.key)) }) })
+          },
+          item.key
+        )) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("main", { children: renderView() }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("footer", { className: "text-center mt-12 text-xs text-gray-600", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("p", { children: [
-        "ISO 11929 Assistant v2.2 - ",
-        t("authorCredit")
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("main", { children: renderView() }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
         DecayCalculatorModal_default,
         {
           isOpen: isDecayCalculatorOpen,
@@ -33133,25 +32908,40 @@
           t,
           initialActivity: inputs.calibrationFactor,
           initialUncertainty: inputs.calibrationFactorUncertainty,
-          unit: inputs.calibrationFactorUnit.split("/")[0]
+          unit: inputs.calibrationFactorUnit.split("/")[0] || "Bq"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(UnitConverterModal_default, { isOpen: isUnitConverterOpen, onClose: () => setIsUnitConverterOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ProAccessModal_default, { isOpen: isProModalOpen, onClose: () => setIsProModalOpen(false), onSuccess: handleUnlockSuccess, t }),
-      isUpdateAvailable && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t })
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        UnitConverterModal_default,
+        {
+          isOpen: isUnitConverterOpen,
+          onClose: () => setIsUnitConverterOpen(false),
+          t
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        ProAccessModal_default,
+        {
+          isOpen: isProModalOpen,
+          onClose: () => setIsProModalOpen(false),
+          onSuccess: handleUnlockSuccess,
+          t
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { children: t("authorCredit") }) })
     ] });
   };
   var App_default = App;
 
   // index.tsx
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
   var rootElement = document.getElementById("root");
   if (!rootElement) {
     throw new Error("Could not find the root element to mount the app.");
   }
   var root = import_client.default.createRoot(rootElement);
   root.render(
-    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_react32.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(App_default, {}) })
+    /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_react30.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(App_default, {}) })
   );
 })();
 /*! Bundled license information:

@@ -1,11 +1,11 @@
-const CACHE_NAME = 'iso-assistant-cache-v6.2';
+const CACHE_NAME = 'iso-assistant-cache-v5.1';
 const urlsToCache = [
   './',
-  './index.html',
-  './bundle.js',
-  './manifest.json',
-  './icons/icon-192x192.png',
-  './icons/icon-512x512.png'
+  'index.html',
+  'bundle.js',
+  'manifest.json',
+  'icons/icon-192x192.png',
+  'icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -16,9 +16,9 @@ self.addEventListener('install', event => {
         // Use a "best effort" approach to caching non-essential assets
         const essentialFiles = [
           './',
-          './index.html',
-          './bundle.js',
-          './manifest.json',
+          'index.html',
+          'bundle.js',
+          'manifest.json',
         ];
         return cache.addAll(essentialFiles).catch(error => {
           console.warn('Could not cache all essential assets on install:', error);
