@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Theme Overrides --- */
+
+/* --- Theme: Lab White --- */
+html.theme-lab body { background-color: #f1f5f9; /* slate-100 */ }
+html.theme-lab .bg-gray-900, html.theme-lab .bg-gray-900\/50 { background-color: #f1f5f9; }
+html.theme-lab .text-white, html.theme-lab .text-gray-100, html.theme-lab .text-gray-200, html.theme-lab .text-gray-300 { color: #0f172a; } /* slate-900 */
+html.theme-lab .text-gray-400, html.theme-lab .text-gray-500 { color: #475569; } /* slate-600 */
+html.theme-lab .bg-gray-800, html.theme-lab .bg-gray-800\/70 { background-color: #ffffff; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); }
+html.theme-lab .bg-gray-700 { background-color: #f8fafc; } /* slate-50 */
+html.theme-lab .border-gray-700, html.theme-lab .border-gray-800 { border-color: #e2e8f0; } /* slate-200 */
+html.theme-lab input, html.theme-lab select, html.theme-lab textarea { background-color: #f8fafc; color: #0f172a; }
+html.theme-lab input:disabled, html.theme-lab select:disabled { background-color: #f1f5f9; }
+
+/* Accent color overrides */
+html.theme-lab .text-cyan-400 { color: #2563eb; } /* blue-600 */
+html.theme-lab .text-cyan-300 { color: #3b82f6; } /* blue-500 */
+html.theme-lab .hover\:text-cyan-400:hover, html.theme-lab .hover\:text-cyan-300:hover { color: #1d4ed8; } /* blue-700 */
+html.theme-lab .bg-cyan-600 { background-color: #2563eb; }
+html.theme-lab .hover\:bg-cyan-700:hover { background-color: #1d4ed8; }
+html.theme-lab .border-cyan-500 { border-color: #2563eb; }
+html.theme-lab .bg-cyan-500 { background-color: #3b82f6; }
+
+/* Chart/SVG specific */
+html.theme-lab path[stroke="#60a5fa"] { stroke: #60a5fa; } /* H0 */
+html.theme-lab path[stroke="#c4b5fd"] { stroke: #a78bfa; } /* H1 */
+html.theme-lab path[stroke="#2dd4bf"] { stroke: #2563eb; } /* Measurement */
+html.theme-lab line[stroke="#f87171"] { stroke: #ef4444; } /* y* */
+html.theme-lab text[fill="#f87171"] { fill: #ef4444; }
+html.theme-lab line[stroke="#facc15"] { stroke: #f59e0b; } /* y# */
+html.theme-lab text[fill="#facc15"] { fill: #f59e0b; }
+
+/* --- Theme: Forest Green --- */
+html.theme-forest body { background-color: #052e16; } /* green-950 */
+html.theme-forest .bg-gray-900, html.theme-forest .bg-gray-900\/50 { background-color: #052e16; }
+html.theme-forest .bg-gray-800, html.theme-forest .bg-gray-800\/70 { background-color: #064e3b; } /* green-900 */
+html.theme-forest .bg-gray-700 { background-color: #047857; } /* green-800 */
+html.theme-forest .border-gray-700, html.theme-forest .border-gray-800 { border-color: #065f46; }
+html.theme-forest input, html.theme-forest select, html.theme-forest textarea { background-color: #064e3b; }
+
+/* Accent color overrides */
+html.theme-forest .text-cyan-400 { color: #4ade80; } /* green-400 */
+html.theme-forest .text-cyan-300 { color: #86efac; } /* green-300 */
+html.theme-forest .hover\:text-cyan-400:hover, html.theme-forest .hover\:text-cyan-300:hover { color: #bbf7d0; } /* green-200 */
+html.theme-forest .bg-cyan-600 { background-color: #16a34a; } /* green-600 */
+html.theme-forest .hover\:bg-cyan-700:hover { background-color: #15803d; }
+html.theme-forest .border-cyan-500 { border-color: #22c55e; }
+html.theme-forest .bg-cyan-500 { background-color: #22c55e; }
