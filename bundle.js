@@ -28146,27 +28146,29 @@
       if (!initialAnalysisResult || !calibrationFunction)
         return;
       setAnalysisStatus("detecting");
-      const autoPeaks = initialAnalysisResult.detectedPeaks;
-      const manualPeaks = analysisResult?.detectedPeaks.filter((p) => p.manual) || [];
-      const allPeaks = [...autoPeaks, ...manualPeaks];
-      const peaksWithEnergy = allPeaks.map((p) => {
-        const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
-        const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
-        return {
-          ...p,
-          energy,
-          fwhm_keV
-        };
+      setAnalysisResult((prev) => {
+        const autoPeaks = initialAnalysisResult.detectedPeaks;
+        const manualPeaks = prev?.detectedPeaks.filter((p) => p.manual) || [];
+        const allPeaks = [...autoPeaks, ...manualPeaks];
+        const peaksWithEnergy = allPeaks.map((p) => {
+          const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
+          const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
+          return {
+            ...p,
+            energy,
+            fwhm_keV
+          };
+        });
+        const peakEnergies = peaksWithEnergy.map((p) => p.energy);
+        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+        const nuclideMatches = /* @__PURE__ */ new Map();
+        identificationResults.forEach((res) => {
+          nuclideMatches.set(res.inputEnergy_keV, res.matches);
+        });
+        return { detectedPeaks: peaksWithEnergy, nuclideMatches };
       });
-      const peakEnergies = peaksWithEnergy.map((p) => p.energy);
-      const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-      const nuclideMatches = /* @__PURE__ */ new Map();
-      identificationResults.forEach((res) => {
-        nuclideMatches.set(res.inputEnergy_keV, res.matches);
-      });
-      setAnalysisResult({ detectedPeaks: peaksWithEnergy, nuclideMatches });
       setAnalysisStatus("complete");
-    }, [initialAnalysisResult, analysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
+    }, [initialAnalysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
     (0, import_react19.useEffect)(() => {
       if (analysisStatus === "complete" && calibrationFunction) {
         setAnalysisResult((prev) => {
@@ -32845,13 +32847,9 @@
       ] })
     ] });
     const handleNavItemClick = (targetView) => {
-      const lockedViews = ["spectro", "sources"];
-      if (lockedViews.includes(targetView)) {
-        if (isProUser) {
-          setView(targetView);
-        } else {
-          setIsProModalOpen(true);
-        }
+      const lockedViews = ["spectro"];
+      if (lockedViews.includes(targetView) && !isProUser) {
+        setIsProModalOpen(true);
       } else {
         setView(targetView);
       }
@@ -32871,7 +32869,7 @@
     const navItems = [
       { key: "calculator", label: t("isoCalculator"), locked: false },
       { key: "spectro", label: t("spectrometryTools"), locked: true },
-      { key: "sources", label: t("sourceManagement"), locked: true }
+      { key: "sources", label: t("sourceManagement"), locked: false }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
       /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("header", { className: "mb-6", children: [
