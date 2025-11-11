@@ -406,13 +406,9 @@ const App: React.FC = () => {
     );
 
     const handleNavItemClick = (targetView: View) => {
-        const lockedViews: View[] = ['spectro', 'sources'];
-        if (lockedViews.includes(targetView)) {
-            if (isProUser) {
-                setView(targetView);
-            } else {
-                setIsProModalOpen(true);
-            }
+        const lockedViews: View[] = ['spectro']; 
+        if (lockedViews.includes(targetView) && !isProUser) {
+            setIsProModalOpen(true);
         } else {
             setView(targetView);
         }
@@ -434,7 +430,7 @@ const App: React.FC = () => {
     const navItems = [
         { key: 'calculator', label: t('isoCalculator'), locked: false },
         { key: 'spectro', label: t('spectrometryTools'), locked: true },
-        { key: 'sources', label: t('sourceManagement'), locked: true },
+        { key: 'sources', label: t('sourceManagement'), locked: false },
     ];
 
     return (

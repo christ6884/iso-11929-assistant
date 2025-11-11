@@ -146,39 +146,43 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
       return spectrumPoints.map(p => ({ x: p.x, y: naturalHeight - p.y }));
   }, [spectrumPoints, imageRef.current?.naturalHeight]);
 
+  // Fix: Refactored `runFullAnalysis` to use a functional update for `setAnalysisResult`.
+  // This removes `analysisResult` from the `useCallback` dependency array, preventing unnecessary re-creations of this callback and potential stale state issues.
   const runFullAnalysis = useCallback(() => {
     if (!initialAnalysisResult || !calibrationFunction) return;
     
     setAnalysisStatus('detecting'); // Using this status for "identifying"
     
-    const autoPeaks = initialAnalysisResult.detectedPeaks;
-    // Persist manual peaks across re-analysis
-    const manualPeaks = (analysisResult?.detectedPeaks.filter(p => p.manual)) || [];
-    
-    const allPeaks = [...autoPeaks, ...manualPeaks];
+    setAnalysisResult(prev => {
+        const autoPeaks = initialAnalysisResult.detectedPeaks;
+        // Persist manual peaks across re-analysis
+        const manualPeaks = (prev?.detectedPeaks.filter(p => p.manual)) || [];
+        
+        const allPeaks = [...autoPeaks, ...manualPeaks];
 
-    const peaksWithEnergy = allPeaks.map(p => {
-        const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
-        const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
-        return {
-            ...p,
-            energy: energy,
-            fwhm_keV: fwhm_keV,
-        };
+        const peaksWithEnergy = allPeaks.map(p => {
+            const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
+            const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
+            return {
+                ...p,
+                energy: energy,
+                fwhm_keV: fwhm_keV,
+            };
+        });
+
+        const peakEnergies = peaksWithEnergy.map(p => p.energy);
+        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+
+        const nuclideMatches = new Map<number, any[]>();
+        identificationResults.forEach(res => {
+            nuclideMatches.set(res.inputEnergy_keV, res.matches);
+        });
+        
+        return { detectedPeaks: peaksWithEnergy, nuclideMatches };
     });
-
-    const peakEnergies = peaksWithEnergy.map(p => p.energy);
-    // FIX: Added analysisType to the identifyPeaks call.
-    const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-
-    const nuclideMatches = new Map<number, any[]>();
-    identificationResults.forEach(res => {
-        nuclideMatches.set(res.inputEnergy_keV, res.matches);
-    });
-    
-    setAnalysisResult({ detectedPeaks: peaksWithEnergy, nuclideMatches });
     setAnalysisStatus('complete');
-  }, [initialAnalysisResult, analysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
+  }, [initialAnalysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
+
 
   // FIX: This useEffect hook was refactored to use the updater form of setAnalysisResult,
   // which ensures it always has the latest state without needing `analysisResult` in the dependency array, thus preventing an infinite loop.
