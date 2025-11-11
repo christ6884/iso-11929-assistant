@@ -1092,7 +1092,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef9(initialValue) {
+          function useRef8(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
@@ -1112,7 +1112,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo12(create, deps) {
+          function useMemo13(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1884,9 +1884,9 @@
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
-          exports.useMemo = useMemo12;
+          exports.useMemo = useMemo13;
           exports.useReducer = useReducer;
-          exports.useRef = useRef9;
+          exports.useRef = useRef8;
           exports.useState = useState26;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
@@ -27490,7 +27490,8 @@
     onMouseMove,
     onMouseLeave,
     onImageClick,
-    onTogglePeakGroup
+    onTogglePeakGroup,
+    onExportCsv
   }) => {
     const [imageSize, setImageSize] = (0, import_react16.useState)(null);
     (0, import_react16.useLayoutEffect)(() => {
@@ -27518,6 +27519,23 @@
         };
       }
     }, [imageRef, imageSrc]);
+    const groupCounts = (0, import_react16.useMemo)(() => {
+      if (!analysisResult || !imageSize || !imageSize.naturalHeight) {
+        return { A: 0, B: 0 };
+      }
+      const { naturalHeight } = imageSize;
+      const counts = { A: 0, B: 0 };
+      analysisResult.detectedPeaks.forEach((peak) => {
+        const count = naturalHeight - peak.y;
+        if (peak.group === "A") {
+          counts.A += count;
+        } else if (peak.group === "B") {
+          counts.B += count;
+        }
+      });
+      return counts;
+    }, [analysisResult, imageSize]);
+    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
     const getScreenCoords = (point) => {
       if (!imageSize || imageSize.naturalWidth === 0 || imageSize.naturalHeight === 0)
         return null;
@@ -27530,7 +27548,20 @@
       return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_react16.default.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tr", { className: "border-t border-gray-700 print:border-gray-300", children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { className: "py-2 px-3 font-mono print:text-black", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `font-semibold text-sm ${peak.manual ? "text-green-300" : "text-cyan-300"} print:text-black print:font-bold`, children: peak.energy.toFixed(2) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { className: "py-2 px-3 font-mono text-gray-400 print:text-black", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { className: "py-2 px-3 text-center font-semibold", style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" }, children: peak.group }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+          "td",
+          {
+            className: "py-2 px-3 text-center font-semibold cursor-pointer no-print",
+            style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" },
+            onClick: (e) => {
+              e.stopPropagation();
+              onTogglePeakGroup(index);
+            },
+            title: "Click to cycle group (A, B, None)",
+            children: peak.group || "-"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { className: "py-2 px-3 text-center font-semibold hidden print:table-cell", style: { color: "black" }, children: peak.group || "-" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { colSpan: 3, className: "py-2 px-3", children: matches.length > 0 ? matches.slice(0, 3).map((match, matchIndex) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: `grid grid-cols-3 gap-2 ${matchIndex > 0 ? "mt-1 pt-1 border-t border-gray-800 print:border-gray-400" : ""}`, children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-bold text-gray-100 col-span-1 print:text-black", children: match.nuclide.name }),
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono text-gray-200 text-right print:text-black", children: match.line.energy_keV.toFixed(2) }),
@@ -27546,9 +27577,15 @@
       {
         title: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between items-center", children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("analysisResultsTitle") }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => window.print(), className: "no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("printReport") })
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex items-center space-x-4 no-print", children: [
+            analysisStatus === "complete" && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: onExportCsv, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("exportCsv") })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => window.print(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("printReport") })
+            ] })
           ] })
         ] }),
         children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 print-container", children: [
@@ -27627,8 +27664,36 @@
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { className: "py-2 px-3", children: t("group") }),
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { colSpan: 3, className: "py-2 px-3", children: t("nuclide") })
               ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("tbody", { children: analysisResult.detectedPeaks.sort((a, b) => a.energy - b.energy).map(renderPeakRow) })
-            ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "text-gray-500 print:text-black", children: t("noPeaksDetected") })
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("tbody", { children: analysisResult.detectedPeaks.map((peak, originalIndex) => ({ peak, originalIndex })).sort((a, b) => a.peak.energy - b.peak.energy).map(({ peak, originalIndex }) => renderPeakRow(peak, originalIndex)) })
+            ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "text-gray-500 print:text-black", children: t("noPeaksDetected") }),
+            analysisResult && analysisResult.detectedPeaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm no-print", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+                      t("group_a_total"),
+                      ":"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: groupCounts.A.toFixed(0) })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+                      t("group_b_total"),
+                      ":"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: groupCounts.B.toFixed(0) })
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("strong", { children: [
+                    t("ratio_a_b"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
+                ] }) })
+              ] })
+            ] })
           ] }) : sidebar })
         ] })
       }
@@ -28206,6 +28271,28 @@
         topMatch
       });
     };
+    const handleExportCsv = () => {
+      if (!spectrumPoints || !calibrationFunction || !imageRef.current || !imageRef.current.complete || imageRef.current.naturalHeight === 0) {
+        alert("Cannot export: analysis data is not complete.");
+        return;
+      }
+      const naturalHeight = imageRef.current.naturalHeight;
+      const header = "Channel,Energy_keV,Counts\n";
+      const csvContent = spectrumPoints.map((point) => {
+        const channel = point.x;
+        const counts = naturalHeight - point.y;
+        const energy = calibrationFunction.slope * channel + calibrationFunction.intercept;
+        return `${Math.round(channel)},${energy.toFixed(3)},${counts.toFixed(0)}`;
+      }).join("\n");
+      const blob = new Blob([header + csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `spectrum_image_export.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
         /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumAnalyzerTitle") }),
@@ -28246,6 +28333,7 @@
           onMouseLeave: () => setInteractivePoint(null),
           onImageClick: handleImageClick,
           onTogglePeakGroup: togglePeakGroup,
+          onExportCsv: handleExportCsv,
           sidebar: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             CalibrationSidebar_default,
             {
@@ -28772,6 +28860,22 @@
     const selectedSpectrum = (0, import_react22.useMemo)(() => {
       return parsedData?.spectra.find((s) => s.id === selectedSpectrumId) || null;
     }, [parsedData, selectedSpectrumId]);
+    const groupCounts = (0, import_react22.useMemo)(() => {
+      if (!analysisResult) {
+        return { A: 0, B: 0 };
+      }
+      const counts = { A: 0, B: 0 };
+      analysisResult.peaks.forEach((peak) => {
+        const count = peak.y;
+        if (peak.group === "A") {
+          counts.A += count;
+        } else if (peak.group === "B") {
+          counts.B += count;
+        }
+      });
+      return counts;
+    }, [analysisResult]);
+    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
     const handleFileLoaded = (file2, data) => {
       setFile(file2);
       setParsedData(data);
@@ -28874,6 +28978,26 @@
       setSelectedSpectrumId(null);
       setAnalysisResult(null);
     };
+    const handleExportCsv = () => {
+      if (!selectedSpectrum || !file)
+        return;
+      const { channelData, calibration } = selectedSpectrum;
+      const energyFromChannel2 = (ch) => calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
+      const header = "Channel,Energy_keV,Counts\n";
+      const csvContent = channelData.map((counts, channel) => {
+        const energy = energyFromChannel2(channel);
+        return `${channel},${energy.toFixed(3)},${counts}`;
+      }).join("\n");
+      const blob = new Blob([header + csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      const fileName = file.name.replace(/\.n42$/i, "_spectrum.csv");
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
     if (!parsedData) {
       return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
@@ -28916,87 +29040,138 @@
             analysisType
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Card_default, { title: t("fileInfoAndSettings"), children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
-              t("instrument"),
-              ":"
-            ] }),
-            " ",
-            parsedData.metadata.instrument
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
-              t("timestamp"),
-              ":"
-            ] }),
-            " ",
-            parsedData.metadata.timestamp
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
-              t("liveTime"),
-              ":"
-            ] }),
-            " ",
-            parsedData.metadata.liveTime
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
-              t("realTime"),
-              ":"
-            ] }),
-            " ",
-            parsedData.metadata.realTime
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("label", { className: "text-sm text-gray-300 block mb-1", children: t("selectSpectrum") }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("select", { value: selectedSpectrumId || "", onChange: (e) => setSelectedSpectrumId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: parsedData.spectra.map((s) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: s.id, children: s.id }, s.id)) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { children: [
-                t("identificationTolerance"),
-                " (keV)"
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Card_default, { title: t("fileInfoAndSettings"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "space-y-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
+                t("instrument"),
+                ":"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
+              " ",
+              parsedData.metadata.instrument
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
+                t("timestamp"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.timestamp
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
+                t("liveTime"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.liveTime
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
+                t("realTime"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.realTime
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("label", { className: "text-sm text-gray-300 block mb-1", children: t("selectSpectrum") }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("select", { value: selectedSpectrumId || "", onChange: (e) => setSelectedSpectrumId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: parsedData.spectra.map((s) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: s.id, children: s.id }, s.id)) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { children: [
+                  t("identificationTolerance"),
+                  " (keV)"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("yAxisZoom") }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("yAxisZoomTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "range", min: "1", max: "100", step: "1", value: yZoom, onChange: (e) => setYZoom(parseFloat(e.target.value)), className: "w-full" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("yAxisClipping") }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("yAxisClippingTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "range", min: "0.1", max: "1", step: "0.01", value: clippingLevel, onChange: (e) => setClippingLevel(parseFloat(e.target.value)), className: "w-full" })
+            ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("yAxisZoom") }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("yAxisZoomTooltip") })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "range", min: "1", max: "100", step: "1", value: yZoom, onChange: (e) => setYZoom(parseFloat(e.target.value)), className: "w-full" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("yAxisClipping") }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("yAxisClippingTooltip") })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "range", min: "0.1", max: "1", step: "0.01", value: clippingLevel, onChange: (e) => setClippingLevel(parseFloat(e.target.value)), className: "w-full" })
-          ] })
-        ] }) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Card_default, { title: t("detectedPeaksTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("table", { className: "w-full text-xs text-left", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
-            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("group") })
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "mt-4 pt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
+            "button",
+            {
+              onClick: handleExportCsv,
+              className: "w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center justify-center space-x-2",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("exportCsv") })
+              ]
+            }
+          ) })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Card_default, { title: t("detectedPeaksTitle"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { className: "py-2 px-2", children: t("group") })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("tbody", { className: "text-gray-200", children: analysisResult?.peaks?.map((peak, originalIndex) => ({ peak, originalIndex })).sort((a, b) => a.peak.energy - b.peak.energy).map(({ peak, originalIndex }) => {
+              const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
+              return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("tr", { className: "border-t border-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.energy.toFixed(1) }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2", children: match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+                  "td",
+                  {
+                    className: "py-2 px-2 text-center font-semibold cursor-pointer",
+                    style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" },
+                    onClick: () => togglePeakGroup(originalIndex),
+                    children: peak.group || "-"
+                  }
+                )
+              ] }, originalIndex);
+            }) })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("tbody", { className: "text-gray-200", children: analysisResult?.peaks?.sort((a, b) => a.energy - b.energy).map((peak, idx) => {
-            const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
-            return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("tr", { className: "border-t border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.energy.toFixed(1) }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2", children: match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : "-" }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { className: "py-2 px-2 text-center", children: peak.group })
-            ] }, idx);
-          }) })
-        ] }) }) }) })
+          analysisResult && analysisResult.peaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { children: [
+                    t("group_a_total"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "font-mono", children: groupCounts.A.toFixed(0) })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { children: [
+                    t("group_b_total"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "font-mono", children: groupCounts.B.toFixed(0) })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("strong", { children: [
+                  t("ratio_a_b"),
+                  ":"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
+              ] }) })
+            ] })
+          ] })
+        ] }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         PeakPositionAdjusterModal_default,
@@ -30482,6 +30657,7 @@
       spectroMenuN42Desc: "Charger et analyser un spectre au format standard ANSI N42.42.",
       spectroMenuBkgSubTitle: "Soustraction de Bruit de Fond",
       spectroMenuBkgSubDesc: "Analyser un spectre net apr\xE8s soustraction d'un bruit de fond (fichiers N42).",
+      exportCsv: "Exporter en CSV",
       // --- Spectrum Analyzer Page (Image) ---
       spectrumAnalyzerTitle: "Analyseur de Spectre sur Image",
       uploadInstruction: "Glissez-d\xE9posez une image de spectre ou cliquez pour s\xE9lectionner.",
@@ -30531,6 +30707,10 @@
       fwhm_keV: "FWHM (keV)",
       nuclide: "Nucl\xE9ide(s) possible(s)",
       noPeaksDetected: "Aucun pic n'a \xE9t\xE9 d\xE9tect\xE9 automatiquement.",
+      analyse_groups: "Analyse des Groupes",
+      group_a_total: "Groupe A (Total)",
+      group_b_total: "Groupe B (Total)",
+      ratio_a_b: "Ratio A/B",
       // --- Modals ---
       enterPeakEnergy: "Entrer l'\xE9nergie du pic",
       peakEnergyLabel: "\xC9nergie du pic (keV)",
@@ -30943,6 +31123,7 @@
       spectroMenuN42Desc: "Load and analyze a spectrum in the standard ANSI N42.42 format.",
       spectroMenuBkgSubTitle: "Background Subtraction",
       spectroMenuBkgSubDesc: "Analyze a net spectrum after subtracting a background (N42 files).",
+      exportCsv: "Export to CSV",
       spectrumAnalyzerTitle: "Image Spectrum Analyzer",
       uploadInstruction: "Drag and drop a spectrum image or click to select.",
       useCamera: "Use Camera",
@@ -30989,6 +31170,10 @@
       fwhm_keV: "FWHM (keV)",
       nuclide: "Possible Nuclide(s)",
       noPeaksDetected: "No peaks were automatically detected.",
+      analyse_groups: "Group Analysis",
+      group_a_total: "Group A (Total)",
+      group_b_total: "Group B (Total)",
+      ratio_a_b: "Ratio A/B",
       enterPeakEnergy: "Enter Peak Energy",
       peakEnergyLabel: "Peak Energy (keV)",
       peakEnergyUncertaintyLabel: "Uncertainty (keV, optional)",
@@ -31388,6 +31573,7 @@
       spectroMenuN42Desc: "Laden und analysieren Sie ein Spektrum im Standardformat ANSI N42.42.",
       spectroMenuBkgSubTitle: "Hintergrundsubtraktion",
       spectroMenuBkgSubDesc: "Analysieren Sie ein Nettospektrum nach Subtraktion eines Hintergrunds (N42-Dateien).",
+      exportCsv: "Als CSV exportieren",
       spectrumAnalyzerTitle: "Bild-Spektrumanalysator",
       uploadInstruction: "Ziehen Sie ein Spektrumbild per Drag & Drop hierher oder klicken Sie, um es auszuw\xE4hlen.",
       useCamera: "Kamera verwenden",
@@ -31434,6 +31620,10 @@
       fwhm_keV: "FWHM (keV)",
       nuclide: "M\xF6gliche(s) Nuklid(e)",
       noPeaksDetected: "Es wurden keine Peaks automatisch erkannt.",
+      analyse_groups: "Gruppenanalyse",
+      group_a_total: "Gruppe A (Gesamt)",
+      group_b_total: "Gruppe B (Gesamt)",
+      ratio_a_b: "Verh\xE4ltnis A/B",
       enterPeakEnergy: "Peak-Energie eingeben",
       peakEnergyLabel: "Peak-Energie (keV)",
       peakEnergyUncertaintyLabel: "Unsicherheit (keV, optional)",
@@ -31833,6 +32023,7 @@
       spectroMenuN42Desc: "Cargar y analizar un espectro en el formato est\xE1ndar ANSI N42.42.",
       spectroMenuBkgSubTitle: "Sustracci\xF3n de Fondo",
       spectroMenuBkgSubDesc: "Analizar un espectro neto despu\xE9s de sustraer un fondo (archivos N42).",
+      exportCsv: "Exportar a CSV",
       spectrumAnalyzerTitle: "Analizador de Espectro de Imagen",
       uploadInstruction: "Arrastre y suelte una imagen de espectro o haga clic para seleccionar.",
       useCamera: "Usar C\xE1mara",
@@ -31879,6 +32070,10 @@
       fwhm_keV: "FWHM (keV)",
       nuclide: "Posible(s) N\xFAclido(s)",
       noPeaksDetected: "No se detectaron picos autom\xE1ticamente.",
+      analyse_groups: "An\xE1lisis de Grupo",
+      group_a_total: "Grupo A (Total)",
+      group_b_total: "Grupo B (Total)",
+      ratio_a_b: "Ratio A/B",
       enterPeakEnergy: "Ingresar Energ\xEDa del Pico",
       peakEnergyLabel: "Energ\xEDa del Pico (keV)",
       peakEnergyUncertaintyLabel: "Incertidumbre (keV, opcional)",
