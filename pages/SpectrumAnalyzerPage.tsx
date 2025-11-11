@@ -236,6 +236,32 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
     });
   };
 
+  const handleExportCsv = () => {
+    if (!spectrumPoints || !calibrationFunction || !imageRef.current || !imageRef.current.complete || imageRef.current.naturalHeight === 0) {
+        alert('Cannot export: analysis data is not complete.');
+        return;
+    }
+
+    const naturalHeight = imageRef.current.naturalHeight;
+
+    const header = "Channel,Energy_keV,Counts\n";
+    const csvContent = spectrumPoints.map(point => {
+        const channel = point.x;
+        const counts = naturalHeight - point.y;
+        const energy = calibrationFunction.slope * channel + calibrationFunction.intercept;
+        return `${Math.round(channel)},${energy.toFixed(3)},${counts.toFixed(0)}`;
+    }).join('\n');
+
+    const blob = new Blob([header + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `spectrum_image_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
 
   return (
     <div>
@@ -277,6 +303,7 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
             onMouseLeave={() => setInteractivePoint(null)}
             onImageClick={handleImageClick}
             onTogglePeakGroup={togglePeakGroup}
+            onExportCsv={handleExportCsv}
             sidebar={
                 <CalibrationSidebar
                     imageLoaded={!!imageDataUrl}

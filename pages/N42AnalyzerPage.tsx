@@ -85,6 +85,24 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
         return parsedData?.spectra.find(s => s.id === selectedSpectrumId) || null;
     }, [parsedData, selectedSpectrumId]);
     
+    const groupCounts = useMemo(() => {
+        if (!analysisResult) {
+            return { A: 0, B: 0 };
+        }
+        const counts = { A: 0, B: 0 };
+        analysisResult.peaks.forEach(peak => {
+            const count = peak.y;
+            if (peak.group === 'A') {
+                counts.A += count;
+            } else if (peak.group === 'B') {
+                counts.B += count;
+            }
+        });
+        return counts;
+    }, [analysisResult]);
+
+    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
+
     const handleFileLoaded = (file: File, data: ParsedN42Data) => {
         setFile(file);
         setParsedData(data);
@@ -193,6 +211,28 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
         setSelectedSpectrumId(null);
         setAnalysisResult(null);
     };
+
+    const handleExportCsv = () => {
+        if (!selectedSpectrum || !file) return;
+        const { channelData, calibration } = selectedSpectrum;
+        const energyFromChannel = (ch: number) => calibration.c * ch**2 + calibration.b * ch + calibration.a;
+    
+        const header = "Channel,Energy_keV,Counts\n";
+        const csvContent = channelData.map((counts, channel) => {
+            const energy = energyFromChannel(channel);
+            return `${channel},${energy.toFixed(3)},${counts}`;
+        }).join('\n');
+    
+        const blob = new Blob([header + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        const fileName = file.name.replace(/\.n42$/i, '_spectrum.csv');
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
     
     if (!parsedData) {
          return (
@@ -269,6 +309,15 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
                                 <input type="range" min="0.1" max="1" step="0.01" value={clippingLevel} onChange={e => setClippingLevel(parseFloat(e.target.value))} className="w-full" />
                             </div>
                         </div>
+                        <div className="mt-4 pt-4 border-t border-gray-700">
+                            <button 
+                                onClick={handleExportCsv} 
+                                className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center justify-center space-x-2"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                <span>{t('exportCsv')}</span>
+                            </button>
+                        </div>
                     </Card>
                 </div>
                  <div className="lg:col-span-2">
@@ -277,19 +326,45 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
                             <table className="w-full text-xs text-left">
                                 <thead className="text-gray-400"><tr><th className="py-2 px-2">{t('energy_keV')}</th><th className="py-2 px-2">{t('fwhm_keV')}</th><th className="py-2 px-2">{t('counts')}</th><th className="py-2 px-2">{t('nuclidePossible')}</th><th className="py-2 px-2">{t('group')}</th></tr></thead>
                                 <tbody className="text-gray-200">
-                                    {analysisResult?.peaks?.sort((a,b) => a.energy - b.energy).map((peak, idx) => {
-                                        const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
-                                        return (<tr key={idx} className="border-t border-gray-700">
-                                            <td className="py-2 px-2 font-mono">{peak.energy.toFixed(1)}</td>
-                                            <td className="py-2 px-2 font-mono text-gray-400">{peak.fwhm_keV?.toFixed(2) ?? '-'}</td>
-                                            <td className="py-2 px-2 font-mono">{peak.y.toFixed(0)}</td>
-                                            <td className="py-2 px-2">{match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : '-'}</td>
-                                            <td className="py-2 px-2 text-center">{peak.group}</td>
-                                        </tr>);
-                                    })}
+                                    {analysisResult?.peaks
+                                        ?.map((peak, originalIndex) => ({ peak, originalIndex }))
+                                        .sort((a,b) => a.peak.energy - b.peak.energy)
+                                        .map(({peak, originalIndex}) => {
+                                            const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
+                                            return (<tr key={originalIndex} className="border-t border-gray-700">
+                                                <td className="py-2 px-2 font-mono">{peak.energy.toFixed(1)}</td>
+                                                <td className="py-2 px-2 font-mono text-gray-400">{peak.fwhm_keV?.toFixed(2) ?? '-'}</td>
+                                                <td className="py-2 px-2 font-mono">{peak.y.toFixed(0)}</td>
+                                                <td className="py-2 px-2">{match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : '-'}</td>
+                                                <td 
+                                                    className="py-2 px-2 text-center font-semibold cursor-pointer"
+                                                    style={{ color: peak.group === 'A' ? '#fb923c' : peak.group === 'B' ? '#c084fc' : 'inherit' }}
+                                                    onClick={() => togglePeakGroup(originalIndex)}
+                                                >
+                                                    {peak.group || '-'}
+                                                </td>
+                                            </tr>);
+                                        })}
                                 </tbody>
                             </table>
                         </div>
+                        {analysisResult && analysisResult.peaks.length > 0 && (
+                            <div className="mt-4 pt-4 border-t border-gray-700 text-sm">
+                                <h4 className="font-semibold text-gray-300 mb-2">{t('analyse_groups')}</h4>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <div className="flex justify-between"><span>{t('group_a_total')}:</span><span className="font-mono">{groupCounts.A.toFixed(0)}</span></div>
+                                        <div className="flex justify-between"><span>{t('group_b_total')}:</span><span className="font-mono">{groupCounts.B.toFixed(0)}</span></div>
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between text-cyan-300">
+                                            <strong>{t('ratio_a_b')}:</strong>
+                                            <strong className="font-mono">{ratio !== null ? ratio.toFixed(3) : 'N/A'}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </Card>
                 </div>
             </div>

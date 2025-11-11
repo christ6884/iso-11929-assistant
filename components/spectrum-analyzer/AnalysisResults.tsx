@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef } from 'react';
+import React, { useLayoutEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import Card from '../Card';
 import { AnalysisResult, Point, CalibrationFunction, InteractivePeak, DetectedPeak } from '../../types';
@@ -19,6 +19,7 @@ interface AnalysisResultsProps {
   onMouseLeave: () => void;
   onImageClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   onTogglePeakGroup: (peakIndex: number) => void;
+  onExportCsv: () => void;
 }
 
 const Marker: React.FC<{ position: Point, text: string, type: 'auto' | 'manual', group?: 'A' | 'B' }> = ({ position, text, type, group }) => {
@@ -66,7 +67,7 @@ const Tooltip: React.FC<{ eventCoords: Point, text: string }> = ({ eventCoords, 
 const AnalysisResults: React.FC<AnalysisResultsProps> = ({
     imageSrc, imageRef, analysisResult, spectrumPoints, calibrationFunction, interactivePoint, sidebar, t,
     analysisStatus, step,
-    onMouseMove, onMouseLeave, onImageClick, onTogglePeakGroup
+    onMouseMove, onMouseLeave, onImageClick, onTogglePeakGroup, onExportCsv
 }) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number; naturalWidth: number; naturalHeight: number } | null>(null);
 
@@ -96,6 +97,26 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
     }
   }, [imageRef, imageSrc]);
 
+  const groupCounts = useMemo(() => {
+    if (!analysisResult || !imageSize || !imageSize.naturalHeight) {
+      return { A: 0, B: 0 };
+    }
+    const { naturalHeight } = imageSize;
+    const counts = { A: 0, B: 0 };
+    analysisResult.detectedPeaks.forEach(peak => {
+      // The peak y is the pixel coordinate from the top. Counts are inverted.
+      const count = naturalHeight - peak.y;
+      if (peak.group === 'A') {
+        counts.A += count;
+      } else if (peak.group === 'B') {
+        counts.B += count;
+      }
+    });
+    return counts;
+  }, [analysisResult, imageSize]);
+
+  const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
+
   const getScreenCoords = (point: Point): Point | null => {
     if (!imageSize || imageSize.naturalWidth === 0 || imageSize.naturalHeight === 0) return null;
     const x = (point.x / imageSize.naturalWidth) * imageSize.width;
@@ -116,8 +137,16 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                 <td className="py-2 px-3 font-mono text-gray-400 print:text-black">
                     {peak.fwhm_keV?.toFixed(2) ?? '-'}
                 </td>
-                <td className="py-2 px-3 text-center font-semibold" style={{ color: peak.group === 'A' ? '#fb923c' : peak.group === 'B' ? '#c084fc' : 'inherit' }}>
-                    {peak.group}
+                <td 
+                    className="py-2 px-3 text-center font-semibold cursor-pointer no-print"
+                    style={{ color: peak.group === 'A' ? '#fb923c' : peak.group === 'B' ? '#c084fc' : 'inherit' }}
+                    onClick={(e) => { e.stopPropagation(); onTogglePeakGroup(index); }}
+                    title="Click to cycle group (A, B, None)"
+                >
+                    {peak.group || '-'}
+                </td>
+                 <td className="py-2 px-3 text-center font-semibold hidden print:table-cell" style={{color: 'black'}}>
+                    {peak.group || '-'}
                 </td>
                 <td colSpan={3} className="py-2 px-3">
                     {matches.length > 0 ? (
@@ -144,10 +173,18 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
             title={
                 <div className="flex justify-between items-center">
                     <span>{t('analysisResultsTitle')}</span>
-                    <button onClick={() => window.print()} className="no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
-                        <span>{t('printReport')}</span>
-                    </button>
+                    <div className="flex items-center space-x-4 no-print">
+                         {analysisStatus === 'complete' && (
+                            <button onClick={onExportCsv} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                <span>{t('exportCsv')}</span>
+                            </button>
+                        )}
+                        <button onClick={() => window.print()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
+                            <span>{t('printReport')}</span>
+                        </button>
+                    </div>
                 </div>
             }
         >
@@ -227,12 +264,32 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {analysisResult.detectedPeaks.sort((a,b) => a.energy - b.energy).map(renderPeakRow)}
+                                            {analysisResult.detectedPeaks
+                                                .map((peak, originalIndex) => ({ peak, originalIndex }))
+                                                .sort((a,b) => a.peak.energy - b.peak.energy)
+                                                .map(({peak, originalIndex}) => renderPeakRow(peak, originalIndex))}
                                         </tbody>
                                     </table>
                                 </div>
                             ) : (
                                 <p className="text-gray-500 print:text-black">{t('noPeaksDetected')}</p>
+                            )}
+                            {analysisResult && analysisResult.detectedPeaks.length > 0 && (
+                                <div className="mt-4 pt-4 border-t border-gray-700 text-sm no-print">
+                                    <h4 className="font-semibold text-gray-300 mb-2">{t('analyse_groups')}</h4>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <div className="flex justify-between"><span>{t('group_a_total')}:</span><span className="font-mono">{groupCounts.A.toFixed(0)}</span></div>
+                                            <div className="flex justify-between"><span>{t('group_b_total')}:</span><span className="font-mono">{groupCounts.B.toFixed(0)}</span></div>
+                                        </div>
+                                        <div>
+                                            <div className="flex justify-between text-cyan-300">
+                                                <strong>{t('ratio_a_b')}:</strong>
+                                                <strong className="font-mono">{ratio !== null ? ratio.toFixed(3) : 'N/A'}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
                         </div>
                     ) : (
