@@ -260,97 +260,100 @@ const InputPanel: React.FC<InputPanelProps> = ({
          </div>
     );
     
-    const renderChambreLingeInputs = () => (
-         <div className="space-y-4">
-             <CollapsibleSection title={t('detectorSetup')} defaultOpen={true}>
-                 <div className="space-y-3 p-2">
-                     <div className="space-y-2 max-h-80 overflow-y-auto">
-                        {inputs.detectors.map((detector, i) => (
-                             <div key={i} className="bg-gray-700 p-2 rounded-md space-y-2">
-                                 <div className="flex justify-between items-center">
-                                     <h4 className="font-semibold">{t('detector')} {i+1}</h4>
-                                     <label className="flex items-center space-x-2 text-sm cursor-pointer">
-                                         <span>{t('enabled')}</span>
-                                         <input type="checkbox" checked={detector.enabled} onChange={(e) => onDetectorChange(i, 'enabled', e.target.checked)} />
-                                     </label>
-                                 </div>
-                                 <div className="grid grid-cols-2 gap-2 text-xs items-center">
-                                     <label>{t('detectorType')}</label>
-                                      <select
-                                            value={detector.type}
-                                            onChange={(e) => onDetectorChange(i, 'type', e.target.value as 'beta' | 'gamma')}
-                                            className="bg-gray-800 p-1 rounded text-white text-xs"
-                                         >
-                                            <option value="beta">Beta</option>
-                                            <option value="gamma">Gamma</option>
-                                      </select>
-                                     <label>{t('efficiency')} (%)</label>
-                                     <input type="number" value={detector.efficiency} onChange={(e) => onDetectorChange(i, 'efficiency', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
-                                     <label>{t('background')}</label>
-                                     <div className="grid grid-cols-2 gap-1">
-                                         <input type="number" value={detector.background} onChange={(e) => onDetectorChange(i, 'background', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
-                                         <select
-                                            value={detector.backgroundUnit}
-                                            onChange={(e) => onDetectorChange(i, 'backgroundUnit', e.target.value as CountUnit)}
-                                            className="bg-gray-800 p-1 rounded text-white text-xs"
-                                         >
-                                             {rateUnitOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                                         </select>
+    const renderChambreLingeInputs = () => {
+        const detectorLimit = mode === 'chambre' ? 6 : 9;
+        return (
+             <div className="space-y-4">
+                 <CollapsibleSection title={t('detectorSetup')} defaultOpen={true}>
+                     <div className="space-y-3 p-2">
+                         <div className="space-y-2 max-h-80 overflow-y-auto">
+                            {inputs.detectors.slice(0, detectorLimit).map((detector, i) => (
+                                 <div key={i} className="bg-gray-700 p-2 rounded-md space-y-2">
+                                     <div className="flex justify-between items-center">
+                                         <h4 className="font-semibold">{t('detector')} {i+1}</h4>
+                                         <label className="flex items-center space-x-2 text-sm cursor-pointer">
+                                             <span>{t('enabled')}</span>
+                                             <input type="checkbox" checked={detector.enabled} onChange={(e) => onDetectorChange(i, 'enabled', e.target.checked)} />
+                                         </label>
                                      </div>
-                                     <label className="flex items-center space-x-1"><span>{t('detectorDimLength')}</span><InfoTooltip text={t('detectorDimLengthTooltip')} /></label>
-                                     <input type="number" value={detector.length} onChange={(e) => onDetectorChange(i, 'length', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
-                                     <label className="flex items-center space-x-1"><span>{t('detectorDimWidth')}</span><InfoTooltip text={t('detectorDimWidthTooltip')} /></label>
-                                     <input type="number" value={detector.width} onChange={(e) => onDetectorChange(i, 'width', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
+                                     <div className="grid grid-cols-2 gap-2 text-xs items-center">
+                                         <label>{t('detectorType')}</label>
+                                          <select
+                                                value={detector.type}
+                                                onChange={(e) => onDetectorChange(i, 'type', e.target.value as 'beta' | 'gamma')}
+                                                className="bg-gray-800 p-1 rounded text-white text-xs"
+                                             >
+                                                <option value="beta">Beta</option>
+                                                <option value="gamma">Gamma</option>
+                                          </select>
+                                         <label>{t('efficiency')} (%)</label>
+                                         <input type="number" value={detector.efficiency} onChange={(e) => onDetectorChange(i, 'efficiency', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
+                                         <label>{t('background')}</label>
+                                         <div className="grid grid-cols-2 gap-1">
+                                             <input type="number" value={detector.background} onChange={(e) => onDetectorChange(i, 'background', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
+                                             <select
+                                                value={detector.backgroundUnit}
+                                                onChange={(e) => onDetectorChange(i, 'backgroundUnit', e.target.value as CountUnit)}
+                                                className="bg-gray-800 p-1 rounded text-white text-xs"
+                                             >
+                                                 {rateUnitOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+                                             </select>
+                                         </div>
+                                         <label className="flex items-center space-x-1"><span>{t('detectorDimLength')}</span><InfoTooltip text={t('detectorDimLengthTooltip')} /></label>
+                                         <input type="number" value={detector.length} onChange={(e) => onDetectorChange(i, 'length', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
+                                         <label className="flex items-center space-x-1"><span>{t('detectorDimWidth')}</span><InfoTooltip text={t('detectorDimWidthTooltip')} /></label>
+                                         <input type="number" value={detector.width} onChange={(e) => onDetectorChange(i, 'width', parseFloat(e.target.value))} className="bg-gray-800 p-1 rounded font-mono text-right text-white" />
+                                     </div>
                                  </div>
-                             </div>
-                        ))}
+                            ))}
+                         </div>
                      </div>
-                 </div>
-             </CollapsibleSection>
-             {mode === 'linge' && (
-                 <CollapsibleSection title={t('conveyorSetup')} defaultOpen={true}>
+                 </CollapsibleSection>
+                 {mode === 'linge' && (
+                     <CollapsibleSection title={t('conveyorSetup')} defaultOpen={true}>
+                         <div className="space-y-3 p-2">
+                             <InputRow label={t('conveyorSpeed')} tooltipText={t('conveyorSpeedTooltip')}>
+                                 <div className="grid grid-cols-2 gap-2">
+                                     <NumberInput name="conveyorSpeed" value={inputs.conveyorSpeed} onChange={onInputChange} />
+                                     <UnitSelect name="conveyorSpeedUnit" value={inputs.conveyorSpeedUnit} onChange={onInputChange} options={[ { value: 'cm_min', label: 'cm/min' }, { value: 'm_min', label: 'm/min' } ]} />
+                                 </div>
+                             </InputRow>
+                         </div>
+                     </CollapsibleSection>
+                 )}
+                 {mode === 'chambre' && (
+                     <CollapsibleSection title={t('measurementConditions')} defaultOpen={true}>
+                         <div className="space-y-3 p-2">
+                             <InputRow label={t('measurementTime')} tooltipText={t('measurementTimeTooltip')}>
+                                 <div className="flex items-center space-x-2">
+                                    <NumberInput name="chambreLingeTime" value={inputs.chambreLingeTime} onChange={onInputChange} />
+                                    <span className="text-sm text-gray-400">s</span>
+                                 </div>
+                             </InputRow>
+                         </div>
+                     </CollapsibleSection>
+                 )}
+                  {renderCalibrationSection()}
+                  <CollapsibleSection title={t('targetActivity')} defaultOpen={true}>
                      <div className="space-y-3 p-2">
-                         <InputRow label={t('conveyorSpeed')} tooltipText={t('conveyorSpeedTooltip')}>
+                        <InputRow label={t('targetValue')} tooltipText={t('targetValueTooltip')}>
                              <div className="grid grid-cols-2 gap-2">
-                                 <NumberInput name="conveyorSpeed" value={inputs.conveyorSpeed} onChange={onInputChange} />
-                                 <UnitSelect name="conveyorSpeedUnit" value={inputs.conveyorSpeedUnit} onChange={onInputChange} options={[ { value: 'cm_min', label: 'cm/min' }, { value: 'm_min', label: 'm/min' } ]} />
-                             </div>
-                         </InputRow>
+                                <NumberInput name="chambreLingeTarget" value={inputs.chambreLingeTarget} onChange={onInputChange} />
+                                <UnitSelect name="chambreLingeTargetUnit" value={inputs.chambreLingeTargetUnit} onChange={onInputChange} options={[
+                                    { value: TargetUnit.BQ, label: TargetUnit.BQ },
+                                    { value: TargetUnit.BQ_CM2, label: TargetUnit.BQ_CM2 },
+                                    { value: TargetUnit.DPM, label: TargetUnit.DPM },
+                                    { value: TargetUnit.DPM_CM2, label: 'dpm/cm²' },
+                                    { value: TargetUnit.UCI, label: TargetUnit.UCI },
+                                    { value: TargetUnit.UCI_CM2, label: TargetUnit.UCI_CM2 },
+                                ]} />
+                            </div>
+                        </InputRow>
                      </div>
-                 </CollapsibleSection>
-             )}
-             {mode === 'chambre' && (
-                 <CollapsibleSection title={t('measurementConditions')} defaultOpen={true}>
-                     <div className="space-y-3 p-2">
-                         <InputRow label={t('measurementTime')} tooltipText={t('measurementTimeTooltip')}>
-                             <div className="flex items-center space-x-2">
-                                <NumberInput name="chambreLingeTime" value={inputs.chambreLingeTime} onChange={onInputChange} />
-                                <span className="text-sm text-gray-400">s</span>
-                             </div>
-                         </InputRow>
-                     </div>
-                 </CollapsibleSection>
-             )}
-              {renderCalibrationSection()}
-              <CollapsibleSection title={t('targetActivity')} defaultOpen={true}>
-                 <div className="space-y-3 p-2">
-                    <InputRow label={t('targetValue')} tooltipText={t('targetValueTooltip')}>
-                         <div className="grid grid-cols-2 gap-2">
-                            <NumberInput name="chambreLingeTarget" value={inputs.chambreLingeTarget} onChange={onInputChange} />
-                            <UnitSelect name="chambreLingeTargetUnit" value={inputs.chambreLingeTargetUnit} onChange={onInputChange} options={[
-                                { value: TargetUnit.BQ, label: TargetUnit.BQ },
-                                { value: TargetUnit.BQ_CM2, label: TargetUnit.BQ_CM2 },
-                                { value: TargetUnit.DPM, label: TargetUnit.DPM },
-                                { value: TargetUnit.DPM_CM2, label: 'dpm/cm²' },
-                                { value: TargetUnit.UCI, label: TargetUnit.UCI },
-                                { value: TargetUnit.UCI_CM2, label: TargetUnit.UCI_CM2 },
-                            ]} />
-                        </div>
-                    </InputRow>
-                 </div>
-            </CollapsibleSection>
-         </div>
-    );
+                </CollapsibleSection>
+             </div>
+        );
+    }
 
     const renderExpertInputs = () => (
         <div className="space-y-4">

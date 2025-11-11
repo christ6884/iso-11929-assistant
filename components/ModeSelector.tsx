@@ -1,6 +1,7 @@
 import React from 'react';
 // Fix: Corrected import path
 import { AnalysisMode } from '../types';
+import InfoTooltip from './InfoTooltip';
 
 interface ModeSelectorProps {
   currentMode: AnalysisMode;
@@ -8,12 +9,12 @@ interface ModeSelectorProps {
   t: any;
 }
 
-const modes: { id: AnalysisMode; label: string }[] = [
-  { id: 'standard', label: 'standard' },
-  { id: 'spectrometry', label: 'spectrometry' },
-  { id: 'surface', label: 'surfaceControl' },
-  { id: 'chambre', label: 'chambre' },
-  { id: 'linge', label: 'linge' },
+const modes: { id: AnalysisMode; label: string; tooltipKey: string }[] = [
+  { id: 'standard', label: 'standard', tooltipKey: 'standardTooltip' },
+  { id: 'spectrometry', label: 'spectrometry', tooltipKey: 'spectrometryTooltip' },
+  { id: 'surface', label: 'surfaceControl', tooltipKey: 'surfaceControlTooltip' },
+  { id: 'chambre', label: 'chambre', tooltipKey: 'chambreTooltip' },
+  { id: 'linge', label: 'linge', tooltipKey: 'lingeTooltip' },
 ];
 
 const ModeSelector: React.FC<ModeSelectorProps> = ({ currentMode, onModeChange, t }) => {
@@ -29,7 +30,10 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ currentMode, onModeChange, 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          {t(mode.label)}
+            <div className="flex items-center space-x-2">
+                <span>{t(mode.label)}</span>
+                <InfoTooltip text={t(mode.tooltipKey)} />
+            </div>
         </button>
       ))}
     </div>
