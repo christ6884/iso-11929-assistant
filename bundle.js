@@ -30244,6 +30244,7 @@
   var AddSourceModal = ({ isOpen, onClose, onSave, t, sourceToEdit }) => {
     const [name, setName] = (0, import_react28.useState)("");
     const [location, setLocation] = (0, import_react28.useState)("");
+    const [casier, setCasier] = (0, import_react28.useState)("");
     const [nuclide, setNuclide] = (0, import_react28.useState)("");
     const [referenceActivity, setReferenceActivity] = (0, import_react28.useState)(1e4);
     const [referenceActivityUncertainty, setReferenceActivityUncertainty] = (0, import_react28.useState)(5);
@@ -30260,6 +30261,7 @@
       if (sourceToEdit) {
         setName(sourceToEdit.name);
         setLocation(sourceToEdit.location || "");
+        setCasier(sourceToEdit.casier || "");
         setNuclide(sourceToEdit.nuclide);
         setReferenceActivity(sourceToEdit.referenceActivity);
         setReferenceActivityUncertainty(sourceToEdit.referenceActivityUncertainty);
@@ -30269,6 +30271,7 @@
       } else {
         setName("");
         setLocation("");
+        setCasier("");
         setNuclide(allNuclides.length > 0 ? allNuclides.find((n) => n.name.includes("Co-60"))?.name || allNuclides[0].name : "");
         setReferenceActivity(1e4);
         setReferenceActivityUncertainty(5);
@@ -30284,6 +30287,7 @@
           id: sourceToEdit ? sourceToEdit.id : crypto.randomUUID(),
           name,
           location,
+          casier,
           nuclide,
           referenceActivity,
           referenceActivityUncertainty,
@@ -30297,14 +30301,18 @@
     if (!isOpen)
       return null;
     return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Card_default, { title: sourceToEdit ? t("editSourceTitle") : t("addSourceTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] }),
         /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("location") }),
           /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("casier") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: casier, onChange: (e) => setCasier(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
@@ -30556,6 +30564,7 @@
               referenceDate: sourceObj.referenceDate,
               referenceActivityUncertainty: parseFloat(sourceObj.referenceActivityUncertainty),
               location: sourceObj.location || "",
+              casier: sourceObj.casier || "",
               certificateNumber: sourceObj.certificateNumber || "",
               type: sourceObj.type || ""
             };
@@ -30680,11 +30689,30 @@
     const handleExport = () => {
       if (sources.length === 0)
         return;
-      const header = Object.keys(sources[0]).join(",");
-      const csv = [
-        header,
-        ...sources.map((source) => Object.values(source).join(","))
-      ].join("\n");
+      const headers = [
+        "id",
+        "name",
+        "location",
+        "casier",
+        "nuclide",
+        "referenceActivity",
+        "referenceActivityUncertainty",
+        "referenceDate",
+        "certificateNumber",
+        "type"
+      ];
+      const headerString = headers.join(",");
+      const csvRows = sources.map((source) => {
+        return headers.map((header) => {
+          const value = source[header];
+          let formattedValue = value === void 0 || value === null ? "" : String(value);
+          if (formattedValue.includes(",")) {
+            formattedValue = `"${formattedValue}"`;
+          }
+          return formattedValue;
+        }).join(",");
+      });
+      const csv = [headerString, ...csvRows].join("\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
@@ -30735,7 +30763,7 @@
     }, []);
     const filteredSources = (0, import_react31.useMemo)(() => {
       return sources.filter(
-        (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase())
+        (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase()) || source.casier?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }, [sources, searchTerm]);
     const sortedSources = (0, import_react31.useMemo)(() => {
@@ -30835,6 +30863,7 @@
         /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
           /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
           /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
           /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
           /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
@@ -30850,6 +30879,7 @@
           return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
             /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
             /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.location }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.casier }),
             /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.nuclide }),
             /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.type }),
             /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
@@ -31323,6 +31353,7 @@
       addSource: "Ajouter une source",
       sourceName: "Nom de la source",
       location: "Localisation",
+      casier: "Casier",
       sourceMgmt_nuclide: "Nucl\xE9ide",
       currentActivity: "Activit\xE9 actuelle (Bq)",
       conformity: "Conformit\xE9",
@@ -31345,7 +31376,7 @@
       noSignificantGamma: "Pas de raie gamma significative.",
       // --- CSV Import/Export ---
       importCsvTitle: "Importer des sources depuis un CSV",
-      importCsvIntro: "S\xE9lectionnez un fichier CSV \xE0 importer. Le fichier doit contenir les colonnes: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, certificateNumber, type.",
+      importCsvIntro: "S\xE9lectionnez un fichier CSV \xE0 importer. Le fichier doit contenir les colonnes: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, casier, certificateNumber, type.",
       selectCsvFile: "S\xE9lectionnez un fichier CSV ou glissez-d\xE9posez ici",
       importReviewTitle: "V\xE9rification de l'importation",
       importInstructions: "V\xE9rifiez les sources \xE0 importer. Les nouvelles sources sont coch\xE9es par d\xE9faut. G\xE9rez les conflits pour les sources existantes.",
@@ -31813,6 +31844,7 @@
       addSource: "Add Source",
       sourceName: "Source Name",
       location: "Location",
+      casier: "Locker",
       sourceMgmt_nuclide: "Nuclide",
       currentActivity: "Current Activity (Bq)",
       conformity: "Conformity",
@@ -31834,7 +31866,7 @@
       mainEnergyLines: "Main Gamma Lines",
       noSignificantGamma: "No significant gamma lines.",
       importCsvTitle: "Import Sources from CSV",
-      importCsvIntro: "Select a CSV file to import. The file must contain the columns: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, certificateNumber, type.",
+      importCsvIntro: "Select a CSV file to import. The file must contain the columns: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, casier, certificateNumber, type.",
       selectCsvFile: "Select a CSV file or drag and drop here",
       importReviewTitle: "Import Review",
       importInstructions: "Review the sources to be imported. New sources are checked by default. Handle conflicts for existing sources.",
@@ -32295,6 +32327,7 @@
       addSource: "Quelle hinzuf\xFCgen",
       sourceName: "Quellenname",
       location: "Standort",
+      casier: "Schlie\xDFfach",
       sourceMgmt_nuclide: "Nuklid",
       currentActivity: "Aktuelle Aktivit\xE4t (Bq)",
       conformity: "Konformit\xE4t",
@@ -32316,7 +32349,7 @@
       mainEnergyLines: "Haupt-Gammalinien",
       noSignificantGamma: "Keine signifikanten Gammalinien.",
       importCsvTitle: "Quellen aus CSV importieren",
-      importCsvIntro: "W\xE4hlen Sie eine CSV-Datei zum Importieren aus. Die Datei muss die Spalten enthalten: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, certificateNumber, type.",
+      importCsvIntro: "W\xE4hlen Sie eine CSV-Datei zum Importieren aus. Die Datei muss die Spalten enthalten: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, casier, certificateNumber, type.",
       selectCsvFile: "W\xE4hlen Sie eine CSV-Datei aus oder ziehen Sie sie hierher",
       importReviewTitle: "Importpr\xFCfung",
       importInstructions: "\xDCberpr\xFCfen Sie die zu importierenden Quellen. Neue Quellen sind standardm\xE4\xDFig aktiviert. Behandeln Sie Konflikte f\xFCr vorhandene Quellen.",
@@ -32777,6 +32810,7 @@
       addSource: "Agregar Fuente",
       sourceName: "Nombre de la Fuente",
       location: "Ubicaci\xF3n",
+      casier: "Casillero",
       sourceMgmt_nuclide: "N\xFAclido",
       currentActivity: "Actividad Actual (Bq)",
       conformity: "Conformidad",
@@ -32798,7 +32832,7 @@
       mainEnergyLines: "L\xEDneas Gamma Principales",
       noSignificantGamma: "No hay l\xEDneas gamma significativas.",
       importCsvTitle: "Importar Fuentes desde CSV",
-      importCsvIntro: "Seleccione un archivo CSV para importar. El archivo debe contener las columnas: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, certificateNumber, type.",
+      importCsvIntro: "Seleccione un archivo CSV para importar. El archivo debe contener las columnas: id, name, nuclide, referenceActivity, referenceDate, referenceActivityUncertainty, location, casier, certificateNumber, type.",
       selectCsvFile: "Seleccione un archivo CSV o arr\xE1strelo aqu\xED",
       importReviewTitle: "Revisi\xF3n de Importaci\xF3n",
       importInstructions: "Revise las fuentes a importar. Las nuevas fuentes est\xE1n marcadas por defecto. Gestione los conflictos para las fuentes existentes.",
