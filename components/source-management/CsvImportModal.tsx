@@ -62,6 +62,7 @@ const CsvImportModal: React.FC<CsvImportModalProps> = ({ isOpen, onClose, onImpo
                         referenceDate: sourceObj.referenceDate,
                         referenceActivityUncertainty: parseFloat(sourceObj.referenceActivityUncertainty),
                         location: sourceObj.location || '',
+                        casier: sourceObj.casier || '',
                         certificateNumber: sourceObj.certificateNumber || '',
                         type: sourceObj.type || '',
                     };

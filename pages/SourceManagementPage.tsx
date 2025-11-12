@@ -81,11 +81,28 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
     
     const handleExport = () => {
         if (sources.length === 0) return;
-        const header = Object.keys(sources[0]).join(',');
-        const csv = [
-            header,
-            ...sources.map(source => Object.values(source).join(','))
-        ].join('\n');
+        
+        // Define explicit header order to match import requirements.
+        const headers: (keyof Source)[] = [
+            'id', 'name', 'location', 'casier', 'nuclide', 
+            'referenceActivity', 'referenceActivityUncertainty', 
+            'referenceDate', 'certificateNumber', 'type'
+        ];
+        const headerString = headers.join(',');
+
+        const csvRows = sources.map(source => {
+            return headers.map(header => {
+                const value = source[header];
+                // Handle undefined/null and commas in values
+                let formattedValue = value === undefined || value === null ? '' : String(value);
+                if (formattedValue.includes(',')) {
+                    formattedValue = `"${formattedValue}"`;
+                }
+                return formattedValue;
+            }).join(',');
+        });
+        
+        const csv = [headerString, ...csvRows].join('\n');
         
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
@@ -145,7 +162,8 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
         return sources.filter(source => 
             source.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            source.location?.toLowerCase().includes(searchTerm.toLowerCase())
+            source.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            source.casier?.toLowerCase().includes(searchTerm.toLowerCase())
         );
     }, [sources, searchTerm]);
 
@@ -266,6 +284,7 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                                 <tr>
                                     <SortableHeader sortKey="name" label={t('sourceName')} />
                                     <SortableHeader sortKey="location" label={t('location')} />
+                                    <SortableHeader sortKey="casier" label={t('casier')} />
                                     <SortableHeader sortKey="nuclide" label={t('sourceMgmt_nuclide')} />
                                     <SortableHeader sortKey="type" label={t('sourceType')} />
                                     <th className="p-3 text-right">
@@ -288,6 +307,7 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                                         <tr key={source.id} className="border-t border-gray-700 hover:bg-gray-800/50 text-gray-300">
                                             <td className="p-3 font-semibold text-cyan-300" onMouseEnter={(e) => handleMouseEnter(e, source)} onMouseLeave={handleMouseLeave}>{source.name}</td>
                                             <td className="p-3">{source.location}</td>
+                                            <td className="p-3">{source.casier}</td>
                                             <td className="p-3">{source.nuclide}</td>
                                             <td className="p-3">{source.type}</td>
                                             <td className="p-3 font-mono text-right">{currentActivity.toExponential(3)}</td>

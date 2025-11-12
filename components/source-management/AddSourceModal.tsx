@@ -20,6 +20,7 @@ const formatDateForInput = (date: Date | string) => {
 const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave, t, sourceToEdit }) => {
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
+    const [casier, setCasier] = useState('');
     const [nuclide, setNuclide] = useState('');
     const [referenceActivity, setReferenceActivity] = useState(10000);
     const [referenceActivityUncertainty, setReferenceActivityUncertainty] = useState(5);
@@ -38,6 +39,7 @@ const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave
         if (sourceToEdit) {
             setName(sourceToEdit.name);
             setLocation(sourceToEdit.location || '');
+            setCasier(sourceToEdit.casier || '');
             setNuclide(sourceToEdit.nuclide);
             setReferenceActivity(sourceToEdit.referenceActivity);
             setReferenceActivityUncertainty(sourceToEdit.referenceActivityUncertainty);
@@ -48,6 +50,7 @@ const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave
             // Reset to default for new source
             setName('');
             setLocation('');
+            setCasier('');
             setNuclide(allNuclides.length > 0 ? allNuclides.find(n => n.name.includes('Co-60'))?.name || allNuclides[0].name : '');
             setReferenceActivity(10000);
             setReferenceActivityUncertainty(5);
@@ -65,6 +68,7 @@ const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave
                 id: sourceToEdit ? sourceToEdit.id : crypto.randomUUID(),
                 name,
                 location,
+                casier,
                 nuclide,
                 referenceActivity,
                 referenceActivityUncertainty,
@@ -83,14 +87,18 @@ const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave
             <div className="w-full max-w-2xl p-4" onClick={(e) => e.stopPropagation()}>
                 <Card title={sourceToEdit ? t('editSourceTitle') : t('addSourceTitle')}>
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="text-sm text-gray-300 mb-1 block">{t('sourceName')}</label>
+                            <input type="text" value={name} onChange={e => setName(e.target.value)} required className="w-full bg-gray-700 p-2 rounded-md text-white" />
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-sm text-gray-300 mb-1 block">{t('sourceName')}</label>
-                                <input type="text" value={name} onChange={e => setName(e.target.value)} required className="w-full bg-gray-700 p-2 rounded-md text-white" />
-                            </div>
                             <div>
                                 <label className="text-sm text-gray-300 mb-1 block">{t('location')}</label>
                                 <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="w-full bg-gray-700 p-2 rounded-md text-white" />
+                            </div>
+                            <div>
+                                <label className="text-sm text-gray-300 mb-1 block">{t('casier')}</label>
+                                <input type="text" value={casier} onChange={e => setCasier(e.target.value)} className="w-full bg-gray-700 p-2 rounded-md text-white" />
                             </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

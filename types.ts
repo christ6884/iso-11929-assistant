@@ -188,6 +188,7 @@ export interface Source {
     id: string;
     name: string;
     location?: string;
+    casier?: string;
     nuclide: string;
     referenceActivity: number;
     referenceActivityUncertainty: number;
