@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Card from './Card';
-import InfoTooltip from './InfoTooltip';
-import { Results, Inputs, DetectionLimitMode, AnalysisMode, TargetUnit, MeanTime } from '../types';
-import CollapsibleSection from './CollapsibleSection';
+import Card from './Card.tsx';
+import InfoTooltip from './InfoTooltip.tsx';
+import { Results, Inputs, DetectionLimitMode, AnalysisMode, TargetUnit, MeanTime } from '../types.ts';
+import CollapsibleSection from './CollapsibleSection.tsx';
 
 interface ResultsPanelProps {
   results: Results | string | null;
@@ -15,6 +15,7 @@ interface ResultsPanelProps {
   onTargetDetectionLimitChange: (value: number) => void;
   isExpertMode: boolean;
   isCalculating: boolean;
+  onOpenReportModal: () => void;
 }
 
 const formatNumber = (num: number | string | null | undefined) => {
@@ -85,7 +86,7 @@ const UncertaintyBudget: React.FC<{ components: Results['varianceComponents'], t
 
 
 const ResultsPanel: React.FC<ResultsPanelProps> = ({ 
-    results, t, inputs, mode, detectionLimitMode, onDetectionLimitModeChange, targetDetectionLimit, onTargetDetectionLimitChange, isExpertMode, isCalculating 
+    results, t, inputs, mode, detectionLimitMode, onDetectionLimitModeChange, targetDetectionLimit, onTargetDetectionLimitChange, isExpertMode, isCalculating, onOpenReportModal 
 }) => {
   const isTargetBasedMode = mode === 'surface' || mode === 'chambre' || mode === 'linge';
   const targetUnit = isTargetBasedMode ? (mode === 'surface' ? inputs.targetUnit : inputs.chambreLingeTargetUnit) : '';
@@ -307,7 +308,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
                 <span className="text-lg font-semibold text-cyan-400 print-text-black">{t('results')}</span>
                 {!isTargetBasedMode && <span className="text-xs font-mono bg-gray-700 text-cyan-300 px-2 py-0.5 rounded-full">{t('resultUnit')}: {baseUnit}</span>}
             </div>
-            <button onClick={() => window.print()} className="no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 self-end md:self-center">
+            <button onClick={onOpenReportModal} className="no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 self-end md:self-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
                 <span>{t('printReport')}</span>
             </button>

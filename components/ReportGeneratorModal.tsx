@@ -87,6 +87,20 @@ const ReportGeneratorModal: React.FC<ReportGeneratorModalProps> = ({ isOpen, onC
     const [sampleId, setSampleId] = useState('');
     const [comments, setComments] = useState('');
 
+    const handlePrint = () => {
+        const body = document.body;
+        body.classList.add('print-report-active');
+
+        const handleAfterPrint = () => {
+            body.classList.remove('print-report-active');
+            window.removeEventListener('afterprint', handleAfterPrint);
+        };
+
+        window.addEventListener('afterprint', handleAfterPrint);
+        window.print();
+    };
+
+
     if (!isOpen) return null;
 
     const renderInputTable = () => {
@@ -131,13 +145,13 @@ const ReportGeneratorModal: React.FC<ReportGeneratorModalProps> = ({ isOpen, onC
     );
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm no-print" onClick={onClose}>
-            <div className="bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container" onClick={onClose}>
+            <div className="bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper" onClick={e => e.stopPropagation()}>
                 <div className="p-6 border-b border-gray-700 no-print">
                     <h1 className="text-2xl font-bold text-cyan-400">{t('reportGeneratorTitle')}</h1>
                 </div>
 
-                <div className="p-6 overflow-y-auto max-h-[75vh]">
+                <div className="p-6 overflow-y-auto max-h-[75vh] report-modal-body">
                     {/* A4 Page Simulation */}
                     <div className="bg-white p-8 mx-auto shadow-lg a4-page print-section" style={{ width: '210mm', minHeight: '297mm' }}>
                          {/* Report Header */}
@@ -185,7 +199,7 @@ const ReportGeneratorModal: React.FC<ReportGeneratorModalProps> = ({ isOpen, onC
                     <textarea placeholder={t('comments')} value={comments} onChange={e => setComments(e.target.value)} rows={3} className="w-full bg-gray-700 p-2 rounded-md text-white mb-4" />
                     <div className="flex justify-end space-x-4">
                         <button onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg">{t('close')}</button>
-                        <button onClick={() => window.print()} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg">{t('printReport')}</button>
+                        <button onClick={handlePrint} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg">{t('printReport')}</button>
                     </div>
                 </div>
             </div>

@@ -52,6 +52,11 @@ html.theme-forest .bg-cyan-500 { background-color: #22c55e; }
 
 /* --- Print Styles --- */
 @media print {
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+
     body {
         background-color: white !important;
     }
@@ -101,5 +106,36 @@ html.theme-forest .bg-cyan-500 { background-color: #22c55e; }
     }
     h1, h2, h3 {
         page-break-after: avoid;
+    }
+
+    /* New styles for report printing */
+    /* When printing a report, hide all direct children of the app container except for the report modal */
+    body.print-report-active #root > div > *:not(.report-modal-container) {
+      display: none !important;
+    }
+
+    body.print-report-active .report-modal-container {
+        position: static !important;
+        display: block !important;
+        background: white !important;
+        overflow: visible !important;
+    }
+    
+    body.print-report-active .report-modal-content-wrapper {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        background: white !important;
+    }
+
+    body.print-report-active .report-modal-body {
+        overflow: visible !important;
+        max-height: none !important;
+        padding: 0 !important;
     }
 }
