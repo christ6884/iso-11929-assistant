@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-// Fix: Corrected import path
-import { Results } from '../types';
-import Card from './Card';
+import { Results } from '../types.ts';
+import Card from './Card.tsx';
 
 interface MonteCarloStatsModalProps {
   isOpen: boolean;

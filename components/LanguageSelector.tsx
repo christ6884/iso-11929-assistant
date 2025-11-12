@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-// Fix: Corrected import path
-import { Language } from '../types';
+import { Language } from '../types.ts';
 
 interface LanguageSelectorProps {
   currentLanguage: Language;

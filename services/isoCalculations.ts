@@ -1,5 +1,4 @@
-// Fix: Corrected import path
-import { Results, AnalysisMode, Inputs, MeanTime, CountUnit } from '../types';
+import { Results, AnalysisMode, Inputs, MeanTime, CountUnit } from '../types.ts';
 
 // Helper functions for normal distribution
 const erf = (x: number) => {
@@ -84,10 +83,10 @@ export function calculateAll(params: CalcInputs, t: any): Results | string {
       u2_var_r0 = w**2 * (r_0_total / t_0) * (channel_ratio**2);
   } else { // Standard, Surface, Chambre or Linge mode
       if (mode === 'chambre' || mode === 'linge') {
-          r_g = 0; // Not used for limit calculation
+          r_g = getRate(grossCount, grossCountUnit, t_g);
           r_0 = backgroundCount; // This is the pre-calculated aggregate rate in c/s
       } else if (mode === 'surface') {
-          r_g = 0; // Not used for limit calculation
+          r_g = getRate(grossCount, grossCountUnit, t_g);
           r_0 = inputs.estimatedBackgroundRate; // Use the specific background rate for surface mode
       } else { // 'standard' mode
           r_g = getRate(grossCount, grossCountUnit, t_g);
@@ -101,6 +100,12 @@ export function calculateAll(params: CalcInputs, t: any): Results | string {
       u2_var_rg = w**2 * (r_g / t_g);
       u2_var_r0 = w**2 * (r_0 / t_0);
   }
+
+  const sensitivityCoefficients = {
+    grossRate: w,
+    backgroundRate: -w,
+    calibrationFactor: r_g - r_0,
+  };
 
   // --- Variance Components for Uncertainty Budget ---
   const u2_var_w = (y * u_rel_w)**2;
@@ -143,7 +148,7 @@ export function calculateAll(params: CalcInputs, t: any): Results | string {
       const r_0_total = backgroundTotalCount / t_0;
       const channel_ratio = roiChannels > 0 && backgroundChannels > 0 ? roiChannels / backgroundChannels : 1;
       const r_0_scaled = r_0_total * channel_ratio;
-      term_B_quad = (w / t_g) - 2 * correlationCoefficient * Math.sqrt(r_0 / t_0) * u_w;
+      term_B_quad = (w / t_g) - 2 * correlationCoefficient * Math.sqrt(r_0_scaled / t_0) * u_w;
       term_C_quad = w**2 * ( (r_0_total * channel_ratio) / t_g + (r_0_total / t_0) * (channel_ratio**2) );
   } else {
       term_B_quad = (w / t_g) - 2 * correlationCoefficient * Math.sqrt(r_0 / t_0) * u_w;
@@ -218,6 +223,7 @@ export function calculateAll(params: CalcInputs, t: any): Results | string {
     uncertaintyAtZero: u_0,
     uncertaintyAtDetectionLimit: Math.sqrt(Math.max(0, u2_hash)),
     varianceComponents,
+    sensitivityCoefficients,
   };
 }
 

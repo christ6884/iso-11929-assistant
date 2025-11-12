@@ -1,6 +1,5 @@
-// Fix: Corrected import path
-import { PeakIdentificationResult, PeakIdentificationMatch } from '../types';
-import { nuclideLibrary } from './gammaLibrary';
+import { PeakIdentificationResult, PeakIdentificationMatch } from '../types.ts';
+import { nuclideLibrary } from './gammaLibrary.ts';
 
 export function identifyPeaks(
   peakEnergies: number[],

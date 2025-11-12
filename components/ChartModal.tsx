@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-// Fix: Corrected import path
-import { Results, AnalysisMode } from '../types';
+import { Results, AnalysisMode } from '../types.ts';
 
 interface ChartModalProps {
   isOpen: boolean;

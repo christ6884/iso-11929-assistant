@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import InfoTooltip from './InfoTooltip';
 import { Results, Inputs, DetectionLimitMode, AnalysisMode, TargetUnit, MeanTime } from '../types';
+import CollapsibleSection from './CollapsibleSection';
 
 interface ResultsPanelProps {
   results: Results | string | null;
@@ -12,11 +13,12 @@ interface ResultsPanelProps {
   onDetectionLimitModeChange: (mode: DetectionLimitMode) => void;
   targetDetectionLimit: number;
   onTargetDetectionLimitChange: (value: number) => void;
+  isExpertMode: boolean;
   isCalculating: boolean;
 }
 
-const formatNumber = (num: number | string | null) => {
-    if (num === null) return 'N/A';
+const formatNumber = (num: number | string | null | undefined) => {
+    if (num === null || num === undefined) return 'N/A';
     if (typeof num === 'string') return num;
     if (Math.abs(num) < 0.001 && num !== 0) return num.toExponential(3);
     const fixed = num.toFixed(3);
@@ -62,12 +64,12 @@ const UncertaintyBudget: React.FC<{ components: Results['varianceComponents'], t
                     const percentage = (item.value / components.total) * 100;
                     if (Math.abs(percentage) < 0.1) return null;
                     return (
-                        <div key={item.label} className="flex justify-between items-center">
-                            <div className="flex items-center space-x-2">
+                        <div key={item.label} className="grid grid-cols-3 items-center gap-2">
+                            <div className="flex items-center space-x-2 col-span-1">
                                 <span className="text-gray-300 print-text-black">{item.label}</span>
                                 {item.label === t('budgetCalibration') && <InfoTooltip text={t('budgetCalibrationTooltip')} />}
                             </div>
-                            <div className="flex items-center w-1/2">
+                            <div className="flex items-center col-span-2">
                                 <div className="w-full bg-gray-600 rounded-full h-2.5 mr-2 no-print">
                                     <div className={`${item.color}`} style={{ width: `${Math.abs(percentage)}%`, height: '100%', borderRadius: 'inherit' }}></div>
                                 </div>
@@ -83,7 +85,7 @@ const UncertaintyBudget: React.FC<{ components: Results['varianceComponents'], t
 
 
 const ResultsPanel: React.FC<ResultsPanelProps> = ({ 
-    results, t, inputs, mode, detectionLimitMode, onDetectionLimitModeChange, targetDetectionLimit, onTargetDetectionLimitChange, isCalculating 
+    results, t, inputs, mode, detectionLimitMode, onDetectionLimitModeChange, targetDetectionLimit, onTargetDetectionLimitChange, isExpertMode, isCalculating 
 }) => {
   const isTargetBasedMode = mode === 'surface' || mode === 'chambre' || mode === 'linge';
   const targetUnit = isTargetBasedMode ? (mode === 'surface' ? inputs.targetUnit : inputs.chambreLingeTargetUnit) : '';
@@ -212,7 +214,18 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
           />
         </div>
 
-        {res.calculationMethod === 'analytical' && <UncertaintyBudget components={res.varianceComponents} t={t} />}
+        {res.calculationMethod === 'analytical' && isExpertMode && <UncertaintyBudget components={res.varianceComponents} t={t} />}
+        
+        {isExpertMode && res.calculationMethod === 'analytical' && res.sensitivityCoefficients && (
+            <CollapsibleSection title={t('uncertaintyDetails')}>
+                <div className="space-y-3 p-2">
+                    <h4 className="text-md font-semibold text-gray-300 flex items-center">{t('sensitivityCoefficients')} <InfoTooltip text={t('sensitivityCoefficientsTooltip')} /></h4>
+                    <ResultRow label={t('coeff_gross')} value={formatNumber(res.sensitivityCoefficients.grossRate)} tooltip={t('coeff_gross_tooltip')} />
+                    <ResultRow label={t('coeff_bkg')} value={formatNumber(res.sensitivityCoefficients.backgroundRate)} tooltip={t('coeff_bkg_tooltip')} />
+                    <ResultRow label={t('coeff_calib')} value={formatNumber(res.sensitivityCoefficients.calibrationFactor)} tooltip={t('coeff_calib_tooltip')} />
+                </div>
+            </CollapsibleSection>
+        )}
 
         <div className="border-t border-gray-700 pt-3 space-y-2 print-border-gray">
             <ResultRow 
@@ -300,7 +313,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
             </button>
         </div>
     } className="print-card">
-        {mode === 'standard' || mode === 'spectrometry' ? (
+        {(mode === 'standard' || mode === 'spectrometry') && !isTargetBasedMode ? (
           <>
             <div className="mb-4 no-print">
               <label className="text-gray-300 mb-2 block">{t('detectionLimitMode')}</label>

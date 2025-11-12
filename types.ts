@@ -1,4 +1,3 @@
-// Enums
 export enum Language {
     FR = 'fr',
     EN = 'en',
@@ -6,15 +5,11 @@ export enum Language {
     ES = 'es',
 }
 
-export type View = 'calculator' | 'spectro' | 'sources' | 'history';
-
-export type AnalysisMode = 'standard' | 'spectrometry' | 'surface' | 'chambre' | 'linge';
-
 export enum CountUnit {
-    COUNTS = 'COUNTS',
-    CPS = 'CPS',
-    CPM = 'CPM',
-    C_02S = 'C_02S',
+    COUNTS = 'counts',
+    CPS = 'c/s',
+    CPM = 'c/min',
+    C_02S = 'c/0.2s',
 }
 
 export enum TargetUnit {
@@ -26,10 +21,10 @@ export enum TargetUnit {
     UCI_CM2 = 'µCi/cm²',
 }
 
+export type View = 'calculator' | 'spectro' | 'sources' | 'history';
+export type AnalysisMode = 'standard' | 'spectrometry' | 'surface' | 'chambre' | 'linge';
 export type DetectionLimitMode = 'calculate' | 'target';
 
-
-// Data structures
 export interface Detector {
     efficiency: number;
     background: number;
@@ -99,7 +94,6 @@ export interface Results {
     k1beta: number;
     alphaProbability: number;
     betaProbability: number;
-    probabilityEffectPresent?: number;
     meanTimeBetweenFalseAlarms: MeanTime;
     uncertaintyAtZero: number;
     uncertaintyAtDetectionLimit: number;
@@ -110,6 +104,12 @@ export interface Results {
         covariance: number;
         total: number;
     } | null;
+    sensitivityCoefficients?: {
+        grossRate: number;
+        backgroundRate: number;
+        calibrationFactor: number;
+    };
+    probabilityEffectPresent?: number;
     histogramData?: number[];
     numSimulations?: number;
     monteCarloStats?: {
@@ -122,70 +122,9 @@ export interface Results {
         kurtosis: number;
         confidenceIntervalPercentileLower: number;
         confidenceIntervalPercentileUpper: number;
-    };
+    }
 }
 
-// For Spectrum Analyzer
-export interface Point {
-    x: number;
-    y: number;
-}
-
-export interface CalibrationPoint extends Point {
-    energy: number;
-    uncertainty?: number;
-}
-
-export interface CalibrationFunction {
-    slope: number;
-    intercept: number;
-    rSquared?: number;
-}
-
-export interface DetectedPeak extends Point {
-    energy: number;
-    manual?: boolean;
-    fwhm_keV?: number;
-    group?: 'A' | 'B';
-}
-
-export interface AnalysisResult {
-    detectedPeaks: DetectedPeak[];
-    nuclideMatches: Map<number, PeakIdentificationMatch[]>;
-}
-
-export interface InteractivePeak {
-    point: Point;
-    eventCoords: Point;
-    topMatch: PeakIdentificationMatch | null;
-}
-
-// For Gamma Library & Peak Identifier
-export interface EmissionLine {
-    energy_keV: number;
-    intensity_percent: number;
-    type: 'gamma' | 'alpha' | 'beta';
-}
-
-export interface NuclideData {
-    name: string;
-    halfLife_s: number;
-    lines: EmissionLine[];
-}
-
-export interface PeakIdentificationMatch {
-    nuclide: NuclideData;
-    line: EmissionLine;
-    delta_keV: number;
-}
-
-export interface PeakIdentificationResult {
-    inputEnergy_keV: number;
-    matches: PeakIdentificationMatch[];
-}
-
-
-// For Source Management
 export interface Source {
     id: string;
     name: string;
@@ -207,8 +146,63 @@ export interface SourceType {
     maxActivityBq: number;
 }
 
+export interface Point {
+    x: number;
+    y: number;
+}
 
-// For N42 Analyzer
+export interface CalibrationPoint extends Point {
+    energy: number;
+    uncertainty?: number;
+}
+
+export interface CalibrationFunction {
+    slope: number;
+    intercept: number;
+    rSquared?: number;
+}
+
+export interface DetectedPeak extends Point {
+    energy: number;
+    fwhm_keV?: number;
+    manual?: boolean;
+    group?: 'A' | 'B';
+}
+
+export interface InteractivePeak {
+    point: Point;
+    eventCoords: Point;
+    topMatch: PeakIdentificationMatch | null;
+}
+
+export interface AnalysisResult {
+    detectedPeaks: DetectedPeak[];
+    nuclideMatches: Map<number, PeakIdentificationMatch[]>;
+}
+
+export interface NuclideLine {
+    energy_keV: number;
+    intensity_percent: number;
+    type: 'gamma' | 'alpha' | 'beta';
+}
+
+export interface NuclideData {
+    name: string;
+    halfLife_s: number;
+    lines: NuclideLine[];
+}
+
+export interface PeakIdentificationMatch {
+    nuclide: NuclideData;
+    line: NuclideLine;
+    delta_keV: number;
+}
+
+export interface PeakIdentificationResult {
+    inputEnergy_keV: number;
+    matches: PeakIdentificationMatch[];
+}
+
 export interface N42Metadata {
     instrument: string;
     timestamp: string;
@@ -220,9 +214,9 @@ export interface N42Spectrum {
     id: string;
     channelData: number[];
     calibration: {
-        a: number;
-        b: number;
-        c: number;
+        a: number; // intercept
+        b: number; // slope
+        c: number; // quadratic
     };
     liveTimeSeconds?: number;
 }
@@ -242,36 +236,31 @@ export interface ROI {
     endChannel: number;
 }
 
-// For Analysis History / Lab Book
-export interface N42AnalysisData {
-  parsedData: ParsedN42Data;
-  selectedSpectrumId: string;
-  analysisResult: N42AnalysisResult;
-}
-
 export interface ImageAnalysisData {
-  imageDataUrl: string;
-  spectrumPoints: Point[];
-  calibrationPoints: CalibrationPoint[];
-  calibrationFunction: CalibrationFunction;
-  analysisResult: AnalysisResult;
+    imageDataUrl: string;
+    spectrumPoints: Point[];
+    calibrationPoints: CalibrationPoint[];
+    calibrationFunction: CalibrationFunction;
+    analysisResult: AnalysisResult;
 }
 
-// Fix: Changed AnalysisRecord to a discriminated union type to allow for proper type narrowing based on analysisType.
-export type AnalysisRecord =
-  | {
-      id: string;
-      name: string;
-      date: string; // ISO string
-      sourceId?: string;
-      analysisType: 'n42';
-      data: N42AnalysisData;
-    }
-  | {
-      id: string;
-      name: string;
-      date: string;
-      sourceId?: string;
-      analysisType: 'image';
-      data: ImageAnalysisData;
-    };
+export interface N42AnalysisData {
+    parsedData: ParsedN42Data;
+    selectedSpectrumId: string;
+    analysisResult: N42AnalysisResult;
+}
+
+export type AnalysisRecord = {
+    id: string;
+    name: string;
+    date: string; // ISO string
+    sourceId?: string;
+} & (
+    | { analysisType: 'image'; data: ImageAnalysisData }
+    | { analysisType: 'n42'; data: N42AnalysisData }
+);
+
+export interface Radionuclide {
+  name: string;
+  halfLifeSeconds: number;
+}

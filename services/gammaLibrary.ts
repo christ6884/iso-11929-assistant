@@ -1,5 +1,4 @@
-// Fix: Corrected import path
-import { NuclideData } from '../types';
+import { NuclideData } from '../types.ts';
 
 // A curated and expanded library of common radionuclides and their most prominent emission lines.
 // Data primarily sourced from BIPM Monographie 5, "Table of Radionuclides".

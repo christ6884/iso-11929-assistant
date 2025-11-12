@@ -1,9 +1,8 @@
 import React from 'react';
-import Card from './Card';
-import InfoTooltip from './InfoTooltip';
-import CollapsibleSection from './CollapsibleSection';
-// Fix: Corrected import path
-import { Inputs, AnalysisMode, CountUnit, TargetUnit, Detector, Results, MeanTime } from '../types';
+import Card from './Card.tsx';
+import InfoTooltip from './InfoTooltip.tsx';
+import CollapsibleSection from './CollapsibleSection.tsx';
+import { Inputs, AnalysisMode, CountUnit, TargetUnit, Detector, Results, MeanTime } from '../types.ts';
 
 interface InputPanelProps {
   inputs: Inputs;
@@ -45,7 +44,6 @@ const InputRow: React.FC<{ label: string; children: React.ReactNode; tooltipText
 const NumberInput: React.FC<{ name: keyof Inputs; value: number; onChange: (name: keyof Inputs, value: number) => void; min?: number; step?: number, disabled?: boolean }> = ({ name, value, onChange, min = 0, step = 0.01, disabled = false }) => (
     <input
         type="number"
-// Fix: The name prop for an input element must be a string.
         name={name as string}
         value={value}
         onChange={(e) => onChange(name, parseFloat(e.target.value))}
@@ -58,7 +56,6 @@ const NumberInput: React.FC<{ name: keyof Inputs; value: number; onChange: (name
 
 const UnitSelect: React.FC<{ name: keyof Inputs; value: string; onChange: (name: keyof Inputs, value: string) => void; options: { value: string; label: string }[] }> = ({ name, value, onChange, options }) => (
     <select
-// Fix: The name prop for a select element must be a string.
         name={name as string}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}

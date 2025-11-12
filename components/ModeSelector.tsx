@@ -1,7 +1,6 @@
 import React from 'react';
-// Fix: Corrected import path
-import { AnalysisMode } from '../types';
-import InfoTooltip from './InfoTooltip';
+import { AnalysisMode } from '../types.ts';
+import InfoTooltip from './InfoTooltip.tsx';
 
 interface ModeSelectorProps {
   currentMode: AnalysisMode;

@@ -1,27 +1,24 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-// Fix: Corrected import paths
-import { Language, View, AnalysisMode, Inputs, Results, Detector, CountUnit, TargetUnit, DetectionLimitMode, AnalysisRecord } from './types';
-import InputPanel from './components/InputPanel';
-import ResultsPanel from './components/ResultsPanel';
-import ChartPanel from './components/ChartPanel';
-import ModeSelector from './components/ModeSelector';
-import LanguageSelector from './components/LanguageSelector';
-import ThemeSelector from './components/ThemeSelector';
-import WelcomeModal from './components/WelcomeModal';
-import UserGuideModal from './components/UserGuideModal';
-import PeakIdentifierModal from './components/PeakIdentifierModal';
-import DecayCalculatorModal from './components/DecayCalculatorModal';
-import ProAccessModal from './components/ProAccessModal';
-import UnitConverterModal from './components/UnitConverterModal';
-import SpectroPage from './pages/SpectroPage';
-import SourceManagementPage from './pages/SourceManagementPage';
-import AnalysisHistoryPage from './pages/AnalysisHistoryPage';
-import BackgroundSubtractionPage from './pages/BackgroundSubtractionPage';
-import UpdateNotification from './components/UpdateNotification';
-// Fix: Corrected import paths
-import { getTranslator } from './translations';
-import { calculateAll, findK1betaForTarget, probability_from_quantile } from './services/isoCalculations';
-import { runMonteCarloSimulation } from './services/monteCarloService';
+import { Language, View, AnalysisMode, Inputs, Results, Detector, CountUnit, TargetUnit, DetectionLimitMode, AnalysisRecord } from './types.ts';
+import InputPanel from './components/InputPanel.tsx';
+import ResultsPanel from './components/ResultsPanel.tsx';
+import ChartPanel from './components/ChartPanel.tsx';
+import ModeSelector from './components/ModeSelector.tsx';
+import LanguageSelector from './components/LanguageSelector.tsx';
+import ThemeSelector from './components/ThemeSelector.tsx';
+import WelcomeModal from './components/WelcomeModal.tsx';
+import UserGuideModal from './components/UserGuideModal.tsx';
+import PeakIdentifierModal from './components/PeakIdentifierModal.tsx';
+import DecayCalculatorModal from './components/DecayCalculatorModal.tsx';
+import ProAccessModal from './components/ProAccessModal.tsx';
+import UnitConverterModal from './components/UnitConverterModal.tsx';
+import SpectroPage from './pages/SpectroPage.tsx';
+import SourceManagementPage from './pages/SourceManagementPage.tsx';
+import AnalysisHistoryPage from './pages/AnalysisHistoryPage.tsx';
+import UpdateNotification from './components/UpdateNotification.tsx';
+import { getTranslator } from './translations.ts';
+import { calculateAll, findK1betaForTarget, probability_from_quantile } from './services/isoCalculations.ts';
+import { runMonteCarloSimulation } from './services/monteCarloService.ts';
 
 // Default state for inputs
 const defaultDetectors: Detector[] = Array(10).fill(null).map(() => ({
@@ -416,6 +413,7 @@ const App: React.FC = () => {
                         targetDetectionLimit={targetDetectionLimit}
                         onTargetDetectionLimitChange={setTargetDetectionLimit}
                         isCalculating={isCalculating}
+                        isExpertMode={isExpertMode}
                     />
                     <ChartPanel
                         results={typeof results === 'string' ? null : results}

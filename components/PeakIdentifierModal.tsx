@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Card from './Card';
-// Fix: Corrected import path
-import { PeakIdentificationResult } from '../types';
-import { identifyPeaks } from '../services/peakIdentifierService';
+import Card from './Card.tsx';
+import { PeakIdentificationResult } from '../types.ts';
+import { identifyPeaks } from '../services/peakIdentifierService.ts';
 
 interface PeakIdentifierModalProps {
   isOpen: boolean;

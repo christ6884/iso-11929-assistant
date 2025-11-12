@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Card from './Card';
-import { radionuclides, Radionuclide } from '../services/radionuclides';
+import Card from './Card.tsx';
+import { radionuclides, Radionuclide } from '../services/radionuclides.ts';
 
 interface DecayCalculatorModalProps {
   isOpen: boolean;

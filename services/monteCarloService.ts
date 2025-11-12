@@ -1,6 +1,5 @@
-// Fix: Corrected import path
-import { Results, AnalysisMode, Inputs, CountUnit } from '../types';
-import { calculateMeanTime, probability_from_quantile } from './isoCalculations';
+import { Results, AnalysisMode, Inputs, CountUnit } from '../types.ts';
+import { calculateMeanTime, probability_from_quantile } from './isoCalculations.ts';
 
 // Helper to generate a random number from a Poisson distribution
 // Using the Knuth algorithm, suitable for lambda < 30

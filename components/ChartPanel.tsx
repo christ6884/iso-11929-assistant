@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Card from './Card';
-import InfoTooltip from './InfoTooltip';
-// Fix: Corrected import path
-import { Results, AnalysisMode } from '../types';
-import MonteCarloStatsModal from './MonteCarloStatsModal';
-import ChartModal from './ChartModal';
+import Card from './Card.tsx';
+import InfoTooltip from './InfoTooltip.tsx';
+import { Results, AnalysisMode } from '../types.ts';
+import MonteCarloStatsModal from './MonteCarloStatsModal.tsx';
+import ChartModal from './ChartModal.tsx';
 
 interface ChartPanelProps {
   results: Results | null;
