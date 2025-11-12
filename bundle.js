@@ -24953,7 +24953,8 @@
     targetDetectionLimit,
     onTargetDetectionLimitChange,
     isExpertMode,
-    isCalculating
+    isCalculating,
+    onOpenReportModal
   }) => {
     const isTargetBasedMode = mode === "surface" || mode === "chambre" || mode === "linge";
     const targetUnit = isTargetBasedMode ? mode === "surface" ? inputs.targetUnit : inputs.chambreLingeTargetUnit : "";
@@ -25182,7 +25183,7 @@
           baseUnit
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { onClick: () => window.print(), className: "no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 self-end md:self-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { onClick: onOpenReportModal, className: "no-print text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 self-end md:self-center", children: [
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: t("printReport") })
       ] })
@@ -31168,6 +31169,16 @@
     const [operatorName, setOperatorName] = (0, import_react34.useState)("");
     const [sampleId, setSampleId] = (0, import_react34.useState)("");
     const [comments, setComments] = (0, import_react34.useState)("");
+    const handlePrint = () => {
+      const body = document.body;
+      body.classList.add("print-report-active");
+      const handleAfterPrint = () => {
+        body.classList.remove("print-report-active");
+        window.removeEventListener("afterprint", handleAfterPrint);
+      };
+      window.addEventListener("afterprint", handleAfterPrint);
+      window.print();
+    };
     if (!isOpen)
       return null;
     const renderInputTable = () => {
@@ -31214,9 +31225,9 @@
         /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") })
       ] })
     ] }) });
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm no-print", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col", onClick: (e) => e.stopPropagation(), children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper", onClick: (e) => e.stopPropagation(), children: [
       /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-6 border-b border-gray-700 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h1", { className: "text-2xl font-bold text-cyan-400", children: t("reportGeneratorTitle") }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh]", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh] report-modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "text-black mb-8 pb-4 border-b border-gray-300", children: [
           /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h1", { className: "text-3xl font-bold mb-2", children: "ISO 11929 Calculation Report" }),
           /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-2 gap-4 text-sm", children: [
@@ -31273,7 +31284,7 @@
         /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("textarea", { placeholder: t("comments"), value: comments, onChange: (e) => setComments(e.target.value), rows: 3, className: "w-full bg-gray-700 p-2 rounded-md text-white mb-4" }),
         /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex justify-end space-x-4", children: [
           /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => window.print(), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handlePrint, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
         ] })
       ] })
     ] }) });
@@ -34105,7 +34116,8 @@
               targetDetectionLimit,
               onTargetDetectionLimitChange: setTargetDetectionLimit,
               isCalculating,
-              isExpertMode
+              isExpertMode,
+              onOpenReportModal: () => setIsReportModalOpen(true)
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
@@ -34160,7 +34172,6 @@
               /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsReportModalOpen(true), title: t("printReport"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }) }),
             /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
             /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
             /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
