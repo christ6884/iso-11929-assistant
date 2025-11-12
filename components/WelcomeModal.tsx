@@ -13,8 +13,8 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose, t }) => {
     { title: t('welcomeFeature1Title'), desc: t('welcomeFeature1Desc') },
     { title: t('welcomeFeature2Title'), desc: t('welcomeFeature2Desc') },
     { title: t('welcomeFeature4Title'), desc: t('welcomeFeature4Desc') },
-    { title: t('welcomeFeature6Title'), desc: t('welcomeFeature6Desc') },
     { title: t('welcomeFeature5Title'), desc: t('welcomeFeature5Desc') },
+    { title: t('welcomeFeature6Title'), desc: t('welcomeFeature6Desc') },
   ];
 
   return (

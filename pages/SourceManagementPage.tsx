@@ -9,6 +9,7 @@ import SourceTooltip from '../components/source-management/SourceTooltip';
 import ImportReviewModal from '../components/source-management/ImportReviewModal';
 import CsvImportModal from '../components/source-management/CsvImportModal';
 import SourceTypesMemoModal from '../components/source-management/SourceTypesMemoModal';
+import ExportModal from '../components/ExportModal.tsx';
 
 interface SourceManagementPageProps {
     t: any;
@@ -30,6 +31,11 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
     const [isImportReviewOpen, setIsImportReviewOpen] = useState(false);
     const [isCsvImportOpen, setIsCsvImportOpen] = useState(false);
     const [sourcesToImport, setSourcesToImport] = useState<Source[]>([]);
+
+    // New state for offline export
+    const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+    const [jsonDataToExport, setJsonDataToExport] = useState('');
+
 
     const fetchSources = useCallback(async () => {
         setIsLoading(true);
@@ -82,7 +88,6 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
     const handleExport = () => {
         if (sources.length === 0) return;
         
-        // Define explicit header order to match import requirements.
         const headers: (keyof Source)[] = [
             'id', 'name', 'location', 'casier', 'nuclide', 
             'referenceActivity', 'referenceActivityUncertainty', 
@@ -93,7 +98,6 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
         const csvRows = sources.map(source => {
             return headers.map(header => {
                 const value = source[header];
-                // Handle undefined/null and commas in values
                 let formattedValue = value === undefined || value === null ? '' : String(value);
                 if (formattedValue.includes(',')) {
                     formattedValue = `"${formattedValue}"`;
@@ -129,7 +133,6 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                 if (!source) continue;
                 
                 if (decision === 'add') {
-                    // When adding, we need to strip the ID to let the DB generate one if it was a new source
                     const { id, ...sourceData } = source;
                     await db.addSource(sourceData);
                 } else if (decision === 'overwrite') {
@@ -143,6 +146,18 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
             setIsImportReviewOpen(false);
             setSourcesToImport([]);
             setIsLoading(false);
+        }
+    };
+    
+    const handleOfflineExport = async () => {
+        try {
+            const allSources = await db.getAllSources();
+            const jsonString = JSON.stringify(allSources, null, 2);
+            setJsonDataToExport(jsonString);
+            setIsExportModalOpen(true);
+        } catch (error) {
+            console.error("Failed to get sources for export:", error);
+            alert("Error preparing data for export.");
         }
     };
 
@@ -189,8 +204,7 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                 if (typeof aValue === 'string' && typeof bValue === 'string') {
                     return sortConfig.direction === 'ascending' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
                 }
-
-                // Handle cases where one might be undefined (e.g., location)
+                
                 if (aValue === undefined) return 1;
                 if (bValue === undefined) return -1;
 
@@ -264,6 +278,10 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
                         />
+                        <button onClick={handleOfflineExport} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center space-x-2">
+                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                           <span>{t('exportBackup')}</span>
+                        </button>
                         <button onClick={() => setIsCsvImportOpen(true)} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">{t('import')}</button>
                         <button onClick={handleExport} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">{t('export')}</button>
                         <button onClick={() => setIsMemoOpen(true)} title={t('sourceTypeMemo')} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">
@@ -360,6 +378,13 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
             <SourceTypesMemoModal 
                 isOpen={isMemoOpen}
                 onClose={() => setIsMemoOpen(false)}
+                t={t}
+            />
+
+            <ExportModal
+                isOpen={isExportModalOpen}
+                onClose={() => setIsExportModalOpen(false)}
+                jsonData={jsonDataToExport}
                 t={t}
             />
 

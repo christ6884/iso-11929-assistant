@@ -289,9 +289,10 @@ const fr: Translations = {
     currentActivity: "Activité actuelle (Bq)",
     conformity: "Conformité",
     actions: "Actions",
-    import: "Importer",
-    export: "Exporter",
-    
+    import: "Importer (CSV)",
+    export: "Exporter (CSV)",
+    exportBackup: "Exporter / Sauvegarder",
+
     // Theme
     changeTheme: "Changer le thème",
     themeCyberCyan: "Cyber Cyan",
@@ -530,6 +531,14 @@ const fr: Translations = {
     unit_desc_rad: "Une ancienne unité de dose absorbée (Radiation Absorbed Dose).",
     unit_desc_sv: "Le Sievert, l'unité SI de la dose équivalente, tenant compte de l'effet biologique des différents types de rayonnement.",
     unit_desc_rem: "Une ancienne unité de dose équivalente (Röntgen Equivalent Man).",
+
+    // Offline Export Modal
+    exportModalTitle: "Exporter les Données des Sources",
+    exportModalIntro: "Ceci est une sauvegarde de toutes vos sources. Conservez-la en lieu sûr pour éviter toute perte de données. Vous pouvez copier le texte ou télécharger le fichier.",
+    copyJson: "Copier le JSON",
+    downloadFile: "Télécharger le Fichier",
+    shareFile: "Partager",
+    copied: "Copié !",
 };
 
 const en: Translations = {
@@ -817,8 +826,9 @@ const en: Translations = {
     currentActivity: "Current Activity (Bq)",
     conformity: "Conformity",
     actions: "Actions",
-    import: "Import",
-    export: "Export",
+    import: "Import (CSV)",
+    export: "Export (CSV)",
+    exportBackup: "Export / Backup",
 
     // Theme
     changeTheme: "Change Theme",
@@ -1058,6 +1068,14 @@ const en: Translations = {
     unit_desc_rad: "An older unit of absorbed dose (Radiation Absorbed Dose).",
     unit_desc_sv: "The Sievert, the SI unit of equivalent dose, which accounts for the biological effect of different types of radiation.",
     unit_desc_rem: "An older unit of equivalent dose (Röntgen Equivalent Man).",
+
+    // Offline Export Modal
+    exportModalTitle: "Export Source Data",
+    exportModalIntro: "This is a backup of all your source data. Keep it in a safe place to prevent data loss. You can copy the text or download the file.",
+    copyJson: "Copy JSON",
+    downloadFile: "Download File",
+    shareFile: "Share",
+    copied: "Copied!",
 };
 
 const de: Translations = {
@@ -1345,8 +1363,9 @@ const de: Translations = {
     currentActivity: "Aktuelle Aktivität (Bq)",
     conformity: "Konformität",
     actions: "Aktionen",
-    import: "Importieren",
-    export: "Exportieren",
+    import: "Importieren (CSV)",
+    export: "Exportieren (CSV)",
+    exportBackup: "Exportieren / Sichern",
     
     // Theme
     changeTheme: "Thema ändern",
@@ -1586,6 +1605,14 @@ const de: Translations = {
     unit_desc_rad: "Eine ältere Einheit der absorbierten Dosis (Radiation Absorbed Dose).",
     unit_desc_sv: "Das Sievert, die SI-Einheit der Äquivalentdosis, die die biologische Wirkung verschiedener Strahlungsarten berücksichtigt.",
     unit_desc_rem: "Eine ältere Einheit der Äquivalentdosis (Röntgen Equivalent Man).",
+    
+    // Offline Export Modal
+    exportModalTitle: "Quellendaten exportieren",
+    exportModalIntro: "Dies ist eine Sicherung all Ihrer Quellendaten. Bewahren Sie sie an einem sicheren Ort auf, um Datenverlust zu vermeiden. Sie können den Text kopieren oder die Datei herunterladen.",
+    copyJson: "JSON kopieren",
+    downloadFile: "Datei herunterladen",
+    shareFile: "Teilen",
+    copied: "Kopiert!",
 };
 
 const es: Translations = {
@@ -1873,8 +1900,9 @@ const es: Translations = {
     currentActivity: "Actividad Actual (Bq)",
     conformity: "Conformidad",
     actions: "Acciones",
-    import: "Importar",
-    export: "Exportar",
+    import: "Importar (CSV)",
+    export: "Exportar (CSV)",
+    exportBackup: "Exportar / Guardar",
 
     // Theme
     changeTheme: "Cambiar Tema",
@@ -2114,6 +2142,14 @@ const es: Translations = {
     unit_desc_rad: "Una unidad antigua de dosis absorbida (Radiation Absorbed Dose).",
     unit_desc_sv: "El Sievert, la unidad SI de dosis equivalente, que tiene en cuenta el efecto biológico de diferentes tipos de radiación.",
     unit_desc_rem: "Una unidad antigua de dosis equivalente (Röntgen Equivalent Man).",
+
+    // Offline Export Modal
+    exportModalTitle: "Exportar Datos de Fuentes",
+    exportModalIntro: "Esta es una copia de seguridad de todos los datos de sus fuentes. Guárdela en un lugar seguro para evitar la pérdida de datos. Puede copiar el texto o descargar el archivo.",
+    copyJson: "Copiar JSON",
+    downloadFile: "Descargar Archivo",
+    shareFile: "Compartir",
+    copied: "¡Copiado!",
 };
 
 const translations = { fr, en, de, es };
