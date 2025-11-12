@@ -384,6 +384,11 @@ const InputPanel: React.FC<InputPanelProps> = ({
                                      <span className="font-mono w-12 text-right">{inputs.correlationCoefficient.toFixed(2)}</span>
                                  </div>
                             </InputRow>
+                             <InputRow label={t('bayesianCalculationMode')} tooltipText={t('bayesianCalculationModeTooltip')}>
+                                <div className="text-right">
+                                    <input type="checkbox" checked={inputs.useBayesianMode} onChange={(e) => onInputChange('useBayesianMode', e.target.checked)} className="form-checkbox h-5 w-5 text-cyan-500" />
+                                </div>
+                            </InputRow>
                          </div>
                     </CollapsibleSection>
                     <CollapsibleSection title={t('monteCarloMode')} defaultOpen={true}>

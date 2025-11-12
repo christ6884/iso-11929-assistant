@@ -242,7 +242,15 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
             />
         </div>
         <div className="border-t border-gray-700 pt-3 print-border-gray">
-             <h3 className="text-md font-semibold text-gray-400 mb-2 print-text-black">{t('conclusion')}</h3>
+             {(res.calculationMethod === 'bayesian' && res.probabilityEffectPresent !== undefined) && (
+                <ResultRow
+                    label={t('probabilityEffectPresent')}
+                    value={`${(res.probabilityEffectPresent * 100).toFixed(1)} %`}
+                    tooltip={t('probabilityEffectPresentTooltip')}
+                    valueColor="text-yellow-300"
+                />
+             )}
+             <h3 className="text-md font-semibold text-gray-400 my-2 print-text-black">{t('conclusion')}</h3>
              <div className={`p-3 rounded-md text-center font-semibold ${res.isEffectPresent ? 'bg-red-900/50 text-red-300' : 'bg-green-900/50 text-green-300'} print-text-black`}>
                 {res.isEffectPresent ? t('effectPresent') : t('effectNotPresent')}
              </div>

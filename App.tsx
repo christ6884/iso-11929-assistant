@@ -20,7 +20,7 @@ import BackgroundSubtractionPage from './pages/BackgroundSubtractionPage';
 import UpdateNotification from './components/UpdateNotification';
 // Fix: Corrected import paths
 import { getTranslator } from './translations';
-import { calculateAll, findK1betaForTarget } from './services/isoCalculations';
+import { calculateAll, findK1betaForTarget, probability_from_quantile } from './services/isoCalculations';
 import { runMonteCarloSimulation } from './services/monteCarloService';
 
 // Default state for inputs
@@ -66,6 +66,7 @@ const initialInputs: Inputs = {
   k1beta: 1.645,
   correlationCoefficient: 0,
   monteCarloMode: false,
+  useBayesianMode: false,
   numSimulations: 10000,
 };
 
@@ -298,24 +299,38 @@ const App: React.FC = () => {
                 correlationCoefficient: inputs.correlationCoefficient
             };
 
+            let result: Results | string | null = null;
+
             if (detectionLimitMode === 'target' && (mode === 'standard' || mode === 'spectrometry')) {
                 const k1betaResult = findK1betaForTarget(baseInputs, targetDetectionLimit, t);
                 if (typeof k1betaResult === 'number') {
                     const finalResult = inputs.monteCarloMode
                         ? runMonteCarloSimulation({ ...baseInputs, k1beta: k1betaResult, numSimulations: inputs.numSimulations }, t)
                         : calculateAll({ ...baseInputs, k1beta: k1betaResult }, t);
-                    setResults(finalResult);
+                    result = finalResult;
                     setInputs(prev => ({...prev, k1beta: k1betaResult}));
                 } else {
-                    setResults(k1betaResult);
+                    result = k1betaResult;
                 }
             } else {
-                const result = inputs.monteCarloMode
+                result = inputs.monteCarloMode
                     ? runMonteCarloSimulation({ ...baseInputs, k1beta: inputs.k1beta, numSimulations: inputs.numSimulations }, t)
                     : calculateAll({ ...baseInputs, k1beta: inputs.k1beta }, t);
-                setResults(result);
             }
-            
+
+            if (inputs.useBayesianMode && typeof result === 'object' && result !== null) {
+                const { primaryResult, primaryUncertainty } = result;
+                if (primaryUncertainty > 0) {
+                    const z = primaryResult / primaryUncertainty;
+                    // This is the CDF of the standard normal distribution, giving P(Z <= z)
+                    // which corresponds to P(μ > 0)
+                    const probability = probability_from_quantile(z); 
+                    result.probabilityEffectPresent = probability;
+                    result.calculationMethod = 'bayesian';
+                }
+            }
+
+            setResults(result);
             setIsCalculating(false);
         }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);

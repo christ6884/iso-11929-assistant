@@ -72,6 +72,7 @@ export interface Inputs {
     k1beta: number;
     correlationCoefficient: number;
     monteCarloMode: boolean;
+    useBayesianMode: boolean;
     numSimulations: number;
 }
 
@@ -83,7 +84,7 @@ export interface MeanTime {
 }
 
 export interface Results {
-    calculationMethod: 'analytical' | 'monteCarlo';
+    calculationMethod: 'analytical' | 'monteCarlo' | 'bayesian';
     currentMode: AnalysisMode;
     primaryResult: number;
     primaryUncertainty: number;
@@ -98,6 +99,7 @@ export interface Results {
     k1beta: number;
     alphaProbability: number;
     betaProbability: number;
+    probabilityEffectPresent?: number;
     meanTimeBetweenFalseAlarms: MeanTime;
     uncertaintyAtZero: number;
     uncertaintyAtDetectionLimit: number;
