@@ -1084,7 +1084,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState28(initialState) {
+          function useState30(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1092,11 +1092,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef8(initialValue) {
+          function useRef9(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect23(create, deps) {
+          function useEffect24(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1112,7 +1112,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo14(create, deps) {
+          function useMemo15(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1879,15 +1879,15 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect23;
+          exports.useEffect = useEffect24;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
-          exports.useMemo = useMemo14;
+          exports.useMemo = useMemo15;
           exports.useReducer = useReducer;
-          exports.useRef = useRef8;
-          exports.useState = useState28;
+          exports.useRef = useRef9;
+          exports.useState = useState30;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React33 = require_react();
+          var React35 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React33.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React35.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React33.Children.forEach(props.children, function(child) {
+                  React35.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -22580,7 +22580,7 @@
             return root3;
           }
           var ReactVersion = "18.3.1";
-          function createPortal5(children, containerInfo, implementation) {
+          function createPortal6(children, containerInfo, implementation) {
             var key = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : null;
             {
               checkKeyStringCoercion(key);
@@ -23437,7 +23437,7 @@
             if (!isValidContainer(container)) {
               throw new Error("Target container is not a DOM element.");
             }
-            return createPortal5(children, container, null, key);
+            return createPortal6(children, container, null, key);
           }
           function renderSubtreeIntoContainer(parentComponent, element, containerNode, callback) {
             return unstable_renderSubtreeIntoContainer(parentComponent, element, containerNode, callback);
@@ -23559,7 +23559,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React33 = require_react();
+          var React35 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23585,7 +23585,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React33.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React35.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24435,11 +24435,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx41 = jsxWithValidationDynamic;
-          var jsxs40 = jsxWithValidationStatic;
+          var jsx43 = jsxWithValidationDynamic;
+          var jsxs42 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx41;
-          exports.jsxs = jsxs40;
+          exports.jsx = jsx43;
+          exports.jsxs = jsxs42;
         })();
       }
     }
@@ -24458,11 +24458,11 @@
   });
 
   // index.tsx
-  var import_react32 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // App.tsx
-  var import_react31 = __toESM(require_react());
+  var import_react33 = __toESM(require_react());
 
   // components/InputPanel.tsx
   var import_react3 = __toESM(require_react());
@@ -27028,7 +27028,7 @@
   var UnitConverterModal_default = UnitConverterModal;
 
   // pages/SpectroPage.tsx
-  var import_react25 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
 
   // pages/SpectrumAnalyzerPage.tsx
   var import_react20 = __toESM(require_react());
@@ -27487,9 +27487,9 @@
     t,
     analysisStatus,
     step,
-    onMouseMove: onMouseMove2,
+    onMouseMove,
     onMouseLeave,
-    onImageClick: onImageClick2,
+    onImageClick,
     onTogglePeakGroup,
     onExportCsv,
     onSaveAnalysis
@@ -27596,7 +27596,7 @@
           ] })
         ] }),
         children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 print-container", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "lg:col-span-2 relative", onClick: onImageClick2, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "lg:col-span-2 relative", onClick: onImageClick, children: [
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
               "img",
               {
@@ -27610,7 +27610,7 @@
               "div",
               {
                 className: "absolute inset-0 cursor-crosshair no-print",
-                onMouseMove: onMouseMove2,
+                onMouseMove,
                 onMouseLeave,
                 children: [
                   analysisResult?.detectedPeaks.map((peak, index) => {
@@ -28338,7 +28338,19 @@
       setErrorMessage("");
       setStep("add");
       setInteractivePoint(null);
-    }, []);
+    }, [
+      // Fix: Added state setters to the dependency array to be explicit, although they are stable. This may resolve a subtle linting issue causing the reported error.
+      setImageDataUrl,
+      setCalibrationPoints,
+      setCalibrationFunction,
+      setSpectrumPoints,
+      setAnalysisResult,
+      setInitialAnalysisResult,
+      setAnalysisStatus,
+      setErrorMessage,
+      setStep,
+      setInteractivePoint
+    ]);
     const handleImageLoaded = async (dataUrl) => {
       resetState();
       setImageDataUrl(dataUrl);
@@ -28569,9 +28581,9 @@
           t,
           analysisStatus,
           step,
-          onMouseMove,
+          onMouseMove: handleMouseMove,
           onMouseLeave: () => setInteractivePoint(null),
-          onImageClick,
+          onImageClick: handleImageClick,
           onTogglePeakGroup: togglePeakGroup,
           onExportCsv: handleExportCsv,
           onSaveAnalysis: () => setIsSaveModalOpen(true),
@@ -28650,6 +28662,18 @@
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
     return `${totalSeconds.toFixed(2)} s`;
   }
+  function parseDurationToSeconds(isoDuration) {
+    if (!isoDuration)
+      return void 0;
+    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
+    const matches = isoDuration.match(regex);
+    if (!matches)
+      return void 0;
+    const hours = parseFloat(matches[1] || "0");
+    const minutes = parseFloat(matches[2] || "0");
+    const seconds = parseFloat(matches[3] || "0");
+    return hours * 3600 + minutes * 60 + seconds;
+  }
   async function parseN42File(file, t) {
     const text = await file.text();
     const parser = new DOMParser();
@@ -28662,12 +28686,12 @@
     const measurement = xmlDoc.querySelector("RadMeasurement, Measurement");
     const timestamp = measurement?.querySelector("StartDateTime");
     const realTime = measurement?.querySelector("RealTimeDuration");
+    const realTimeContent = realTime?.textContent || null;
     const metadata = {
       instrument: instrument?.textContent || "Unknown",
       timestamp: timestamp?.textContent ? new Date(timestamp.textContent).toLocaleString() : "N/A",
-      liveTime: "N/A",
-      // Will be set from the first spectrum as a default
-      realTime: parseDuration(realTime?.textContent || null)
+      realTime: parseDuration(realTimeContent),
+      realTimeSeconds: parseDurationToSeconds(realTimeContent)
     };
     const spectrumElements = xmlDoc.querySelectorAll("RadMeasurement Spectrum, Measurement Spectrum");
     const spectra = [];
@@ -28699,9 +28723,7 @@
         const idAttr = specEl.getAttribute("id");
         const specId = remark || description || idAttr || `${t("spectrum")} ${index + 1}`;
         const liveTimeEl = specEl.querySelector("LiveTimeDuration");
-        if (index === 0) {
-          metadata.liveTime = parseDuration(liveTimeEl?.textContent || null);
-        }
+        const liveTimeSeconds = parseDurationToSeconds(liveTimeEl?.textContent || null);
         spectra.push({
           id: specId,
           channelData,
@@ -28712,7 +28734,8 @@
             // Slope
             c: coeffs[2] || 0
             // Quadratic
-          }
+          },
+          liveTimeSeconds
         });
       } catch (e) {
         console.warn("Could not parse a spectrum block:", e);
@@ -29321,7 +29344,7 @@
                 ":"
               ] }),
               " ",
-              parsedData.metadata.liveTime
+              selectedSpectrum?.liveTimeSeconds ? `${selectedSpectrum.liveTimeSeconds.toFixed(2)} s` : "N/A"
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("strong", { children: [
@@ -29783,12 +29806,250 @@
   };
   var BackgroundSubtractionPage_default = BackgroundSubtractionPage;
 
-  // pages/SpectroPage.tsx
+  // pages/SpectrumComparisonPage.tsx
+  var import_react26 = __toESM(require_react());
+
+  // components/n42-analyzer/ComparisonPlot.tsx
+  var import_react25 = __toESM(require_react());
+  var import_react_dom4 = __toESM(require_react_dom());
   var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  var ComparisonPlot = ({
+    spectrumA,
+    spectrumB,
+    timeA,
+    timeB,
+    normalization,
+    t
+  }) => {
+    const [logScale, setLogScale] = (0, import_react25.useState)(true);
+    const [hoverInfo, setHoverInfo] = (0, import_react25.useState)(null);
+    const energyFromChannelA = (ch) => spectrumA.calibration.c * ch ** 2 + spectrumA.calibration.b * ch + spectrumA.calibration.a;
+    const energyFromChannelB = (ch) => spectrumB.calibration.c * ch ** 2 + spectrumB.calibration.b * ch + spectrumB.calibration.a;
+    const getData = (spectrum, time) => {
+      return normalization === "time" && time > 0 ? spectrum.channelData.map((c) => c / time) : spectrum.channelData;
+    };
+    const dataA = (0, import_react25.useMemo)(() => getData(spectrumA, timeA), [spectrumA, timeA, normalization]);
+    const dataB = (0, import_react25.useMemo)(() => getData(spectrumB, timeB), [spectrumB, timeB, normalization]);
+    const width = 800;
+    const height = 450;
+    const padding = { top: 50, right: 30, bottom: 50, left: 60 };
+    const xMax = Math.max(dataA.length - 1, dataB.length - 1);
+    const yMax = (0, import_react25.useMemo)(() => {
+      const maxA = dataA.reduce((max, v) => Math.max(max, v), -Infinity);
+      const maxB = dataB.reduce((max, v) => Math.max(max, v), -Infinity);
+      return Math.max(maxA, maxB);
+    }, [dataA, dataB]);
+    const toSvgX = (x) => padding.left + x / xMax * (width - padding.left - padding.right);
+    const svgToChannel = (svgX) => {
+      return Math.round((svgX - padding.left) / (width - padding.left - padding.right) * xMax);
+    };
+    const toSvgY = (y) => {
+      const plotHeight = height - padding.top - padding.bottom;
+      if (yMax <= 0)
+        return height - padding.bottom;
+      if (logScale) {
+        if (y <= 0)
+          return height - padding.bottom;
+        const logMax = Math.log10(yMax);
+        if (logMax <= 0)
+          return height - padding.bottom;
+        const logY = Math.log10(y);
+        return height - padding.bottom - logY / logMax * plotHeight;
+      }
+      return height - padding.bottom - y / yMax * plotHeight;
+    };
+    const createPath = (data) => {
+      if (data.length === 0)
+        return "";
+      let p = `M ${toSvgX(0)} ${toSvgY(data[0])}`;
+      for (let i = 1; i < data.length; i++) {
+        if (isFinite(data[i])) {
+          p += ` L ${toSvgX(i)} ${toSvgY(data[i])}`;
+        }
+      }
+      return p;
+    };
+    const pathA = (0, import_react25.useMemo)(() => createPath(dataA), [dataA, logScale, yMax]);
+    const pathB = (0, import_react25.useMemo)(() => createPath(dataB), [dataB, logScale, yMax]);
+    const handleMouseMove = (e) => {
+      const svg = e.currentTarget;
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const ctm = svg.getScreenCTM();
+      if (ctm) {
+        const svgP = pt.matrixTransform(ctm.inverse());
+        const channel = svgToChannel(svgP.x);
+        if (channel >= 0 && channel < xMax) {
+          const countsA = dataA[channel];
+          const countsB = dataB[channel];
+          const energy = energyFromChannelA(channel);
+          setHoverInfo({ x: e.clientX, y: e.clientY, channel, energy, countsA, countsB });
+        }
+      }
+    };
+    const handleMouseLeave = () => {
+      setHoverInfo(null);
+    };
+    const yAxisLabel = normalization === "time" ? t("countsPerSecond") : t("counts");
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-between items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("plotTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "flex items-center space-x-4 text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { className: "flex items-center space-x-2 cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "checkbox", checked: logScale, onChange: () => setLogScale(!logScale), className: "form-checkbox h-4 w-4 text-cyan-500" }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("plotLogScale") })
+      ] }) })
+    ] }), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "relative", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#9ca3af", fontSize: "14", children: t("channel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("line", { x1: padding.left, y1: padding.top, x2: padding.left, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("text", { x: padding.left - 40, y: height / 2, textAnchor: "middle", transform: `rotate(-90 ${padding.left - 40} ${height / 2})`, fill: "#9ca3af", fontSize: "14", children: yAxisLabel }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { d: pathB, stroke: "#f97316", fill: "none", strokeWidth: "1.5", opacity: "0.8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { d: pathA, stroke: "#38bdf8", fill: "none", strokeWidth: "1.5" })
+        ] }),
+        hoverInfo && (0, import_react_dom4.createPortal)(
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+            "div",
+            {
+              className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50",
+              style: { top: hoverInfo.y + 15, left: hoverInfo.x + 15 },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+                  t("channel"),
+                  ": ",
+                  hoverInfo.channel
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+                  t("energy_keV"),
+                  ": ",
+                  hoverInfo.energy.toFixed(1)
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "mt-1 pt-1 border-t border-gray-700", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "text-sky-400", children: [
+                    t("spectrumA"),
+                    ": ",
+                    hoverInfo.countsA?.toPrecision(3)
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "text-orange-400", children: [
+                    t("spectrumB"),
+                    ": ",
+                    hoverInfo.countsB?.toPrecision(3)
+                  ] })
+                ] })
+              ]
+            }
+          ),
+          document.body
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-center flex-wrap gap-x-6 gap-y-2 text-sm mt-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex items-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "w-4 h-4 rounded-full bg-sky-400 mr-2" }),
+          t("spectrumA")
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex items-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "w-4 h-4 rounded-full bg-orange-500 mr-2" }),
+          t("spectrumB")
+        ] })
+      ] })
+    ] });
+  };
+  var ComparisonPlot_default = ComparisonPlot;
+
+  // pages/SpectrumComparisonPage.tsx
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var N42FileUploader3 = ({ id, onFileLoaded, label, file }) => {
+    const handleFile = async (f) => {
+      if (!f)
+        return;
+      try {
+        const parsed = await parseN42File(f, (key) => key);
+        onFileLoaded(f, parsed);
+      } catch (e) {
+        alert(`Error parsing file: ${e.message}`);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("label", { htmlFor: id, className: "p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "file", id, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("p", { className: "text-xs text-gray-500", children: file ? file.name : "Select a file" })
+    ] }) });
+  };
+  var SpectrumComparisonPage = ({ t, onBack, analysisType }) => {
+    const [spectrumA, setSpectrumA] = (0, import_react26.useState)({ file: null, data: null });
+    const [spectrumB, setSpectrumB] = (0, import_react26.useState)({ file: null, data: null });
+    const [timeA, setTimeA] = (0, import_react26.useState)(60);
+    const [timeB, setTimeB] = (0, import_react26.useState)(60);
+    const [normalization, setNormalization] = (0, import_react26.useState)("none");
+    (0, import_react26.useEffect)(() => {
+      if (spectrumA.data?.spectra[0]?.liveTimeSeconds) {
+        setTimeA(spectrumA.data.spectra[0].liveTimeSeconds);
+      }
+    }, [spectrumA.data]);
+    (0, import_react26.useEffect)(() => {
+      if (spectrumB.data?.spectra[0]?.liveTimeSeconds) {
+        setTimeB(spectrumB.data.spectra[0].liveTimeSeconds);
+      }
+    }, [spectrumB.data]);
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumComparisonTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: t("backButton") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(Card_default, { title: t("inputs"), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumA") }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(N42FileUploader3, { id: "upload-a", onFileLoaded: (file, data) => setSpectrumA({ file, data }), label: t("loadSpectrum"), file: spectrumA.file }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
+              t("measurementTime"),
+              " (s)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "number", value: timeA, onChange: (e) => setTimeA(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumB") }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(N42FileUploader3, { id: "upload-b", onFileLoaded: (file, data) => setSpectrumB({ file, data }), label: t("loadSpectrum"), file: spectrumB.file }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
+              t("measurementTime"),
+              " (s)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "number", value: timeB, onChange: (e) => setTimeB(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "border-t border-gray-700 pt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-2 block", children: t("normalization") }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1 max-w-xs", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { onClick: () => setNormalization("none"), className: `flex-1 p-1 text-sm rounded ${normalization === "none" ? "bg-cyan-600" : ""}`, children: t("normNone") }),
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { onClick: () => setNormalization("time"), className: `flex-1 p-1 text-sm rounded ${normalization === "time" ? "bg-cyan-600" : ""}`, children: t("timeScale") })
+          ] })
+        ] })
+      ] }),
+      spectrumA.data && spectrumB.data && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+        ComparisonPlot_default,
+        {
+          spectrumA: spectrumA.data.spectra[0],
+          spectrumB: spectrumB.data.spectra[0],
+          timeA,
+          timeB,
+          normalization,
+          t
+        }
+      ) })
+    ] });
+  };
+  var SpectrumComparisonPage_default = SpectrumComparisonPage;
+
+  // pages/SpectroPage.tsx
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
   var SpectroPage = ({ t, onOpenPeakIdentifier, analysisToLoad, clearAnalysisToLoad }) => {
-    const [mode, setMode] = (0, import_react25.useState)("selection");
-    const [analysisType, setAnalysisType] = (0, import_react25.useState)("gamma");
-    (0, import_react25.useEffect)(() => {
+    const [mode, setMode] = (0, import_react27.useState)("selection");
+    const [analysisType, setAnalysisType] = (0, import_react27.useState)("gamma");
+    (0, import_react27.useEffect)(() => {
       if (analysisToLoad) {
         setMode(analysisToLoad.analysisType);
       }
@@ -29800,15 +30061,18 @@
       }
     };
     if (mode === "image") {
-      const dataToLoad = analysisToLoad?.analysisType === "image" ? analysisToLoad.data : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(SpectrumAnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
+      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "image" ? analysisToLoad.data : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(SpectrumAnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
     }
     if (mode === "n42") {
-      const dataToLoad = analysisToLoad?.analysisType === "n42" ? analysisToLoad.data : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(N42AnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
+      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "n42" ? analysisToLoad.data : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(N42AnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
     }
     if (mode === "bkg") {
-      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(BackgroundSubtractionPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType });
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(BackgroundSubtractionPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType });
+    }
+    if (mode === "compare") {
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(SpectrumComparisonPage_default, { t, onBack: handleBack, analysisType });
     }
     const handleKeyDown = (e, newMode) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -29821,34 +30085,43 @@
         key: "image",
         title: "spectroMenuImageTitle",
         desc: "spectroMenuImageDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) })
       },
       {
         key: "n42",
         title: "spectroMenuN42Title",
         desc: "spectroMenuN42Desc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) })
       },
       {
         key: "bkg",
         title: "spectroMenuBkgSubTitle",
         desc: "spectroMenuBkgSubDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) })
+      },
+      {
+        key: "compare",
+        title: "spectroMenuCompareTitle",
+        desc: "spectroMenuCompareDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18", opacity: "0.6" })
+        ] })
       }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "p-4 sm:p-6 md:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h2", { className: "text-2xl sm:text-3xl font-bold text-center text-gray-300 mb-6", children: t("spectroMenuTitle") }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "max-w-md mx-auto mb-8", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex items-center justify-center space-x-2 mb-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("label", { className: "text-md sm:text-lg font-semibold text-gray-300", children: t("analysisType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(InfoTooltip_default, { text: t("analysisTypeTooltip") })
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "p-4 sm:p-6 md:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h2", { className: "text-2xl sm:text-3xl font-bold text-center text-gray-300 mb-6", children: t("spectroMenuTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "max-w-md mx-auto mb-8", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex items-center justify-center space-x-2 mb-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("label", { className: "text-md sm:text-lg font-semibold text-gray-300", children: t("analysisType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(InfoTooltip_default, { text: t("analysisTypeTooltip") })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex bg-gray-800 border border-gray-700 rounded-lg p-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "gamma" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("gammaAnalysis") }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "alpha" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("alphaAnalysis") })
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex bg-gray-800 border border-gray-700 rounded-lg p-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "gamma" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("gammaAnalysis") }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "alpha" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("alphaAnalysis") })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
         "div",
         {
           onClick: () => setMode(tool.key),
@@ -29857,10 +30130,10 @@
           tabIndex: 0,
           "aria-label": t(tool.title),
           className: "bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-700 hover:border-cyan-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500",
-          children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "p-6 flex flex-col items-center justify-center text-center flex-grow", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "bg-gray-700 p-4 rounded-full mb-4", children: tool.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { className: "text-lg font-bold text-gray-100", children: t(tool.title) }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "text-sm text-gray-400 mt-2", children: t(tool.desc) })
+          children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "p-6 flex flex-col items-center justify-center text-center flex-grow", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "bg-gray-700 p-4 rounded-full mb-4", children: tool.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-bold text-gray-100", children: t(tool.title) }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-sm text-gray-400 mt-2", children: t(tool.desc) })
           ] })
         },
         tool.key
@@ -29870,10 +30143,10 @@
   var SpectroPage_default = SpectroPage;
 
   // pages/SourceManagementPage.tsx
-  var import_react29 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
 
   // components/source-management/AddSourceModal.tsx
-  var import_react26 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
 
   // services/sourceTypes.ts
   var sourceTypes = [
@@ -29950,28 +30223,28 @@
   ];
 
   // components/source-management/AddSourceModal.tsx
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
   var formatDateForInput2 = (date) => {
     if (typeof date === "string")
       return date;
     return date.toISOString().split("T")[0];
   };
   var AddSourceModal = ({ isOpen, onClose, onSave, t, sourceToEdit }) => {
-    const [name, setName] = (0, import_react26.useState)("");
-    const [location, setLocation] = (0, import_react26.useState)("");
-    const [nuclide, setNuclide] = (0, import_react26.useState)("");
-    const [referenceActivity, setReferenceActivity] = (0, import_react26.useState)(1e4);
-    const [referenceActivityUncertainty, setReferenceActivityUncertainty] = (0, import_react26.useState)(5);
-    const [referenceDate, setReferenceDate] = (0, import_react26.useState)(formatDateForInput2(/* @__PURE__ */ new Date()));
-    const [certificateNumber, setCertificateNumber] = (0, import_react26.useState)("");
-    const [type, setType] = (0, import_react26.useState)("");
+    const [name, setName] = (0, import_react28.useState)("");
+    const [location, setLocation] = (0, import_react28.useState)("");
+    const [nuclide, setNuclide] = (0, import_react28.useState)("");
+    const [referenceActivity, setReferenceActivity] = (0, import_react28.useState)(1e4);
+    const [referenceActivityUncertainty, setReferenceActivityUncertainty] = (0, import_react28.useState)(5);
+    const [referenceDate, setReferenceDate] = (0, import_react28.useState)(formatDateForInput2(/* @__PURE__ */ new Date()));
+    const [certificateNumber, setCertificateNumber] = (0, import_react28.useState)("");
+    const [type, setType] = (0, import_react28.useState)("");
     const allNuclides = Object.entries(radionuclides).flatMap(
       ([type2, nuclides]) => nuclides.map((n) => ({
         name: n.name,
         type: type2.charAt(0).toUpperCase() + type2.slice(1)
       }))
     );
-    (0, import_react26.useEffect)(() => {
+    (0, import_react28.useEffect)(() => {
       if (sourceToEdit) {
         setName(sourceToEdit.name);
         setLocation(sourceToEdit.location || "");
@@ -30011,61 +30284,61 @@
     };
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Card_default, { title: sourceToEdit ? t("editSourceTitle") : t("addSourceTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Card_default, { title: sourceToEdit ? t("editSourceTitle") : t("addSourceTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("select", { value: nuclide, onChange: (e) => setNuclide(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type2, nuclidesOfType]) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("optgroup", { label: type2.charAt(0).toUpperCase() + type2.slice(1), children: nuclidesOfType.map((n) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("option", { value: n.name, children: n.name }, n.name)) }, type2)) })
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("select", { value: nuclide, onChange: (e) => setNuclide(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type2, nuclidesOfType]) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("optgroup", { label: type2.charAt(0).toUpperCase() + type2.slice(1), children: nuclidesOfType.map((n) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("option", { value: n.name, children: n.name }, n.name)) }, type2)) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("select", { value: type, onChange: (e) => setType(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("option", { value: "", children: t("selectType") }),
-            sourceTypes.map((st) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("option", { value: st.key, children: st.description }, st.key))
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("select", { value: type, onChange: (e) => setType(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("option", { value: "", children: t("selectType") }),
+            sourceTypes.map((st) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("option", { value: st.key, children: st.description }, st.key))
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "number", value: referenceActivity, onChange: (e) => setReferenceActivity(parseFloat(e.target.value)), min: "0", step: "any", required: true, className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "number", value: referenceActivity, onChange: (e) => setReferenceActivity(parseFloat(e.target.value)), min: "0", step: "any", required: true, className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivityUncertainty") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "number", value: referenceActivityUncertainty, onChange: (e) => setReferenceActivityUncertainty(parseFloat(e.target.value)), min: "0", step: "any", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivityUncertainty") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "number", value: referenceActivityUncertainty, onChange: (e) => setReferenceActivityUncertainty(parseFloat(e.target.value)), min: "0", step: "any", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceDate") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "date", value: referenceDate, onChange: (e) => setReferenceDate(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceDate") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "date", value: referenceDate, onChange: (e) => setReferenceDate(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("certificateNumber") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "text", value: certificateNumber, onChange: (e) => setCertificateNumber(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("certificateNumber") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "text", value: certificateNumber, onChange: (e) => setCertificateNumber(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
       ] })
     ] }) }) }) });
   };
   var AddSourceModal_default = AddSourceModal;
 
   // components/source-management/SourceTooltip.tsx
-  var import_react_dom4 = __toESM(require_react_dom());
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  var import_react_dom5 = __toESM(require_react_dom());
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   var SourceTooltip = ({ source, position, t }) => {
     const nuclideData = Object.entries(radionuclides).flatMap(
       ([type, nuclides]) => nuclides.map((n) => ({ ...n, type }))
@@ -30088,45 +30361,45 @@
       pointerEvents: "none",
       zIndex: 100
     };
-    return (0, import_react_dom4.createPortal)(
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
+    return (0, import_react_dom5.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
         "div",
         {
           style: tooltipStyle,
           className: "w-72 bg-gray-900 text-white text-xs rounded py-2 px-3 border border-cyan-500 shadow-lg",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h4", { className: "font-bold text-sm text-cyan-400 mb-2 border-b border-gray-700 pb-1", children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "space-y-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("span", { className: "text-gray-400", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h4", { className: "font-bold text-sm text-cyan-400 mb-2 border-b border-gray-700 pb-1", children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "space-y-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("span", { className: "text-gray-400", children: [
                   t("halfLife"),
                   ":"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { className: "font-mono", children: nuclideData ? formatHalfLife(halfLifeYears) : "N/A" })
+                /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { className: "font-mono", children: nuclideData ? formatHalfLife(halfLifeYears) : "N/A" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("span", { className: "text-gray-400", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("span", { className: "text-gray-400", children: [
                   t("radiationType"),
                   ":"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { className: "font-mono capitalize", children: nuclideData?.type || "N/A" })
+                /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("span", { className: "font-mono capitalize", children: nuclideData?.type || "N/A" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "pt-1 mt-1 border-t border-gray-700", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("h5", { className: "text-gray-400 mb-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "pt-1 mt-1 border-t border-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("h5", { className: "text-gray-400 mb-1", children: [
                   t("mainEnergyLines"),
                   ":"
                 ] }),
-                mainGammaLines && mainGammaLines.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("ul", { className: "space-y-0.5", children: mainGammaLines.map((line) => /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("li", { className: "flex justify-between font-mono", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("span", { children: [
+                mainGammaLines && mainGammaLines.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("ul", { className: "space-y-0.5", children: mainGammaLines.map((line) => /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("li", { className: "flex justify-between font-mono", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("span", { children: [
                     line.energy_keV.toFixed(1),
                     " keV"
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("span", { className: "text-gray-400", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("span", { className: "text-gray-400", children: [
                     "(",
                     line.intensity_percent.toFixed(2),
                     "%)"
                   ] })
-                ] }, line.energy_keV)) }) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-gray-500", children: t("noSignificantGamma") })
+                ] }, line.energy_keV)) }) : /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-gray-500", children: t("noSignificantGamma") })
               ] })
             ] })
           ]
@@ -30138,8 +30411,8 @@
   var SourceTooltip_default = SourceTooltip;
 
   // components/source-management/ImportReviewModal.tsx
-  var import_react27 = __toESM(require_react());
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  var import_react29 = __toESM(require_react());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
   var ImportReviewModal = ({
     isOpen,
     onClose,
@@ -30148,8 +30421,8 @@
     onConfirm,
     t
   }) => {
-    const [decisions, setDecisions] = (0, import_react27.useState)(/* @__PURE__ */ new Map());
-    (0, import_react27.useEffect)(() => {
+    const [decisions, setDecisions] = (0, import_react29.useState)(/* @__PURE__ */ new Map());
+    (0, import_react29.useEffect)(() => {
       if (isOpen) {
         const newDecisions = /* @__PURE__ */ new Map();
         const existingIds2 = new Set(existingSources.map((s) => s.id));
@@ -30180,21 +30453,21 @@
     if (!isOpen)
       return null;
     const existingIds = new Set(existingSources.map((s) => s.id));
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Card_default, { title: t("importReviewTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("p", { className: "text-sm text-gray-400", children: t("importInstructions") }),
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "max-h-[60vh] overflow-y-auto border border-gray-700 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("th", { className: "py-2 px-3 w-8", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("input", { type: "checkbox", title: t("selectAll"), onChange: handleSelectAllNew }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("th", { className: "py-2 px-3", children: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("th", { className: "py-2 px-3", children: t("importStatus") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("th", { className: "py-2 px-3", children: t("decision") })
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Card_default, { title: t("importReviewTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { className: "text-sm text-gray-400", children: t("importInstructions") }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "max-h-[60vh] overflow-y-auto border border-gray-700 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3 w-8", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("input", { type: "checkbox", title: t("selectAll"), onChange: handleSelectAllNew }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("importStatus") }),
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("decision") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("tbody", { className: "text-gray-200", children: sourcesFromFile.map((source) => {
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("tbody", { className: "text-gray-200", children: sourcesFromFile.map((source) => {
           const isConflict = existingIds.has(source.id);
           const currentDecision = decisions.get(source.id);
-          return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("tr", { className: "border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("td", { className: "py-3 px-3", children: !isConflict && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { className: "border-t border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: !isConflict && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
               "input",
               {
                 type: "checkbox",
@@ -30203,37 +30476,37 @@
                 className: "form-checkbox h-4 w-4 text-cyan-600 bg-gray-700 border-gray-600 rounded"
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("td", { className: "py-3 px-3 font-semibold", children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("td", { className: "py-3 px-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("td", { className: "py-3 px-3", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${isConflict ? "bg-yellow-900 text-yellow-300" : "bg-green-900 text-green-300"}`, children: isConflict ? t("conflict") : t("new") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("td", { className: "py-3 px-3", children: isConflict && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-0.5", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => handleDecisionChange(source.id, "skip"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "skip" ? "bg-gray-500 text-white" : "hover:bg-gray-600"}`, children: t("skip") }),
-              /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => handleDecisionChange(source.id, "overwrite"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "overwrite" ? "bg-red-600 text-white" : "hover:bg-gray-600"}`, children: t("overwrite") })
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-semibold", children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${isConflict ? "bg-yellow-900 text-yellow-300" : "bg-green-900 text-green-300"}`, children: isConflict ? t("conflict") : t("new") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: isConflict && /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-0.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => handleDecisionChange(source.id, "skip"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "skip" ? "bg-gray-500 text-white" : "hover:bg-gray-600"}`, children: t("skip") }),
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: () => handleDecisionChange(source.id, "overwrite"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "overwrite" ? "bg-red-600 text-white" : "hover:bg-gray-600"}`, children: t("overwrite") })
             ] }) })
           ] }, source.id);
         }) })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "button", onClick: () => onConfirm(decisions), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmImport") })
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { type: "button", onClick: () => onConfirm(decisions), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmImport") })
       ] })
     ] }) }) }) });
   };
   var ImportReviewModal_default = ImportReviewModal;
 
   // components/source-management/CsvImportModal.tsx
-  var import_react28 = __toESM(require_react());
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  var import_react30 = __toESM(require_react());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   var CsvImportModal = ({ isOpen, onClose, onImport, t }) => {
-    const [file, setFile] = (0, import_react28.useState)(null);
-    const [error, setError] = (0, import_react28.useState)(null);
+    const [file, setFile] = (0, import_react30.useState)(null);
+    const [error, setError] = (0, import_react30.useState)(null);
     const handleFileChange = (e) => {
       if (e.target.files && e.target.files.length > 0) {
         setFile(e.target.files[0]);
         setError(null);
       }
     };
-    const handleDrop = (0, import_react28.useCallback)((e) => {
+    const handleDrop = (0, import_react30.useCallback)((e) => {
       e.preventDefault();
       e.stopPropagation();
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
@@ -30285,71 +30558,71 @@
     };
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Card_default, { title: t("importCsvTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-sm text-gray-400", children: t("importCsvIntro") }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Card_default, { title: t("importCsvTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-sm text-gray-400", children: t("importCsvIntro") }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
         "div",
         {
           onDragOver: (e) => e.preventDefault(),
           onDrop: handleDrop,
           className: "p-6 border-2 border-dashed rounded-lg text-center border-gray-600 hover:border-cyan-500",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "file", id: "csv-upload", className: "hidden", accept: ".csv", onChange: handleFileChange }),
-            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { htmlFor: "csv-upload", className: "cursor-pointer text-cyan-400 font-semibold", children: file ? file.name : t("selectCsvFile") })
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("input", { type: "file", id: "csv-upload", className: "hidden", accept: ".csv", onChange: handleFileChange }),
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("label", { htmlFor: "csv-upload", className: "cursor-pointer text-cyan-400 font-semibold", children: file ? file.name : t("selectCsvFile") })
           ]
         }
       ),
-      error && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-red-400 text-sm text-center", children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { onClick: processImport, disabled: !file, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("confirmImport") })
+      error && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-red-400 text-sm text-center", children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: processImport, disabled: !file, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("confirmImport") })
       ] })
     ] }) }) }) });
   };
   var CsvImportModal_default = CsvImportModal;
 
   // components/source-management/SourceTypesMemoModal.tsx
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
   var SourceTypesMemoModal = ({ isOpen, onClose, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("description") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "py-2 px-3", children: t("description") }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("tr", { className: "border-t border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: type.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("tr", { className: "border-t border-gray-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "py-3 px-3", children: type.description }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
         ] }, type.key)) })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
     ] }) }) });
   };
   var SourceTypesMemoModal_default = SourceTypesMemoModal;
 
   // pages/SourceManagementPage.tsx
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
   var SourceManagementPage = ({ t }) => {
-    const [sources, setSources] = (0, import_react29.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react29.useState)(true);
-    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react29.useState)(false);
-    const [sourceToEdit, setSourceToEdit] = (0, import_react29.useState)(null);
-    const [searchTerm, setSearchTerm] = (0, import_react29.useState)("");
-    const [hoveredSource, setHoveredSource] = (0, import_react29.useState)(null);
-    const [sortConfig, setSortConfig] = (0, import_react29.useState)({ key: "name", direction: "ascending" });
-    const [isMemoOpen, setIsMemoOpen] = (0, import_react29.useState)(false);
-    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react29.useState)(false);
-    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react29.useState)(false);
-    const [sourcesToImport, setSourcesToImport] = (0, import_react29.useState)([]);
-    const fetchSources = (0, import_react29.useCallback)(async () => {
+    const [sources, setSources] = (0, import_react31.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react31.useState)(true);
+    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react31.useState)(false);
+    const [sourceToEdit, setSourceToEdit] = (0, import_react31.useState)(null);
+    const [searchTerm, setSearchTerm] = (0, import_react31.useState)("");
+    const [hoveredSource, setHoveredSource] = (0, import_react31.useState)(null);
+    const [sortConfig, setSortConfig] = (0, import_react31.useState)({ key: "name", direction: "ascending" });
+    const [isMemoOpen, setIsMemoOpen] = (0, import_react31.useState)(false);
+    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react31.useState)(false);
+    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react31.useState)(false);
+    const [sourcesToImport, setSourcesToImport] = (0, import_react31.useState)([]);
+    const fetchSources = (0, import_react31.useCallback)(async () => {
       setIsLoading(true);
       try {
         const allSources = await db.getAllSources();
@@ -30360,7 +30633,7 @@
         setIsLoading(false);
       }
     }, []);
-    (0, import_react29.useEffect)(() => {
+    (0, import_react31.useEffect)(() => {
       fetchSources();
     }, [fetchSources]);
     const handleSaveSource = async (source) => {
@@ -30438,7 +30711,7 @@
         setIsLoading(false);
       }
     };
-    const calculateCurrentActivity = (0, import_react29.useCallback)((source) => {
+    const calculateCurrentActivity = (0, import_react31.useCallback)((source) => {
       const nuclideData = Object.values(radionuclides).flat().find((n) => n.name === source.nuclide);
       if (!nuclideData)
         return source.referenceActivity;
@@ -30448,12 +30721,12 @@
       const lambda = Math.log(2) / nuclideData.halfLifeSeconds;
       return source.referenceActivity * Math.exp(-lambda * elapsedTimeSeconds);
     }, []);
-    const filteredSources = (0, import_react29.useMemo)(() => {
+    const filteredSources = (0, import_react31.useMemo)(() => {
       return sources.filter(
         (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }, [sources, searchTerm]);
-    const sortedSources = (0, import_react29.useMemo)(() => {
+    const sortedSources = (0, import_react31.useMemo)(() => {
       let sortableItems = [...filteredSources];
       if (sortConfig.key) {
         sortableItems.sort((a, b) => {
@@ -30516,16 +30789,16 @@
     };
     const SortableHeader = ({ sortKey, label }) => {
       const isSorted = sortConfig.key === sortKey;
-      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: label }),
-        isSorted && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: label }),
+        isSorted && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
       ] }) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
             "input",
             {
               type: "text",
@@ -30535,51 +30808,51 @@
               className: "bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => {
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => {
             setSourceToEdit(null);
             setIsAddModalOpen(true);
           }, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm", children: t("addSource") })
         ] })
-      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("p", { children: [
+      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("p", { children: [
         t("loading"),
         "..."
-      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: t("currentActivity") }),
-            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: t("currentActivity") }),
+            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-center", children: t("actions") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("tbody", { children: sortedSources.map((source) => {
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tbody", { children: sortedSources.map((source) => {
           const currentActivity = calculateCurrentActivity(source);
           const conformity = checkConformity(source, currentActivity);
-          return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.location }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: source.type }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
+          return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.location }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.type }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
+                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
               ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
             ] }) })
           ] }, source.id);
         }) })
       ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         AddSourceModal_default,
         {
           isOpen: isAddModalOpen,
@@ -30592,7 +30865,7 @@
           sourceToEdit
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         CsvImportModal_default,
         {
           isOpen: isCsvImportOpen,
@@ -30601,7 +30874,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         ImportReviewModal_default,
         {
           isOpen: isImportReviewOpen,
@@ -30612,7 +30885,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         SourceTypesMemoModal_default,
         {
           isOpen: isMemoOpen,
@@ -30620,18 +30893,18 @@
           t
         }
       ),
-      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
+      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
     ] });
   };
   var SourceManagementPage_default = SourceManagementPage;
 
   // pages/AnalysisHistoryPage.tsx
-  var import_react30 = __toESM(require_react());
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var import_react32 = __toESM(require_react());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   var AnalysisHistoryPage = ({ t, onLoadAnalysis }) => {
-    const [analyses, setAnalyses] = (0, import_react30.useState)([]);
-    const [sources, setSources] = (0, import_react30.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react30.useState)(true);
+    const [analyses, setAnalyses] = (0, import_react32.useState)([]);
+    const [sources, setSources] = (0, import_react32.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react32.useState)(true);
     const fetchAllData = async () => {
       setIsLoading(true);
       try {
@@ -30647,10 +30920,10 @@
         setIsLoading(false);
       }
     };
-    (0, import_react30.useEffect)(() => {
+    (0, import_react32.useEffect)(() => {
       fetchAllData();
     }, []);
-    const sourceMap = (0, import_react30.useMemo)(() => {
+    const sourceMap = (0, import_react32.useMemo)(() => {
       return new Map(sources.map((s) => [s.id, s.name]));
     }, [sources]);
     const handleDelete = async (id) => {
@@ -30659,30 +30932,30 @@
         fetchAllData();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("p", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("p", { children: [
       t("loading"),
       "..."
-    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("table", { className: "w-full text-sm text-left", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "p-3", children: t("analysisDate") }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "p-3", children: t("linkedSource") }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("table", { className: "w-full text-sm text-left", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisDate") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("linkedSource") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("actions") })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "hidden sm:inline", children: t("load") })
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden sm:inline", children: t("load") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
           ] })
         ] }) })
       ] }, record.id)) })
@@ -30691,13 +30964,13 @@
   var AnalysisHistoryPage_default = AnalysisHistoryPage;
 
   // components/UpdateNotification.tsx
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   var UpdateNotification = ({ isOpen, onUpdate, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         "button",
         {
           onClick: onUpdate,
@@ -30720,13 +30993,13 @@
       standard: "Standard",
       spectrometry: "Spectrom\xE9trie",
       surfaceControl: "Contr\xF4le surfacique",
-      chambre: "Chambre",
-      linge: "Linge",
+      chambre: "Chambre (CPO/HWM)",
+      linge: "Linge (HLM)",
       standardTooltip: "Pour les mesures simples avec un comptage brut et un comptage de bruit de fond.",
       spectrometryTooltip: "Pour l'analyse d'un pic dans une R\xE9gion d'Int\xE9r\xEAt (ROI), en tenant compte de la mise \xE0 l'\xE9chelle du bruit de fond.",
       surfaceControlTooltip: "Pour les contr\xF4les de contamination de surface, visant une activit\xE9 par unit\xE9 de surface (ex: Bq/cm\xB2).",
-      chambreTooltip: "Pour les syst\xE8mes de mesure fixes (ex: portiques \xE0 personnes) avec un temps de mesure fixe.",
-      lingeTooltip: "Pour les syst\xE8mes \xE0 convoyeur (ex: contr\xF4leurs de linge) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement.",
+      chambreTooltip: "Pour les syst\xE8mes de mesure fixes (ex: CPO/CGP, HWM-38/300) avec un temps de mesure fixe.",
+      lingeTooltip: "Pour les syst\xE8mes \xE0 convoyeur (ex: HLM - Hamburg Laundry Monitor) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement.",
       isoCalculator: "Calculateur ISO",
       spectrometryTools: "Outils Spectro",
       sourceManagement: "Gestion des sources",
@@ -30909,6 +31182,8 @@
       spectroMenuN42Desc: "Charger et analyser un spectre au format standard ANSI N42.42.",
       spectroMenuBkgSubTitle: "Soustraction de Bruit de Fond",
       spectroMenuBkgSubDesc: "Analyser un spectre net apr\xE8s soustraction d'un bruit de fond (fichiers N42).",
+      spectroMenuCompareTitle: "Comparaison de Spectres",
+      spectroMenuCompareDesc: "Superposer deux spectres (fichiers N42) pour une analyse visuelle.",
       exportCsv: "Exporter en CSV",
       saveAnalysis: "Sauvegarder l'analyse",
       // --- Spectrum Analyzer Page (Image) ---
@@ -31012,6 +31287,15 @@
       bkg_sub_backgroundTime: "Temps mesure BDF (s)",
       calculateNetSpectrum: "Calculer le spectre net",
       error_channelMismatch: "Erreur: Les spectres de l'\xE9chantillon et du bruit de fond n'ont pas le m\xEAme nombre de canaux.",
+      // --- Spectrum Comparison Page ---
+      spectrumComparisonTitle: "Comparaison de Spectres",
+      spectrumA: "Spectre A",
+      spectrumB: "Spectre B",
+      loadSpectrum: "Charger le spectre (.n42)",
+      normalization: "Normalisation",
+      normNone: "Aucune",
+      timeScale: "Mise \xE0 l'\xE9chelle temporelle",
+      countsPerSecond: "Coups/seconde",
       // --- Source Management ---
       sourceInventory: "Inventaire des sources",
       searchSource: "Rechercher une source...",
@@ -31139,8 +31423,8 @@
       guide_main_calc_modes_li1: "Pour les mesures simples avec un comptage brut et un comptage de bruit de fond.",
       guide_main_calc_modes_li2: "Pour l'analyse d'un pic dans une R\xE9gion d'Int\xE9r\xEAt (ROI), en tenant compte de la mise \xE0 l'\xE9chelle du bruit de fond.",
       guide_main_calc_modes_li3_surface: "Pour les contr\xF4les de contamination de surface, visant une activit\xE9 par unit\xE9 de surface.",
-      guide_main_calc_modes_li3_chambre: "Pour les syst\xE8mes de mesure fixes (ex: portiques \xE0 personnes) avec un temps de mesure fixe. Limit\xE9 \xE0 6 d\xE9tecteurs.",
-      guide_main_calc_modes_li3_linge: "Pour les syst\xE8mes \xE0 convoyeur (ex: contr\xF4leurs de linge) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement. Limit\xE9 \xE0 9 d\xE9tecteurs.",
+      guide_main_calc_modes_li3_chambre: "Pour les syst\xE8mes de mesure fixes (ex: CPO/CGP, HWM-38/300) avec un temps de mesure fixe. Limit\xE9 \xE0 6 d\xE9tecteurs.",
+      guide_main_calc_modes_li3_linge: "Pour les syst\xE8mes \xE0 convoyeur (ex: HLM - Hamburg Laundry Monitor) o\xF9 le temps de mesure d\xE9pend de la vitesse de d\xE9filement. Limit\xE9 \xE0 9 d\xE9tecteurs.",
       guide_main_calc_inputs_title: "Param\xE8tres d'Entr\xE9e",
       guide_main_calc_inputs_p1: "Les valeurs que vous fournissez pour effectuer le calcul.",
       guide_main_calc_inputs_li1: "Informations sur les comptages mesur\xE9s.",
@@ -31207,13 +31491,13 @@
       standard: "Standard",
       spectrometry: "Spectrometry",
       surfaceControl: "Surface Control",
-      chambre: "Chamber",
-      linge: "Laundry",
+      chambre: "Chamber (CPO/HWM)",
+      linge: "Laundry (HLM)",
       standardTooltip: "For simple measurements with a gross count and a background count.",
       spectrometryTooltip: "For analyzing a peak in a Region of Interest (ROI), taking into account background scaling.",
       surfaceControlTooltip: "For surface contamination checks, targeting an activity per unit area (e.g., Bq/cm\xB2).",
-      chambreTooltip: "For fixed measurement systems (e.g., personnel portals) with a fixed measurement time.",
-      lingeTooltip: "For conveyor-based systems (e.g., laundry monitors) where measurement time depends on the transit speed.",
+      chambreTooltip: "For fixed measurement systems (e.g., CPO/CGP, HWM-38/300) with a fixed measurement time.",
+      lingeTooltip: "For conveyor-based systems (e.g., HLM - Hamburg Laundry Monitor) where measurement time depends on the transit speed.",
       isoCalculator: "ISO Calculator",
       spectrometryTools: "Spectro Tools",
       sourceManagement: "Source Management",
@@ -31391,6 +31675,8 @@
       spectroMenuN42Desc: "Load and analyze a spectrum in the standard ANSI N42.42 format.",
       spectroMenuBkgSubTitle: "Background Subtraction",
       spectroMenuBkgSubDesc: "Analyze a net spectrum after subtracting a background (N42 files).",
+      spectroMenuCompareTitle: "Spectrum Comparison",
+      spectroMenuCompareDesc: "Overlay two spectra (N42 files) for visual analysis.",
       exportCsv: "Export to CSV",
       saveAnalysis: "Save Analysis",
       spectrumAnalyzerTitle: "Image Spectrum Analyzer",
@@ -31487,6 +31773,14 @@
       bkg_sub_backgroundTime: "Background Measurement Time (s)",
       calculateNetSpectrum: "Calculate Net Spectrum",
       error_channelMismatch: "Error: Sample and background spectra do not have the same number of channels.",
+      spectrumComparisonTitle: "Spectrum Comparison",
+      spectrumA: "Spectrum A",
+      spectrumB: "Spectrum B",
+      loadSpectrum: "Load Spectrum (.n42)",
+      normalization: "Normalization",
+      normNone: "None",
+      timeScale: "Time Scale",
+      countsPerSecond: "Counts/second",
       sourceInventory: "Source Inventory",
       searchSource: "Search source...",
       import: "Import",
@@ -31605,8 +31899,8 @@
       guide_main_calc_modes_li1: "For simple measurements with a gross count and a background count.",
       guide_main_calc_modes_li2: "For analyzing a peak in a Region of Interest (ROI), taking into account background scaling.",
       guide_main_calc_modes_li3_surface: "For surface contamination checks, targeting an activity per unit area.",
-      guide_main_calc_modes_li3_chambre: "For fixed measurement systems (e.g., personnel portals) with a fixed measurement time. Limited to 6 detectors.",
-      guide_main_calc_modes_li3_linge: "For conveyor-based systems (e.g., laundry monitors) where measurement time depends on the transit speed. Limited to 9 detectors.",
+      guide_main_calc_modes_li3_chambre: "For fixed measurement systems (e.g., CPO/CGP, HWM-38/300) with a fixed measurement time. Limited to 6 detectors.",
+      guide_main_calc_modes_li3_linge: "For conveyor-based systems (e.g., HLM - Hamburg Laundry Monitor) where measurement time depends on the transit speed. Limited to 9 detectors.",
       guide_main_calc_inputs_title: "Input Parameters",
       guide_main_calc_inputs_p1: "The values you provide to perform the calculation.",
       guide_main_calc_inputs_li1: "Information on the measured counts.",
@@ -31673,13 +31967,13 @@
       standard: "Standard",
       spectrometry: "Spektrometrie",
       surfaceControl: "Oberfl\xE4chenkontrolle",
-      chambre: "Kammer",
-      linge: "W\xE4sche",
+      chambre: "Kammer (CPO/HWM)",
+      linge: "W\xE4sche (HLM)",
       standardTooltip: "F\xFCr einfache Messungen mit einer Brutto- und einer Hintergrundz\xE4hlung.",
       spectrometryTooltip: "Zur Analyse eines Peaks in einem Interessenbereich (ROI), unter Ber\xFCcksichtigung der Hintergrundskalierung.",
       surfaceControlTooltip: "F\xFCr Oberfl\xE4chenkontaminationspr\xFCfungen, die auf eine fl\xE4chenbezogene Aktivit\xE4t abzielen (z. B. Bq/cm\xB2).",
-      chambreTooltip: "F\xFCr feste Messsysteme (z. B. Personenportale) mit einer festen Messzeit.",
-      lingeTooltip: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. W\xE4schemonitore), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt.",
+      chambreTooltip: "F\xFCr feste Messsysteme (z. B. CPO/CGP, HWM-38/300) mit einer festen Messzeit.",
+      lingeTooltip: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. HLM - Hamburg Laundry Monitor), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt.",
       isoCalculator: "ISO-Rechner",
       spectrometryTools: "Spektro-Werkzeuge",
       sourceManagement: "Quellenverwaltung",
@@ -31857,6 +32151,8 @@
       spectroMenuN42Desc: "Laden und analysieren Sie ein Spektrum im Standardformat ANSI N42.42.",
       spectroMenuBkgSubTitle: "Hintergrundsubtraktion",
       spectroMenuBkgSubDesc: "Analysieren Sie ein Nettospektrum nach Subtraktion eines Hintergrunds (N42-Dateien).",
+      spectroMenuCompareTitle: "Spektrenvergleich",
+      spectroMenuCompareDesc: "\xDCberlagern Sie zwei Spektren (N42-Dateien) zur visuellen Analyse.",
       exportCsv: "Als CSV exportieren",
       saveAnalysis: "Analyse speichern",
       spectrumAnalyzerTitle: "Bild-Spektrumanalysator",
@@ -31953,6 +32249,14 @@
       bkg_sub_backgroundTime: "Hintergrundmesszeit (s)",
       calculateNetSpectrum: "Nettospektrum berechnen",
       error_channelMismatch: "Fehler: Proben- und Hintergrundspektren haben nicht die gleiche Anzahl von Kan\xE4len.",
+      spectrumComparisonTitle: "Spektrenvergleich",
+      spectrumA: "Spektrum A",
+      spectrumB: "Spektrum B",
+      loadSpectrum: "Spektrum laden (.n42)",
+      normalization: "Normalisierung",
+      normNone: "Keine",
+      timeScale: "Zeitskalierung",
+      countsPerSecond: "Z\xE4hlungen/Sekunde",
       sourceInventory: "Quelleninventar",
       searchSource: "Quelle suchen...",
       import: "Importieren",
@@ -32071,8 +32375,8 @@
       guide_main_calc_modes_li1: "F\xFCr einfache Messungen mit einer Brutto- und einer Hintergrundz\xE4hlung.",
       guide_main_calc_modes_li2: "Zur Analyse eines Peaks in einem Interessenbereich (ROI), unter Ber\xFCcksichtigung der Hintergrundskalierung.",
       guide_main_calc_modes_li3_surface: "F\xFCr Oberfl\xE4chenkontaminationspr\xFCfungen, die auf eine fl\xE4chenbezogene Aktivit\xE4t abzielen.",
-      guide_main_calc_modes_li3_chambre: "F\xFCr feste Messsysteme (z. B. Personenportale) mit einer festen Messzeit. Begrenzt auf 6 Detektoren.",
-      guide_main_calc_modes_li3_linge: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. W\xE4schemonitore), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt. Begrenzt auf 9 Detektoren.",
+      guide_main_calc_modes_li3_chambre: "F\xFCr feste Messsysteme (z. B. CPO/CGP, HWM-38/300) mit einer festen Messzeit. Begrenzt auf 6 Detektoren.",
+      guide_main_calc_modes_li3_linge: "F\xFCr f\xF6rderbandbasierte Systeme (z. B. HLM - Hamburg Laundry Monitor), bei denen die Messzeit von der Transitgeschwindigkeit abh\xE4ngt. Begrenzt auf 9 Detektoren.",
       guide_main_calc_inputs_title: "Eingabeparameter",
       guide_main_calc_inputs_p1: "Die Werte, die Sie zur Durchf\xFChrung der Berechnung angeben.",
       guide_main_calc_inputs_li1: "Informationen zu den gemessenen Z\xE4hlungen.",
@@ -32139,13 +32443,13 @@
       standard: "Est\xE1ndar",
       spectrometry: "Espectrometr\xEDa",
       surfaceControl: "Control de Superficie",
-      chambre: "C\xE1mara",
-      linge: "Lavander\xEDa",
+      chambre: "C\xE1mara (CPO/HWM)",
+      linge: "Lavander\xEDa (HLM)",
       standardTooltip: "Para mediciones simples con un conteo bruto y un conteo de fondo.",
       spectrometryTooltip: "Para analizar un pico en una Regi\xF3n de Inter\xE9s (ROI), teniendo en cuenta el escalado del fondo.",
       surfaceControlTooltip: "Para controles de contaminaci\xF3n de superficie, con el objetivo de una actividad por unidad de \xE1rea (p. ej., Bq/cm\xB2).",
-      chambreTooltip: "Para sistemas de medici\xF3n fijos (p. ej., portales de personal) con un tiempo de medici\xF3n fijo.",
-      lingeTooltip: "Para sistemas basados en cintas transportadoras (p. ej., monitores de lavander\xEDa) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito.",
+      chambreTooltip: "Para sistemas de medici\xF3n fijos (p. ej., CPO/CGP, HWM-38/300) con un tiempo de medici\xF3n fijo.",
+      lingeTooltip: "Para sistemas basados en cintas transportadoras (p. ej., HLM - Hamburg Laundry Monitor) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito.",
       isoCalculator: "Calculadora ISO",
       spectrometryTools: "Herramientas de Espectro",
       sourceManagement: "Gesti\xF3n de Fuentes",
@@ -32323,6 +32627,8 @@
       spectroMenuN42Desc: "Cargar y analizar un espectro en el formato est\xE1ndar ANSI N42.42.",
       spectroMenuBkgSubTitle: "Sustracci\xF3n de Fondo",
       spectroMenuBkgSubDesc: "Analizar un espectro neto despu\xE9s de sustraer un fondo (archivos N42).",
+      spectroMenuCompareTitle: "Comparaci\xF3n de Espectros",
+      spectroMenuCompareDesc: "Superponer dos espectros (archivos N42) para un an\xE1lisis visual.",
       exportCsv: "Exportar a CSV",
       saveAnalysis: "Guardar An\xE1lisis",
       spectrumAnalyzerTitle: "Analizador de Espectro de Imagen",
@@ -32419,6 +32725,14 @@
       bkg_sub_backgroundTime: "Tiempo de Medici\xF3n de Fondo (s)",
       calculateNetSpectrum: "Calcular Espectro Neto",
       error_channelMismatch: "Error: Los espectros de muestra y de fondo no tienen el mismo n\xFAmero de canales.",
+      spectrumComparisonTitle: "Comparaci\xF3n de Espectros",
+      spectrumA: "Espectro A",
+      spectrumB: "Espectro B",
+      loadSpectrum: "Cargar Espectro (.n42)",
+      normalization: "Normalizaci\xF3n",
+      normNone: "Ninguna",
+      timeScale: "Escala de Tiempo",
+      countsPerSecond: "Cuentas/segundo",
       sourceInventory: "Inventario de Fuentes",
       searchSource: "Buscar fuente...",
       import: "Importar",
@@ -32537,8 +32851,8 @@
       guide_main_calc_modes_li1: "Para mediciones simples con un conteo bruto y un conteo de fondo.",
       guide_main_calc_modes_li2: "Para analizar un pico en una Regi\xF3n de Inter\xE9s (ROI), teniendo en cuenta el escalado del fondo.",
       guide_main_calc_modes_li3_surface: "Para controles de contaminaci\xF3n de superficie, con el objetivo de una actividad por unidad de \xE1rea.",
-      guide_main_calc_modes_li3_chambre: "Para sistemas de medici\xF3n fijos (p. ej., portales de personal) con un tiempo de medici\xF3n fijo. Limitado a 6 detectores.",
-      guide_main_calc_modes_li3_linge: "Para sistemas basados en cintas transportadoras (p. ej., monitores de lavander\xEDa) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito. Limitado a 9 detectores.",
+      guide_main_calc_modes_li3_chambre: "Para sistemas de medici\xF3n fijos (p. ej., CPO/CGP, HWM-38/300) con un tiempo de medici\xF3n fijo. Limitado a 6 detectores.",
+      guide_main_calc_modes_li3_linge: "Para sistemas basados en cintas transportadoras (p. ej., HLM - Hamburg Laundry Monitor) donde el tiempo de medici\xF3n depende de la velocidad de tr\xE1nsito. Limitado a 9 detectores.",
       guide_main_calc_inputs_title: "Par\xE1metros de Entrada",
       guide_main_calc_inputs_p1: "Los valores que proporciona para realizar el c\xE1lculo.",
       guide_main_calc_inputs_li1: "Informaci\xF3n sobre los conteos medidos.",
@@ -33010,7 +33324,7 @@
   }
 
   // App.tsx
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
   var defaultDetectors = Array(10).fill(null).map(() => ({
     efficiency: 50,
     background: 10,
@@ -33055,31 +33369,31 @@
     numSimulations: 1e4
   };
   var App = () => {
-    const [language, setLanguage] = (0, import_react31.useState)("fr" /* FR */);
-    const [t, setT] = (0, import_react31.useState)(() => getTranslator("fr" /* FR */));
-    const [view, setView] = (0, import_react31.useState)("calculator");
-    const [isExpertMode, setIsExpertMode] = (0, import_react31.useState)(false);
-    const [theme, setTheme] = (0, import_react31.useState)("default");
-    const [inputs, setInputs] = (0, import_react31.useState)(initialInputs);
-    const [results, setResults] = (0, import_react31.useState)(null);
-    const [mode, setMode] = (0, import_react31.useState)("standard");
-    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react31.useState)("calculate");
-    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react31.useState)(100);
-    const [isCalculating, setIsCalculating] = (0, import_react31.useState)(true);
-    const [autoW, setAutoW] = (0, import_react31.useState)(true);
-    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react31.useState)(() => !localStorage.getItem("hasSeenWelcome"));
-    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react31.useState)(false);
-    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react31.useState)(false);
-    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react31.useState)(false);
-    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react31.useState)(false);
-    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react31.useState)(false);
-    const [isProUser, setIsProUser] = (0, import_react31.useState)(false);
-    const [isProModalOpen, setIsProModalOpen] = (0, import_react31.useState)(false);
-    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react31.useState)(false);
-    const waitingWorkerRef = (0, import_react31.useRef)(null);
-    const [analysisToLoad, setAnalysisToLoad] = (0, import_react31.useState)(null);
-    const toolsMenuRef = (0, import_react31.useRef)(null);
-    (0, import_react31.useEffect)(() => {
+    const [language, setLanguage] = (0, import_react33.useState)("fr" /* FR */);
+    const [t, setT] = (0, import_react33.useState)(() => getTranslator("fr" /* FR */));
+    const [view, setView] = (0, import_react33.useState)("calculator");
+    const [isExpertMode, setIsExpertMode] = (0, import_react33.useState)(false);
+    const [theme, setTheme] = (0, import_react33.useState)("default");
+    const [inputs, setInputs] = (0, import_react33.useState)(initialInputs);
+    const [results, setResults] = (0, import_react33.useState)(null);
+    const [mode, setMode] = (0, import_react33.useState)("standard");
+    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react33.useState)("calculate");
+    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react33.useState)(100);
+    const [isCalculating, setIsCalculating] = (0, import_react33.useState)(true);
+    const [autoW, setAutoW] = (0, import_react33.useState)(true);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react33.useState)(() => !localStorage.getItem("hasSeenWelcome"));
+    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react33.useState)(false);
+    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react33.useState)(false);
+    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react33.useState)(false);
+    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react33.useState)(false);
+    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react33.useState)(false);
+    const [isProUser, setIsProUser] = (0, import_react33.useState)(false);
+    const [isProModalOpen, setIsProModalOpen] = (0, import_react33.useState)(false);
+    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react33.useState)(false);
+    const waitingWorkerRef = (0, import_react33.useRef)(null);
+    const [analysisToLoad, setAnalysisToLoad] = (0, import_react33.useState)(null);
+    const toolsMenuRef = (0, import_react33.useRef)(null);
+    (0, import_react33.useEffect)(() => {
       if (localStorage.getItem("isProUser") === "true") {
         setIsProUser(true);
       }
@@ -33113,14 +33427,14 @@
         });
       }
     };
-    (0, import_react31.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       localStorage.setItem("app-theme", theme);
       document.documentElement.classList.remove("theme-lab", "theme-forest");
       if (theme !== "default") {
         document.documentElement.classList.add(`theme-${theme}`);
       }
     }, [theme]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       if (!isToolsMenuOpen)
         return;
       const handleClickOutside = (event) => {
@@ -33133,7 +33447,7 @@
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isToolsMenuOpen]);
-    const autoCalculatedW = (0, import_react31.useMemo)(() => {
+    const autoCalculatedW = (0, import_react33.useMemo)(() => {
       if (!autoW || mode !== "chambre" && mode !== "linge") {
         return null;
       }
@@ -33143,7 +33457,7 @@
       const avgEfficiency = activeDetectors.reduce((sum, d) => sum + d.efficiency / 100, 0) / activeDetectors.length;
       return avgEfficiency > 0 ? 1 / avgEfficiency : null;
     }, [autoW, mode, inputs.detectors]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       if (autoCalculatedW !== null && (autoCalculatedW !== inputs.calibrationFactor || inputs.calibrationFactorUnit !== "Bq/(c/s)")) {
         setInputs((prev) => ({
           ...prev,
@@ -33178,7 +33492,7 @@
       setIsProModalOpen(false);
       alert(t("proUnlockedSuccess"));
     };
-    const calculate = (0, import_react31.useCallback)(() => {
+    const calculate = (0, import_react33.useCallback)(() => {
       setIsCalculating(true);
       setTimeout(() => {
         let t_g = inputs.grossTime;
@@ -33271,7 +33585,7 @@
         setIsCalculating(false);
       }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       calculate();
     }, [calculate]);
     const handleSaveConfig = () => {
@@ -33311,10 +33625,10 @@
       setAnalysisToLoad(record);
       setView("spectro");
     };
-    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
           InputPanel_default,
           {
             inputs,
@@ -33334,8 +33648,8 @@
             onAutoWChange: setAutoW
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             ResultsPanel_default,
             {
               results,
@@ -33349,7 +33663,7 @@
               isCalculating
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             ChartPanel_default,
             {
               results: typeof results === "string" ? null : results,
@@ -33374,11 +33688,11 @@
         case "calculator":
           return renderCalculatorView();
         case "spectro":
-          return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
+          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
         case "sources":
-          return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SourceManagementPage_default, { t });
+          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SourceManagementPage_default, { t });
         case "history":
-          return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
+          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
         default:
           return renderCalculatorView();
       }
@@ -33389,59 +33703,59 @@
       { key: "sources", label: t("sourceManagement"), locked: false },
       { key: "history", label: t("analysisHistory"), locked: true }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("header", { className: "mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("header", { className: "mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
-            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
+            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
-              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("a", { href: "#", onClick: (e) => {
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
+              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsUserGuideOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("userGuide") }),
-                /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("a", { href: "#", onClick: (e) => {
+                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsWelcomeModalOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("showWelcomeTooltip") })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
           "button",
           {
             onClick: () => handleNavItemClick(item.key),
             className: `px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center space-x-2 ${view === item.key ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
             title: item.locked && !isProUser ? t("lockedFeature") : item.label,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: item.label }),
-              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: item.label }),
+              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
             ]
           },
           item.key
         )) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("main", { children: renderView() }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("main", { children: renderView() }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
         DecayCalculatorModal_default,
         {
           isOpen: isDecayCalculatorOpen,
@@ -33453,7 +33767,7 @@
           unit: inputs.calibrationFactorUnit.split("/")[0] || "Bq"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
         UnitConverterModal_default,
         {
           isOpen: isUnitConverterOpen,
@@ -33461,7 +33775,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
         ProAccessModal_default,
         {
           isOpen: isProModalOpen,
@@ -33470,20 +33784,20 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { children: t("authorCredit") }) })
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { children: t("authorCredit") }) })
     ] });
   };
   var App_default = App;
 
   // index.tsx
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   var rootElement = document.getElementById("root");
   if (!rootElement) {
     throw new Error("Could not find the root element to mount the app.");
   }
   var root = import_client.default.createRoot(rootElement);
   root.render(
-    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_react32.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(App_default, {}) })
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_react34.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(App_default, {}) })
   );
 })();
 /*! Bundled license information:
