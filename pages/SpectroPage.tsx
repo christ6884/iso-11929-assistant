@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SpectrumAnalyzerPage from './SpectrumAnalyzerPage';
 import N42AnalyzerPage from './N42AnalyzerPage';
 import BackgroundSubtractionPage from './BackgroundSubtractionPage';
+import SpectrumComparisonPage from './SpectrumComparisonPage';
 import Card from '../components/Card';
 import InfoTooltip from '../components/InfoTooltip';
 import { AnalysisRecord } from '../types';
@@ -14,7 +15,7 @@ interface SpectroPageProps {
 }
 
 const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, analysisToLoad, clearAnalysisToLoad }) => {
-    const [mode, setMode] = useState<'selection' | 'image' | 'n42' | 'bkg'>('selection');
+    const [mode, setMode] = useState<'selection' | 'image' | 'n42' | 'bkg' | 'compare'>('selection');
     const [analysisType, setAnalysisType] = useState<'gamma' | 'alpha'>('gamma');
 
     useEffect(() => {
@@ -47,8 +48,12 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
     if (mode === 'bkg') {
         return <BackgroundSubtractionPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} />;
     }
+
+    if (mode === 'compare') {
+        return <SpectrumComparisonPage t={t} onBack={handleBack} analysisType={analysisType} />;
+    }
     
-    const handleKeyDown = (e: React.KeyboardEvent, newMode: 'image' | 'n42' | 'bkg') => {
+    const handleKeyDown = (e: React.KeyboardEvent, newMode: 'image' | 'n42' | 'bkg' | 'compare') => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setMode(newMode);
@@ -73,6 +78,15 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
             title: 'spectroMenuBkgSubTitle',
             desc: 'spectroMenuBkgSubDesc',
             icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" /></svg>
+        },
+        {
+            key: 'compare',
+            title: 'spectroMenuCompareTitle',
+            desc: 'spectroMenuCompareDesc',
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18" opacity="0.6" />
+                </svg>
         }
     ];
 
@@ -92,12 +106,12 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-stretch gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-stretch gap-8">
                 {tools.map(tool => (
                     <div 
                         key={tool.key}
-                        onClick={() => setMode(tool.key as 'image' | 'n42' | 'bkg')}
-                        onKeyDown={(e) => handleKeyDown(e, tool.key as 'image' | 'n42' | 'bkg')}
+                        onClick={() => setMode(tool.key as 'image' | 'n42' | 'bkg' | 'compare')}
+                        onKeyDown={(e) => handleKeyDown(e, tool.key as 'image' | 'n42' | 'bkg' | 'compare')}
                         role="button"
                         tabIndex={0}
                         aria-label={t(tool.title)}

@@ -209,8 +209,8 @@ export interface SourceType {
 export interface N42Metadata {
     instrument: string;
     timestamp: string;
-    liveTime: string;
     realTime: string;
+    realTimeSeconds?: number;
 }
 
 export interface N42Spectrum {
@@ -221,6 +221,7 @@ export interface N42Spectrum {
         b: number;
         c: number;
     };
+    liveTimeSeconds?: number;
 }
 
 export interface ParsedN42Data {

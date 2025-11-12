@@ -297,7 +297,7 @@ const N42AnalyzerPage: React.FC<N42AnalyzerPageProps> = ({ t, onBack, analysisTy
                         <div className="space-y-3">
                             <div><strong>{t('instrument')}:</strong> {parsedData.metadata.instrument}</div>
                             <div><strong>{t('timestamp')}:</strong> {parsedData.metadata.timestamp}</div>
-                            <div><strong>{t('liveTime')}:</strong> {parsedData.metadata.liveTime}</div>
+                            <div><strong>{t('liveTime')}:</strong> {selectedSpectrum?.liveTimeSeconds ? `${selectedSpectrum.liveTimeSeconds.toFixed(2)} s` : 'N/A'}</div>
                             <div><strong>{t('realTime')}:</strong> {parsedData.metadata.realTime}</div>
                             <div className="pt-2 border-t border-gray-700">
                                 <label className="text-sm text-gray-300 block mb-1">{t('selectSpectrum')}</label>

@@ -15,6 +15,20 @@ function parseDuration(isoDuration: string | null): string {
   return `${totalSeconds.toFixed(2)} s`;
 }
 
+function parseDurationToSeconds(isoDuration: string | null): number | undefined {
+  if (!isoDuration) return undefined;
+  const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
+  const matches = isoDuration.match(regex);
+  if (!matches) return undefined;
+  
+  const hours = parseFloat(matches[1] || '0');
+  const minutes = parseFloat(matches[2] || '0');
+  const seconds = parseFloat(matches[3] || '0');
+  
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+
 export async function parseN42File(file: File, t: (key: string) => string): Promise<ParsedN42Data> {
     const text = await file.text();
     const parser = new DOMParser();
@@ -32,12 +46,13 @@ export async function parseN42File(file: File, t: (key: string) => string): Prom
     const timestamp = measurement?.querySelector('StartDateTime');
     // Overall RealTime from measurement block, LiveTime will be per-spectrum
     const realTime = measurement?.querySelector('RealTimeDuration');
+    const realTimeContent = realTime?.textContent || null;
 
     const metadata: N42Metadata = {
         instrument: instrument?.textContent || 'Unknown',
         timestamp: timestamp?.textContent ? new Date(timestamp.textContent).toLocaleString() : 'N/A',
-        liveTime: 'N/A', // Will be set from the first spectrum as a default
-        realTime: parseDuration(realTime?.textContent || null),
+        realTime: parseDuration(realTimeContent),
+        realTimeSeconds: parseDurationToSeconds(realTimeContent),
     };
 
     const spectrumElements = xmlDoc.querySelectorAll('RadMeasurement Spectrum, Measurement Spectrum');
@@ -77,9 +92,7 @@ export async function parseN42File(file: File, t: (key: string) => string): Prom
             
             // Per-spectrum live time is more accurate
             const liveTimeEl = specEl.querySelector('LiveTimeDuration');
-            if (index === 0) { // Use the first spectrum's live time for the overall metadata display
-                metadata.liveTime = parseDuration(liveTimeEl?.textContent || null);
-            }
+            const liveTimeSeconds = parseDurationToSeconds(liveTimeEl?.textContent || null);
 
             spectra.push({
                 id: specId,
@@ -88,7 +101,8 @@ export async function parseN42File(file: File, t: (key: string) => string): Prom
                     a: coeffs[0] || 0, // Intercept
                     b: coeffs[1] || 0, // Slope
                     c: coeffs[2] || 0, // Quadratic
-                }
+                },
+                liveTimeSeconds: liveTimeSeconds,
             });
 
         } catch (e) {

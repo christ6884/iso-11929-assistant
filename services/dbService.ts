@@ -106,11 +106,12 @@ class DBService {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
             const store = transaction.objectStore(ANALYSES_STORE_NAME);
-            const newRecord: AnalysisRecord = {
+            // Fix: Cast the constructed record to AnalysisRecord to solve a TypeScript error with discriminated unions and spread syntax.
+            const newRecord = {
                 id: crypto.randomUUID(),
                 date: new Date().toISOString(),
                 ...record,
-            };
+            } as AnalysisRecord;
             const request = store.add(newRecord);
             transaction.oncomplete = () => resolve();
             transaction.onerror = () => reject(transaction.error);
