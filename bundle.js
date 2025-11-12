@@ -1084,7 +1084,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState30(initialState) {
+          function useState31(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect24(create, deps) {
+          function useEffect25(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,7 +1879,7 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect24;
+          exports.useEffect = useEffect25;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo15;
           exports.useReducer = useReducer;
           exports.useRef = useRef9;
-          exports.useState = useState30;
+          exports.useState = useState31;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React35 = require_react();
+          var React36 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React35.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React36.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React35.Children.forEach(props.children, function(child) {
+                  React36.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23559,7 +23559,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React35 = require_react();
+          var React36 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23585,7 +23585,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React35.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React36.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24435,11 +24435,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx43 = jsxWithValidationDynamic;
-          var jsxs42 = jsxWithValidationStatic;
+          var jsx44 = jsxWithValidationDynamic;
+          var jsxs43 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx43;
-          exports.jsxs = jsxs42;
+          exports.jsx = jsx44;
+          exports.jsxs = jsxs43;
         })();
       }
     }
@@ -24458,11 +24458,11 @@
   });
 
   // index.tsx
-  var import_react34 = __toESM(require_react());
+  var import_react35 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // App.tsx
-  var import_react33 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
 
   // components/InputPanel.tsx
   var import_react3 = __toESM(require_react());
@@ -25920,8 +25920,8 @@
       { title: t("welcomeFeature1Title"), desc: t("welcomeFeature1Desc") },
       { title: t("welcomeFeature2Title"), desc: t("welcomeFeature2Desc") },
       { title: t("welcomeFeature4Title"), desc: t("welcomeFeature4Desc") },
-      { title: t("welcomeFeature6Title"), desc: t("welcomeFeature6Desc") },
-      { title: t("welcomeFeature5Title"), desc: t("welcomeFeature5Desc") }
+      { title: t("welcomeFeature5Title"), desc: t("welcomeFeature5Desc") },
+      { title: t("welcomeFeature6Title"), desc: t("welcomeFeature6Desc") }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl m-4 border border-gray-700", onClick: (e) => e.stopPropagation(), children: [
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-6 md:p-8", children: [
@@ -30102,7 +30102,7 @@
   var SpectroPage_default = SpectroPage;
 
   // pages/SourceManagementPage.tsx
-  var import_react31 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
 
   // components/source-management/AddSourceModal.tsx
   var import_react28 = __toESM(require_react());
@@ -30576,21 +30576,90 @@
   };
   var SourceTypesMemoModal_default = SourceTypesMemoModal;
 
-  // pages/SourceManagementPage.tsx
+  // components/ExportModal.tsx
+  var import_react31 = __toESM(require_react());
   var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var ExportModal = ({ isOpen, onClose, jsonData, t }) => {
+    const [copied, setCopied] = (0, import_react31.useState)(false);
+    const canShare = typeof navigator.share === "function";
+    (0, import_react31.useEffect)(() => {
+      if (!isOpen) {
+        setCopied(false);
+      }
+    }, [isOpen]);
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(jsonData);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2e3);
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+        alert("Failed to copy text.");
+      }
+    };
+    const handleDownload = () => {
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sources-backup.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+    const handleShare = async () => {
+      if (!canShare)
+        return;
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const file = new File([blob], "sources-backup.json", { type: "application/json" });
+      try {
+        await navigator.share({
+          files: [file],
+          title: t("sourceInventory")
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Card_default, { title: t("exportModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "text-sm text-gray-300", children: t("exportModalIntro") }),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+        "textarea",
+        {
+          readOnly: true,
+          value: jsonData,
+          className: "w-full h-48 bg-gray-900/50 p-2 rounded-md font-mono text-xs text-gray-300 border border-gray-600"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex flex-wrap justify-end gap-3 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: handleCopy, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors", children: copied ? t("copied") : t("copyJson") }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: handleDownload, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("downloadFile") }),
+        canShare && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: handleShare, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg", children: t("shareFile") })
+      ] })
+    ] }) }) }) });
+  };
+  var ExportModal_default = ExportModal;
+
+  // pages/SourceManagementPage.tsx
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   var SourceManagementPage = ({ t }) => {
-    const [sources, setSources] = (0, import_react31.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react31.useState)(true);
-    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react31.useState)(false);
-    const [sourceToEdit, setSourceToEdit] = (0, import_react31.useState)(null);
-    const [searchTerm, setSearchTerm] = (0, import_react31.useState)("");
-    const [hoveredSource, setHoveredSource] = (0, import_react31.useState)(null);
-    const [sortConfig, setSortConfig] = (0, import_react31.useState)({ key: "name", direction: "ascending" });
-    const [isMemoOpen, setIsMemoOpen] = (0, import_react31.useState)(false);
-    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react31.useState)(false);
-    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react31.useState)(false);
-    const [sourcesToImport, setSourcesToImport] = (0, import_react31.useState)([]);
-    const fetchSources = (0, import_react31.useCallback)(async () => {
+    const [sources, setSources] = (0, import_react32.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react32.useState)(true);
+    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react32.useState)(false);
+    const [sourceToEdit, setSourceToEdit] = (0, import_react32.useState)(null);
+    const [searchTerm, setSearchTerm] = (0, import_react32.useState)("");
+    const [hoveredSource, setHoveredSource] = (0, import_react32.useState)(null);
+    const [sortConfig, setSortConfig] = (0, import_react32.useState)({ key: "name", direction: "ascending" });
+    const [isMemoOpen, setIsMemoOpen] = (0, import_react32.useState)(false);
+    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react32.useState)(false);
+    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react32.useState)(false);
+    const [sourcesToImport, setSourcesToImport] = (0, import_react32.useState)([]);
+    const [isExportModalOpen, setIsExportModalOpen] = (0, import_react32.useState)(false);
+    const [jsonDataToExport, setJsonDataToExport] = (0, import_react32.useState)("");
+    const fetchSources = (0, import_react32.useCallback)(async () => {
       setIsLoading(true);
       try {
         const allSources = await db.getAllSources();
@@ -30601,7 +30670,7 @@
         setIsLoading(false);
       }
     }, []);
-    (0, import_react31.useEffect)(() => {
+    (0, import_react32.useEffect)(() => {
       fetchSources();
     }, [fetchSources]);
     const handleSaveSource = async (source) => {
@@ -30698,7 +30767,18 @@
         setIsLoading(false);
       }
     };
-    const calculateCurrentActivity = (0, import_react31.useCallback)((source) => {
+    const handleOfflineExport = async () => {
+      try {
+        const allSources = await db.getAllSources();
+        const jsonString = JSON.stringify(allSources, null, 2);
+        setJsonDataToExport(jsonString);
+        setIsExportModalOpen(true);
+      } catch (error) {
+        console.error("Failed to get sources for export:", error);
+        alert("Error preparing data for export.");
+      }
+    };
+    const calculateCurrentActivity = (0, import_react32.useCallback)((source) => {
       const nuclideData = Object.values(radionuclides).flat().find((n) => n.name === source.nuclide);
       if (!nuclideData)
         return source.referenceActivity;
@@ -30708,12 +30788,12 @@
       const lambda = Math.log(2) / nuclideData.halfLifeSeconds;
       return source.referenceActivity * Math.exp(-lambda * elapsedTimeSeconds);
     }, []);
-    const filteredSources = (0, import_react31.useMemo)(() => {
+    const filteredSources = (0, import_react32.useMemo)(() => {
       return sources.filter(
         (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase()) || source.casier?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }, [sources, searchTerm]);
-    const sortedSources = (0, import_react31.useMemo)(() => {
+    const sortedSources = (0, import_react32.useMemo)(() => {
       let sortableItems = [...filteredSources];
       if (sortConfig.key) {
         sortableItems.sort((a, b) => {
@@ -30776,16 +30856,16 @@
     };
     const SortableHeader = ({ sortKey, label }) => {
       const isSorted = sortConfig.key === sortKey;
-      return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: label }),
-        isSorted && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: label }),
+        isSorted && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
       ] }) });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             "input",
             {
               type: "text",
@@ -30795,53 +30875,57 @@
               className: "bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => {
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: handleOfflineExport, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: t("exportBackup") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => {
             setSourceToEdit(null);
             setIsAddModalOpen(true);
           }, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm", children: t("addSource") })
         ] })
-      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("p", { children: [
+      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("p", { children: [
         t("loading"),
         "..."
-      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: t("currentActivity") }),
-            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: t("currentActivity") }),
+            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("actions") })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tbody", { children: sortedSources.map((source) => {
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("tbody", { children: sortedSources.map((source) => {
           const currentActivity = calculateCurrentActivity(source);
           const conformity = checkConformity(source, currentActivity);
-          return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.location }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.casier }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: source.type }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
-                /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
+          return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: source.location }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: source.casier }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: source.type }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
+                /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
               ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
             ] }) })
           ] }, source.id);
         }) })
       ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         AddSourceModal_default,
         {
           isOpen: isAddModalOpen,
@@ -30854,7 +30938,7 @@
           sourceToEdit
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         CsvImportModal_default,
         {
           isOpen: isCsvImportOpen,
@@ -30863,7 +30947,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         ImportReviewModal_default,
         {
           isOpen: isImportReviewOpen,
@@ -30874,7 +30958,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
         SourceTypesMemoModal_default,
         {
           isOpen: isMemoOpen,
@@ -30882,18 +30966,27 @@
           t
         }
       ),
-      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        ExportModal_default,
+        {
+          isOpen: isExportModalOpen,
+          onClose: () => setIsExportModalOpen(false),
+          jsonData: jsonDataToExport,
+          t
+        }
+      ),
+      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
     ] });
   };
   var SourceManagementPage_default = SourceManagementPage;
 
   // pages/AnalysisHistoryPage.tsx
-  var import_react32 = __toESM(require_react());
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var import_react33 = __toESM(require_react());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   var AnalysisHistoryPage = ({ t, onLoadAnalysis }) => {
-    const [analyses, setAnalyses] = (0, import_react32.useState)([]);
-    const [sources, setSources] = (0, import_react32.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react32.useState)(true);
+    const [analyses, setAnalyses] = (0, import_react33.useState)([]);
+    const [sources, setSources] = (0, import_react33.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react33.useState)(true);
     const fetchAllData = async () => {
       setIsLoading(true);
       try {
@@ -30909,10 +31002,10 @@
         setIsLoading(false);
       }
     };
-    (0, import_react32.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       fetchAllData();
     }, []);
-    const sourceMap = (0, import_react32.useMemo)(() => {
+    const sourceMap = (0, import_react33.useMemo)(() => {
       return new Map(sources.map((s) => [s.id, s.name]));
     }, [sources]);
     const handleDelete = async (id) => {
@@ -30921,30 +31014,30 @@
         fetchAllData();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("p", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("p", { children: [
       t("loading"),
       "..."
-    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("table", { className: "w-full text-sm text-left", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisDate") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: t("linkedSource") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("table", { className: "w-full text-sm text-left", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3", children: t("analysisDate") }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3", children: t("linkedSource") }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3 text-center", children: t("actions") })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden sm:inline", children: t("load") })
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden sm:inline", children: t("load") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
           ] })
         ] }) })
       ] }, record.id)) })
@@ -30953,13 +31046,13 @@
   var AnalysisHistoryPage_default = AnalysisHistoryPage;
 
   // components/UpdateNotification.tsx
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
   var UpdateNotification = ({ isOpen, onUpdate, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
         "button",
         {
           onClick: onUpdate,
@@ -31242,8 +31335,9 @@
     currentActivity: "Activit\xE9 actuelle (Bq)",
     conformity: "Conformit\xE9",
     actions: "Actions",
-    import: "Importer",
-    export: "Exporter",
+    import: "Importer (CSV)",
+    export: "Exporter (CSV)",
+    exportBackup: "Exporter / Sauvegarder",
     // Theme
     changeTheme: "Changer le th\xE8me",
     themeCyberCyan: "Cyber Cyan",
@@ -31478,7 +31572,14 @@
     unit_desc_gy: "Le Gray, l'unit\xE9 SI de la dose absorb\xE9e, mesurant l'\xE9nergie d\xE9pos\xE9e par kilogramme de mati\xE8re.",
     unit_desc_rad: "Une ancienne unit\xE9 de dose absorb\xE9e (Radiation Absorbed Dose).",
     unit_desc_sv: "Le Sievert, l'unit\xE9 SI de la dose \xE9quivalente, tenant compte de l'effet biologique des diff\xE9rents types de rayonnement.",
-    unit_desc_rem: "Une ancienne unit\xE9 de dose \xE9quivalente (R\xF6ntgen Equivalent Man)."
+    unit_desc_rem: "Une ancienne unit\xE9 de dose \xE9quivalente (R\xF6ntgen Equivalent Man).",
+    // Offline Export Modal
+    exportModalTitle: "Exporter les Donn\xE9es des Sources",
+    exportModalIntro: "Ceci est une sauvegarde de toutes vos sources. Conservez-la en lieu s\xFBr pour \xE9viter toute perte de donn\xE9es. Vous pouvez copier le texte ou t\xE9l\xE9charger le fichier.",
+    copyJson: "Copier le JSON",
+    downloadFile: "T\xE9l\xE9charger le Fichier",
+    shareFile: "Partager",
+    copied: "Copi\xE9 !"
   };
   var en = {
     // General
@@ -31750,8 +31851,9 @@
     currentActivity: "Current Activity (Bq)",
     conformity: "Conformity",
     actions: "Actions",
-    import: "Import",
-    export: "Export",
+    import: "Import (CSV)",
+    export: "Export (CSV)",
+    exportBackup: "Export / Backup",
     // Theme
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
@@ -31986,7 +32088,14 @@
     unit_desc_gy: "The Gray, the SI unit of absorbed dose, measuring energy deposited per kilogram of matter.",
     unit_desc_rad: "An older unit of absorbed dose (Radiation Absorbed Dose).",
     unit_desc_sv: "The Sievert, the SI unit of equivalent dose, which accounts for the biological effect of different types of radiation.",
-    unit_desc_rem: "An older unit of equivalent dose (R\xF6ntgen Equivalent Man)."
+    unit_desc_rem: "An older unit of equivalent dose (R\xF6ntgen Equivalent Man).",
+    // Offline Export Modal
+    exportModalTitle: "Export Source Data",
+    exportModalIntro: "This is a backup of all your source data. Keep it in a safe place to prevent data loss. You can copy the text or download the file.",
+    copyJson: "Copy JSON",
+    downloadFile: "Download File",
+    shareFile: "Share",
+    copied: "Copied!"
   };
   var de = {
     // General
@@ -32258,8 +32367,9 @@
     currentActivity: "Aktuelle Aktivit\xE4t (Bq)",
     conformity: "Konformit\xE4t",
     actions: "Aktionen",
-    import: "Importieren",
-    export: "Exportieren",
+    import: "Importieren (CSV)",
+    export: "Exportieren (CSV)",
+    exportBackup: "Exportieren / Sichern",
     // Theme
     changeTheme: "Thema \xE4ndern",
     themeCyberCyan: "Cyber Cyan",
@@ -32494,7 +32604,14 @@
     unit_desc_gy: "Das Gray, die SI-Einheit der absorbierten Dosis, die die pro Kilogramm Materie deponierte Energie misst.",
     unit_desc_rad: "Eine \xE4ltere Einheit der absorbierten Dosis (Radiation Absorbed Dose).",
     unit_desc_sv: "Das Sievert, die SI-Einheit der \xC4quivalentdosis, die die biologische Wirkung verschiedener Strahlungsarten ber\xFCcksichtigt.",
-    unit_desc_rem: "Eine \xE4ltere Einheit der \xC4quivalentdosis (R\xF6ntgen Equivalent Man)."
+    unit_desc_rem: "Eine \xE4ltere Einheit der \xC4quivalentdosis (R\xF6ntgen Equivalent Man).",
+    // Offline Export Modal
+    exportModalTitle: "Quellendaten exportieren",
+    exportModalIntro: "Dies ist eine Sicherung all Ihrer Quellendaten. Bewahren Sie sie an einem sicheren Ort auf, um Datenverlust zu vermeiden. Sie k\xF6nnen den Text kopieren oder die Datei herunterladen.",
+    copyJson: "JSON kopieren",
+    downloadFile: "Datei herunterladen",
+    shareFile: "Teilen",
+    copied: "Kopiert!"
   };
   var es = {
     // General
@@ -32766,8 +32883,9 @@
     currentActivity: "Actividad Actual (Bq)",
     conformity: "Conformidad",
     actions: "Acciones",
-    import: "Importar",
-    export: "Exportar",
+    import: "Importar (CSV)",
+    export: "Exportar (CSV)",
+    exportBackup: "Exportar / Guardar",
     // Theme
     changeTheme: "Cambiar Tema",
     themeCyberCyan: "Cyber Cyan",
@@ -33002,7 +33120,14 @@
     unit_desc_gy: "El Gray, la unidad SI de dosis absorbida, que mide la energ\xEDa depositada por kilogramo de materia.",
     unit_desc_rad: "Una unidad antigua de dosis absorbida (Radiation Absorbed Dose).",
     unit_desc_sv: "El Sievert, la unidad SI de dosis equivalente, que tiene en cuenta el efecto biol\xF3gico de diferentes tipos de radiaci\xF3n.",
-    unit_desc_rem: "Una unidad antigua de dosis equivalente (R\xF6ntgen Equivalent Man)."
+    unit_desc_rem: "Una unidad antigua de dosis equivalente (R\xF6ntgen Equivalent Man).",
+    // Offline Export Modal
+    exportModalTitle: "Exportar Datos de Fuentes",
+    exportModalIntro: "Esta es una copia de seguridad de todos los datos de sus fuentes. Gu\xE1rdela en un lugar seguro para evitar la p\xE9rdida de datos. Puede copiar el texto o descargar el archivo.",
+    copyJson: "Copiar JSON",
+    downloadFile: "Descargar Archivo",
+    shareFile: "Compartir",
+    copied: "\xA1Copiado!"
   };
   var translations = { fr, en, de, es };
   function getTranslator(lang) {
@@ -33415,7 +33540,7 @@
   }
 
   // App.tsx
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   var defaultDetectors = Array(10).fill(null).map(() => ({
     efficiency: 50,
     background: 10,
@@ -33461,31 +33586,31 @@
     numSimulations: 1e4
   };
   var App = () => {
-    const [language, setLanguage] = (0, import_react33.useState)("fr" /* FR */);
-    const [t, setT] = (0, import_react33.useState)(() => getTranslator("fr" /* FR */));
-    const [view, setView] = (0, import_react33.useState)("calculator");
-    const [isExpertMode, setIsExpertMode] = (0, import_react33.useState)(false);
-    const [theme, setTheme] = (0, import_react33.useState)("default");
-    const [inputs, setInputs] = (0, import_react33.useState)(initialInputs);
-    const [results, setResults] = (0, import_react33.useState)(null);
-    const [mode, setMode] = (0, import_react33.useState)("standard");
-    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react33.useState)("calculate");
-    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react33.useState)(100);
-    const [isCalculating, setIsCalculating] = (0, import_react33.useState)(true);
-    const [autoW, setAutoW] = (0, import_react33.useState)(true);
-    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react33.useState)(() => !localStorage.getItem("hasSeenWelcome"));
-    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react33.useState)(false);
-    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react33.useState)(false);
-    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react33.useState)(false);
-    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react33.useState)(false);
-    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react33.useState)(false);
-    const [isProUser, setIsProUser] = (0, import_react33.useState)(false);
-    const [isProModalOpen, setIsProModalOpen] = (0, import_react33.useState)(false);
-    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react33.useState)(false);
-    const waitingWorkerRef = (0, import_react33.useRef)(null);
-    const [analysisToLoad, setAnalysisToLoad] = (0, import_react33.useState)(null);
-    const toolsMenuRef = (0, import_react33.useRef)(null);
-    (0, import_react33.useEffect)(() => {
+    const [language, setLanguage] = (0, import_react34.useState)("fr" /* FR */);
+    const [t, setT] = (0, import_react34.useState)(() => getTranslator("fr" /* FR */));
+    const [view, setView] = (0, import_react34.useState)("calculator");
+    const [isExpertMode, setIsExpertMode] = (0, import_react34.useState)(false);
+    const [theme, setTheme] = (0, import_react34.useState)("default");
+    const [inputs, setInputs] = (0, import_react34.useState)(initialInputs);
+    const [results, setResults] = (0, import_react34.useState)(null);
+    const [mode, setMode] = (0, import_react34.useState)("standard");
+    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react34.useState)("calculate");
+    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react34.useState)(100);
+    const [isCalculating, setIsCalculating] = (0, import_react34.useState)(true);
+    const [autoW, setAutoW] = (0, import_react34.useState)(true);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react34.useState)(() => !localStorage.getItem("hasSeenWelcome"));
+    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react34.useState)(false);
+    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react34.useState)(false);
+    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react34.useState)(false);
+    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react34.useState)(false);
+    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react34.useState)(false);
+    const [isProUser, setIsProUser] = (0, import_react34.useState)(false);
+    const [isProModalOpen, setIsProModalOpen] = (0, import_react34.useState)(false);
+    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react34.useState)(false);
+    const waitingWorkerRef = (0, import_react34.useRef)(null);
+    const [analysisToLoad, setAnalysisToLoad] = (0, import_react34.useState)(null);
+    const toolsMenuRef = (0, import_react34.useRef)(null);
+    (0, import_react34.useEffect)(() => {
       if (localStorage.getItem("isProUser") === "true") {
         setIsProUser(true);
       }
@@ -33519,14 +33644,14 @@
         });
       }
     };
-    (0, import_react33.useEffect)(() => {
+    (0, import_react34.useEffect)(() => {
       localStorage.setItem("app-theme", theme);
       document.documentElement.classList.remove("theme-lab", "theme-forest");
       if (theme !== "default") {
         document.documentElement.classList.add(`theme-${theme}`);
       }
     }, [theme]);
-    (0, import_react33.useEffect)(() => {
+    (0, import_react34.useEffect)(() => {
       if (!isToolsMenuOpen)
         return;
       const handleClickOutside = (event) => {
@@ -33539,7 +33664,7 @@
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isToolsMenuOpen]);
-    const autoCalculatedW = (0, import_react33.useMemo)(() => {
+    const autoCalculatedW = (0, import_react34.useMemo)(() => {
       if (!autoW || mode !== "chambre" && mode !== "linge") {
         return null;
       }
@@ -33549,7 +33674,7 @@
       const avgEfficiency = activeDetectors.reduce((sum, d) => sum + d.efficiency / 100, 0) / activeDetectors.length;
       return avgEfficiency > 0 ? 1 / avgEfficiency : null;
     }, [autoW, mode, inputs.detectors]);
-    (0, import_react33.useEffect)(() => {
+    (0, import_react34.useEffect)(() => {
       if (autoCalculatedW !== null && (autoCalculatedW !== inputs.calibrationFactor || inputs.calibrationFactorUnit !== "Bq/(c/s)")) {
         setInputs((prev) => ({
           ...prev,
@@ -33584,7 +33709,7 @@
       setIsProModalOpen(false);
       alert(t("proUnlockedSuccess"));
     };
-    const calculate = (0, import_react33.useCallback)(() => {
+    const calculate = (0, import_react34.useCallback)(() => {
       setIsCalculating(true);
       setTimeout(() => {
         let t_g = inputs.grossTime;
@@ -33687,7 +33812,7 @@
         setIsCalculating(false);
       }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
-    (0, import_react33.useEffect)(() => {
+    (0, import_react34.useEffect)(() => {
       calculate();
     }, [calculate]);
     const handleSaveConfig = () => {
@@ -33727,10 +33852,10 @@
       setAnalysisToLoad(record);
       setView("spectro");
     };
-    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
           InputPanel_default,
           {
             inputs,
@@ -33750,8 +33875,8 @@
             onAutoWChange: setAutoW
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
             ResultsPanel_default,
             {
               results,
@@ -33766,7 +33891,7 @@
               isExpertMode
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
             ChartPanel_default,
             {
               results: typeof results === "string" ? null : results,
@@ -33791,11 +33916,11 @@
         case "calculator":
           return renderCalculatorView();
         case "spectro":
-          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
+          return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
         case "sources":
-          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SourceManagementPage_default, { t });
+          return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(SourceManagementPage_default, { t });
         case "history":
-          return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
+          return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
         default:
           return renderCalculatorView();
       }
@@ -33806,59 +33931,59 @@
       { key: "sources", label: t("sourceManagement"), locked: false },
       { key: "history", label: t("analysisHistory"), locked: true }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("header", { className: "mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("header", { className: "mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
-            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
+            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
-              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("a", { href: "#", onClick: (e) => {
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
+              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsUserGuideOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("userGuide") }),
-                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("a", { href: "#", onClick: (e) => {
+                /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsWelcomeModalOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("showWelcomeTooltip") })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
           "button",
           {
             onClick: () => handleNavItemClick(item.key),
             className: `px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center space-x-2 ${view === item.key ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
             title: item.locked && !isProUser ? t("lockedFeature") : item.label,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: item.label }),
-              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: item.label }),
+              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
             ]
           },
           item.key
         )) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("main", { children: renderView() }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("main", { children: renderView() }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
         DecayCalculatorModal_default,
         {
           isOpen: isDecayCalculatorOpen,
@@ -33870,7 +33995,7 @@
           unit: inputs.calibrationFactorUnit.split("/")[0] || "Bq"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
         UnitConverterModal_default,
         {
           isOpen: isUnitConverterOpen,
@@ -33878,7 +34003,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
         ProAccessModal_default,
         {
           isOpen: isProModalOpen,
@@ -33887,20 +34012,20 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { children: t("authorCredit") }) })
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { children: t("authorCredit") }) })
     ] });
   };
   var App_default = App;
 
   // index.tsx
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   var rootElement = document.getElementById("root");
   if (!rootElement) {
     throw new Error("Could not find the root element to mount the app.");
   }
   var root = import_client.default.createRoot(rootElement);
   root.render(
-    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_react34.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(App_default, {}) })
+    /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_react35.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(App_default, {}) })
   );
 })();
 /*! Bundled license information:
