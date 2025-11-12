@@ -31067,8 +31067,8 @@
   // translations.ts
   var fr = {
     // General
-    authorDetails: "Par David LOISELEUR - Inspir\xE9 par la norme ISO 11929:2019",
-    authorCredit: "Cr\xE9\xE9 avec \u2764\uFE0F par David LOISELEUR. Tous droits r\xE9serv\xE9s.",
+    authorDetails: "Par Christophe PHAM - Inspir\xE9 par la norme ISO 11929:2019",
+    authorCredit: "Cr\xE9\xE9 avec \u2764\uFE0F par Christophe PHAM. Tous droits r\xE9serv\xE9s.",
     proVersion: "Version PRO",
     unlockPro: "D\xE9bloquer PRO",
     unitConverter: "Convertisseur d'unit\xE9s",
@@ -31583,8 +31583,8 @@
   };
   var en = {
     // General
-    authorDetails: "By David LOISELEUR - Inspired by ISO 11929:2019",
-    authorCredit: "Crafted with \u2764\uFE0F by David LOISELEUR. All rights reserved.",
+    authorDetails: "By Christophe PHAM - Inspired by ISO 11929:2019",
+    authorCredit: "Crafted with \u2764\uFE0F by Christophe PHAM. All rights reserved.",
     proVersion: "PRO Version",
     unlockPro: "Unlock PRO",
     unitConverter: "Unit Converter",
@@ -32099,8 +32099,8 @@
   };
   var de = {
     // General
-    authorDetails: "Von David LOISELEUR - Inspiriert von ISO 11929:2019",
-    authorCredit: "Mit \u2764\uFE0F erstellt von David LOISELEUR. Alle Rechte vorbehalten.",
+    authorDetails: "Von Christophe PHAM - Inspiriert von ISO 11929:2019",
+    authorCredit: "Mit \u2764\uFE0F erstellt von Christophe PHAM. Alle Rechte vorbehalten.",
     proVersion: "PRO Version",
     unlockPro: "PRO freischalten",
     unitConverter: "Einheitenumrechner",
@@ -32615,8 +32615,8 @@
   };
   var es = {
     // General
-    authorDetails: "Por David LOISELEUR - Inspirado en la norma ISO 11929:2019",
-    authorCredit: "Creado con \u2764\uFE0F por David LOISELEUR. Todos los derechos reservados.",
+    authorDetails: "Por Christophe PHAM - Inspirado en la norma ISO 11929:2019",
+    authorCredit: "Creado con \u2764\uFE0F por Christophe PHAM. Todos los derechos reservados.",
     proVersion: "Versi\xF3n PRO",
     unlockPro: "Desbloquear PRO",
     unitConverter: "Convertidor de Unidades",
