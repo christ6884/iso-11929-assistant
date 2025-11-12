@@ -259,6 +259,7 @@ const CalibrationSidebar: React.FC<CalibrationSidebarProps> = ({
         <div className="pt-4 border-t border-gray-700">
             {/* FIX: The onReset handler was being called with a MouseEvent, causing a type mismatch. Wrapping it in an arrow function ensures it's called with no arguments, matching its () => void definition. */}
             {/* Fix: Wrapped onReset in an arrow function to prevent passing the MouseEvent as an argument. */}
+            {/* Fix: Wrapped onReset in an arrow function to prevent passing the MouseEvent as an argument, which caused a type inference issue leading to the specified error. */}
             <button
                 onClick={() => onReset()}
                 className="w-full bg-yellow-600/80 hover:bg-yellow-700/80 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center space-x-2"
