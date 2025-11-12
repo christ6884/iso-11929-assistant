@@ -24843,10 +24843,13 @@
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: "k(1-\u03B2)", tooltipText: t("k1betaTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "k1beta", value: inputs.k1beta, onChange: onInputChange, step: 1e-3 }) })
       ] }) }),
       isExpertMode && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("advancedParameters"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "space-y-3 p-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("correlationCoefficient"), tooltipText: t("correlationCoefficientTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "range", min: "0", max: "1", step: "0.01", name: "correlationCoefficient", value: inputs.correlationCoefficient, onChange: (e) => onInputChange("correlationCoefficient", parseFloat(e.target.value)), className: "w-full" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "font-mono w-12 text-right", children: inputs.correlationCoefficient.toFixed(2) })
-        ] }) }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("advancedParameters"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-3 p-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("correlationCoefficient"), tooltipText: t("correlationCoefficientTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "range", min: "0", max: "1", step: "0.01", name: "correlationCoefficient", value: inputs.correlationCoefficient, onChange: (e) => onInputChange("correlationCoefficient", parseFloat(e.target.value)), className: "w-full" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "font-mono w-12 text-right", children: inputs.correlationCoefficient.toFixed(2) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("bayesianCalculationMode"), tooltipText: t("bayesianCalculationModeTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "checkbox", checked: inputs.useBayesianMode, onChange: (e) => onInputChange("useBayesianMode", e.target.checked), className: "form-checkbox h-5 w-5 text-cyan-500" }) }) })
+        ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("monteCarloMode"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-3 p-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("enableMonteCarlo"), tooltipText: t("enableMonteCarloTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "checkbox", checked: inputs.monteCarloMode, onChange: (e) => onInputChange("monteCarloMode", e.target.checked), className: "form-checkbox h-5 w-5 text-cyan-500" }) }) }),
           inputs.monteCarloMode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("numSimulations"), tooltipText: t("numSimulationsTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "numSimulations", value: inputs.numSimulations, onChange: onInputChange, min: 100, step: 100 }) })
@@ -25111,7 +25114,16 @@
           )
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "border-t border-gray-700 pt-3 print-border-gray", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "text-md font-semibold text-gray-400 mb-2 print-text-black", children: t("conclusion") }),
+          res.calculationMethod === "bayesian" && res.probabilityEffectPresent !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            ResultRow,
+            {
+              label: t("probabilityEffectPresent"),
+              value: `${(res.probabilityEffectPresent * 100).toFixed(1)} %`,
+              tooltip: t("probabilityEffectPresentTooltip"),
+              valueColor: "text-yellow-300"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "text-md font-semibold text-gray-400 my-2 print-text-black", children: t("conclusion") }),
           /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: `p-3 rounded-md text-center font-semibold ${res.isEffectPresent ? "bg-red-900/50 text-red-300" : "bg-green-900/50 text-green-300"} print-text-black`, children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") }),
           res.isEffectPresent && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mt-2 space-y-2", children: [
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
@@ -31112,6 +31124,8 @@
       budgetCovariance: "Covariance",
       systemCompliant: "Le syst\xE8me atteint la cible de d\xE9tection.",
       systemNonCompliant: "Le syst\xE8me N'ATTEINT PAS la cible de d\xE9tection.",
+      probabilityEffectPresent: "Probabilit\xE9 d'effet (P>0)",
+      probabilityEffectPresentTooltip: "La probabilit\xE9 a posteriori que la valeur r\xE9elle de l'activit\xE9 soit sup\xE9rieure \xE0 z\xE9ro, en supposant un a priori uniforme.",
       // --- Input Panel ---
       inputs: "Param\xE8tres d'entr\xE9e",
       expertMode: "Mode expert",
@@ -31178,6 +31192,8 @@
       monteCarloMode: "Mode Monte Carlo",
       enableMonteCarlo: "Activer Monte Carlo",
       enableMonteCarloTooltip: "Utiliser la simulation de Monte Carlo pour la propagation des incertitudes.",
+      bayesianCalculationMode: "Mode de calcul bay\xE9sien",
+      bayesianCalculationModeTooltip: "Active l'approche bay\xE9sienne pour l'estimation. Fournit la probabilit\xE9 que l'activit\xE9 soit sup\xE9rieure \xE0 z\xE9ro.",
       numSimulations: "Nombre de simulations",
       numSimulationsTooltip: "Nombre d'it\xE9rations pour la simulation. Plus le nombre est \xE9lev\xE9, plus le r\xE9sultat est pr\xE9cis mais lent.",
       counts: "coups",
@@ -31616,6 +31632,8 @@
       budgetCovariance: "Covariance",
       systemCompliant: "The system meets the detection target.",
       systemNonCompliant: "The system DOES NOT meet the detection target.",
+      probabilityEffectPresent: "Probability of Effect (P>0)",
+      probabilityEffectPresentTooltip: "The posterior probability that the true value of the activity is greater than zero, assuming a uniform prior.",
       inputs: "Input Parameters",
       expertMode: "Expert mode",
       saveConfig: "Save",
@@ -31681,6 +31699,8 @@
       monteCarloMode: "Monte Carlo Mode",
       enableMonteCarlo: "Enable Monte Carlo",
       enableMonteCarloTooltip: "Use Monte Carlo simulation for uncertainty propagation.",
+      bayesianCalculationMode: "Bayesian Calculation Mode",
+      bayesianCalculationModeTooltip: "Enables the Bayesian approach for estimation. Provides the probability that the activity is greater than zero.",
       numSimulations: "Number of simulations",
       numSimulationsTooltip: "Number of iterations for the simulation. Higher number is more accurate but slower.",
       counts: "counts",
@@ -32099,6 +32119,8 @@
       budgetCovariance: "Kovarianz",
       systemCompliant: "Das System erf\xFCllt das Nachweisziel.",
       systemNonCompliant: "Das System erf\xFCllt das Nachweisziel NICHT.",
+      probabilityEffectPresent: "Wahrscheinlichkeit des Effekts (P>0)",
+      probabilityEffectPresentTooltip: "Die A-posteriori-Wahrscheinlichkeit, dass der wahre Wert der Aktivit\xE4t gr\xF6\xDFer als Null ist, unter Annahme einer uniformen A-priori-Wahrscheinlichkeit.",
       inputs: "Eingabeparameter",
       expertMode: "Expertenmodus",
       saveConfig: "Speichern",
@@ -32164,6 +32186,8 @@
       monteCarloMode: "Monte-Carlo-Modus",
       enableMonteCarlo: "Monte Carlo aktivieren",
       enableMonteCarloTooltip: "Verwenden Sie die Monte-Carlo-Simulation zur Unsicherheitsfortpflanzung.",
+      bayesianCalculationMode: "Bayes-Berechnungsmodus",
+      bayesianCalculationModeTooltip: "Aktiviert den Bayes-Ansatz f\xFCr die Sch\xE4tzung. Gibt die Wahrscheinlichkeit an, dass die Aktivit\xE4t gr\xF6\xDFer als Null ist.",
       numSimulations: "Anzahl der Simulationen",
       numSimulationsTooltip: "Anzahl der Iterationen f\xFCr die Simulation. Eine h\xF6here Zahl ist genauer, aber langsamer.",
       counts: "Z\xE4hlungen",
@@ -32582,6 +32606,8 @@
       budgetCovariance: "Covarianza",
       systemCompliant: "El sistema cumple con el objetivo de detecci\xF3n.",
       systemNonCompliant: "El sistema NO cumple con el objetivo de detecci\xF3n.",
+      probabilityEffectPresent: "Probabilidad de Efecto (P>0)",
+      probabilityEffectPresentTooltip: "La probabilidad a posteriori de que el valor verdadero de la actividad sea mayor que cero, asumiendo un prior uniforme.",
       inputs: "Par\xE1metros de Entrada",
       expertMode: "Modo experto",
       saveConfig: "Guardar",
@@ -32647,6 +32673,8 @@
       monteCarloMode: "Modo Monte Carlo",
       enableMonteCarlo: "Habilitar Monte Carlo",
       enableMonteCarloTooltip: "Usar simulaci\xF3n de Monte Carlo para la propagaci\xF3n de incertidumbres.",
+      bayesianCalculationMode: "Modo de C\xE1lculo Bayesiano",
+      bayesianCalculationModeTooltip: "Habilita el enfoque bayesiano para la estimaci\xF3n. Proporciona la probabilidad de que la actividad sea mayor que cero.",
       numSimulations: "N\xFAmero de simulaciones",
       numSimulationsTooltip: "N\xFAmero de iteraciones para la simulaci\xF3n. Un n\xFAmero mayor es m\xE1s preciso pero m\xE1s lento.",
       counts: "conteos",
@@ -33436,6 +33464,7 @@
     k1beta: 1.645,
     correlationCoefficient: 0,
     monteCarloMode: false,
+    useBayesianMode: false,
     numSimulations: 1e4
   };
   var App = () => {
@@ -33639,19 +33668,29 @@
           k1alpha: inputs.k1alpha,
           correlationCoefficient: inputs.correlationCoefficient
         };
+        let result = null;
         if (detectionLimitMode === "target" && (mode === "standard" || mode === "spectrometry")) {
           const k1betaResult = findK1betaForTarget(baseInputs, targetDetectionLimit, t);
           if (typeof k1betaResult === "number") {
             const finalResult = inputs.monteCarloMode ? runMonteCarloSimulation({ ...baseInputs, k1beta: k1betaResult, numSimulations: inputs.numSimulations }, t) : calculateAll({ ...baseInputs, k1beta: k1betaResult }, t);
-            setResults(finalResult);
+            result = finalResult;
             setInputs((prev) => ({ ...prev, k1beta: k1betaResult }));
           } else {
-            setResults(k1betaResult);
+            result = k1betaResult;
           }
         } else {
-          const result = inputs.monteCarloMode ? runMonteCarloSimulation({ ...baseInputs, k1beta: inputs.k1beta, numSimulations: inputs.numSimulations }, t) : calculateAll({ ...baseInputs, k1beta: inputs.k1beta }, t);
-          setResults(result);
+          result = inputs.monteCarloMode ? runMonteCarloSimulation({ ...baseInputs, k1beta: inputs.k1beta, numSimulations: inputs.numSimulations }, t) : calculateAll({ ...baseInputs, k1beta: inputs.k1beta }, t);
         }
+        if (inputs.useBayesianMode && typeof result === "object" && result !== null) {
+          const { primaryResult, primaryUncertainty } = result;
+          if (primaryUncertainty > 0) {
+            const z = primaryResult / primaryUncertainty;
+            const probability = probability_from_quantile(z);
+            result.probabilityEffectPresent = probability;
+            result.calculationMethod = "bayesian";
+          }
+        }
+        setResults(result);
         setIsCalculating(false);
       }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
