@@ -65,28 +65,46 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
             key: 'image',
             title: 'spectroMenuImageTitle',
             desc: 'spectroMenuImageDesc',
-            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" /></svg>
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" /></svg>,
+            disabled: false,
         },
         {
             key: 'n42',
             title: 'spectroMenuN42Title',
             desc: 'spectroMenuN42Desc',
-            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>,
+            disabled: false,
+        },
+        {
+            key: 'spc',
+            title: 'spectroMenuSPCTitle',
+            desc: 'spectroMenuSPCDesc',
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>,
+            disabled: true,
+        },
+        {
+            key: 'chn',
+            title: 'spectroMenuCHNTitle',
+            desc: 'spectroMenuCHNDesc',
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>,
+            disabled: true,
         },
         {
             key: 'bkg',
             title: 'spectroMenuBkgSubTitle',
             desc: 'spectroMenuBkgSubDesc',
-            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" /></svg>
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" /></svg>,
+            disabled: false,
         },
         {
             key: 'compare',
             title: 'spectroMenuCompareTitle',
             desc: 'spectroMenuCompareDesc',
-            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18" opacity="0.6" />
-                </svg>
+                </svg>,
+            disabled: false,
         }
     ];
 
@@ -106,20 +124,24 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-stretch gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-stretch gap-8">
                 {tools.map(tool => (
                     <div 
                         key={tool.key}
-                        onClick={() => setMode(tool.key as 'image' | 'n42' | 'bkg' | 'compare')}
-                        onKeyDown={(e) => handleKeyDown(e, tool.key as 'image' | 'n42' | 'bkg' | 'compare')}
+                        onClick={() => !tool.disabled && setMode(tool.key as any)}
+                        onKeyDown={(e) => !tool.disabled && handleKeyDown(e, tool.key as any)}
                         role="button"
-                        tabIndex={0}
+                        tabIndex={tool.disabled ? -1 : 0}
                         aria-label={t(tool.title)}
-                        className="bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-700 hover:border-cyan-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
+                        className={`bg-gray-800 rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 ${
+                            tool.disabled
+                            ? 'opacity-50 cursor-not-allowed'
+                            : 'hover:shadow-2xl hover:border-cyan-400 transform hover:-translate-y-2 cursor-pointer'
+                        }`}
                     >
                         <div className="p-6 flex flex-col items-center justify-center text-center flex-grow">
-                            <div className="bg-gray-700 p-4 rounded-full mb-4">
-                                {tool.icon}
+                            <div className={`p-4 rounded-full mb-4 bg-gray-700`}>
+                                {React.cloneElement(tool.icon, { className: `h-16 w-16 ${tool.disabled ? 'text-gray-500' : 'text-cyan-400'}` })}
                             </div>
                             <h3 className="text-lg font-bold text-gray-100">{t(tool.title)}</h3>
                             <p className="text-sm text-gray-400 mt-2">{t(tool.desc)}</p>

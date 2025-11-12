@@ -1,5 +1,5 @@
 {
-  "name": "ISO 11929 V5 avec analyseur spectre image et N42 couleurs compSpectre",
+  "name": "ISO 11929 V6 avec analyseur spectre image et N42 couleurs compSpectre",
   "description": "A web application to assist in understanding and applying the ISO 11929 standard for nuclear measurements. It helps calculate characteristic limits like decision thresholds and detection limits, and provides multilingual support (FR, EN, DE, ES).",
   "requestFramePermissions": [
     "camera"

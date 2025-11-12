@@ -174,20 +174,26 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
             title={
                 <div className="flex justify-between items-center">
                     <span>{t('analysisResultsTitle')}</span>
-                    <div className="flex items-center space-x-4 no-print">
+                    <div className="flex items-center space-x-2 no-print">
                          {analysisStatus === 'complete' && (
-                            <>
-                                <button onClick={onSaveAnalysis} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                            <div className="flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg">
+                                <button onClick={onSaveAnalysis} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v10l-5-4-5 4V4z" /></svg>
                                     <span>{t('saveAnalysis')}</span>
                                 </button>
-                                <button onClick={onExportCsv} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                                <button onClick={onExportCsv} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                                     <span>{t('exportCsv')}</span>
                                 </button>
-                            </>
+                                <button disabled title={`${t('exportHdf5')} (coming soon)`} className="text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed">
+                                    <span>HDF5</span>
+                                </button>
+                                <button disabled title={`${t('exportNetCdf')} (coming soon)`} className="text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed">
+                                    <span>NetCDF</span>
+                                </button>
+                            </div>
                         )}
-                        <button onClick={() => window.print()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
+                        <button onClick={() => window.print()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
                             <span>{t('printReport')}</span>
                         </button>

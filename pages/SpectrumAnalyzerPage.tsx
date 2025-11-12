@@ -71,19 +71,8 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
     setErrorMessage('');
     setStep('add');
     setInteractivePoint(null);
-  }, [
-    // Fix: Added state setters to the dependency array to be explicit, although they are stable. This may resolve a subtle linting issue causing the reported error.
-    setImageDataUrl,
-    setCalibrationPoints,
-    setCalibrationFunction,
-    setSpectrumPoints,
-    setAnalysisResult,
-    setInitialAnalysisResult,
-    setAnalysisStatus,
-    setErrorMessage,
-    setStep,
-    setInteractivePoint,
-  ]);
+    // Fix: The dependency array for useCallback was unnecessarily complex with comments. It has been simplified to an empty array `[]` as state setters are stable and do not need to be listed as dependencies.
+  }, []);
 
   const handleImageLoaded = async (dataUrl: string) => {
     resetState();
