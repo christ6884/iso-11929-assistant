@@ -15,7 +15,7 @@ type SpectrumState = {
     data: ParsedN42Data | null;
 }
 
-const N42FileUploader: React.FC<{ onFileLoaded: (file: File, data: ParsedN42Data) => void, label: string, file: File | null }> = ({ onFileLoaded, label, file }) => {
+const N42FileUploader: React.FC<{ id: string; onFileLoaded: (file: File, data: ParsedN42Data) => void, label: string, file: File | null }> = ({ id, onFileLoaded, label, file }) => {
     const handleFile = async (f: File) => {
         if (!f) return;
         try {
@@ -27,8 +27,8 @@ const N42FileUploader: React.FC<{ onFileLoaded: (file: File, data: ParsedN42Data
     };
     return (
         <div className="text-center">
-            <label htmlFor={`upload-${label}`} className="p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block">
-                <input type="file" id={`upload-${label}`} className="hidden" accept=".n42" onChange={(e) => e.target.files && handleFile(e.target.files[0])} />
+            <label htmlFor={id} className="p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block">
+                <input type="file" id={id} className="hidden" accept=".n42" onChange={(e) => e.target.files && handleFile(e.target.files[0])} />
                 <p className="font-semibold text-gray-300">{label}</p>
                 <p className="text-xs text-gray-500">{file ? file.name : 'Select a file'}</p>
             </label>
@@ -69,13 +69,13 @@ const SpectrumComparisonPage: React.FC<SpectrumComparisonPageProps> = ({ t, onBa
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-6">
                     <div>
                         <h3 className="text-lg font-semibold text-gray-300 mb-4">{t('spectrumA')}</h3>
-                        <N42FileUploader onFileLoaded={(file, data) => setSpectrumA({ file, data })} label={t('loadSpectrum')} file={spectrumA.file} />
+                        <N42FileUploader id="upload-a" onFileLoaded={(file, data) => setSpectrumA({ file, data })} label={t('loadSpectrum')} file={spectrumA.file} />
                         <label className="text-sm text-gray-300 mt-4 block mb-1">{t('measurementTime')} (s)</label>
                         <input type="number" value={timeA} onChange={e => setTimeA(parseFloat(e.target.value) || 0)} className="w-full bg-gray-700 p-2 rounded-md font-mono text-right" />
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-gray-300 mb-4">{t('spectrumB')}</h3>
-                        <N42FileUploader onFileLoaded={(file, data) => setSpectrumB({ file, data })} label={t('loadSpectrum')} file={spectrumB.file} />
+                        <N42FileUploader id="upload-b" onFileLoaded={(file, data) => setSpectrumB({ file, data })} label={t('loadSpectrum')} file={spectrumB.file} />
                         <label className="text-sm text-gray-300 mt-4 block mb-1">{t('measurementTime')} (s)</label>
                         <input type="number" value={timeB} onChange={e => setTimeB(parseFloat(e.target.value) || 0)} className="w-full bg-gray-700 p-2 rounded-md font-mono text-right" />
                     </div>
