@@ -27578,18 +27578,20 @@
       {
         title: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between items-center", children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("analysisResultsTitle") }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex items-center space-x-4 no-print", children: [
-            analysisStatus === "complete" && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: onSaveAnalysis, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex items-center space-x-2 no-print", children: [
+            analysisStatus === "complete" && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: onSaveAnalysis, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: "M5 4a2 2 0 012-2h6a2 2 0 012 2v10l-5-4-5 4V4z" }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("saveAnalysis") })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: onExportCsv, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: onExportCsv, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("exportCsv") })
-              ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { disabled: true, title: `${t("exportHdf5")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "HDF5" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { disabled: true, title: `${t("exportNetCdf")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "NetCDF" }) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => window.print(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => window.print(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700", children: [
               /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: t("printReport") })
             ] })
@@ -28338,19 +28340,7 @@
       setErrorMessage("");
       setStep("add");
       setInteractivePoint(null);
-    }, [
-      // Fix: Added state setters to the dependency array to be explicit, although they are stable. This may resolve a subtle linting issue causing the reported error.
-      setImageDataUrl,
-      setCalibrationPoints,
-      setCalibrationFunction,
-      setSpectrumPoints,
-      setAnalysisResult,
-      setInitialAnalysisResult,
-      setAnalysisStatus,
-      setErrorMessage,
-      setStep,
-      setInteractivePoint
-    ]);
+    }, []);
     const handleImageLoaded = async (dataUrl) => {
       resetState();
       setImageDataUrl(dataUrl);
@@ -29383,17 +29373,21 @@
               /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("input", { type: "range", min: "0.1", max: "1", step: "0.01", value: clippingLevel, onChange: (e) => setClippingLevel(parseFloat(e.target.value)), className: "w-full" })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "mt-4 pt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-            "button",
-            {
-              onClick: handleExportCsv,
-              className: "w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center justify-center space-x-2",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: t("exportCsv") })
-              ]
-            }
-          ) })
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "mt-4 pt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+              "button",
+              {
+                onClick: handleExportCsv,
+                className: "flex-1 text-sm text-cyan-400 hover:text-cyan-300 flex items-center justify-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: t("exportCsv") })
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { disabled: true, title: `${t("exportHdf5")} (coming soon)`, className: "flex-1 text-sm text-gray-500 flex items-center justify-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: "HDF5" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { disabled: true, title: `${t("exportNetCdf")} (coming soon)`, className: "flex-1 text-sm text-gray-500 flex items-center justify-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: "NetCDF" }) })
+          ] }) })
         ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(Card_default, { title: t("detectedPeaksTitle"), children: [
           /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("table", { className: "w-full text-xs text-left", children: [
@@ -30085,28 +30079,46 @@
         key: "image",
         title: "spectroMenuImageTitle",
         desc: "spectroMenuImageDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) }),
+        disabled: false
       },
       {
         key: "n42",
         title: "spectroMenuN42Title",
         desc: "spectroMenuN42Desc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: false
+      },
+      {
+        key: "spc",
+        title: "spectroMenuSPCTitle",
+        desc: "spectroMenuSPCDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: true
+      },
+      {
+        key: "chn",
+        title: "spectroMenuCHNTitle",
+        desc: "spectroMenuCHNDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: true
       },
       {
         key: "bkg",
         title: "spectroMenuBkgSubTitle",
         desc: "spectroMenuBkgSubDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) })
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) }),
+        disabled: false
       },
       {
         key: "compare",
         title: "spectroMenuCompareTitle",
         desc: "spectroMenuCompareDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-cyan-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
+        icon: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
           /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" }),
           /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18", opacity: "0.6" })
-        ] })
+        ] }),
+        disabled: false
       }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "p-4 sm:p-6 md:p-8", children: [
@@ -30121,17 +30133,17 @@
           /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "alpha" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("alphaAnalysis") })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
         "div",
         {
-          onClick: () => setMode(tool.key),
-          onKeyDown: (e) => handleKeyDown(e, tool.key),
+          onClick: () => !tool.disabled && setMode(tool.key),
+          onKeyDown: (e) => !tool.disabled && handleKeyDown(e, tool.key),
           role: "button",
-          tabIndex: 0,
+          tabIndex: tool.disabled ? -1 : 0,
           "aria-label": t(tool.title),
-          className: "bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-700 hover:border-cyan-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500",
+          className: `bg-gray-800 rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 ${tool.disabled ? "opacity-50 cursor-not-allowed" : "hover:shadow-2xl hover:border-cyan-400 transform hover:-translate-y-2 cursor-pointer"}`,
           children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "p-6 flex flex-col items-center justify-center text-center flex-grow", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "bg-gray-700 p-4 rounded-full mb-4", children: tool.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: `p-4 rounded-full mb-4 bg-gray-700`, children: import_react27.default.cloneElement(tool.icon, { className: `h-16 w-16 ${tool.disabled ? "text-gray-500" : "text-cyan-400"}` }) }),
             /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-bold text-gray-100", children: t(tool.title) }),
             /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-sm text-gray-400 mt-2", children: t(tool.desc) })
           ] })
@@ -31184,7 +31196,13 @@
       spectroMenuBkgSubDesc: "Analyser un spectre net apr\xE8s soustraction d'un bruit de fond (fichiers N42).",
       spectroMenuCompareTitle: "Comparaison de Spectres",
       spectroMenuCompareDesc: "Superposer deux spectres (fichiers N42) pour une analyse visuelle.",
+      spectroMenuSPCTitle: "Analyseur .SPC",
+      spectroMenuSPCDesc: "Charger un spectre au format .SPC (Canberra, etc.). Bient\xF4t disponible (fichiers de test requis).",
+      spectroMenuCHNTitle: "Analyseur .CHN",
+      spectroMenuCHNDesc: "Charger un spectre au format .CHN (ORTEC, etc.). Bient\xF4t disponible (fichiers de test requis).",
       exportCsv: "Exporter en CSV",
+      exportHdf5: "Exporter en HDF5",
+      exportNetCdf: "Exporter en NetCDF",
       saveAnalysis: "Sauvegarder l'analyse",
       // --- Spectrum Analyzer Page (Image) ---
       spectrumAnalyzerTitle: "Analyseur de Spectre sur Image",
@@ -31677,7 +31695,13 @@
       spectroMenuBkgSubDesc: "Analyze a net spectrum after subtracting a background (N42 files).",
       spectroMenuCompareTitle: "Spectrum Comparison",
       spectroMenuCompareDesc: "Overlay two spectra (N42 files) for visual analysis.",
+      spectroMenuSPCTitle: ".SPC Analyzer",
+      spectroMenuSPCDesc: "Load a spectrum in .SPC format (Canberra, etc.). Coming soon (test files required).",
+      spectroMenuCHNTitle: ".CHN Analyzer",
+      spectroMenuCHNDesc: "Load a spectrum in .CHN format (ORTEC, etc.). Coming soon (test files required).",
       exportCsv: "Export to CSV",
+      exportHdf5: "Export to HDF5",
+      exportNetCdf: "Export to NetCDF",
       saveAnalysis: "Save Analysis",
       spectrumAnalyzerTitle: "Image Spectrum Analyzer",
       uploadInstruction: "Drag and drop a spectrum image or click to select.",
@@ -32153,7 +32177,13 @@
       spectroMenuBkgSubDesc: "Analysieren Sie ein Nettospektrum nach Subtraktion eines Hintergrunds (N42-Dateien).",
       spectroMenuCompareTitle: "Spektrenvergleich",
       spectroMenuCompareDesc: "\xDCberlagern Sie zwei Spektren (N42-Dateien) zur visuellen Analyse.",
+      spectroMenuSPCTitle: ".SPC-Analysator",
+      spectroMenuSPCDesc: "Laden Sie ein Spektrum im .SPC-Format (Canberra usw.). Demn\xE4chst verf\xFCgbar (Testdateien erforderlich).",
+      spectroMenuCHNTitle: ".CHN-Analysator",
+      spectroMenuCHNDesc: "Laden Sie ein Spektrum im .CHN-Format (ORTEC usw.). Demn\xE4chst verf\xFCgbar (Testdateien erforderlich).",
       exportCsv: "Als CSV exportieren",
+      exportHdf5: "Nach HDF5 exportieren",
+      exportNetCdf: "Nach NetCDF exportieren",
       saveAnalysis: "Analyse speichern",
       spectrumAnalyzerTitle: "Bild-Spektrumanalysator",
       uploadInstruction: "Ziehen Sie ein Spektrumbild per Drag & Drop hierher oder klicken Sie, um es auszuw\xE4hlen.",
@@ -32629,7 +32659,13 @@
       spectroMenuBkgSubDesc: "Analizar un espectro neto despu\xE9s de sustraer un fondo (archivos N42).",
       spectroMenuCompareTitle: "Comparaci\xF3n de Espectros",
       spectroMenuCompareDesc: "Superponer dos espectros (archivos N42) para un an\xE1lisis visual.",
+      spectroMenuSPCTitle: "Analizador .SPC",
+      spectroMenuSPCDesc: "Cargar un espectro en formato .SPC (Canberra, etc.). Pr\xF3ximamente disponible (se requieren archivos de prueba).",
+      spectroMenuCHNTitle: "Analizador .CHN",
+      spectroMenuCHNDesc: "Cargar un espectro en formato .CHN (ORTEC, etc.). Pr\xF3ximamente disponible (se requieren archivos de prueba).",
       exportCsv: "Exportar a CSV",
+      exportHdf5: "Exportar a HDF5",
+      exportNetCdf: "Exportar a NetCDF",
       saveAnalysis: "Guardar An\xE1lisis",
       spectrumAnalyzerTitle: "Analizador de Espectro de Imagen",
       uploadInstruction: "Arrastre y suelte una imagen de espectro o haga clic para seleccionar.",
