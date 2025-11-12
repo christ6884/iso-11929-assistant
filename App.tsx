@@ -16,6 +16,7 @@ import SpectroPage from './pages/SpectroPage.tsx';
 import SourceManagementPage from './pages/SourceManagementPage.tsx';
 import AnalysisHistoryPage from './pages/AnalysisHistoryPage.tsx';
 import UpdateNotification from './components/UpdateNotification.tsx';
+import ReportGeneratorModal from './components/ReportGeneratorModal.tsx';
 import { getTranslator } from './translations.ts';
 import { calculateAll, findK1betaForTarget, probability_from_quantile } from './services/isoCalculations.ts';
 import { runMonteCarloSimulation } from './services/monteCarloService.ts';
@@ -89,6 +90,7 @@ const App: React.FC = () => {
     const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = useState(false);
     const [isUnitConverterOpen, setIsUnitConverterOpen] = useState(false);
     const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
+    const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
     const [isProUser, setIsProUser] = useState(false);
     const [isProModalOpen, setIsProModalOpen] = useState(false);
@@ -459,7 +461,7 @@ const App: React.FC = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8">
-            <header className="mb-6">
+            <header className="mb-6 no-print">
                 <div className="flex justify-between items-start mb-4">
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-cyan-400">ISO 11929 Assistant</h1>
@@ -474,6 +476,9 @@ const App: React.FC = () => {
                                 <span className="hidden sm:inline">{t('unlockPro')}</span>
                             </button>
                         )}
+                        <button onClick={() => setIsReportModalOpen(true)} title={t('printReport')} className="p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors">
+                           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
+                        </button>
                         <button onClick={() => setIsUnitConverterOpen(true)} title={t('unitConverter')} className="p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" />
@@ -542,8 +547,15 @@ const App: React.FC = () => {
                 onSuccess={handleUnlockSuccess}
                 t={t}
             />
+            <ReportGeneratorModal
+                isOpen={isReportModalOpen}
+                onClose={() => setIsReportModalOpen(false)}
+                inputs={inputs}
+                results={results}
+                t={t}
+            />
 
-            <footer className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800">
+            <footer className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print">
                 <p>{t('authorCredit')}</p>
             </footer>
         </div>

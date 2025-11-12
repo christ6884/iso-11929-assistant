@@ -49,3 +49,57 @@ html.theme-forest .bg-cyan-600 { background-color: #16a34a; } /* green-600 */
 html.theme-forest .hover\:bg-cyan-700:hover { background-color: #15803d; }
 html.theme-forest .border-cyan-500 { border-color: #22c55e; }
 html.theme-forest .bg-cyan-500 { background-color: #22c55e; }
+
+/* --- Print Styles --- */
+@media print {
+    body {
+        background-color: white !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-section {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .a4-page {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        min-height: initial !important;
+    }
+    
+    .print-section *, .a4-page * {
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ccc !important;
+        padding: 6px;
+    }
+    
+    /* Avoid breaking elements across pages */
+    table, tr, .chart-container {
+      page-break-inside: avoid;
+    }
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+}
