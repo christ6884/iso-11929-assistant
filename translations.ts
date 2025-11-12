@@ -6,8 +6,8 @@ type Translations = {
 
 const fr: Translations = {
     // General
-    authorDetails: "Par David LOISELEUR - Inspiré par la norme ISO 11929:2019",
-    authorCredit: "Créé avec ❤️ par David LOISELEUR. Tous droits réservés.",
+    authorDetails: "Par Christophe PHAM - Inspiré par la norme ISO 11929:2019",
+    authorCredit: "Créé avec ❤️ par Christophe PHAM. Tous droits réservés.",
     proVersion: "Version PRO",
     unlockPro: "Débloquer PRO",
     unitConverter: "Convertisseur d'unités",
@@ -543,8 +543,8 @@ const fr: Translations = {
 
 const en: Translations = {
     // General
-    authorDetails: "By David LOISELEUR - Inspired by ISO 11929:2019",
-    authorCredit: "Crafted with ❤️ by David LOISELEUR. All rights reserved.",
+    authorDetails: "By Christophe PHAM - Inspired by ISO 11929:2019",
+    authorCredit: "Crafted with ❤️ by Christophe PHAM. All rights reserved.",
     proVersion: "PRO Version",
     unlockPro: "Unlock PRO",
     unitConverter: "Unit Converter",
@@ -1080,8 +1080,8 @@ const en: Translations = {
 
 const de: Translations = {
     // General
-    authorDetails: "Von David LOISELEUR - Inspiriert von ISO 11929:2019",
-    authorCredit: "Mit ❤️ erstellt von David LOISELEUR. Alle Rechte vorbehalten.",
+    authorDetails: "Von Christophe PHAM - Inspiriert von ISO 11929:2019",
+    authorCredit: "Mit ❤️ erstellt von Christophe PHAM. Alle Rechte vorbehalten.",
     proVersion: "PRO Version",
     unlockPro: "PRO freischalten",
     unitConverter: "Einheitenumrechner",
@@ -1617,8 +1617,8 @@ const de: Translations = {
 
 const es: Translations = {
     // General
-    authorDetails: "Por David LOISELEUR - Inspirado en la norma ISO 11929:2019",
-    authorCredit: "Creado con ❤️ por David LOISELEUR. Todos los derechos reservados.",
+    authorDetails: "Por Christophe PHAM - Inspirado en la norma ISO 11929:2019",
+    authorCredit: "Creado con ❤️ por Christophe PHAM. Todos los derechos reservados.",
     proVersion: "Versión PRO",
     unlockPro: "Desbloquear PRO",
     unitConverter: "Convertidor de Unidades",
