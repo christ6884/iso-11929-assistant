@@ -7,7 +7,7 @@
     "start": "npm run build && electron .",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "build": "rimraf dist && esbuild index.tsx --bundle --outfile=dist/bundle.js --platform=browser --target=es2020 --jsx=automatic && copyfiles index.html manifest.json service-worker.js icons/**/* dist",
+    "build": "rimraf dist && esbuild index.tsx --bundle --outfile=dist/bundle.js --platform=browser --target=es2020 --jsx=automatic && tailwindcss -i index.css -o dist/index.css && copyfiles index.html manifest.json service-worker.js icons/**/* dist",
     "dist": "npm run build && electron-builder"
   },
   "author": "PHAM Christophe, UNITECH Service Group",
