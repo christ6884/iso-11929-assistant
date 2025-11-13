@@ -15,6 +15,7 @@ import UnitConverterModal from './components/UnitConverterModal.tsx';
 import SpectroPage from './pages/SpectroPage.tsx';
 import SourceManagementPage from './pages/SourceManagementPage.tsx';
 import AnalysisHistoryPage from './pages/AnalysisHistoryPage.tsx';
+import AdminPage from './pages/AdminPage.tsx';
 import UpdateNotification from './components/UpdateNotification.tsx';
 import ReportGeneratorModal from './components/ReportGeneratorModal.tsx';
 import { getTranslator } from './translations.ts';
@@ -101,6 +102,10 @@ const App: React.FC = () => {
     const [analysisToLoad, setAnalysisToLoad] = useState<AnalysisRecord | null>(null);
 
     const toolsMenuRef = useRef<HTMLDivElement>(null);
+    
+    // Admin/Secret trigger state
+    const footerClickCountRef = useRef(0);
+    const footerLastClickTimeRef = useRef(0);
 
     useEffect(() => {
         if (localStorage.getItem('isProUser') === 'true') {
@@ -379,6 +384,28 @@ const App: React.FC = () => {
         setView('spectro');
     };
 
+    const handleFooterClick = () => {
+        const now = Date.now();
+        // Increased timeout to 2000ms (2 seconds) to make it easier to trigger
+        if (now - footerLastClickTimeRef.current < 2000) {
+            footerClickCountRef.current += 1;
+        } else {
+            footerClickCountRef.current = 1;
+        }
+        footerLastClickTimeRef.current = now;
+
+        if (footerClickCountRef.current >= 5) {
+            footerClickCountRef.current = 0;
+            // Small timeout to ensure the prompt appears after the click event settles
+            setTimeout(() => {
+                const pwd = prompt("Admin Password:");
+                if (pwd === "42") {
+                    setView('admin');
+                }
+            }, 100);
+        }
+    };
+
     const renderCalculatorView = () => (
         <>
             <div className="flex justify-center mb-6">
@@ -448,6 +475,8 @@ const App: React.FC = () => {
                 return <SourceManagementPage t={t} />;
             case 'history':
                 return <AnalysisHistoryPage t={t} onLoadAnalysis={handleLoadAnalysis} />;
+            case 'admin':
+                return <AdminPage t={t} onBack={() => setView('calculator')} inputs={inputs} isProUser={isProUser} setProUser={(val) => setIsProUser(val)}/>;
             default:
                 return renderCalculatorView();
         }
@@ -553,8 +582,8 @@ const App: React.FC = () => {
                 t={t}
             />
 
-            <footer className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print">
-                <p>{t('authorCredit')}</p>
+            <footer className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print cursor-pointer" onClick={handleFooterClick}>
+                <p className="select-none">{t('authorCredit')}</p>
             </footer>
         </div>
     );

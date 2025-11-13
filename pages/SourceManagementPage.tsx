@@ -254,23 +254,24 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
         const isSorted = sortConfig.key === sortKey;
         return (
             <th className="p-3">
-                <button onClick={() => requestSort(sortKey)} className="flex items-center space-x-1">
+                <button onClick={() => requestSort(sortKey)} className="flex items-center space-x-1 no-print">
                     <span>{label}</span>
                     {isSorted && (
                         <span>{sortConfig.direction === 'ascending' ? '▲' : '▼'}</span>
                     )}
                 </button>
+                 <span className="hidden print:inline">{label}</span>
             </th>
         );
     };
 
 
     return (
-        <div>
+        <div className="print-section">
             <Card title={
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                     <h2 className="text-xl font-bold text-gray-200">{t('sourceInventory')}</h2>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 no-print">
                          <input
                             type="text"
                             placeholder={t('searchSource')}
@@ -286,6 +287,9 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                         <button onClick={handleExport} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">{t('export')}</button>
                         <button onClick={() => setIsMemoOpen(true)} title={t('sourceTypeMemo')} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" /></svg>
+                        </button>
+                        <button onClick={() => window.print()} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clipRule="evenodd" /></svg>
                         </button>
                         <button onClick={() => { setSourceToEdit(null); setIsAddModalOpen(true); }} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm">{t('addSource')}</button>
                     </div>
@@ -306,15 +310,16 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                                     <SortableHeader sortKey="nuclide" label={t('sourceMgmt_nuclide')} />
                                     <SortableHeader sortKey="type" label={t('sourceType')} />
                                     <th className="p-3 text-right">
-                                        <button onClick={() => requestSort('currentActivity')} className="flex items-center space-x-1 float-right">
+                                        <button onClick={() => requestSort('currentActivity')} className="flex items-center space-x-1 float-right no-print">
                                             <span>{t('currentActivity')}</span>
                                             {sortConfig.key === 'currentActivity' && (
                                                 <span>{sortConfig.direction === 'ascending' ? '▲' : '▼'}</span>
                                             )}
                                         </button>
+                                        <span className="hidden print:inline float-right">{t('currentActivity')}</span>
                                     </th>
                                     <th className="p-3 text-center">{t('conformity')}</th>
-                                    <th className="p-3 text-center">{t('actions')}</th>
+                                    <th className="p-3 text-center no-print">{t('actions')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -332,7 +337,7 @@ const SourceManagementPage: React.FC<SourceManagementPageProps> = ({ t }) => {
                                             <td className="p-3 text-center">
                                                 <span title={conformity} className={`block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}`}></span>
                                             </td>
-                                            <td className="p-3">
+                                            <td className="p-3 no-print">
                                                 <div className="flex items-center justify-center space-x-3">
                                                     <button onClick={() => handleEditSource(source)} className="text-cyan-400 hover:text-cyan-300" title={t('editSource')}>
                                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" /></svg>

@@ -21,7 +21,7 @@ export enum TargetUnit {
     UCI_CM2 = 'µCi/cm²',
 }
 
-export type View = 'calculator' | 'spectro' | 'sources' | 'history';
+export type View = 'calculator' | 'spectro' | 'sources' | 'history' | 'admin';
 export type AnalysisMode = 'standard' | 'spectrometry' | 'surface' | 'chambre' | 'linge';
 export type DetectionLimitMode = 'calculate' | 'target';
 
