@@ -1084,7 +1084,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState32(initialState) {
+          function useState33(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo16;
           exports.useReducer = useReducer;
           exports.useRef = useRef9;
-          exports.useState = useState32;
+          exports.useState = useState33;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React37 = require_react();
+          var React38 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React37.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React38.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React37.Children.forEach(props.children, function(child) {
+                  React38.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23559,7 +23559,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React37 = require_react();
+          var React38 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23585,7 +23585,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React37.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React38.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24435,11 +24435,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx45 = jsxWithValidationDynamic;
-          var jsxs44 = jsxWithValidationStatic;
+          var jsx46 = jsxWithValidationDynamic;
+          var jsxs45 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx45;
-          exports.jsxs = jsxs44;
+          exports.jsx = jsx46;
+          exports.jsxs = jsxs45;
         })();
       }
     }
@@ -24458,11 +24458,11 @@
   });
 
   // index.tsx
-  var import_react36 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // App.tsx
-  var import_react35 = __toESM(require_react());
+  var import_react36 = __toESM(require_react());
 
   // components/InputPanel.tsx
   var import_react3 = __toESM(require_react());
@@ -30896,15 +30896,18 @@
     };
     const SortableHeader = ({ sortKey, label }) => {
       const isSorted = sortConfig.key === sortKey;
-      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: label }),
-        isSorted && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
-      ] }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("th", { className: "p-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1 no-print", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: label }),
+          isSorted && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden print:inline", children: label })
+      ] });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "print-section", children: [
       /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
         /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center gap-2 no-print", children: [
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
             "input",
             {
@@ -30922,6 +30925,7 @@
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => window.print(), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => {
             setSourceToEdit(null);
             setIsAddModalOpen(true);
@@ -30937,12 +30941,15 @@
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-right", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: t("currentActivity") }),
-            sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
-          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("th", { className: "p-3 text-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right no-print", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: t("currentActivity") }),
+              sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: "hidden print:inline float-right", children: t("currentActivity") })
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("th", { className: "p-3 text-center no-print", children: t("actions") })
         ] }) }),
         /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("tbody", { children: sortedSources.map((source) => {
           const currentActivity = calculateCurrentActivity(source);
@@ -30955,7 +30962,7 @@
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: source.type }),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("td", { className: "p-3 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
               /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
                 /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
@@ -31085,14 +31092,302 @@
   };
   var AnalysisHistoryPage_default = AnalysisHistoryPage;
 
-  // components/UpdateNotification.tsx
+  // pages/AdminPage.tsx
+  var import_react34 = __toESM(require_react());
   var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var projectStructure = [
+    {
+      name: "components",
+      type: "folder",
+      descKey: "folderDesc_components",
+      children: [
+        {
+          name: "n42-analyzer",
+          type: "folder",
+          descKey: "folderDesc_n42_analyzer",
+          children: [
+            { name: "AddPeakModal.tsx", type: "file", descKey: "fileDesc_AddPeakModal" },
+            { name: "ComparisonPlot.tsx", type: "file", descKey: "fileDesc_ComparisonPlot" },
+            { name: "DeconvolutionModal.tsx", type: "file", descKey: "fileDesc_DeconvolutionModal" },
+            { name: "EfficiencyCalibrationModal.tsx", type: "file", descKey: "fileDesc_EfficiencyCalibrationModal" },
+            { name: "SpectrumPlot.tsx", type: "file", descKey: "fileDesc_SpectrumPlot" }
+          ]
+        },
+        {
+          name: "source-management",
+          type: "folder",
+          descKey: "folderDesc_source_management",
+          children: [
+            { name: "AddSourceModal.tsx", type: "file", descKey: "fileDesc_AddSourceModal" },
+            { name: "CsvImportModal.tsx", type: "file", descKey: "fileDesc_CsvImportModal" },
+            { name: "ImportReviewModal.tsx", type: "file", descKey: "fileDesc_ImportReviewModal" },
+            { name: "SourceTooltip.tsx", type: "file", descKey: "fileDesc_SourceTooltip" },
+            { name: "SourceTypesMemoModal.tsx", type: "file", descKey: "fileDesc_SourceTypesMemoModal" }
+          ]
+        },
+        {
+          name: "spectrum-analyzer",
+          type: "folder",
+          descKey: "folderDesc_spectrum_analyzer",
+          children: [
+            { name: "AnalysisResults.tsx", type: "file", descKey: "fileDesc_AnalysisResults" },
+            { name: "CalibrationPointModal.tsx", type: "file", descKey: "fileDesc_CalibrationPointModal" },
+            { name: "CalibrationSidebar.tsx", type: "file", descKey: "fileDesc_CalibrationSidebar" },
+            { name: "CameraCapture.tsx", type: "file", descKey: "fileDesc_CameraCapture" },
+            { name: "ImageUploader.tsx", type: "file", descKey: "fileDesc_ImageUploader" }
+          ]
+        },
+        { name: "Card.tsx", type: "file", descKey: "fileDesc_Card" },
+        { name: "ChartModal.tsx", type: "file", descKey: "fileDesc_ChartModal" },
+        { name: "ChartPanel.tsx", type: "file", descKey: "fileDesc_ChartPanel" },
+        { name: "CollapsibleSection.tsx", type: "file", descKey: "fileDesc_CollapsibleSection" },
+        { name: "DecayCalculatorModal.tsx", type: "file", descKey: "fileDesc_DecayCalculatorModal" },
+        { name: "ExportModal.tsx", type: "file", descKey: "fileDesc_ExportModal" },
+        { name: "GeminiBackupModal.tsx", type: "file", descKey: "fileDesc_GeminiBackupModal" },
+        { name: "GeminiHelper.tsx", type: "file", descKey: "fileDesc_GeminiHelper" },
+        { name: "InfoTooltip.tsx", type: "file", descKey: "fileDesc_InfoTooltip" },
+        { name: "InputPanel.tsx", type: "file", descKey: "fileDesc_InputPanel" },
+        { name: "LanguageSelector.tsx", type: "file", descKey: "fileDesc_LanguageSelector" },
+        { name: "ModeSelector.tsx", type: "file", descKey: "fileDesc_ModeSelector" },
+        { name: "MonteCarloStatsModal.tsx", type: "file", descKey: "fileDesc_MonteCarloStatsModal" },
+        { name: "PeakIdentifierModal.tsx", type: "file", descKey: "fileDesc_PeakIdentifierModal" },
+        { name: "PeakPositionAdjusterModal.tsx", type: "file", descKey: "fileDesc_PeakPositionAdjusterModal" },
+        { name: "ProAccessModal.tsx", type: "file", descKey: "fileDesc_ProAccessModal" },
+        { name: "ReportGeneratorModal.tsx", type: "file", descKey: "fileDesc_ReportGeneratorModal" },
+        { name: "ResultsPanel.tsx", type: "file", descKey: "fileDesc_ResultsPanel" },
+        { name: "SaveAnalysisModal.tsx", type: "file", descKey: "fileDesc_SaveAnalysisModal" },
+        { name: "ThemeSelector.tsx", type: "file", descKey: "fileDesc_ThemeSelector" },
+        { name: "UnitConverterModal.tsx", type: "file", descKey: "fileDesc_UnitConverterModal" },
+        { name: "UpdateNotification.tsx", type: "file", descKey: "fileDesc_UpdateNotification" },
+        { name: "UserGuideModal.tsx", type: "file", descKey: "fileDesc_UserGuideModal" },
+        { name: "WelcomeModal.tsx", type: "file", descKey: "fileDesc_WelcomeModal" }
+      ]
+    },
+    {
+      name: "electron",
+      type: "folder",
+      descKey: "folderDesc_electron",
+      children: [
+        { name: "main.js", type: "file", descKey: "fileDesc_electron_main" },
+        { name: "preload.js", type: "file", descKey: "fileDesc_electron_preload" }
+      ]
+    },
+    {
+      name: "pages",
+      type: "folder",
+      descKey: "folderDesc_pages",
+      children: [
+        { name: "AdminPage.tsx", type: "file", descKey: "fileDesc_AdminPage" },
+        { name: "AnalysisHistoryPage.tsx", type: "file", descKey: "fileDesc_AnalysisHistoryPage" },
+        { name: "BackgroundSubtractionPage.tsx", type: "file", descKey: "fileDesc_BackgroundSubtractionPage" },
+        { name: "N42AnalyzerPage.tsx", type: "file", descKey: "fileDesc_N42AnalyzerPage" },
+        { name: "SourceManagementPage.tsx", type: "file", descKey: "fileDesc_SourceManagementPage" },
+        { name: "SpectroPage.tsx", type: "file", descKey: "fileDesc_SpectroPage" },
+        { name: "SpectrumAnalyzerPage.tsx", type: "file", descKey: "fileDesc_SpectrumAnalyzerPage" },
+        { name: "SpectrumComparisonPage.tsx", type: "file", descKey: "fileDesc_SpectrumComparisonPage" }
+      ]
+    },
+    {
+      name: "services",
+      type: "folder",
+      descKey: "folderDesc_services",
+      children: [
+        { name: "analysisHelpers.ts", type: "file", descKey: "fileDesc_analysisHelpers" },
+        { name: "dbService.ts", type: "file", descKey: "fileDesc_dbService" },
+        { name: "gammaLibrary.ts", type: "file", descKey: "fileDesc_gammaLibrary" },
+        { name: "geminiService.ts", type: "file", descKey: "fileDesc_geminiService" },
+        { name: "isoCalculations.ts", type: "file", descKey: "fileDesc_isoCalculations" },
+        { name: "monteCarloService.ts", type: "file", descKey: "fileDesc_monteCarloService" },
+        { name: "n42ParserService.ts", type: "file", descKey: "fileDesc_n42ParserService" },
+        { name: "peakIdentifierService.ts", type: "file", descKey: "fileDesc_peakIdentifierService" },
+        { name: "radionuclides.ts", type: "file", descKey: "fileDesc_radionuclides" },
+        { name: "sourceTypes.ts", type: "file", descKey: "fileDesc_sourceTypes" },
+        { name: "spectrumAnalyzerService.ts", type: "file", descKey: "fileDesc_spectrumAnalyzerService" }
+      ]
+    },
+    { name: "App.tsx", type: "file", descKey: "fileDesc_App" },
+    { name: "index.css", type: "file", descKey: "fileDesc_index_css" },
+    { name: "index.html", type: "file", descKey: "fileDesc_index_html" },
+    { name: "index.tsx", type: "file", descKey: "fileDesc_index_tsx" },
+    { name: "manifest.json", type: "file", descKey: "fileDesc_manifest" },
+    { name: "metadata.json", type: "file", descKey: "fileDesc_metadata" },
+    { name: "package.json", type: "file", descKey: "fileDesc_package" },
+    { name: "service-worker.js", type: "file", descKey: "fileDesc_sw" },
+    { name: "tailwind.config.js", type: "file", descKey: "fileDesc_tailwind" },
+    { name: "translations.ts", type: "file", descKey: "fileDesc_translations" },
+    { name: "types.ts", type: "file", descKey: "fileDesc_types" }
+  ];
+  var FileTreeItem = ({ node, path, depth, selectedPath, onSelect }) => {
+    const [isOpen, setIsOpen] = (0, import_react34.useState)(true);
+    const currentPath = `${path}/${node.name}`;
+    const isSelected = selectedPath === currentPath;
+    const handleToggle = (e) => {
+      e.stopPropagation();
+      if (node.type === "folder") {
+        setIsOpen(!isOpen);
+      }
+      onSelect(node, currentPath);
+    };
+    const getIcon = () => {
+      if (node.type === "folder") {
+        return isOpen ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-4 h-4 text-yellow-400", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-4 h-4 text-yellow-400", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" }) });
+      }
+      if (node.name.endsWith(".tsx"))
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-cyan-400 text-xs font-bold", children: "TSX" });
+      if (node.name.endsWith(".ts"))
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-blue-400 text-xs font-bold", children: "TS" });
+      if (node.name.endsWith(".css"))
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-pink-400 text-xs font-bold", children: "#" });
+      if (node.name.endsWith(".json"))
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-yellow-300 text-xs font-bold" });
+      if (node.name.endsWith(".html"))
+        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-orange-400 text-xs font-bold", children: "<>" });
+      return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-gray-400 text-xs", children: "?" });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "select-none", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+        "div",
+        {
+          className: `flex items-center space-x-2 py-1 px-2 cursor-pointer transition-colors ${isSelected ? "bg-cyan-900/50 text-white" : "text-gray-300 hover:bg-gray-800"}`,
+          style: { paddingLeft: `${depth * 12 + 8}px` },
+          onClick: handleToggle,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "w-4 h-4 flex items-center justify-center", children: getIcon() }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: `text-sm ${isSelected ? "font-semibold" : ""}`, children: node.name }),
+            node.type === "folder" && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-500 ml-auto", children: isOpen ? "\u25BC" : "\u25B6" })
+          ]
+        }
+      ),
+      node.type === "folder" && isOpen && node.children && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { children: node.children.map((child) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        FileTreeItem,
+        {
+          node: child,
+          path: currentPath,
+          depth: depth + 1,
+          selectedPath,
+          onSelect
+        },
+        child.name
+      )) })
+    ] });
+  };
+  var AdminPage = ({ t, onBack, inputs, isProUser, setProUser }) => {
+    const [selectedNode, setSelectedNode] = (0, import_react34.useState)(null);
+    const [selectedPath, setSelectedPath] = (0, import_react34.useState)(null);
+    const handleSelect = (node, path) => {
+      setSelectedNode(node);
+      setSelectedPath(path);
+    };
+    const handleClearDB = async () => {
+      if (confirm("Warning: This will delete all saved sources and analysis history. Are you sure?")) {
+        try {
+          await db.deleteSource("all");
+          const req = indexedDB.deleteDatabase("ISOAssistantDB");
+          req.onsuccess = () => alert("Database deleted. Please refresh.");
+          req.onerror = () => alert("Failed to delete DB.");
+        } catch (e) {
+          alert("Error clearing DB");
+        }
+      }
+    };
+    const handleClearLocalStorage = () => {
+      if (confirm("Reset all app settings (theme, language, etc)?")) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-6", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex justify-between items-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("adminPageTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: t("backButton") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: "System Controls", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex flex-wrap gap-4 items-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-gray-300 font-semibold", children: [
+            t("godMode"),
+            ":"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+            "button",
+            {
+              onClick: () => setProUser(!isProUser),
+              className: `px-3 py-1 rounded text-xs font-bold ${isProUser ? "bg-green-600 text-white" : "bg-red-600 text-white"}`,
+              children: isProUser ? t("enableGodMode") : t("disableGodMode")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-xs text-gray-500 ml-2", children: [
+            "(",
+            t("godModeDesc"),
+            ")"
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-gray-300 font-semibold", children: [
+            t("dataManagement"),
+            ":"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearLocalStorage, className: "bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs", children: t("clearLocalStorage") }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearDB, className: "bg-red-900 hover:bg-red-800 text-white px-2 py-1 rounded text-xs", children: t("clearIndexedDB") })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "lg:col-span-1 bg-gray-900 rounded-lg border border-gray-700 flex flex-col", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "p-3 border-b border-gray-700 bg-gray-800 rounded-t-lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h3", { className: "text-sm font-bold text-gray-300", children: t("projectExplorer") }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-500 mt-1", children: t("projectExplorerDesc") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "flex-1 overflow-y-auto p-2 font-mono text-sm", children: projectStructure.map((node) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+            FileTreeItem,
+            {
+              node,
+              path: "",
+              depth: 0,
+              selectedPath,
+              onSelect: handleSelect
+            },
+            node.name
+          )) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "p-2 border-t border-gray-700 bg-gray-800/50 text-xs text-gray-500 text-center", children: t("adminStaticStructureWarning") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "lg:col-span-2", children: selectedNode ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: selectedNode.name, className: "h-full flex flex-col", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-700 p-3 rounded", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-400 block", children: "Type" }),
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-sm font-mono text-white capitalize", children: selectedNode.type })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-700 p-3 rounded", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-400 block", children: "Path" }),
+              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs font-mono text-cyan-300 break-all", children: selectedPath })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h4", { className: "text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1", children: t("fileRole") }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "bg-gray-900/50 p-4 rounded border border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-gray-200", children: t(selectedNode.descKey) }) })
+          ] }),
+          selectedNode.type === "folder" && selectedNode.children && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h4", { className: "text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1", children: "Contents" }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("ul", { className: "list-disc list-inside text-sm text-gray-400", children: selectedNode.children.map((child) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("li", { children: child.name }, child.name)) })
+          ] })
+        ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "h-full flex items-center justify-center bg-gray-800 rounded-lg border border-gray-700 border-dashed", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "text-center text-gray-500", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-16 h-16 mx-auto mb-4 opacity-50", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { children: t("adminWelcome") })
+        ] }) }) })
+      ] })
+    ] });
+  };
+  var AdminPage_default = AdminPage;
+
+  // components/UpdateNotification.tsx
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   var UpdateNotification = ({ isOpen, onUpdate, t }) => {
     if (!isOpen)
       return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
         "button",
         {
           onClick: onUpdate,
@@ -31105,8 +31400,8 @@
   var UpdateNotification_default = UpdateNotification;
 
   // components/ReportGeneratorModal.tsx
-  var import_react34 = __toESM(require_react());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var import_react35 = __toESM(require_react());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   var generateGaussianPoints3 = (mean, stdDev, range) => {
     if (stdDev <= 0)
       return [];
@@ -31132,7 +31427,7 @@
   };
   var ReportChart = ({ results, t }) => {
     if (typeof results.detectionLimit !== "number" || typeof results.decisionThreshold !== "number")
-      return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { children: t("chartNotAvailable") });
+      return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { children: t("chartNotAvailable") });
     const { primaryResult, primaryUncertainty, decisionThreshold, detectionLimit, uncertaintyAtZero, uncertaintyAtDetectionLimit } = results;
     const width = 800;
     const height = 450;
@@ -31153,22 +31448,22 @@
       points.forEach((p) => path += ` L ${toSvgX(p.x)} ${toSvgY(p.y)}`);
       return path;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "bg-white p-2 border border-gray-300 chart-container", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "#333" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#000", fontSize: "14", children: t("activity") }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: createPath(h0Points), stroke: "#007bff", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: createPath(h1Points), stroke: "#6f42c1", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: createPath(yPoints), stroke: "#28a745", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("line", { x1: toSvgX(decisionThreshold), y1: padding.top, x2: toSvgX(decisionThreshold), y2: height - padding.bottom, stroke: "#dc3545", strokeWidth: "2", strokeDasharray: "5 3" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("text", { x: toSvgX(decisionThreshold), y: padding.top - 8, textAnchor: "middle", fill: "#dc3545", fontSize: "12", fontWeight: "bold", children: "y*" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("line", { x1: toSvgX(detectionLimit), y1: padding.top, x2: toSvgX(detectionLimit), y2: height - padding.bottom, stroke: "#ffc107", strokeWidth: "2", strokeDasharray: "5 3" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("text", { x: toSvgX(detectionLimit), y: padding.top - 8, textAnchor: "middle", fill: "#ffc107", fontSize: "12", fontWeight: "bold", children: "y#" })
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "bg-white p-2 border border-gray-300 chart-container", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "#333" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#000", fontSize: "14", children: t("activity") }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { d: createPath(h0Points), stroke: "#007bff", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { d: createPath(h1Points), stroke: "#6f42c1", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { d: createPath(yPoints), stroke: "#28a745", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("line", { x1: toSvgX(decisionThreshold), y1: padding.top, x2: toSvgX(decisionThreshold), y2: height - padding.bottom, stroke: "#dc3545", strokeWidth: "2", strokeDasharray: "5 3" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("text", { x: toSvgX(decisionThreshold), y: padding.top - 8, textAnchor: "middle", fill: "#dc3545", fontSize: "12", fontWeight: "bold", children: "y*" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("line", { x1: toSvgX(detectionLimit), y1: padding.top, x2: toSvgX(detectionLimit), y2: height - padding.bottom, stroke: "#ffc107", strokeWidth: "2", strokeDasharray: "5 3" }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("text", { x: toSvgX(detectionLimit), y: padding.top - 8, textAnchor: "middle", fill: "#ffc107", fontSize: "12", fontWeight: "bold", children: "y#" })
     ] }) });
   };
   var ReportGeneratorModal = ({ isOpen, onClose, inputs, results, t }) => {
-    const [operatorName, setOperatorName] = (0, import_react34.useState)("");
-    const [sampleId, setSampleId] = (0, import_react34.useState)("");
-    const [comments, setComments] = (0, import_react34.useState)("");
+    const [operatorName, setOperatorName] = (0, import_react35.useState)("");
+    const [sampleId, setSampleId] = (0, import_react35.useState)("");
+    const [comments, setComments] = (0, import_react35.useState)("");
     const handlePrint = () => {
       const body = document.body;
       body.classList.add("print-report-active");
@@ -31196,59 +31491,59 @@
         { label: "k(1-\u03B1)", value: inputs.k1alpha, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
         { label: "k(1-\u03B2)", value: inputs.k1beta, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] }
       ];
-      return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("tbody", { children: rows.filter((r) => r.mode.includes(results && typeof results !== "string" ? results.currentMode : "standard")).map((row) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "font-semibold p-2", children: row.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: row.value })
+      return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("tbody", { children: rows.filter((r) => r.mode.includes(results && typeof results !== "string" ? results.currentMode : "standard")).map((row) => /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "font-semibold p-2", children: row.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "p-2", children: row.value })
       ] }, row.label)) }) });
     };
-    const renderResultsTable = (res) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "font-semibold p-2", children: t("primaryResult") }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: `${formatNumber3(res.primaryResult)} \xB1 ${formatNumber3(res.primaryUncertainty)}` })
+    const renderResultsTable = (res) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "font-semibold p-2", children: t("primaryResult") }),
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "p-2", children: `${formatNumber3(res.primaryResult)} \xB1 ${formatNumber3(res.primaryUncertainty)}` })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("td", { className: "font-semibold p-2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("td", { className: "font-semibold p-2", children: [
           t("decisionThreshold"),
           " (y*)"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: formatNumber3(res.decisionThreshold) })
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "p-2", children: formatNumber3(res.decisionThreshold) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("td", { className: "font-semibold p-2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("td", { className: "font-semibold p-2", children: [
           t("detectionLimit"),
           " (y#)"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: formatNumber3(res.detectionLimit) })
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "p-2", children: formatNumber3(res.detectionLimit) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "font-semibold p-2", children: t("conclusion") }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("td", { className: "p-2", children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") })
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "font-semibold p-2", children: t("conclusion") }),
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("td", { className: "p-2", children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") })
       ] })
     ] }) });
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper", onClick: (e) => e.stopPropagation(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-6 border-b border-gray-700 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h1", { className: "text-2xl font-bold text-cyan-400", children: t("reportGeneratorTitle") }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh] report-modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "text-black mb-8 pb-4 border-b border-gray-300", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h1", { className: "text-3xl font-bold mb-2", children: "ISO 11929 Calculation Report" }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-2 gap-4 text-sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("strong", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "p-6 border-b border-gray-700 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h1", { className: "text-2xl font-bold text-cyan-400", children: t("reportGeneratorTitle") }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh] report-modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "text-black mb-8 pb-4 border-b border-gray-300", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h1", { className: "text-3xl font-bold mb-2", children: "ISO 11929 Calculation Report" }),
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "grid grid-cols-2 gap-4 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("strong", { children: [
                 t("operatorName"),
                 ":"
               ] }),
               " ",
               operatorName || "-"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("strong", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("strong", { children: [
                 t("sampleId"),
                 ":"
               ] }),
               " ",
               sampleId || "-"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("strong", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("strong", { children: [
                 t("reportDate"),
                 ":"
               ] }),
@@ -31257,34 +31552,34 @@
             ] })
           ] })
         ] }),
-        typeof results !== "string" && results ? /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "space-y-8 text-black", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportInputs") }),
+        typeof results !== "string" && results ? /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "space-y-8 text-black", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportInputs") }),
             renderInputTable()
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportResults") }),
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportResults") }),
             renderResultsTable(results)
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "page-break-before", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("chartTitle") }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(ReportChart, { results, t })
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "page-break-before", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("chartTitle") }),
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ReportChart, { results, t })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("comments") }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm whitespace-pre-wrap min-h-[50px]", children: comments || " - " })
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("comments") }),
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "text-sm whitespace-pre-wrap min-h-[50px]", children: comments || " - " })
           ] })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-black", children: t("noResultsToDisplay") })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "text-black", children: t("noResultsToDisplay") })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "bg-gray-900/50 p-6 rounded-b-lg border-t border-gray-700 no-print", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("input", { type: "text", placeholder: t("operatorName"), value: operatorName, onChange: (e) => setOperatorName(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("input", { type: "text", placeholder: t("sampleId"), value: sampleId, onChange: (e) => setSampleId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "bg-gray-900/50 p-6 rounded-b-lg border-t border-gray-700 no-print", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("input", { type: "text", placeholder: t("operatorName"), value: operatorName, onChange: (e) => setOperatorName(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" }),
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("input", { type: "text", placeholder: t("sampleId"), value: sampleId, onChange: (e) => setSampleId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("textarea", { placeholder: t("comments"), value: comments, onChange: (e) => setComments(e.target.value), rows: 3, className: "w-full bg-gray-700 p-2 rounded-md text-white mb-4" }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex justify-end space-x-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handlePrint, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("textarea", { placeholder: t("comments"), value: comments, onChange: (e) => setComments(e.target.value), rows: 3, className: "w-full bg-gray-700 p-2 rounded-md text-white mb-4" }),
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "flex justify-end space-x-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }),
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: handlePrint, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
         ] })
       ] })
     ] }) });
@@ -31541,6 +31836,10 @@
     delta: "Delta (keV)",
     gammaAnalysis: "Gamma",
     alphaAnalysis: "Alpha",
+    modeByEnergy: "Par \xC9nergie",
+    modeByNuclide: "Par Nucl\xE9ide",
+    searchNuclide: "Rechercher un nucl\xE9ide",
+    emissionLines: "Raies d'\xE9mission principales",
     // Source Management
     sourceInventory: "Inventaire des sources",
     searchSource: "Rechercher...",
@@ -31565,6 +31864,21 @@
     import: "Importer (CSV)",
     export: "Exporter (CSV)",
     exportBackup: "Exporter / Sauvegarder",
+    // Admin
+    adminPageTitle: "Explorateur de Projet & Admin",
+    adminWelcome: "Vue structurelle du projet pour d\xE9veloppeur.",
+    projectExplorer: "Arborescence des Fichiers",
+    projectExplorerDesc: "Cliquez sur (i) pour voir le r\xF4le du fichier.",
+    adminStaticStructureWarning: "Note : Cette structure de fichiers est d\xE9finie statiquement. Elle ne se met pas \xE0 jour automatiquement.",
+    godMode: "Mode Dieu",
+    godModeDesc: "Force le mode PRO.",
+    enableGodMode: "Activer",
+    disableGodMode: "D\xE9sactiver",
+    dataManagement: "Donn\xE9es",
+    clearLocalStorage: "Reset App",
+    clearIndexedDB: "Vider DB",
+    fileRole: "R\xF4le du fichier",
+    fileInfo: "Information",
     // Theme
     changeTheme: "Changer le th\xE8me",
     themeCyberCyan: "Cyber Cyan",
@@ -31572,63 +31886,62 @@
     themeForestGreen: "For\xEAt Verte",
     // Language
     changeLanguage: "Changer de langue",
-    // === NEW KEYS ===
     // User Guide
     guideTitle: "Guide d'utilisation",
     guide_intro_title: "Introduction",
     guide_intro_p1: "Cet assistant est un outil p\xE9dagogique et pratique pour appliquer les concepts de la norme ISO 11929. Il permet de calculer les limites caract\xE9ristiques (seuil de d\xE9cision, limite de d\xE9tection) et de comprendre l'impact des diff\xE9rents param\xE8tres.",
     guide_main_calc_title: "Calculateur Principal",
     guide_main_calc_p1: "Le c\u0153ur de l'application. Il effectue les calculs selon la norme.",
-    guide_main_calc_modes_title: "Modes de calcul",
-    guide_main_calc_modes_p1: "Adaptez le calcul \xE0 votre situation de mesure :",
-    guide_main_calc_modes_li1: "Pour les comptages simples (\xE9chantillon et bruit de fond).",
-    guide_main_calc_modes_li2: "Pour l'analyse d'un pic dans un spectre gamma, en d\xE9finissant une R\xE9gion d'Int\xE9r\xEAt (ROI).",
-    guide_main_calc_modes_li3_surface: "D\xE9di\xE9 aux contaminam\xE8tres surfaciques, pour v\xE9rifier l'atteinte d'un seuil en Bq/cm\xB2.",
-    guide_main_calc_modes_li3_chambre: "Pour les moniteurs de contamination fixes (portiques, moniteurs outillage) avec un temps de mesure fixe.",
-    guide_main_calc_modes_li3_linge: "Pour les moniteurs \xE0 d\xE9filement (linge, d\xE9chets) o\xF9 le temps de mesure d\xE9pend de la vitesse du convoyeur.",
-    guide_main_calc_inputs_title: "Param\xE8tres d'entr\xE9e",
-    guide_main_calc_inputs_p1: "Les principaux param\xE8tres \xE0 renseigner sont :",
-    guide_main_calc_inputs_li1: "Les coups et temps de mesure pour l'\xE9chantillon (brut) et le bruit de fond.",
-    guide_main_calc_inputs_li2: "Le facteur d'\xE9talonnage (w) et son incertitude relative, qui lient le taux de comptage \xE0 l'activit\xE9.",
-    guide_main_calc_inputs_li3: "Les quantiles k(1-\u03B1) et k(1-\u03B2) qui d\xE9finissent les risques d'erreur accept\xE9s (typiquement 1.645 pour 5%).",
-    guide_main_calc_results_title: "Interpr\xE9tation des r\xE9sultats",
-    guide_main_calc_results_p1: "Les r\xE9sultats cl\xE9s sont :",
-    guide_main_calc_results_li1: "La valeur nette mesur\xE9e doit d\xE9passer ce seuil pour conclure \xE0 la pr\xE9sence d'activit\xE9.",
-    guide_main_calc_results_li2: "La plus petite activit\xE9 que l'on peut esp\xE9rer d\xE9tecter avec la m\xE9thode de mesure.",
-    guide_main_calc_results_li3: "Une conclusion claire est donn\xE9e : 'Pr\xE9sence d'activit\xE9 d\xE9tect\xE9e' si y > y*, ou non sinon.",
-    guide_main_calc_results_li4: "Visualise la contribution de chaque source d'incertitude (comptage, bruit de fond, \xE9talonnage) \xE0 l'incertitude totale.",
-    guide_main_calc_expert_title: "Mode Expert",
-    guide_main_calc_expert_p1: "Pour les utilisateurs avanc\xE9s :",
-    guide_main_calc_expert_li1: "Permet de prendre en compte une corr\xE9lation entre l'incertitude du bruit de fond et celle de l'\xE9talonnage (rarement utilis\xE9).",
-    guide_main_calc_expert_li2: "Utilise des simulations statistiques pour propager les incertitudes. C'est une m\xE9thode plus robuste, surtout \xE0 faible nombre de coups, mais plus lente.",
-    guide_spec_tools_title: "Outils de Spectrom\xE9trie (PRO)",
-    guide_spec_tools_p1: "Cette section fournit des outils avanc\xE9s pour l'analyse de spectres gamma et alpha.",
-    guide_spec_analyzer_title: "Analyseur de spectre depuis une image",
-    guide_spec_analyzer_p1: "Un outil unique qui extrait les donn\xE9es d'une image de spectre (capture d'\xE9cran, photo). Le processus se d\xE9roule en 3 phases :",
-    guide_spec_analyzer_phase1_title: "Phase 1 : \xC9talonnage",
-    guide_spec_analyzer_phase1_p1: "Cliquez sur des pics connus dans votre spectre et renseignez leur \xE9nergie. Un minimum de 2 points est requis pour calculer une fonction d'\xE9talonnage lin\xE9aire.",
-    guide_spec_analyzer_phase2_title: "Phase 2 : Analyse",
-    guide_spec_analyzer_phase2_p1: "Une fois l'\xE9talonnage valid\xE9, l'application d\xE9tecte automatiquement les pics, calcule leur \xE9nergie, leur FWHM et propose des identifications de radionucl\xE9ides possibles. Vous pouvez aussi ajouter manuellement des pics.",
-    guide_n42_analyzer_title: "Analyseur de fichier N42",
-    guide_n42_analyzer_p1: "Importez des spectres au format standard ANSI N42.42.",
-    guide_n42_analyzer_li1: "Chargez un fichier .n42 depuis votre appareil.",
-    guide_n42_analyzer_li2: "L'application lit les m\xE9tadonn\xE9es (instrument, temps de mesure) et les donn\xE9es du spectre.",
-    guide_n42_analyzer_li3: "L'\xE9talonnage en \xE9nergie est automatiquement lu depuis le fichier.",
-    guide_n42_analyzer_li4: "Les pics sont d\xE9tect\xE9s et identifi\xE9s. Vous pouvez interagir avec le graphique pour ajouter des pics manuellement ou analyser une r\xE9gion d'int\xE9r\xEAt (ROI).",
+    guide_main_calc_modes_title: "Modes d'analyse",
+    guide_main_calc_modes_p1: "S\xE9lectionnez le mode appropri\xE9 via la barre d'onglets en haut.",
+    guide_main_calc_modes_li1: "Pour les mesures simples avec des temps de comptage d\xE9finis.",
+    guide_main_calc_modes_li2: "Similaire au Standard, mais utilise les tailles de la ROI et du spectre complet pour mettre \xE0 l'\xE9chelle le bruit de fond.",
+    guide_main_calc_modes_li3_surface: "Calcule le seuil et la limite en termes d'activit\xE9 surfacique, en utilisant l'efficacit\xE9 et la surface de la sonde.",
+    guide_main_calc_modes_li3_chambre: "Pour les moniteurs \xE0 temps fixe.",
+    guide_main_calc_modes_li3_linge: "Pour les moniteurs \xE0 convoyeur, calcule le temps de mesure effectif bas\xE9 sur la vitesse.",
+    guide_main_calc_inputs_title: "Entr\xE9es",
+    guide_main_calc_inputs_p1: "Remplissez les champs requis. Les infobulles (i) fournissent des d\xE9tails sur chaque param\xE8tre.",
+    guide_main_calc_inputs_li1: "Entrez les coups bruts ou le taux, et le temps de mesure.",
+    guide_main_calc_inputs_li2: "Le facteur 'w' (ex: efficacit\xE9 inverse). Pour les modes Surface/Chambre/Linge, cela peut \xEAtre calcul\xE9 automatiquement.",
+    guide_main_calc_inputs_li3: "D\xE9finit les probabilit\xE9s d'erreur (\u03B1, \u03B2).",
+    guide_main_calc_results_title: "R\xE9sultats",
+    guide_main_calc_results_p1: "Le panneau de droite affiche les valeurs calcul\xE9es.",
+    guide_main_calc_results_li1: "Si le r\xE9sultat net > y*, l'effet est pr\xE9sent.",
+    guide_main_calc_results_li2: "La plus petite activit\xE9 d\xE9tectable de mani\xE8re fiable.",
+    guide_main_calc_results_li3: "Une d\xE9claration claire de pr\xE9sence ou d'absence d'activit\xE9.",
+    guide_main_calc_results_li4: "(Mode Expert) Montre la contribution de chaque entr\xE9e \xE0 l'incertitude totale.",
+    guide_main_calc_expert_title: "Fonctionnalit\xE9s Expert",
+    guide_main_calc_expert_p1: "Activez le commutateur 'Mode Expert' pour plus d'options.",
+    guide_main_calc_expert_li1: "Ajustez si le bruit de fond et l'\xE9talonnage sont corr\xE9l\xE9s.",
+    guide_main_calc_expert_li2: "Utilisez la simulation num\xE9rique au lieu des formules analytiques pour une meilleure pr\xE9cision statistique.",
+    guide_spec_tools_title: "Outils de Spectrom\xE9trie",
+    guide_spec_tools_p1: "Accessible aux utilisateurs PRO via l'onglet Spectrom\xE9trie.",
+    guide_spec_analyzer_title: "Analyseur d'Image",
+    guide_spec_analyzer_p1: "Extrait des donn\xE9es \xE0 partir d'une image de spectre (capture d'\xE9cran ou photo).",
+    guide_spec_analyzer_phase1_title: "\xC9talonnage",
+    guide_spec_analyzer_phase1_p1: "Cliquez sur des pics connus (ex: Cs-137 \xE0 662 keV) pour \xE9tablir la relation canal-\xE9nergie.",
+    guide_spec_analyzer_phase2_title: "Analyse",
+    guide_spec_analyzer_phase2_p1: "Le syst\xE8me extrait la courbe, d\xE9tecte les pics et tente de les identifier par rapport \xE0 la biblioth\xE8que.",
+    guide_n42_analyzer_title: "Analyseur N42",
+    guide_n42_analyzer_p1: "Charge et visualise les fichiers au format standard ANSI N42.42.",
+    guide_n42_analyzer_li1: "Visualisation interactive (zoom, \xE9chelle log).",
+    guide_n42_analyzer_li2: "D\xE9tection automatique des pics.",
+    guide_n42_analyzer_li3: "Identification des nucl\xE9ides.",
+    guide_n42_analyzer_li4: "Soustraction de bruit de fond et comparaison.",
     guide_source_mgmt_title: "Gestion des Sources",
-    guide_source_mgmt_p1: "G\xE9rez un inventaire de vos sources radioactives de r\xE9f\xE9rence et de contr\xF4le.",
-    guide_source_mgmt_li1: "Ajoutez, modifiez ou supprimez des sources.",
-    guide_source_mgmt_li2: "L'activit\xE9 de chaque source est calcul\xE9e en temps r\xE9el en fonction de sa date de r\xE9f\xE9rence et de sa p\xE9riode.",
-    guide_source_mgmt_li3: "Associez un type \xE0 vos sources (ex: S3, S5) pour un suivi de conformit\xE9 automatis\xE9.",
-    guide_source_mgmt_li4: "Un code couleur indique si l'activit\xE9 de la source est conforme, trop faible (avertissement) ou trop forte (erreur) par rapport aux exigences de son type.",
-    guide_source_mgmt_li5: "Importez et exportez votre inventaire au format CSV.",
+    guide_source_mgmt_p1: "G\xE9rez votre inventaire de sources de contr\xF4le.",
+    guide_source_mgmt_li1: "Ajouter/Modifier/Supprimer des sources.",
+    guide_source_mgmt_li2: "Calcul automatique de l'activit\xE9 actuelle (d\xE9croissance).",
+    guide_source_mgmt_li3: "V\xE9rification de conformit\xE9 par rapport aux types standard (S1, S2, etc.).",
+    guide_source_mgmt_li4: "Import/Export CSV.",
+    guide_source_mgmt_li5: "Base de donn\xE9es locale (IndexedDB).",
     guide_other_tools_title: "Autres Outils",
     guide_other_tools_decay_title: "Calculateur de d\xE9croissance",
-    guide_other_tools_decay_p1: "Calcule l'activit\xE9 d'une source \xE0 une date donn\xE9e \xE0 partir de son activit\xE9 de r\xE9f\xE9rence. Le r\xE9sultat peut \xEAtre directement appliqu\xE9 au facteur d'\xE9talonnage du calculateur principal.",
-    guide_other_tools_peak_title: "Identification de pics",
-    guide_other_tools_peak_p1: "Entrez une ou plusieurs \xE9nergies (en keV) et l'outil recherchera dans la biblioth\xE8que les radionucl\xE9ides correspondants dans la tol\xE9rance sp\xE9cifi\xE9e.",
-    guide_data_mgmt_title: "Gestion des donn\xE9es",
-    guide_data_mgmt_p1: "Vous pouvez sauvegarder la configuration du calculateur principal (bouton 'Sauvegarder') et la recharger plus tard. Les analyses de spectrom\xE9trie peuvent \xEAtre sauvegard\xE9es dans l'historique (ic\xF4ne disquette) et recharg\xE9es depuis l'onglet 'Historique d'Analyses'.",
+    guide_other_tools_decay_p1: "Un utilitaire rapide pour calculer l'activit\xE9 actuelle de n'importe quel nucl\xE9ide sans l'ajouter \xE0 l'inventaire.",
+    guide_other_tools_peak_title: "Identificateur de Pics",
+    guide_other_tools_peak_p1: "Entrez une liste d'\xE9nergies pour trouver les nucl\xE9ides correspondants.",
+    guide_data_mgmt_title: "Gestion des Donn\xE9es",
+    guide_data_mgmt_p1: "Sauvegardez votre configuration compl\xE8te (Entr\xE9es + Mode) via les boutons 'Sauvegarder/Charger' dans le panneau d'entr\xE9e.",
     // Spectro Page & Sub-pages
     spectroMenuTitle: "Menu des Outils de Spectrom\xE9trie",
     analysisType: "Type d'analyse",
@@ -31806,12 +32119,103 @@
     copyJson: "Copier le JSON",
     downloadFile: "T\xE9l\xE9charger le Fichier",
     shareFile: "Partager",
-    copied: "Copi\xE9 !"
+    copied: "Copi\xE9 !",
+    confirmAddPeak: "Voulez-vous ajouter un pic manuellement \xE0 cette position ?",
+    // Report Generator
+    reportGeneratorTitle: "G\xE9n\xE9rer un rapport",
+    operatorName: "Nom de l'op\xE9rateur",
+    sampleId: "Identifiant de l'\xE9chantillon",
+    reportDate: "Date du rapport",
+    reportInputs: "Donn\xE9es d'entr\xE9e",
+    reportResults: "R\xE9sultats",
+    comments: "Commentaires",
+    noResultsToDisplay: "Aucun r\xE9sultat \xE0 afficher.",
+    chartNotAvailable: "Graphique non disponible.",
+    // --- File Explorer Descriptions (Admin) ---
+    folderDesc_components: "Composants UI r\xE9utilisables pour l'interface.",
+    folderDesc_pages: "Vues principales de l'application (simule le routage).",
+    folderDesc_services: "Logique m\xE9tier, calculs math\xE9matiques et acc\xE8s aux donn\xE9es.",
+    folderDesc_electron: "Configuration du processus principal Electron.",
+    folderDesc_n42_analyzer: "Composants sp\xE9cifiques \xE0 l'analyse de fichiers N42.",
+    folderDesc_source_management: "Composants pour la gestion de l'inventaire des sources.",
+    folderDesc_spectrum_analyzer: "Composants pour l'analyse de spectre depuis une image.",
+    fileDesc_App: "Composant racine. G\xE8re l'\xE9tat global, le routage et la mise en page.",
+    fileDesc_index_tsx: "Point d'entr\xE9e React (Montage).",
+    fileDesc_index_html: "Point d'entr\xE9e HTML.",
+    fileDesc_index_css: "Styles globaux et directives Tailwind.",
+    fileDesc_types: "D\xE9finitions TypeScript (Interfaces, Types, Enums).",
+    fileDesc_translations: "Dictionnaire de traduction (FR, EN, DE, ES).",
+    fileDesc_manifest: "Configuration PWA (ic\xF4nes, nom, couleurs).",
+    fileDesc_metadata: "M\xE9ta-informations pour l'environnement de d\xE9veloppement.",
+    fileDesc_package: "D\xE9pendances npm et scripts de build.",
+    fileDesc_readme: "Documentation du projet.",
+    fileDesc_sw: "Service Worker pour le support hors-ligne (PWA).",
+    fileDesc_tailwind: "Configuration du framework CSS Tailwind.",
+    fileDesc_Card: "Conteneur g\xE9n\xE9rique avec titre pour encadrer le contenu.",
+    fileDesc_ChartModal: "Modale affichant les graphiques agrandis.",
+    fileDesc_ChartPanel: "Panneau des r\xE9sultats graphiques dans le calculateur principal.",
+    fileDesc_CollapsibleSection: "Section accord\xE9on pour plier/d\xE9plier des groupes d'inputs.",
+    fileDesc_DecayCalculatorModal: "Outil de calcul de d\xE9croissance radioactive.",
+    fileDesc_ExportModal: "Modale pour exporter/sauvegarder les donn\xE9es JSON.",
+    fileDesc_GeminiBackupModal: "Composant de sauvegarde (Helper IA).",
+    fileDesc_GeminiHelper: "Fonctions utilitaires pour l'int\xE9gration IA.",
+    fileDesc_InfoTooltip: "Petite bulle d'aide (i) au survol.",
+    fileDesc_InputPanel: "Le grand formulaire de gauche pour les donn\xE9es du calcul ISO.",
+    fileDesc_LanguageSelector: "S\xE9lecteur de langue.",
+    fileDesc_ModeSelector: "Boutons pour changer le mode de calcul.",
+    fileDesc_MonteCarloStatsModal: "Affiche les stats d\xE9taill\xE9es de la simulation MC.",
+    fileDesc_PeakIdentifierModal: "Outil ind\xE9pendant pour identifier des pics par \xE9nergie.",
+    fileDesc_PeakPositionAdjusterModal: "Ajustement fin de la position d'un pic.",
+    fileDesc_ProAccessModal: "D\xE9blocage du mode PRO.",
+    fileDesc_ReportGeneratorModal: "G\xE9n\xE8re un rapport imprimable.",
+    fileDesc_ResultsPanel: "Affiche les r\xE9sultats num\xE9riques.",
+    fileDesc_SaveAnalysisModal: "Sauvegarde d'une analyse spectro.",
+    fileDesc_ThemeSelector: "S\xE9lecteur de th\xE8me visuel.",
+    fileDesc_UnitConverterModal: "Convertisseur d'unit\xE9s.",
+    fileDesc_UpdateNotification: "Alerte de mise \xE0 jour PWA.",
+    fileDesc_UserGuideModal: "Manuel utilisateur int\xE9gr\xE9.",
+    fileDesc_WelcomeModal: "Popup de bienvenue.",
+    fileDesc_AddPeakModal: "Ajout manuel de pic \xE0 un canal sp\xE9cifique.",
+    fileDesc_ComparisonPlot: "Graphique de superposition de spectres.",
+    fileDesc_DeconvolutionModal: "D\xE9convolution de pics dans une ROI.",
+    fileDesc_EfficiencyCalibrationModal: "\xC9talonnage en efficacit\xE9 (Placeholder).",
+    fileDesc_SpectrumPlot: "Affichage graphique interactif du spectre N42.",
+    fileDesc_AddSourceModal: "Formulaire d'ajout/\xE9dition de source.",
+    fileDesc_CsvImportModal: "Importation en masse depuis CSV.",
+    fileDesc_ImportReviewModal: "Validation des donn\xE9es import\xE9es.",
+    fileDesc_SourceTooltip: "D\xE9tails d'une source au survol.",
+    fileDesc_SourceTypesMemoModal: "Aide-m\xE9moire des types de sources.",
+    fileDesc_AnalysisResults: "R\xE9sultats d'analyse d'image spectrale.",
+    fileDesc_CalibrationPointModal: "Saisie d'\xE9nergie pour calibration.",
+    fileDesc_CalibrationSidebar: "Guide \xE9tape par \xE9tape pour calibration image.",
+    fileDesc_CameraCapture: "Interface webcam pour capture de spectre.",
+    fileDesc_ImageUploader: "Zone de chargement d'image.",
+    fileDesc_AdminPage: "Cette page (Explorateur de projet).",
+    fileDesc_AnalysisHistoryPage: "Historique des analyses sauvegard\xE9es.",
+    fileDesc_BackgroundSubtractionPage: "Soustraction de spectre BDF.",
+    fileDesc_N42AnalyzerPage: "Analyse de fichiers N42.",
+    fileDesc_SourceManagementPage: "Inventaire des sources.",
+    fileDesc_SpectroPage: "Menu principal des outils spectro.",
+    fileDesc_SpectrumAnalyzerPage: "Analyse de spectre depuis image.",
+    fileDesc_SpectrumComparisonPage: "Comparaison de spectres.",
+    fileDesc_analysisHelpers: "Fonctions utilitaires (FWHM, etc.).",
+    fileDesc_dbService: "Wrapper IndexedDB.",
+    fileDesc_gammaLibrary: "Biblioth\xE8que de radionucl\xE9ides.",
+    fileDesc_geminiService: "Service d'int\xE9gration IA.",
+    fileDesc_isoCalculations: "Moteur de calcul ISO 11929.",
+    fileDesc_monteCarloService: "Moteur de simulation Monte Carlo.",
+    fileDesc_n42ParserService: "Parseur XML pour fichiers N42.",
+    fileDesc_peakIdentifierService: "Algorithme d'identification de pics.",
+    fileDesc_radionuclides: "Donn\xE9es simplifi\xE9es pour d\xE9croissance.",
+    fileDesc_sourceTypes: "D\xE9finitions des types de sources.",
+    fileDesc_spectrumAnalyzerService: "Traitement d'image pour extraction de courbe.",
+    fileDesc_electron_main: "Processus principal Electron.",
+    fileDesc_electron_preload: "Script de pr\xE9chargement Electron."
   };
   var en = {
-    // General
+    // ... (Inherits mostly structure from FR, ensure updates match)
     authorDetails: "By Christophe PHAM - Inspired by ISO 11929:2019",
-    authorCredit: "Crafted with \u2764\uFE0F by Christophe PHAM. All rights reserved.",
+    authorCredit: "Created with \u2764\uFE0F by Christophe PHAM. All rights reserved.",
     proVersion: "PRO Version",
     unlockPro: "Unlock PRO",
     unitConverter: "Unit Converter",
@@ -31819,7 +32223,7 @@
     toolsMenu: "Tools",
     userGuide: "User Guide",
     showWelcomeTooltip: "Show Welcome Help",
-    lockedFeature: "PRO Feature. Click to unlock.",
+    lockedFeature: "PRO feature. Click to unlock.",
     loading: "Loading",
     calculating: "Calculating...",
     error: "Error",
@@ -31829,80 +32233,75 @@
     save: "Save",
     submit: "Submit",
     counts: "counts",
-    cps: "c/s",
-    cpm: "c/min",
+    cps: "cps",
+    cpm: "cpm",
     c_02s: "c/0.2s",
     days: "days",
     timeFormat: "{y} y, {m} m, {d} d, {h} h",
     backButton: "Back",
     or: "or",
     printReport: "Print Report",
-    // Header & Nav
     isoCalculator: "ISO Calculator",
     spectrometryTools: "Spectrometry Tools",
     sourceManagement: "Source Management",
     analysisHistory: "Analysis History",
-    // Modes
     standard: "Standard",
     spectrometry: "Spectrometry",
     surfaceControl: "Surface Control",
     chambre: "Chamber",
     linge: "Laundry",
-    standardTooltip: "Simple gross/background counting mode.",
+    standardTooltip: "Simple gross/background count mode.",
     spectrometryTooltip: "Analysis based on a Region of Interest (ROI) in a spectrum.",
-    surfaceControlTooltip: "Calculates detection limit for surface contamination monitors.",
-    chambreTooltip: "Calculation for chamber-type contamination monitors.",
+    surfaceControlTooltip: "Calculation for surface contamination monitors.",
+    chambreTooltip: "Calculation for chamber/portal type monitors.",
     lingeTooltip: "Calculation for laundry contamination monitors.",
-    // Inputs Panel
     inputs: "Input Parameters",
     expertMode: "Expert Mode",
     sourceMeasurement: "Source Measurement",
     grossCount: "Gross Count",
-    grossCountTooltip: "Total counts measured for the sample, or the count rate.",
+    grossCountTooltip: "Total counts measured for the sample, or count rate.",
     measurementTime: "Measurement Time",
     measurementTimeTooltip: "Duration of the measurement in seconds.",
     backgroundMeasurement: "Background Measurement",
     backgroundCount: "Background Count",
-    backgroundCountTooltip: "Total counts measured for the background, or the count rate.",
-    backgroundTimeTooltip: "Duration of the background measurement in seconds.",
+    backgroundCountTooltip: "Total counts measured for background, or count rate.",
+    backgroundTimeTooltip: "Duration of background measurement in seconds.",
     calibration: "Calibration",
     calibrationFactor: "Calibration Factor (w)",
     calibrationFactorTooltip: "Factor to convert net count rate (c/s) to activity (Bq).",
-    autoCalibFactor: "Auto-calculate Factor (w)",
-    autoCalibFactorTooltip: "Automatically calculates the calibration factor based on detector efficiency and area.",
+    autoCalibFactor: "Auto Calc Factor (w)",
+    autoCalibFactorTooltip: "Automatically calculates calibration factor based on detector efficiency and area.",
     calibrationFactorUnit: "Factor Unit",
     calibrationFactorUnitTooltip: "Unit of the calibration factor. E.g., Bq/(c/s).",
     relativeUncertainty: "Relative Uncertainty (u_rel(w))",
-    relativeUncertaintyTooltip: "Relative uncertainty on the calibration factor, in percent.",
+    relativeUncertaintyTooltip: "Relative uncertainty of the calibration factor, in percent.",
     decayCalculator: "Decay Calculator",
     riskParameters: "Risk Parameters",
     k1alpha: "k(1-\u03B1)",
-    k1alphaTooltip: "Quantile of the normal distribution for the probability of a Type I error \u03B1 (false positive). Usually 1.645 for \u03B1=5%.",
+    k1alphaTooltip: "Quantile of the normal distribution for the probability of error of the first kind \u03B1 (false positive). Usually 1.645 for \u03B1=5%.",
     k1beta: "k(1-\u03B2)",
-    k1betaTooltip: "Quantile of the normal distribution for the probability of a Type II error \u03B2 (false negative). Usually 1.645 for \u03B2=5%.",
+    k1betaTooltip: "Quantile of the normal distribution for the probability of error of the second kind \u03B2 (false negative). Usually 1.645 for \u03B2=5%.",
     advancedParameters: "Advanced Parameters",
     correlationCoefficient: "Correlation Coefficient",
-    correlationCoefficientTooltip: "Correlation coefficient between the background measurement and the calibration factor. Often left at 0.",
+    correlationCoefficientTooltip: "Correlation coefficient between background measurement and calibration factor. Often left at 0.",
     bayesianCalculationMode: "Bayesian Calculation Mode",
-    bayesianCalculationModeTooltip: "Uses a Bayesian approach for activity estimation, providing a probability of the effect being present.",
+    bayesianCalculationModeTooltip: "Uses a Bayesian approach for activity estimation, providing a probability of effect presence.",
     monteCarloMode: "Monte Carlo Mode",
     enableMonteCarlo: "Enable Monte Carlo",
     enableMonteCarloTooltip: "Uses Monte Carlo simulations to propagate uncertainties, instead of the analytical method.",
     numSimulations: "Number of Simulations",
-    numSimulationsTooltip: "Number of iterations for the Monte Carlo simulation. Higher is more accurate but slower.",
+    numSimulationsTooltip: "Number of iterations for the Monte Carlo simulation. Higher is more precise but slower.",
     saveConfig: "Save",
     loadConfig: "Load",
-    // Spectrometry Inputs
     roiMeasurement: "ROI Measurement",
-    roiGrossCount: "ROI Gross Counts",
-    roiGrossCountTooltip: "Total number of counts within the Region of Interest (ROI) of the sample spectrum.",
+    roiGrossCount: "ROI Gross Count",
+    roiGrossCountTooltip: "Total counts in the Region of Interest (ROI) of the sample spectrum.",
     roiChannels: "ROI Width (channels)",
-    roiChannelsTooltip: "Number of channels that make up the Region of Interest (ROI).",
-    backgroundTotalCount: "Background Total Counts",
-    backgroundTotalCountTooltip: "Total number of counts across the entire background spectrum.",
-    backgroundChannels: "Background Total Channels",
+    roiChannelsTooltip: "Number of channels comprising the Region of Interest (ROI).",
+    backgroundTotalCount: "Total Background Counts",
+    backgroundTotalCountTooltip: "Total counts over the entire background spectrum.",
+    backgroundChannels: "Total Background Channels",
     backgroundChannelsTooltip: "Total number of channels in the background spectrum.",
-    // Surface/Chambre/Linge Inputs
     probeParameters: "Probe Parameters",
     probeEfficiency: "Probe Efficiency (%)",
     probeEfficiencyTooltip: "2\u03C0 or 4\u03C0 efficiency of the detection probe.",
@@ -31910,10 +32309,10 @@
     probeAreaTooltip: "Detection area of the probe in square centimeters.",
     measurementConditions: "Measurement Conditions",
     estimatedBackgroundRate: "Est. Background Rate (c/s)",
-    estimatedBackgroundRateTooltip: "Average expected background count rate for this device.",
+    estimatedBackgroundRateTooltip: "Expected average background count rate for this device.",
     targetActivity: "Target Activity",
     targetValue: "Target Value",
-    targetValueTooltip: "The activity that the system must be able to detect.",
+    targetValueTooltip: "The activity the system must be able to detect.",
     detectorSetup: "Detector Setup",
     detector: "Detector",
     enabled: "Enabled",
@@ -31921,31 +32320,30 @@
     efficiency: "Efficiency",
     background: "Background",
     detectorDimLength: "Length (cm)",
-    detectorDimLengthTooltip: "The detector dimension in the direction of conveyor movement.",
+    detectorDimLengthTooltip: "Detector dimension in the direction of conveyor movement.",
     detectorDimWidth: "Width (cm)",
-    detectorDimWidthTooltip: "The detector dimension perpendicular to conveyor movement.",
+    detectorDimWidthTooltip: "Detector dimension perpendicular to conveyor movement.",
     conveyorSetup: "Conveyor Setup",
     conveyorSpeed: "Conveyor Speed",
-    conveyorSpeedTooltip: "Speed at which items move on the conveyor.",
-    // Results Panel
+    conveyorSpeedTooltip: "Speed of object movement on the conveyor.",
     results: "Results",
     resultUnit: "Unit",
     primaryResult: "Net Result (y)",
-    primaryResultTooltip: "The best estimate of the net measured activity and its standard uncertainty.",
-    mcPrimaryResultTooltip: "The mean of the Monte Carlo distribution (net result) and its standard deviation.",
+    primaryResultTooltip: "Best estimate of the net activity measured and its combined standard uncertainty.",
+    mcPrimaryResultTooltip: "Mean of the Monte Carlo distribution (net result) and its standard deviation.",
     decisionThreshold: "Decision Threshold (y*)",
-    decisionThresholdTooltip: "Critical value. If the net result (y) is greater than y*, the presence of activity is decided.",
+    decisionThresholdTooltip: "Critical value. If net result (y) is greater than y*, activity is decided present.",
     detectionLimit: "Detection Limit (y#)",
     detectionLimitTooltip: "Minimum net activity that can be detected with a probability of \u03B2 of not being missed.",
     meanTimeBetweenFalseAlarms: "Mean Time Between False Alarms",
-    meanTimeBetweenFalseAlarmsTooltip: "Estimated average time before a false detection (false positive) occurs, based on \u03B1 and measurement times.",
+    meanTimeBetweenFalseAlarmsTooltip: "Estimated mean time before a false detection (false positive) occurs, based on \u03B1 and measurement times.",
     conclusion: "Conclusion",
-    effectPresent: "Presence of Activity Detected (y > y*)",
+    effectPresent: "Activity Detected (y > y*)",
     effectNotPresent: "No Activity Detected (y \u2264 y*)",
     bestEstimate: "Best Estimate (y \xB1 U)",
-    bestEstimateTooltip: "The confidence interval (k=2) for the activity, only calculated when activity is detected.",
+    bestEstimateTooltip: "Confidence interval (k=2) for the activity, calculated only when activity is detected.",
     confidenceInterval: "Confidence Interval (95%)",
-    confidenceIntervalTooltip: "The interval in which the true value of the activity has a 95% chance of being.",
+    confidenceIntervalTooltip: "Interval within which the true activity value has 95% probability of being found.",
     uncertaintyBudget: "Uncertainty Budget",
     uncertaintyBudgetTooltip: "Relative contribution of each component to the total variance of the result.",
     budgetGross: "Gross Count",
@@ -31957,92 +32355,84 @@
     sensitivityCoefficients: "Sensitivity Coefficients",
     sensitivityCoefficientsTooltip: "Shows how a change in an input variable affects the output result.",
     coeff_gross: "Gross Count Rate",
-    coeff_gross_tooltip: "Sensitivity of the result to a change in the gross count rate.",
-    coeff_bkg: "Background Count Rate",
-    coeff_bkg_tooltip: "Sensitivity of the result to a change in the background count rate.",
+    coeff_gross_tooltip: "Sensitivity of result to gross count rate variation.",
+    coeff_bkg: "Background Rate",
+    coeff_bkg_tooltip: "Sensitivity of result to background rate variation.",
     coeff_calib: "Calibration Factor",
-    coeff_calib_tooltip: "Sensitivity of the result to a change in the calibration factor.",
+    coeff_calib_tooltip: "Sensitivity of result to calibration factor variation.",
     probabilityEffectPresent: "Probability of Presence",
-    probabilityEffectPresentTooltip: "The probability (P(\u03BC > 0)) that the true activity is greater than zero, calculated via a Bayesian approach.",
+    probabilityEffectPresentTooltip: "Probability (P(\u03BC > 0)) that the true activity is greater than zero, calculated via Bayesian approach.",
     detectionLimitMode: "Calculation Mode",
     targetDetectionLimit: "Target Detection Limit",
-    targetDetectionLimitTooltip: "Enter the detection limit you wish to achieve. The calculation will adjust k(1-\u03B2) to meet it.",
+    targetDetectionLimitTooltip: "Enter the detection limit you wish to achieve. The calculation will adjust k(1-\u03B2) to reach it.",
     calculate: "Calculate",
     target: "Target",
-    systemCompliant: "The system is compliant with the target.",
-    systemNonCompliant: "The system is NOT compliant with the target.",
-    // Chart
+    systemCompliant: "System is compliant with target.",
+    systemNonCompliant: "System is NOT compliant with target.",
     chartTitle: "Graphical Representation",
     activity: "Activity",
     h0_legend: "Null Hypothesis (Activity = 0)",
     h1_legend: "Alternative Hypothesis (Activity = y#)",
     measurement_distribution_legend: "Measurement Distribution",
     confidenceIntervalLegend: "Confidence Interval (95%)",
-    alpha_risk_legend: "\u03B1 Risk (false positive)",
-    beta_risk_legend: "\u03B2 Risk (false negative)",
-    chartDescription: "This chart illustrates the probability distributions for the null hypothesis (H\u2080), the alternative hypothesis (H\u2081), and the current measurement. It helps visualize the decision thresholds and associated risks.",
+    alpha_risk_legend: "Risk \u03B1 (False Positive)",
+    beta_risk_legend: "Risk \u03B2 (False Negative)",
+    chartDescription: "This chart illustrates the probability distributions for the null hypothesis (H\u2080), alternative hypothesis (H\u2081), and the current measurement. It helps visualize decision thresholds and associated risks.",
     mc_distribution_legend: "Monte Carlo Distribution",
     measurement_legend: "Measurement",
-    mcChartDescription: "Histogram of the results from {n} simulations. It shows the probability distribution of the net result.",
+    mcChartDescription: "Histogram of results from {n} simulations. Shows the probability distribution of the net result.",
     viewSimulationStats: "Statistics",
-    viewSimulationStatsTooltip: "View detailed statistics of the Monte Carlo simulation.",
+    viewSimulationStatsTooltip: "View detailed Monte Carlo simulation statistics.",
     expandChartTooltip: "Expand Chart",
-    // Errors
     positiveValuesError: "Measurement times and calibration factor must be positive numbers.",
     negativeRateError: "Count rates cannot be negative.",
     kBetaError: "k(1-\u03B2)\xB2 * u_rel(w)\xB2 must be less than 1. Increase u_rel(w) or decrease k(1-\u03B2).",
-    targetNotReachable: "The target detection limit is not reachable with the current parameters. Try increasing measurement times or reducing background.",
-    noActiveDetectors: "No detectors are enabled. Please enable at least one detector to perform the calculation.",
+    targetNotReachable: "Target detection limit is not reachable with current parameters. Try increasing measurement times or reducing background.",
+    noActiveDetectors: "No detectors enabled. Please enable at least one detector to calculate.",
     positiveSpeedError: "Conveyor speed must be positive.",
-    // Pro Modal
     proUnlockedSuccess: "Pro features unlocked successfully!",
-    proAccessTitle: "Access PRO Features",
-    proAccessDescription: "Enter the passcode to unlock advanced tools, including spectrum analyzers and analysis history.",
+    proAccessTitle: "Pro Features Access",
+    proAccessDescription: "Enter passcode to unlock advanced tools including spectrum analyzers and analysis history.",
     passcode: "Passcode",
     incorrectPasscode: "Incorrect passcode.",
-    // Welcome Modal
-    welcomeTitle: "Welcome to the ISO 11929 Assistant",
-    welcomeIntro: "This tool is designed to help you perform detection calculations according to the ISO 11929:2019 standard. Here is a quick overview of the key features:",
+    welcomeTitle: "Welcome to ISO 11929 Assistant",
+    welcomeIntro: "This tool is designed to help you perform detection calculations according to ISO 11929:2019. Here is an overview of key features:",
     welcomeFeature1Title: "Multiple Calculation Modes",
-    welcomeFeature1Desc: "Choose between Standard, Spectrometry, Surface, Chamber, and Laundry modes to tailor calculations to your specific measurement situation.",
+    welcomeFeature1Desc: "Choose between Standard, Spectrometry, Surface, Chamber, and Laundry modes to adapt calculations to your specific measurement situation.",
     welcomeFeature2Title: "Expert Mode & Monte Carlo",
-    welcomeFeature2Desc: "Activate Expert Mode to adjust risk parameters (k\u03B1, k\u03B2) and use Monte Carlo simulation for robust uncertainty propagation.",
+    welcomeFeature2Desc: "Enable Expert Mode to adjust risk parameters (k\u03B1, k\u03B2) and use Monte Carlo simulation for robust uncertainty propagation.",
     welcomeFeature4Title: "Spectrometry Tools (PRO)",
     welcomeFeature4Desc: "Analyze spectra from images or N42 files. Calibrate, identify peaks, and analyze radionuclides.",
     welcomeFeature5Title: "Source Management",
     welcomeFeature5Desc: "Manage an inventory of your radioactive sources, with decay calculation and compliance tracking.",
-    welcomeFeature6Title: "Decay Calculator & Peak ID",
-    welcomeFeature6Desc: "Integrated tools to quickly calculate radioactive decay or identify unknown energy peaks.",
+    welcomeFeature6Title: "Decay Calculator & Identification",
+    welcomeFeature6Desc: "Built-in tools to quickly calculate radioactive decay or identify unknown energy peaks.",
     welcomeConclusion: "Explore the different modes and options. For more details, consult the user guide.",
-    welcomeStart: "Get Started",
-    // Update Notification
+    welcomeStart: "Start",
     updateAvailable: "A new version is available!",
     refresh: "Refresh",
-    // Simulation Stats Modal
     simulationStatisticsTitle: "Simulation Statistics",
-    simulationSummaryIntro: "Results based on {n} iterations of the Monte Carlo simulation.",
+    simulationSummaryIntro: "Results based on {n} Monte Carlo simulation iterations.",
     statMean: "Mean",
     statMedian: "Median",
-    statStdDev: "Standard Deviation",
+    statStdDev: "Std Dev",
     statRange: "Range (Min; Max)",
     statSkewness: "Skewness",
     statKurtosis: "Kurtosis",
     derivedValuesTitle: "Derived Values",
-    decisionThresholdDerivation: "Derived from the {alphaPercentile}th percentile of the simulated distribution for the null hypothesis (H\u2080).",
+    decisionThresholdDerivation: "Derived from the {alphaPercentile}th percentile of the simulated null hypothesis (H\u2080) distribution.",
     confidenceIntervalDerivation: "Derived from the 2.5% and 97.5% percentiles of the measurement distribution.",
-    // Decay Calculator
     decayCalculatorTitle: "Radioactive Decay Calculator",
     decayCalc_referenceActivity: "Reference Activity",
     decayCalc_referenceUncertainty: "Relative Uncertainty (%)",
     decayCalc_referenceDate: "Reference Date",
     measurementDate: "Measurement Date",
-    selectNuclide: "Select a Radionuclide",
+    selectNuclide: "Select Radionuclide",
     decayResults: "Results",
-    halfLife: "Half-life",
+    halfLife: "Half-Life",
     elapsedTime: "Elapsed Time",
     correctedActivity: "Corrected Activity",
     calculateAndApply: "Calculate and Apply",
-    // Peak Identifier
     peakIdentifierTitle: "Peak Identifier",
     peakIdentifierIntro: "Enter a list of peak energies (in keV), one per line, to identify them using the radionuclide library.",
     peakEnergiesLabel: "Peak Energies (keV)",
@@ -32050,29 +32440,32 @@
     identify: "Identify",
     identificationResults: "Identification Results",
     resultsForPeak: "Results for peak at {energy} \xB1 {tolerance} keV",
-    noNuclidesFound: "No matching nuclides found in the library.",
+    noNuclidesFound: "No matching nuclides found in library.",
     peakId_nuclide: "Nuclide",
-    lineEnergy: "Line Energy (keV)",
+    lineEnergy: "Energy (keV)",
     intensity: "Intensity (%)",
     delta: "Delta (keV)",
     gammaAnalysis: "Gamma",
     alphaAnalysis: "Alpha",
-    // Source Management
+    modeByEnergy: "By Energy",
+    modeByNuclide: "By Nuclide",
+    searchNuclide: "Search Nuclide",
+    emissionLines: "Main Emission Lines",
     sourceInventory: "Source Inventory",
     searchSource: "Search...",
     addSource: "Add Source",
     editSource: "Edit Source",
     deleteSource: "Delete Source",
-    confirmDeleteSource: "Are you sure you want to delete this source? This action is irreversible.",
+    confirmDeleteSource: "Are you sure you want to delete this source? This action cannot be undone.",
     addSourceTitle: "Add New Source",
     editSourceTitle: "Edit Source",
     sourceName: "Name / ID",
     location: "Location",
-    casier: "Storage Box",
+    casier: "Rack/Bin",
     sourceMgmt_nuclide: "Nuclide",
     sourceType: "Source Type",
-    sourceMgmt_referenceActivity: "Reference Activity (Bq)",
-    sourceMgmt_referenceActivityUncertainty: "Relative Uncertainty (%)",
+    sourceMgmt_referenceActivity: "Ref. Activity (Bq)",
+    sourceMgmt_referenceActivityUncertainty: "Rel. Uncertainty (%)",
     sourceMgmt_referenceDate: "Reference Date",
     certificateNumber: "Certificate Number",
     currentActivity: "Current Activity (Bq)",
@@ -32081,109 +32474,119 @@
     import: "Import (CSV)",
     export: "Export (CSV)",
     exportBackup: "Export / Backup",
-    // Theme
+    // Admin
+    adminPageTitle: "Project Explorer & Admin",
+    adminWelcome: "Developer structure view.",
+    projectExplorer: "File Tree",
+    projectExplorerDesc: "Click (i) to view file purpose.",
+    adminStaticStructureWarning: "Note: This file structure is statically defined. It does not update automatically.",
+    godMode: "God Mode",
+    godModeDesc: "Force PRO mode.",
+    enableGodMode: "Enable",
+    disableGodMode: "Disable",
+    dataManagement: "Data",
+    clearLocalStorage: "Reset App",
+    clearIndexedDB: "Clear DB",
+    fileRole: "File Role",
+    fileInfo: "Information",
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
     themeLabWhite: "Lab White",
     themeForestGreen: "Forest Green",
-    // Language
     changeLanguage: "Change Language",
-    // === NEW KEYS ===
-    // User Guide
     guideTitle: "User Guide",
     guide_intro_title: "Introduction",
-    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It allows for the calculation of characteristic limits (decision threshold, detection limit) and for understanding the impact of various parameters.",
+    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It allows calculating characteristic limits (decision threshold, detection limit) and understanding the impact of different parameters.",
     guide_main_calc_title: "Main Calculator",
-    guide_main_calc_p1: "The core of the application. It performs calculations according to the standard.",
-    guide_main_calc_modes_title: "Calculation Modes",
-    guide_main_calc_modes_p1: "Adapt the calculation to your measurement situation:",
-    guide_main_calc_modes_li1: "For simple counts (sample and background).",
-    guide_main_calc_modes_li2: "For analyzing a peak in a gamma spectrum by defining a Region of Interest (ROI).",
-    guide_main_calc_modes_li3_surface: "Dedicated to surface contamination meters, to verify reaching a threshold in Bq/cm\xB2.",
-    guide_main_calc_modes_li3_chambre: "For fixed contamination monitors (portals, tool monitors) with a fixed measurement time.",
-    guide_main_calc_modes_li3_linge: "For conveyor-based monitors (laundry, waste) where measurement time depends on conveyor speed.",
-    guide_main_calc_inputs_title: "Input Parameters",
-    guide_main_calc_inputs_p1: "The main parameters to be provided are:",
-    guide_main_calc_inputs_li1: "The counts and measurement times for the sample (gross) and the background.",
-    guide_main_calc_inputs_li2: "The calibration factor (w) and its relative uncertainty, which link the count rate to the activity.",
-    guide_main_calc_inputs_li3: "The quantiles k(1-\u03B1) and k(1-\u03B2) which define the accepted error risks (typically 1.645 for 5%).",
-    guide_main_calc_results_title: "Interpreting the Results",
-    guide_main_calc_results_p1: "The key results are:",
-    guide_main_calc_results_li1: "The measured net value must exceed this threshold to conclude that activity is present.",
-    guide_main_calc_results_li2: "The smallest activity that can be expected to be detected with the measurement method.",
-    guide_main_calc_results_li3: "A clear conclusion is given: 'Presence of Activity Detected' if y > y*, or not otherwise.",
-    guide_main_calc_results_li4: "Visualizes the contribution of each source of uncertainty (counting, background, calibration) to the total uncertainty.",
-    guide_main_calc_expert_title: "Expert Mode",
-    guide_main_calc_expert_p1: "For advanced users:",
-    guide_main_calc_expert_li1: "Allows to take into account a correlation between the uncertainty of the background and that of the calibration (rarely used).",
-    guide_main_calc_expert_li2: "Uses statistical simulations to propagate uncertainties. It is a more robust method, especially at low counts, but slower.",
-    guide_spec_tools_title: "Spectrometry Tools (PRO)",
-    guide_spec_tools_p1: "This section provides advanced tools for gamma and alpha spectrum analysis.",
-    guide_spec_analyzer_title: "Image Spectrum Analyzer",
-    guide_spec_analyzer_p1: "A unique tool that extracts data from a spectrum image (screenshot, photo). The process is in 3 phases:",
-    guide_spec_analyzer_phase1_title: "Phase 1: Calibration",
-    guide_spec_analyzer_phase1_p1: "Click on known peaks in your spectrum and enter their energy. A minimum of 2 points is required to calculate a linear calibration function.",
-    guide_spec_analyzer_phase2_title: "Phase 2: Analysis",
-    guide_spec_analyzer_phase2_p1: "Once the calibration is validated, the application automatically detects peaks, calculates their energy, FWHM, and suggests possible radionuclide identifications. You can also add peaks manually.",
-    guide_n42_analyzer_title: "N42 File Analyzer",
-    guide_n42_analyzer_p1: "Import spectra in the standard ANSI N42.42 format.",
-    guide_n42_analyzer_li1: "Load a .n42 file from your device.",
-    guide_n42_analyzer_li2: "The application reads metadata (instrument, measurement time) and spectrum data.",
-    guide_n42_analyzer_li3: "The energy calibration is automatically read from the file.",
-    guide_n42_analyzer_li4: "Peaks are detected and identified. You can interact with the plot to add peaks manually or analyze a region of interest (ROI).",
+    guide_main_calc_p1: "The core of the application. Performs calculations according to the standard.",
+    guide_main_calc_modes_title: "Analysis Modes",
+    guide_main_calc_modes_p1: "Select the appropriate mode via the tab bar at the top.",
+    guide_main_calc_modes_li1: "For simple gross/background measurements with defined counting times.",
+    guide_main_calc_modes_li2: "Similar to Standard, but uses ROI and full spectrum widths to scale background.",
+    guide_main_calc_modes_li3_surface: "Calculates threshold and limit in terms of surface activity, using probe efficiency and area.",
+    guide_main_calc_modes_li3_chambre: "For fixed-time monitors.",
+    guide_main_calc_modes_li3_linge: "For conveyor monitors, calculates effective measurement time based on speed.",
+    guide_main_calc_inputs_title: "Inputs",
+    guide_main_calc_inputs_p1: "Fill in the required fields. Tooltips (i) provide details on each parameter.",
+    guide_main_calc_inputs_li1: "Enter gross counts or rate, and measurement time.",
+    guide_main_calc_inputs_li2: "The 'w' factor (e.g., inverse efficiency). For Surface/Chamber/Laundry modes, this can be auto-calculated.",
+    guide_main_calc_inputs_li3: "Defines error probabilities (\u03B1, \u03B2).",
+    guide_main_calc_results_title: "Results",
+    guide_main_calc_results_p1: "The right panel displays calculated values.",
+    guide_main_calc_results_li1: "If net result > y*, effect is present.",
+    guide_main_calc_results_li2: "Smallest reliably detectable activity.",
+    guide_main_calc_results_li3: "Clear statement of presence or absence of activity.",
+    guide_main_calc_results_li4: "(Expert Mode) Shows contribution of each input to total uncertainty.",
+    guide_main_calc_expert_title: "Expert Features",
+    guide_main_calc_expert_p1: "Toggle 'Expert Mode' switch for more options.",
+    guide_main_calc_expert_li1: "Adjust if background and calibration are correlated.",
+    guide_main_calc_expert_li2: "Use numerical simulation instead of analytical formulas for better statistical accuracy.",
+    guide_spec_tools_title: "Spectrometry Tools",
+    guide_spec_tools_p1: "Accessible to PRO users via the Spectrometry tab.",
+    guide_spec_analyzer_title: "Image Analyzer",
+    guide_spec_analyzer_p1: "Extracts data from a spectrum image (screenshot or photo).",
+    guide_spec_analyzer_phase1_title: "Calibration",
+    guide_spec_analyzer_phase1_p1: "Click on known peaks (e.g., Cs-137 at 662 keV) to establish channel-energy relationship.",
+    guide_spec_analyzer_phase2_title: "Analysis",
+    guide_spec_analyzer_phase2_p1: "System extracts curve, detects peaks, and attempts identification against library.",
+    guide_n42_analyzer_title: "N42 Analyzer",
+    guide_n42_analyzer_p1: "Loads and visualizes ANSI N42.42 standard files.",
+    guide_n42_analyzer_li1: "Interactive visualization (zoom, log scale).",
+    guide_n42_analyzer_li2: "Automatic peak detection.",
+    guide_n42_analyzer_li3: "Nuclide identification.",
+    guide_n42_analyzer_li4: "Background subtraction and comparison.",
     guide_source_mgmt_title: "Source Management",
-    guide_source_mgmt_p1: "Manage an inventory of your reference and check radioactive sources.",
-    guide_source_mgmt_li1: "Add, edit, or delete sources.",
-    guide_source_mgmt_li2: "The activity of each source is calculated in real-time based on its reference date and half-life.",
-    guide_source_mgmt_li3: "Associate a type with your sources (e.g., S3, S5) for automated compliance tracking.",
-    guide_source_mgmt_li4: "A color code indicates whether the source activity is compliant, too low (warning), or too high (error) compared to its type's requirements.",
-    guide_source_mgmt_li5: "Import and export your inventory in CSV format.",
+    guide_source_mgmt_p1: "Manage your inventory of check sources.",
+    guide_source_mgmt_li1: "Add/Edit/Delete sources.",
+    guide_source_mgmt_li2: "Automatic current activity calculation (decay).",
+    guide_source_mgmt_li3: "Compliance check against standard types (S1, S2, etc.).",
+    guide_source_mgmt_li4: "CSV Import/Export.",
+    guide_source_mgmt_li5: "Local database (IndexedDB).",
     guide_other_tools_title: "Other Tools",
     guide_other_tools_decay_title: "Decay Calculator",
-    guide_other_tools_decay_p1: "Calculates the activity of a source at a given date from its reference activity. The result can be directly applied to the main calculator's calibration factor.",
+    guide_other_tools_decay_p1: "Quick utility to calculate current activity of any nuclide without adding to inventory.",
     guide_other_tools_peak_title: "Peak Identifier",
-    guide_other_tools_peak_p1: "Enter one or more energies (in keV) and the tool will search the library for corresponding radionuclides within the specified tolerance.",
+    guide_other_tools_peak_p1: "Input a list of energies to find matching nuclides.",
     guide_data_mgmt_title: "Data Management",
-    guide_data_mgmt_p1: "You can save the main calculator's configuration ('Save' button) and reload it later. Spectrometry analyses can be saved to history (disk icon) and reloaded from the 'Analysis History' tab.",
-    // Spectro Page & Sub-pages
+    guide_data_mgmt_p1: "Save your full configuration (Inputs + Mode) via 'Save/Load' buttons in input panel.",
     spectroMenuTitle: "Spectrometry Tools Menu",
     analysisType: "Analysis Type",
-    analysisTypeTooltip: "Select the type of radiation to analyze. This filters the nuclide library for identification.",
+    analysisTypeTooltip: "Select radiation type to analyze. Filters nuclide library for identification.",
     spectroMenuImageTitle: "Image Analyzer",
     spectroMenuImageDesc: "Extract, calibrate, and analyze a spectrum from an image.",
     spectroMenuN42Title: "N42 Analyzer",
-    spectroMenuN42Desc: "Load and analyze a spectrum in ANSI N42.42 format.",
+    spectroMenuN42Desc: "Load and analyze an ANSI N42.42 spectrum file.",
     spectroMenuSPCTitle: "SPC Analyzer",
     spectroMenuSPCDesc: "Load .SPC files (coming soon).",
     spectroMenuCHNTitle: "CHN Analyzer",
     spectroMenuCHNDesc: "Load .CHN files (coming soon).",
     spectroMenuBkgSubTitle: "Background Subtraction",
-    spectroMenuBkgSubDesc: "Calculate a net spectrum from two N42 spectra.",
+    spectroMenuBkgSubDesc: "Calculate net spectrum from two N42 spectra.",
     spectroMenuCompareTitle: "Spectrum Comparison",
     spectroMenuCompareDesc: "Overlay two N42 spectra for visual comparison.",
-    spectrumAnalyzerTitle: "Image Spectrum Analyzer",
+    spectrumAnalyzerTitle: "Spectrum Analyzer from Image",
     useCamera: "Use Camera",
     analysisError_generic: "An error occurred during analysis.",
-    uploadInstruction: "Drag & drop a spectrum image, or click to select.",
+    uploadInstruction: "Drag & drop spectrum image or click to select.",
     takePhoto: "Take Photo",
     calibrationAndAnalysis: "Calibration & Analysis",
     calibrationStep1: "Phase 1: Click on known peaks in your spectrum to add calibration points.",
-    undoLast: "Undo Last",
+    undoLast: "Undo",
     clearAll: "Clear All",
     calculateCalibration: "Calculate Calibration",
-    calibrationStep2: "Phase 2: Check the quality of the linear regression.",
+    calibrationStep2: "Phase 2: Verify linear regression quality.",
     calibrationStatus: "Status",
     statusNotCalculated: "Not calculated",
     statusExcellent: "Excellent",
     statusGood: "Good",
-    statusCheckPoints: "Check your points",
+    statusCheckPoints: "Check points",
     slope: "Slope",
     intercept: "Intercept",
-    backToPoints: "Back to Points",
+    backToPoints: "Back to points",
     runAnalysis: "Run Analysis",
     identificationTolerance: "Identification Tolerance",
-    identificationToleranceTooltip: "The window in keV (+/-) to search for nuclide matches.",
-    runAnalysisAgain: "Run Analysis Again",
+    identificationToleranceTooltip: "Window in keV (+/-) to search for nuclide matches.",
+    runAnalysisAgain: "Re-run Analysis",
     extractingCurve: "Extracting curve...",
     detectingPeaks: "Detecting peaks...",
     backToCalibration: "Back to Calibration",
@@ -32196,8 +32599,8 @@
     exportCsv: "Export CSV",
     exportHdf5: "Export HDF5",
     exportNetCdf: "Export NetCDF",
-    interactiveModeTooltip: "Interactive mode: Click on the spectrum to add a peak manually. Click on a peak label to group it.",
-    analysisComplete: "Analysis complete. Interactive mode enabled.",
+    interactiveModeTooltip: "Interactive Mode: Click spectrum to manually add peak. Click peak label to toggle group.",
+    analysisComplete: "Analysis complete. Interactive mode active.",
     detectedPeaksTitle: "Detected Peaks",
     energy_keV: "Energy (keV)",
     fwhm_keV: "FWHM (keV)",
@@ -32205,8 +32608,8 @@
     nuclide: "Possible Nuclide(s)",
     noPeaksDetected: "No peaks automatically detected.",
     analyse_groups: "Group Analysis",
-    group_a_total: "Group A Total",
-    group_b_total: "Group B Total",
+    group_a_total: "Total Group A",
+    group_b_total: "Total Group B",
     ratio_a_b: "Ratio A / B",
     peakPositionAdjusterTitle: "Adjust Peak Position",
     addPeakManually: "Add Peak Manually",
@@ -32218,8 +32621,8 @@
     suggestedNuclide: "Suggested Nuclide",
     saveAnalysisModalTitle: "Save Analysis",
     analysisName: "Analysis Name",
-    linkToSource: "Link to existing source (optional)",
-    noSource: "No source",
+    linkToSource: "Link to Existing Source (Optional)",
+    noSource: "No Source",
     analysisHistoryTitle: "Analysis History",
     noAnalysesSaved: "No analyses saved yet.",
     analysisNameColumn: "Name",
@@ -32239,19 +32642,19 @@
     realTime: "Real Time",
     selectSpectrum: "Select Spectrum",
     yAxisZoom: "Y-Axis Zoom",
-    yAxisZoomTooltip: "Adjusts the maximum Y-axis scale to zoom in on smaller peaks.",
+    yAxisZoomTooltip: "Adjusts Y-axis max scale to zoom in on smaller peaks.",
     yAxisClipping: "Y-Axis Clipping",
-    yAxisClippingTooltip: "Clips peaks above a certain percentage of the maximum to better see the baseline.",
+    yAxisClippingTooltip: "Clips peaks above a percentage of max to better see baseline.",
     nuclidePossible: "Possible Nuclide (Energy)",
-    n42PeakAddInstruction: "Click on the plot to add a peak manually. Click and drag to select an ROI for deconvolution.",
+    n42PeakAddInstruction: "Click on plot to add peak manually. Click and drag to select ROI for deconvolution.",
     plotTitle: "Spectrum Plot",
-    roiSelectionTooltip: "Click and drag on the plot to select a Region of Interest (ROI) for deconvolution analysis.",
+    roiSelectionTooltip: "Click and drag on plot to select a Region of Interest (ROI) for deconvolution analysis.",
     plotLogScale: "Log Scale",
     clippingWarning: "Clipping Active",
     deconvolutionModalTitle: "ROI Deconvolution",
     roiAnalysis: "Region of Interest Analysis",
-    peaksInRoi: "Peaks found in ROI",
-    confirmDeconvolution: "Replace peaks in ROI",
+    peaksInRoi: "Peaks Found in ROI",
+    confirmDeconvolution: "Replace Peaks in ROI",
     netSpectrumAnalysis: "Net Spectrum Analysis",
     bkgSubtractionTitle: "Background Subtraction",
     sampleSpectrum: "Sample Spectrum",
@@ -32268,14 +32671,14 @@
     loadSpectrum: "Load Spectrum",
     normalization: "Normalization",
     normNone: "None",
-    timeScale: "By Time (cps)",
+    timeScale: "Time-scaled (c/s)",
     countsPerSecond: "Counts / Second",
-    noSources: "No sources in the inventory.",
-    sourceTypeMemo: "Source Types Memo",
-    selectType: "Select a type (optional)",
+    noSources: "No sources in inventory.",
+    sourceTypeMemo: "Source Types Cheat Sheet",
+    selectType: "Select Type (Optional)",
     importReviewTitle: "Review CSV Import",
-    importInstructions: "Review the sources to be imported. Conflicts (same ID) are highlighted.",
-    selectAll: "Select all",
+    importInstructions: "Review sources to import. Conflicts (same ID) are highlighted.",
+    selectAll: "Select All",
     importStatus: "Status",
     decision: "Decision",
     conflict: "Conflict",
@@ -32284,9 +32687,9 @@
     overwrite: "Overwrite",
     confirmImport: "Confirm Import",
     importCsvTitle: "Import Sources from CSV",
-    importCsvIntro: "Select a CSV file previously exported from this application. Columns must match.",
-    selectCsvFile: "Select a .csv file or drop it here",
-    sourceTypeMemoTitle: "Source Types Memo (FR Standard)",
+    importCsvIntro: "Select a CSV file exported from this app. Columns must match.",
+    selectCsvFile: "Select .csv file or drop here",
+    sourceTypeMemoTitle: "Source Types Cheat Sheet (FR Standard)",
     typeKey: "Type",
     description: "Description",
     minActivity: "Min Activity (Bq)",
@@ -32306,1055 +32709,448 @@
     unit_result: "Result",
     unit_to: "To",
     unit_description: "Unit Descriptions",
-    unit_desc_bq: "The SI unit of radioactivity, equal to one decay per second.",
-    unit_desc_ci: "An older unit of activity, originally based on the activity of one gram of radium-226.",
-    unit_desc_dpm: "Disintegrations Per Minute, a common unit for measuring activity, especially for alpha/beta sources.",
-    unit_desc_dps: "Disintegrations Per Second, equivalent to the Becquerel.",
-    unit_desc_c_kg: "Coulombs per kilogram, the SI unit of ionizing radiation exposure.",
-    unit_desc_r: "The R\xF6ntgen, an older unit of exposure, measuring ionization in air.",
-    unit_desc_gy: "The Gray, the SI unit of absorbed dose, measuring energy deposited per kilogram of matter.",
-    unit_desc_rad: "An older unit of absorbed dose (Radiation Absorbed Dose).",
-    unit_desc_sv: "The Sievert, the SI unit of equivalent dose, which accounts for the biological effect of different types of radiation.",
-    unit_desc_rem: "An older unit of equivalent dose (R\xF6ntgen Equivalent Man).",
-    // Offline Export Modal
+    unit_desc_bq: "SI unit of radioactivity, equal to one disintegration per second.",
+    unit_desc_ci: "Older non-SI unit of activity, originally based on Ra-226.",
+    unit_desc_dpm: "Disintegrations per minute, common for alpha/beta sources.",
+    unit_desc_dps: "Disintegrations per second, equivalent to Becquerel.",
+    unit_desc_c_kg: "Coulombs per kilogram, SI unit of ionizing radiation exposure.",
+    unit_desc_r: "The Roentgen, legacy unit of exposure measuring ionization in air.",
+    unit_desc_gy: "The Gray, SI unit of absorbed dose, energy deposited per unit mass.",
+    unit_desc_rad: "Legacy unit of absorbed dose (Radiation Absorbed Dose).",
+    unit_desc_sv: "The Sievert, SI unit of equivalent dose, accounting for biological effect.",
+    unit_desc_rem: "Legacy unit of equivalent dose (Roentgen Equivalent Man).",
     exportModalTitle: "Export Source Data",
-    exportModalIntro: "This is a backup of all your source data. Keep it in a safe place to prevent data loss. You can copy the text or download the file.",
+    exportModalIntro: "This is a backup of all your sources. Keep it safe to prevent data loss. You can copy the text or download the file.",
     copyJson: "Copy JSON",
     downloadFile: "Download File",
     shareFile: "Share",
-    copied: "Copied!"
+    copied: "Copied!",
+    confirmAddPeak: "Do you want to manually add a peak at this position?",
+    reportGeneratorTitle: "Generate Report",
+    operatorName: "Operator Name",
+    sampleId: "Sample ID",
+    reportDate: "Report Date",
+    reportInputs: "Input Data",
+    reportResults: "Results",
+    comments: "Comments",
+    noResultsToDisplay: "No results to display.",
+    chartNotAvailable: "Chart not available.",
+    // --- File Explorer Descriptions (Admin - EN) ---
+    folderDesc_components: "Reusable UI components.",
+    folderDesc_pages: "Main application views (Pseudo-routing).",
+    folderDesc_services: "Business logic, calculations, and data access.",
+    folderDesc_electron: "Electron main process configuration.",
+    folderDesc_n42_analyzer: "N42 file analysis specific components.",
+    folderDesc_source_management: "Source inventory management components.",
+    folderDesc_spectrum_analyzer: "Image-based spectrum analysis components.",
+    fileDesc_App: "Root component. Handles global state and routing.",
+    fileDesc_index_tsx: "React entry point (Mount).",
+    fileDesc_index_html: "HTML entry point.",
+    fileDesc_index_css: "Global styles and Tailwind directives.",
+    fileDesc_types: "TypeScript definitions (Interfaces, Types, Enums).",
+    fileDesc_translations: "Translation dictionary (FR, EN, DE, ES).",
+    fileDesc_manifest: "PWA configuration.",
+    fileDesc_metadata: "Dev environment metadata.",
+    fileDesc_package: "npm dependencies and build scripts.",
+    fileDesc_readme: "Project documentation.",
+    fileDesc_sw: "Service Worker for offline support.",
+    fileDesc_tailwind: "Tailwind CSS configuration.",
+    fileDesc_Card: "Generic content container with title.",
+    fileDesc_ChartModal: "Modal displaying enlarged charts.",
+    fileDesc_ChartPanel: "Graphical results panel in main calculator.",
+    fileDesc_CollapsibleSection: "Accordion section for inputs.",
+    fileDesc_DecayCalculatorModal: "Radioactive decay calculator tool.",
+    fileDesc_ExportModal: "Modal for exporting JSON data.",
+    fileDesc_GeminiBackupModal: "Backup component (AI Helper).",
+    fileDesc_GeminiHelper: "Utility functions for AI integration.",
+    fileDesc_InfoTooltip: "Small info bubble (i) on hover.",
+    fileDesc_InputPanel: "Main calculator input form.",
+    fileDesc_LanguageSelector: "Language switcher.",
+    fileDesc_ModeSelector: "Calculation mode switcher buttons.",
+    fileDesc_MonteCarloStatsModal: "Displays detailed MC simulation stats.",
+    fileDesc_PeakIdentifierModal: "Tool to identify peaks by energy.",
+    fileDesc_PeakPositionAdjusterModal: "Fine-tune peak position.",
+    fileDesc_ProAccessModal: "Unlock PRO mode.",
+    fileDesc_ReportGeneratorModal: "Generates printable report.",
+    fileDesc_ResultsPanel: "Displays numerical results.",
+    fileDesc_SaveAnalysisModal: "Save spectrometry analysis.",
+    fileDesc_ThemeSelector: "Visual theme switcher.",
+    fileDesc_UnitConverterModal: "Unit converter tool.",
+    fileDesc_UpdateNotification: "PWA update alert.",
+    fileDesc_UserGuideModal: "Integrated user manual.",
+    fileDesc_WelcomeModal: "Welcome popup.",
+    fileDesc_AddPeakModal: "Manually add peak at specific channel.",
+    fileDesc_ComparisonPlot: "Spectrum comparison plot.",
+    fileDesc_DeconvolutionModal: "Peak deconvolution in ROI.",
+    fileDesc_EfficiencyCalibrationModal: "Efficiency calibration (Placeholder).",
+    fileDesc_SpectrumPlot: "Interactive N42 spectrum plot.",
+    fileDesc_AddSourceModal: "Add/Edit source form.",
+    fileDesc_CsvImportModal: "Bulk import from CSV.",
+    fileDesc_ImportReviewModal: "Validate imported data.",
+    fileDesc_SourceTooltip: "Source details on hover.",
+    fileDesc_SourceTypesMemoModal: "Source types cheat sheet.",
+    fileDesc_AnalysisResults: "Image analysis results display.",
+    fileDesc_CalibrationPointModal: "Energy input for calibration point.",
+    fileDesc_CalibrationSidebar: "Step-by-step guide for image calibration.",
+    fileDesc_CameraCapture: "Webcam interface for spectrum capture.",
+    fileDesc_ImageUploader: "Image upload zone.",
+    fileDesc_AdminPage: "This page (Project Explorer).",
+    fileDesc_AnalysisHistoryPage: "Saved analysis history.",
+    fileDesc_BackgroundSubtractionPage: "Background spectrum subtraction.",
+    fileDesc_N42AnalyzerPage: "N42 file analysis.",
+    fileDesc_SourceManagementPage: "Source inventory.",
+    fileDesc_SpectroPage: "Spectrometry tools hub.",
+    fileDesc_SpectrumAnalyzerPage: "Image-based spectrum analysis.",
+    fileDesc_SpectrumComparisonPage: "Spectrum comparison.",
+    fileDesc_analysisHelpers: "Analysis utility functions.",
+    fileDesc_dbService: "IndexedDB wrapper.",
+    fileDesc_gammaLibrary: "Radionuclide library.",
+    fileDesc_geminiService: "AI integration service.",
+    fileDesc_isoCalculations: "ISO 11929 calculation engine.",
+    fileDesc_monteCarloService: "Monte Carlo simulation engine.",
+    fileDesc_n42ParserService: "N42 XML parser.",
+    fileDesc_peakIdentifierService: "Peak identification algorithm.",
+    fileDesc_radionuclides: "Simplified decay data.",
+    fileDesc_sourceTypes: "Source type definitions.",
+    fileDesc_spectrumAnalyzerService: "Image processing for curve extraction.",
+    fileDesc_electron_main: "Electron main process.",
+    fileDesc_electron_preload: "Electron preload script."
   };
   var de = {
-    // General
-    authorDetails: "Von Christophe PHAM - Inspiriert von ISO 11929:2019",
-    authorCredit: "Mit \u2764\uFE0F erstellt von Christophe PHAM. Alle Rechte vorbehalten.",
+    // Admin
+    adminPageTitle: "Projekt-Explorer & Admin",
+    adminWelcome: "Entwickler-Strukturansicht.",
+    projectExplorer: "Dateibaum",
+    projectExplorerDesc: "Klicken Sie auf (i), um die Dateifunktion zu sehen.",
+    adminStaticStructureWarning: "Hinweis: Diese Dateistruktur ist statisch definiert. Sie wird nicht automatisch aktualisiert.",
+    godMode: "Gott-Modus",
+    godModeDesc: "PRO-Modus erzwingen.",
+    enableGodMode: "Aktivieren",
+    disableGodMode: "Deaktivieren",
+    dataManagement: "Daten",
+    clearLocalStorage: "App zur\xFCcksetzen",
+    clearIndexedDB: "DB l\xF6schen",
+    fileRole: "Dateifunktion",
+    fileInfo: "Information",
+    // Folder Desc
+    folderDesc_components: "Wiederverwendbare UI-Komponenten.",
+    folderDesc_pages: "Hauptansichten der Anwendung.",
+    folderDesc_services: "Gesch\xE4ftslogik, Berechnungen und Datenzugriff.",
+    folderDesc_electron: "Electron-Hauptprozesskonfiguration.",
+    folderDesc_n42_analyzer: "Komponenten zur N42-Dateianalyse.",
+    folderDesc_source_management: "Komponenten zur Quellenverwaltung.",
+    folderDesc_spectrum_analyzer: "Komponenten zur bildbasierten Spektrumanalyse.",
+    // File Desc
+    fileDesc_App: "Wurzelkomponente. Verwaltet globalen Status und Routing.",
+    fileDesc_index_tsx: "React Einstiegspunkt.",
+    fileDesc_index_html: "HTML Einstiegspunkt.",
+    fileDesc_index_css: "Globale Stile und Tailwind.",
+    fileDesc_types: "TypeScript Definitionen.",
+    fileDesc_translations: "\xDCbersetzungsw\xF6rterbuch.",
+    fileDesc_manifest: "PWA Konfiguration.",
+    fileDesc_metadata: "Entwicklungsumgebung Metadaten.",
+    fileDesc_package: "npm Abh\xE4ngigkeiten.",
+    fileDesc_readme: "Projektdokumentation.",
+    fileDesc_sw: "Service Worker (Offline-Support).",
+    fileDesc_tailwind: "Tailwind CSS Konfiguration.",
+    fileDesc_Card: "Generischer Inhaltscontainer.",
+    fileDesc_ChartModal: "Modal f\xFCr vergr\xF6\xDFerte Diagramme.",
+    fileDesc_ChartPanel: "Grafikpanel im Hauptrechner.",
+    fileDesc_CollapsibleSection: "Akkordeon-Bereich f\xFCr Eingaben.",
+    fileDesc_DecayCalculatorModal: "Zerfallsrechner.",
+    fileDesc_ExportModal: "Export-Modal f\xFCr JSON.",
+    fileDesc_GeminiBackupModal: "Backup-Komponente.",
+    fileDesc_GeminiHelper: "KI-Hilfsfunktionen.",
+    fileDesc_InfoTooltip: "Kleines Info-Symbol (i).",
+    fileDesc_InputPanel: "Haupteingabeformular.",
+    fileDesc_LanguageSelector: "Sprachumschalter.",
+    fileDesc_ModeSelector: "Modus-Umschalter.",
+    fileDesc_MonteCarloStatsModal: "Zeigt MC-Simulationsstatistiken.",
+    fileDesc_PeakIdentifierModal: "Peak-Identifikator.",
+    fileDesc_PeakPositionAdjusterModal: "Peak-Positionsfeinabstimmung.",
+    fileDesc_ProAccessModal: "PRO-Modus freischalten.",
+    fileDesc_ReportGeneratorModal: "Berichtsgenerator.",
+    fileDesc_ResultsPanel: "Zeigt numerische Ergebnisse.",
+    fileDesc_SaveAnalysisModal: "Spektrumanalyse speichern.",
+    fileDesc_ThemeSelector: "Design-Umschalter.",
+    fileDesc_UnitConverterModal: "Einheitenumrechner.",
+    fileDesc_UpdateNotification: "Update-Benachrichtigung.",
+    fileDesc_UserGuideModal: "Benutzerhandbuch.",
+    fileDesc_WelcomeModal: "Willkommens-Popup.",
+    fileDesc_AddPeakModal: "Manueller Peak-Hinzuf\xFCgung.",
+    fileDesc_ComparisonPlot: "Spektrum-Vergleichsplot.",
+    fileDesc_DeconvolutionModal: "Entfaltung in ROI.",
+    fileDesc_EfficiencyCalibrationModal: "Effizienzkalibrierung.",
+    fileDesc_SpectrumPlot: "Interaktiver N42-Plot.",
+    fileDesc_AddSourceModal: "Quelle hinzuf\xFCgen/bearbeiten.",
+    fileDesc_CsvImportModal: "Massenimport aus CSV.",
+    fileDesc_ImportReviewModal: "Importdaten validieren.",
+    fileDesc_SourceTooltip: "Quellendetails.",
+    fileDesc_SourceTypesMemoModal: "Quellentypen-Spickzettel.",
+    fileDesc_AnalysisResults: "Bildanalyse-Ergebnisse.",
+    fileDesc_CalibrationPointModal: "Energieeingabe f\xFCr Kalibrierung.",
+    fileDesc_CalibrationSidebar: "Anleitung zur Bildkalibrierung.",
+    fileDesc_CameraCapture: "Webcam-Schnittstelle.",
+    fileDesc_ImageUploader: "Bildupload-Bereich.",
+    fileDesc_AdminPage: "Diese Seite (Projekt-Explorer).",
+    fileDesc_AnalysisHistoryPage: "Analyse-Historie.",
+    fileDesc_BackgroundSubtractionPage: "Hintergrundsubtraktion.",
+    fileDesc_N42AnalyzerPage: "N42-Analyse.",
+    fileDesc_SourceManagementPage: "Quelleninventar.",
+    fileDesc_SpectroPage: "Spektrometrie-Tools Men\xFC.",
+    fileDesc_SpectrumAnalyzerPage: "Bildbasierte Analyse.",
+    fileDesc_SpectrumComparisonPage: "Spektrum-Vergleich.",
+    fileDesc_analysisHelpers: "Analyse-Hilfsfunktionen.",
+    fileDesc_dbService: "IndexedDB Wrapper.",
+    fileDesc_gammaLibrary: "Radionuklid-Bibliothek.",
+    fileDesc_geminiService: "KI-Integrationsdienst.",
+    fileDesc_isoCalculations: "ISO 11929 Rechenkern.",
+    fileDesc_monteCarloService: "Monte-Carlo-Simulation.",
+    fileDesc_n42ParserService: "N42 XML Parser.",
+    fileDesc_peakIdentifierService: "Peak-Identifikationsalgorithmus.",
+    fileDesc_radionuclides: "Vereinfachte Zerfallsdaten.",
+    fileDesc_sourceTypes: "Quellentyp-Definitionen.",
+    fileDesc_spectrumAnalyzerService: "Bildverarbeitung.",
+    fileDesc_electron_main: "Electron Hauptprozess.",
+    fileDesc_electron_preload: "Electron Preload-Skript.",
+    // Restored General Translations
+    authorDetails: "Von Christophe PHAM - Inspiriert durch ISO 11929:2019",
+    authorCredit: "Erstellt mit \u2764\uFE0F von Christophe PHAM. Alle Rechte vorbehalten.",
     proVersion: "PRO Version",
-    unlockPro: "PRO freischalten",
+    unlockPro: "PRO Freischalten",
     unitConverter: "Einheitenumrechner",
-    identifyPeaks: "Peaks identifizieren",
+    identifyPeaks: "Peaks Identifizieren",
     toolsMenu: "Werkzeuge",
     userGuide: "Benutzerhandbuch",
-    showWelcomeTooltip: "Willkommenshilfe anzeigen",
-    lockedFeature: "PRO-Funktion. Klicken zum Freischalten.",
-    loading: "Laden",
-    calculating: "Berechnung l\xE4uft...",
-    error: "Fehler",
-    cancel: "Abbrechen",
-    close: "Schlie\xDFen",
-    ok: "OK",
-    save: "Speichern",
-    submit: "Senden",
-    counts: "Z\xE4hlungen",
-    cps: "c/s",
-    cpm: "c/min",
-    c_02s: "c/0.2s",
-    days: "Tage",
-    timeFormat: "{y} J, {m} M, {d} T, {h} Std",
     backButton: "Zur\xFCck",
-    or: "oder",
-    printReport: "Bericht drucken",
-    // Header & Nav
-    isoCalculator: "ISO-Rechner",
-    spectrometryTools: "Spektrometrie-Werkzeuge",
+    isoCalculator: "ISO Rechner",
+    spectrometryTools: "Spektrometrie-Tools",
     sourceManagement: "Quellenverwaltung",
-    analysisHistory: "Analysehistorie",
-    // Modes
+    analysisHistory: "Analyse-Historie",
     standard: "Standard",
     spectrometry: "Spektrometrie",
     surfaceControl: "Oberfl\xE4chenkontrolle",
     chambre: "Kammer",
     linge: "W\xE4sche",
-    standardTooltip: "Einfacher Brutto/Hintergrund-Z\xE4hlmodus.",
-    spectrometryTooltip: "Analyse basierend auf einem interessierenden Bereich (ROI) in einem Spektrum.",
-    surfaceControlTooltip: "Berechnet die Nachweisgrenze f\xFCr Oberfl\xE4chenkontaminationsmonitore.",
-    chambreTooltip: "Berechnung f\xFCr Kontaminationsmonitore vom Kammertyp.",
-    lingeTooltip: "Berechnung f\xFCr W\xE4schekontaminationsmonitore.",
-    // Inputs Panel
-    inputs: "Eingabeparameter",
+    inputs: "Eingaben",
     expertMode: "Expertenmodus",
-    sourceMeasurement: "Quellmessung",
-    grossCount: "Brutto-Z\xE4hlung",
-    grossCountTooltip: "Gesamtzahl der f\xFCr die Probe gemessenen Z\xE4hlungen oder die Z\xE4hlrate.",
-    measurementTime: "Messzeit",
-    measurementTimeTooltip: "Dauer der Messung in Sekunden.",
-    backgroundMeasurement: "Hintergrundmessung",
-    backgroundCount: "Hintergrund-Z\xE4hlung",
-    backgroundCountTooltip: "Gesamtzahl der f\xFCr den Hintergrund gemessenen Z\xE4hlungen oder die Z\xE4hlrate.",
-    backgroundTimeTooltip: "Dauer der Hintergrundmessung in Sekunden.",
+    results: "Ergebnisse",
+    calculate: "Berechnen",
+    save: "Speichern",
+    cancel: "Abbrechen",
+    close: "Schlie\xDFen",
+    ok: "OK",
+    error: "Fehler",
+    loading: "Laden",
     calibration: "Kalibrierung",
     calibrationFactor: "Kalibrierfaktor (w)",
-    calibrationFactorTooltip: "Faktor zur Umrechnung der Netto-Z\xE4hlrate (c/s) in Aktivit\xE4t (Bq).",
-    autoCalibFactor: "Faktor (w) automatisch berechnen",
-    autoCalibFactorTooltip: "Berechnet den Kalibrierfaktor automatisch basierend auf Detektoreffizienz und -fl\xE4che.",
-    calibrationFactorUnit: "Faktoreinheit",
-    calibrationFactorUnitTooltip: "Einheit des Kalibrierfaktors. Z.B. Bq/(c/s).",
-    relativeUncertainty: "Relative Unsicherheit (u_rel(w))",
-    relativeUncertaintyTooltip: "Relative Unsicherheit des Kalibrierfaktors in Prozent.",
-    decayCalculator: "Zerfallsrechner",
-    riskParameters: "Risikoparameter",
-    k1alpha: "k(1-\u03B1)",
-    k1alphaTooltip: "Quantil der Normalverteilung f\xFCr die Wahrscheinlichkeit eines Fehlers 1. Art \u03B1 (falsch positiv). Normalerweise 1.645 f\xFCr \u03B1=5%.",
-    k1beta: "k(1-\u03B2)",
-    k1betaTooltip: "Quantil der Normalverteilung f\xFCr die Wahrscheinlichkeit eines Fehlers 2. Art \u03B2 (falsch negativ). Normalerweise 1.645 f\xFCr \u03B2=5%.",
-    advancedParameters: "Erweiterte Parameter",
-    correlationCoefficient: "Korrelationskoeffizient",
-    correlationCoefficientTooltip: "Korrelationskoeffizient zwischen der Hintergrundmessung und dem Kalibrierfaktor. Wird oft bei 0 belassen.",
-    bayesianCalculationMode: "Bayes'scher Berechnungsmodus",
-    bayesianCalculationModeTooltip: "Verwendet einen Bayes'schen Ansatz zur Aktivit\xE4tssch\xE4tzung und liefert eine Wahrscheinlichkeit f\xFCr das Vorhandensein des Effekts.",
-    monteCarloMode: "Monte-Carlo-Modus",
-    enableMonteCarlo: "Monte Carlo aktivieren",
-    enableMonteCarloTooltip: "Verwendet Monte-Carlo-Simulationen zur Fortpflanzung von Unsicherheiten anstelle der analytischen Methode.",
-    numSimulations: "Anzahl der Simulationen",
-    numSimulationsTooltip: "Anzahl der Iterationen f\xFCr die Monte-Carlo-Simulation. H\xF6her ist genauer, aber langsamer.",
-    saveConfig: "Speichern",
-    loadConfig: "Laden",
-    // Spectrometry Inputs
-    roiMeasurement: "ROI-Messung",
-    roiGrossCount: "Brutto-Z\xE4hlungen im ROI",
-    roiGrossCountTooltip: "Gesamtzahl der Z\xE4hlungen innerhalb des interessierenden Bereichs (ROI) des Probenspektrums.",
-    roiChannels: "ROI-Breite (Kan\xE4le)",
-    roiChannelsTooltip: "Anzahl der Kan\xE4le, die den interessierenden Bereich (ROI) bilden.",
-    backgroundTotalCount: "Gesamt-Hintergrundz\xE4hlungen",
-    backgroundTotalCountTooltip: "Gesamtzahl der Z\xE4hlungen \xFCber das gesamte Hintergrundspektrum.",
-    backgroundChannels: "Gesamt-Hintergrundkan\xE4le",
-    backgroundChannelsTooltip: "Gesamtzahl der Kan\xE4le im Hintergrundspektrum.",
-    // Surface/Chambre/Linge Inputs
-    probeParameters: "Sondenparameter",
-    probeEfficiency: "Sondeneffizienz (%)",
-    probeEfficiencyTooltip: "2\u03C0 oder 4\u03C0 Effizienz der Detektionssonde.",
-    probeArea: "Sondenfl\xE4che (cm\xB2)",
-    probeAreaTooltip: "Detektionsfl\xE4che der Sonde in Quadratzentimetern.",
-    measurementConditions: "Messbedingungen",
-    estimatedBackgroundRate: "Gesch. Hintergrundrate (c/s)",
-    estimatedBackgroundRateTooltip: "Durchschnittlich erwartete Hintergrundz\xE4hlrate f\xFCr dieses Ger\xE4t.",
-    targetActivity: "Zielaktivit\xE4t",
-    targetValue: "Zielwert",
-    targetValueTooltip: "Die Aktivit\xE4t, die das System erkennen k\xF6nnen muss.",
-    detectorSetup: "Detektorkonfiguration",
-    detector: "Detektor",
-    enabled: "Aktiviert",
-    detectorType: "Typ",
-    efficiency: "Effizienz",
-    background: "Hintergrund",
-    detectorDimLength: "L\xE4nge (cm)",
-    detectorDimLengthTooltip: "Die Detektorabmessung in Richtung der F\xF6rderbewegung.",
-    detectorDimWidth: "Breite (cm)",
-    detectorDimWidthTooltip: "Die Detektorabmessung senkrecht zur F\xF6rderbewegung.",
-    conveyorSetup: "F\xF6rderbandkonfiguration",
-    conveyorSpeed: "F\xF6rdergeschwindigkeit",
-    conveyorSpeedTooltip: "Geschwindigkeit, mit der sich die Objekte auf dem F\xF6rderband bewegen.",
-    // Results Panel
-    results: "Ergebnisse",
-    resultUnit: "Einheit",
-    primaryResult: "Nettoergebnis (y)",
-    primaryResultTooltip: "Die beste Sch\xE4tzung der gemessenen Nettoaktivit\xE4t und ihre Standardunsicherheit.",
-    mcPrimaryResultTooltip: "Der Mittelwert der Monte-Carlo-Verteilung (Nettoergebnis) und seine Standardabweichung.",
-    decisionThreshold: "Entscheidungsschwelle (y*)",
-    decisionThresholdTooltip: "Kritischer Wert. Wenn das Nettoergebnis (y) gr\xF6\xDFer als y* ist, wird auf das Vorhandensein von Aktivit\xE4t entschieden.",
+    decisionThreshold: "Erkennungsgrenze (y*)",
     detectionLimit: "Nachweisgrenze (y#)",
-    detectionLimitTooltip: "Minimale Nettoaktivit\xE4t, die mit einer Wahrscheinlichkeit von \u03B2, nicht \xFCbersehen zu werden, nachgewiesen werden kann.",
-    meanTimeBetweenFalseAlarms: "Mittlere Zeit zwischen Fehlalarmen",
-    meanTimeBetweenFalseAlarmsTooltip: "Gesch\xE4tzte durchschnittliche Zeit, bevor eine Falschdetektion (falsch positiv) auftritt, basierend auf \u03B1 und Messzeiten.",
     conclusion: "Schlussfolgerung",
     effectPresent: "Aktivit\xE4t nachgewiesen (y > y*)",
     effectNotPresent: "Keine Aktivit\xE4t nachgewiesen (y \u2264 y*)",
-    bestEstimate: "Beste Sch\xE4tzung (y \xB1 U)",
-    bestEstimateTooltip: "Das Konfidenzintervall (k=2) f\xFCr die Aktivit\xE4t, wird nur berechnet, wenn Aktivit\xE4t nachgewiesen wird.",
-    confidenceInterval: "Konfidenzintervall (95%)",
-    confidenceIntervalTooltip: "Das Intervall, in dem sich der wahre Wert der Aktivit\xE4t mit einer Wahrscheinlichkeit von 95% befindet.",
-    uncertaintyBudget: "Unsicherheitsbudget",
-    uncertaintyBudgetTooltip: "Relativer Beitrag jeder Komponente zur Gesamtvarianz des Ergebnisses.",
-    budgetGross: "Brutto-Z\xE4hlung",
-    budgetBackground: "Hintergrund",
-    budgetCalibration: "Kalibrierung (w)",
-    budgetCalibrationTooltip: "Diese Komponente h\xE4ngt vom Wert des Nettoergebnisses (y) ab.",
-    budgetCovariance: "Kovarianz",
-    uncertaintyDetails: "Unsicherheitsdetails",
-    sensitivityCoefficients: "Empfindlichkeitskoeffizienten",
-    sensitivityCoefficientsTooltip: "Zeigt, wie eine \xC4nderung einer Eingangsvariable das Ausgangsergebnis beeinflusst.",
-    coeff_gross: "Brutto-Z\xE4hlrate",
-    coeff_gross_tooltip: "Empfindlichkeit des Ergebnisses auf eine \xC4nderung der Brutto-Z\xE4hlrate.",
-    coeff_bkg: "Hintergrund-Z\xE4hlrate",
-    coeff_bkg_tooltip: "Empfindlichkeit des Ergebnisses auf eine \xC4nderung der Hintergrund-Z\xE4hlrate.",
-    coeff_calib: "Kalibrierfaktor",
-    coeff_calib_tooltip: "Empfindlichkeit des Ergebnisses auf eine \xC4nderung des Kalibrierfaktors.",
-    probabilityEffectPresent: "Anwesenheitswahrscheinlichkeit",
-    probabilityEffectPresentTooltip: "Die Wahrscheinlichkeit (P(\u03BC > 0)), dass die wahre Aktivit\xE4t gr\xF6\xDFer als Null ist, berechnet mittels eines Bayes'schen Ansatzes.",
-    detectionLimitMode: "Berechnungsmodus",
-    targetDetectionLimit: "Ziel-Nachweisgrenze",
-    targetDetectionLimitTooltip: "Geben Sie die Nachweisgrenze ein, die Sie erreichen m\xF6chten. Die Berechnung passt k(1-\u03B2) an, um sie zu erreichen.",
-    calculate: "Berechnen",
-    target: "Ziel",
-    systemCompliant: "Das System entspricht dem Ziel.",
-    systemNonCompliant: "Das System entspricht NICHT dem Ziel.",
-    // Chart
+    meanTimeBetweenFalseAlarms: "Mittlere Zeit zwischen Fehlalarmen",
     chartTitle: "Grafische Darstellung",
-    activity: "Aktivit\xE4t",
-    h0_legend: "Nullhypothese (Aktivit\xE4t = 0)",
-    h1_legend: "Alternativhypothese (Aktivit\xE4t = y#)",
-    measurement_distribution_legend: "Messverteilung",
-    confidenceIntervalLegend: "Konfidenzintervall (95%)",
-    alpha_risk_legend: "\u03B1-Risiko (falsch positiv)",
-    beta_risk_legend: "\u03B2-Risiko (falsch negativ)",
-    chartDescription: "Dieses Diagramm veranschaulicht die Wahrscheinlichkeitsverteilungen f\xFCr die Nullhypothese (H\u2080), die Alternativhypothese (H\u2081) und die aktuelle Messung. Es hilft, die Entscheidungsschwellen und die damit verbundenen Risiken zu visualisieren.",
-    mc_distribution_legend: "Monte-Carlo-Verteilung",
-    measurement_legend: "Messung",
-    mcChartDescription: "Histogramm der Ergebnisse von {n} Simulationen. Es zeigt die Wahrscheinlichkeitsverteilung des Nettoergebnisses.",
-    viewSimulationStats: "Statistiken",
-    viewSimulationStatsTooltip: "Detaillierte Statistiken der Monte-Carlo-Simulation anzeigen.",
-    expandChartTooltip: "Diagramm vergr\xF6\xDFern",
-    // Errors
-    positiveValuesError: "Messzeiten und Kalibrierfaktor m\xFCssen positive Zahlen sein.",
-    negativeRateError: "Z\xE4hlraten k\xF6nnen nicht negativ sein.",
-    kBetaError: "k(1-\u03B2)\xB2 * u_rel(w)\xB2 muss kleiner als 1 sein. Erh\xF6hen Sie u_rel(w) oder verringern Sie k(1-\u03B2).",
-    targetNotReachable: "Die Ziel-Nachweisgrenze ist mit den aktuellen Parametern nicht erreichbar. Versuchen Sie, die Messzeiten zu erh\xF6hen oder den Hintergrund zu reduzieren.",
-    noActiveDetectors: "Es sind keine Detektoren aktiviert. Bitte aktivieren Sie mindestens einen Detektor, um die Berechnung durchzuf\xFChren.",
-    positiveSpeedError: "Die F\xF6rdergeschwindigkeit muss positiv sein.",
-    // Pro Modal
-    proUnlockedSuccess: "Pro-Funktionen erfolgreich freigeschaltet!",
-    proAccessTitle: "Zugriff auf PRO-Funktionen",
-    proAccessDescription: "Geben Sie das Passwort ein, um erweiterte Werkzeuge freizuschalten, einschlie\xDFlich Spektrumanalysatoren und Analysehistorie.",
-    passcode: "Passwort",
-    incorrectPasscode: "Falsches Passwort.",
-    // Welcome Modal
+    reportGeneratorTitle: "Bericht generieren",
+    printReport: "Bericht drucken",
     welcomeTitle: "Willkommen beim ISO 11929 Assistenten",
-    welcomeIntro: "Dieses Werkzeug soll Ihnen helfen, Detektionsberechnungen gem\xE4\xDF der Norm ISO 11929:2019 durchzuf\xFChren. Hier ist ein kurzer \xDCberblick \xFCber die Hauptfunktionen:",
-    welcomeFeature1Title: "Mehrere Berechnungsmodi",
-    welcomeFeature1Desc: "W\xE4hlen Sie zwischen den Modi Standard, Spektrometrie, Oberfl\xE4che, Kammer und W\xE4sche, um die Berechnungen an Ihre spezifische Messsituation anzupassen.",
-    welcomeFeature2Title: "Expertenmodus & Monte Carlo",
-    welcomeFeature2Desc: "Aktivieren Sie den Expertenmodus, um Risikoparameter (k\u03B1, k\u03B2) anzupassen und die Monte-Carlo-Simulation f\xFCr eine robuste Unsicherheitsfortpflanzung zu verwenden.",
-    welcomeFeature4Title: "Spektrometrie-Werkzeuge (PRO)",
-    welcomeFeature4Desc: "Analysieren Sie Spektren aus Bildern oder N42-Dateien. Kalibrieren, identifizieren Sie Peaks und analysieren Sie Radionuklide.",
-    welcomeFeature5Title: "Quellenverwaltung",
-    welcomeFeature5Desc: "Verwalten Sie ein Inventar Ihrer radioaktiven Quellen mit Zerfallsberechnung und Konformit\xE4tsverfolgung.",
-    welcomeFeature6Title: "Zerfallsrechner & Peak-ID",
-    welcomeFeature6Desc: "Integrierte Werkzeuge zur schnellen Berechnung des radioaktiven Zerfalls oder zur Identifizierung unbekannter Energiepeaks.",
-    welcomeConclusion: "Erkunden Sie die verschiedenen Modi und Optionen. Weitere Details finden Sie im Benutzerhandbuch.",
-    welcomeStart: "Los geht's",
-    // Update Notification
-    updateAvailable: "Eine neue Version ist verf\xFCgbar!",
-    refresh: "Aktualisieren",
-    // Simulation Stats Modal
-    simulationStatisticsTitle: "Simulationsstatistiken",
-    simulationSummaryIntro: "Ergebnisse basierend auf {n} Iterationen der Monte-Carlo-Simulation.",
-    statMean: "Mittelwert",
-    statMedian: "Median",
-    statStdDev: "Standardabweichung",
-    statRange: "Bereich (Min; Max)",
-    statSkewness: "Schiefe",
-    statKurtosis: "Kurtosis",
-    derivedValuesTitle: "Abgeleitete Werte",
-    decisionThresholdDerivation: "Abgeleitet aus dem {alphaPercentile}-ten Perzentil der simulierten Verteilung f\xFCr die Nullhypothese (H\u2080).",
-    confidenceIntervalDerivation: "Abgeleitet aus den 2,5%- und 97,5%-Perzentilen der Messverteilung.",
-    // Decay Calculator
-    decayCalculatorTitle: "Radioaktiver Zerfallsrechner",
-    decayCalc_referenceActivity: "Referenzaktivit\xE4t",
-    decayCalc_referenceUncertainty: "Relative Unsicherheit (%)",
-    decayCalc_referenceDate: "Referenzdatum",
-    measurementDate: "Messdatum",
-    selectNuclide: "Radionuklid ausw\xE4hlen",
-    decayResults: "Ergebnisse",
-    halfLife: "Halbwertszeit",
-    elapsedTime: "Verstrichene Zeit",
-    correctedActivity: "Korrigierte Aktivit\xE4t",
-    calculateAndApply: "Berechnen und Anwenden",
-    // Peak Identifier
-    peakIdentifierTitle: "Peak-Identifikator",
-    peakIdentifierIntro: "Geben Sie eine Liste von Peakenergien (in keV), eine pro Zeile, ein, um sie mithilfe der Radionuklidbibliothek zu identifizieren.",
-    peakEnergiesLabel: "Peakenergien (keV)",
-    toleranceLabel: "Toleranz (keV)",
-    identify: "Identifizieren",
-    identificationResults: "Identifikationsergebnisse",
-    resultsForPeak: "Ergebnisse f\xFCr Peak bei {energy} \xB1 {tolerance} keV",
-    noNuclidesFound: "Keine passenden Nuklide in der Bibliothek gefunden.",
-    peakId_nuclide: "Nuklid",
-    lineEnergy: "Linienenergie (keV)",
-    intensity: "Intensit\xE4t (%)",
-    delta: "Delta (keV)",
-    gammaAnalysis: "Gamma",
-    alphaAnalysis: "Alpha",
+    welcomeStart: "Starten",
+    // Specific Inputs/Results
+    grossCount: "Bruttoz\xE4hlrate",
+    backgroundCount: "Nulleffekt",
+    measurementTime: "Messzeit",
+    targetValue: "Zielwert",
+    confidenceInterval: "Konfidenzintervall (95%)",
+    bestEstimate: "Bester Sch\xE4tzwert",
+    uncertaintyBudget: "Unsicherheitsbudget",
     // Source Management
     sourceInventory: "Quelleninventar",
-    searchSource: "Suchen...",
     addSource: "Quelle hinzuf\xFCgen",
     editSource: "Quelle bearbeiten",
     deleteSource: "Quelle l\xF6schen",
-    confirmDeleteSource: "Sind Sie sicher, dass Sie diese Quelle l\xF6schen m\xF6chten? Diese Aktion ist unumkehrbar.",
-    addSourceTitle: "Neue Quelle hinzuf\xFCgen",
-    editSourceTitle: "Quelle bearbeiten",
     sourceName: "Name / ID",
     location: "Standort",
-    casier: "Lagerkasten",
+    casier: "Lagerort",
     sourceMgmt_nuclide: "Nuklid",
-    sourceType: "Quellentyp",
-    sourceMgmt_referenceActivity: "Referenzaktivit\xE4t (Bq)",
-    sourceMgmt_referenceActivityUncertainty: "Relative Unsicherheit (%)",
-    sourceMgmt_referenceDate: "Referenzdatum",
-    certificateNumber: "Zertifikatsnummer",
-    currentActivity: "Aktuelle Aktivit\xE4t (Bq)",
+    sourceMgmt_referenceActivity: "Ref. Aktivit\xE4t",
+    sourceMgmt_referenceDate: "Ref. Datum",
+    currentActivity: "Aktuelle Aktivit\xE4t",
     conformity: "Konformit\xE4t",
-    actions: "Aktionen",
-    import: "Importieren (CSV)",
-    export: "Exportieren (CSV)",
-    exportBackup: "Exportieren / Sichern",
-    // Theme
-    changeTheme: "Thema \xE4ndern",
-    themeCyberCyan: "Cyber Cyan",
-    themeLabWhite: "Labor Wei\xDF",
-    themeForestGreen: "Waldgr\xFCn",
-    // Language
-    changeLanguage: "Sprache \xE4ndern",
-    // === NEW KEYS ===
-    // User Guide
-    guideTitle: "Benutzerhandbuch",
-    guide_intro_title: "Einf\xFChrung",
-    guide_intro_p1: "Dieser Assistent ist ein p\xE4dagogisches und praktisches Werkzeug zur Anwendung der Konzepte der Norm ISO 11929. Er erm\xF6glicht die Berechnung charakteristischer Grenzen (Entscheidungsschwelle, Nachweisgrenze) und das Verst\xE4ndnis der Auswirkungen verschiedener Parameter.",
-    guide_main_calc_title: "Hauptrechner",
-    guide_main_calc_p1: "Das Herzst\xFCck der Anwendung. Er f\xFChrt die Berechnungen gem\xE4\xDF der Norm durch.",
-    guide_main_calc_modes_title: "Berechnungsmodi",
-    guide_main_calc_modes_p1: "Passen Sie die Berechnung an Ihre Messsituation an:",
-    guide_main_calc_modes_li1: "F\xFCr einfache Z\xE4hlungen (Probe und Hintergrund).",
-    guide_main_calc_modes_li2: "Zur Analyse eines Peaks in einem Gammaspektrum durch Definition eines interessierenden Bereichs (ROI).",
-    guide_main_calc_modes_li3_surface: "F\xFCr Oberfl\xE4chenkontaminationsmessger\xE4te, um das Erreichen eines Schwellenwerts in Bq/cm\xB2 zu \xFCberpr\xFCfen.",
-    guide_main_calc_modes_li3_chambre: "F\xFCr feste Kontaminationsmonitore (Portale, Werkzeugmonitore) mit einer festen Messzeit.",
-    guide_main_calc_modes_li3_linge: "F\xFCr Monitore mit F\xF6rderband (W\xE4sche, Abfall), bei denen die Messzeit von der F\xF6rdergeschwindigkeit abh\xE4ngt.",
-    guide_main_calc_inputs_title: "Eingabeparameter",
-    guide_main_calc_inputs_p1: "Die wichtigsten einzugebenden Parameter sind:",
-    guide_main_calc_inputs_li1: "Die Z\xE4hlungen und Messzeiten f\xFCr die Probe (brutto) und den Hintergrund.",
-    guide_main_calc_inputs_li2: "Der Kalibrierfaktor (w) und seine relative Unsicherheit, die die Z\xE4hlrate mit der Aktivit\xE4t verbinden.",
-    guide_main_calc_inputs_li3: "Die Quantile k(1-\u03B1) und k(1-\u03B2), die die akzeptierten Fehlerrisiken definieren (typischerweise 1,645 f\xFCr 5%).",
-    guide_main_calc_results_title: "Interpretation der Ergebnisse",
-    guide_main_calc_results_p1: "Die wichtigsten Ergebnisse sind:",
-    guide_main_calc_results_li1: "Der gemessene Nettowert muss diesen Schwellenwert \xFCberschreiten, um auf das Vorhandensein von Aktivit\xE4t zu schlie\xDFen.",
-    guide_main_calc_results_li2: "Die kleinste Aktivit\xE4t, die mit der Messmethode voraussichtlich nachgewiesen werden kann.",
-    guide_main_calc_results_li3: "Eine klare Schlussfolgerung wird gegeben: 'Aktivit\xE4t nachgewiesen', wenn y > y*, andernfalls nicht.",
-    guide_main_calc_results_li4: "Visualisiert den Beitrag jeder Unsicherheitsquelle (Z\xE4hlung, Hintergrund, Kalibrierung) zur Gesamtunsicherheit.",
-    guide_main_calc_expert_title: "Expertenmodus",
-    guide_main_calc_expert_p1: "F\xFCr fortgeschrittene Benutzer:",
-    guide_main_calc_expert_li1: "Erm\xF6glicht die Ber\xFCcksichtigung einer Korrelation zwischen der Unsicherheit des Hintergrunds und der der Kalibrierung (selten verwendet).",
-    guide_main_calc_expert_li2: "Verwendet statistische Simulationen zur Fortpflanzung von Unsicherheiten. Dies ist eine robustere Methode, insbesondere bei niedrigen Z\xE4hlraten, aber langsamer.",
-    guide_spec_tools_title: "Spektrometrie-Werkzeuge (PRO)",
-    guide_spec_tools_p1: "Dieser Abschnitt bietet erweiterte Werkzeuge zur Analyse von Gamma- und Alphaspektren.",
-    guide_spec_analyzer_title: "Bild-Spektrumanalysator",
-    guide_spec_analyzer_p1: "Ein einzigartiges Werkzeug, das Daten aus einem Spektrumsbild (Screenshot, Foto) extrahiert. Der Prozess besteht aus 3 Phasen:",
-    guide_spec_analyzer_phase1_title: "Phase 1: Kalibrierung",
-    guide_spec_analyzer_phase1_p1: "Klicken Sie auf bekannte Peaks in Ihrem Spektrum und geben Sie deren Energie ein. Es sind mindestens 2 Punkte erforderlich, um eine lineare Kalibrierungsfunktion zu berechnen.",
-    guide_spec_analyzer_phase2_title: "Phase 2: Analyse",
-    guide_spec_analyzer_phase2_p1: "Sobald die Kalibrierung validiert ist, erkennt die Anwendung automatisch Peaks, berechnet deren Energie, FWHM und schl\xE4gt m\xF6gliche Radionuklid-Identifikationen vor. Sie k\xF6nnen auch manuell Peaks hinzuf\xFCgen.",
-    guide_n42_analyzer_title: "N42-Datei-Analysator",
-    guide_n42_analyzer_p1: "Importieren Sie Spektren im Standardformat ANSI N42.42.",
-    guide_n42_analyzer_li1: "Laden Sie eine .n42-Datei von Ihrem Ger\xE4t.",
-    guide_n42_analyzer_li2: "Die Anwendung liest Metadaten (Instrument, Messzeit) und Spektrumsdaten.",
-    guide_n42_analyzer_li3: "Die Energiekalibrierung wird automatisch aus der Datei gelesen.",
-    guide_n42_analyzer_li4: "Peaks werden erkannt und identifiziert. Sie k\xF6nnen mit dem Diagramm interagieren, um manuell Peaks hinzuzuf\xFCgen oder einen interessierenden Bereich (ROI) zu analysieren.",
-    guide_source_mgmt_title: "Quellenverwaltung",
-    guide_source_mgmt_p1: "Verwalten Sie ein Inventar Ihrer radioaktiven Referenz- und Kontrollquellen.",
-    guide_source_mgmt_li1: "Quellen hinzuf\xFCgen, bearbeiten oder l\xF6schen.",
-    guide_source_mgmt_li2: "Die Aktivit\xE4t jeder Quelle wird in Echtzeit basierend auf ihrem Referenzdatum und ihrer Halbwertszeit berechnet.",
-    guide_source_mgmt_li3: "Weisen Sie Ihren Quellen einen Typ zu (z.B. S3, S5) f\xFCr eine automatisierte Konformit\xE4tsverfolgung.",
-    guide_source_mgmt_li4: "Ein Farbcode zeigt an, ob die Quellenaktivit\xE4t konform, zu niedrig (Warnung) oder zu hoch (Fehler) im Vergleich zu den Anforderungen ihres Typs ist.",
-    guide_source_mgmt_li5: "Importieren und exportieren Sie Ihr Inventar im CSV-Format.",
-    guide_other_tools_title: "Andere Werkzeuge",
-    guide_other_tools_decay_title: "Zerfallsrechner",
-    guide_other_tools_decay_p1: "Berechnet die Aktivit\xE4t einer Quelle zu einem bestimmten Datum aus ihrer Referenzaktivit\xE4t. Das Ergebnis kann direkt auf den Kalibrierfaktor des Hauptrechners angewendet werden.",
-    guide_other_tools_peak_title: "Peak-Identifikator",
-    guide_other_tools_peak_p1: "Geben Sie eine oder mehrere Energien (in keV) ein, und das Werkzeug sucht in der Bibliothek nach entsprechenden Radionukliden innerhalb der angegebenen Toleranz.",
-    guide_data_mgmt_title: "Datenverwaltung",
-    guide_data_mgmt_p1: "Sie k\xF6nnen die Konfiguration des Hauptrechners speichern ('Speichern'-Button) und sp\xE4ter erneut laden. Spektrometrieanalysen k\xF6nnen in der Historie gespeichert (Diskettensymbol) und \xFCber den Tab 'Analysehistorie' erneut geladen werden.",
-    // Spectro Page & Sub-pages
-    spectroMenuTitle: "Men\xFC der Spektrometrie-Werkzeuge",
-    analysisType: "Analysetyp",
-    analysisTypeTooltip: "W\xE4hlen Sie die zu analysierende Strahlungsart aus. Dies filtert die Nuklidbibliothek f\xFCr die Identifizierung.",
-    spectroMenuImageTitle: "Bild-Analysator",
-    spectroMenuImageDesc: "Ein Spektrum aus einem Bild extrahieren, kalibrieren und analysieren.",
-    spectroMenuN42Title: "N42-Analysator",
-    spectroMenuN42Desc: "Ein Spektrum im ANSI N42.42-Format laden und analysieren.",
-    spectroMenuSPCTitle: "SPC-Analysator",
-    spectroMenuSPCDesc: ".SPC-Dateien laden (in K\xFCrze).",
-    spectroMenuCHNTitle: "CHN-Analysator",
-    spectroMenuCHNDesc: ".CHN-Dateien laden (in K\xFCrze).",
-    spectroMenuBkgSubTitle: "Hintergrundsubtraktion",
-    spectroMenuBkgSubDesc: "Ein Nettospektrum aus zwei N42-Spektren berechnen.",
-    spectroMenuCompareTitle: "Spektrenvergleich",
-    spectroMenuCompareDesc: "Zwei N42-Spektren zur visuellen \xDCberpr\xFCfung \xFCberlagern.",
-    spectrumAnalyzerTitle: "Bild-Spektrumanalysator",
-    useCamera: "Kamera verwenden",
-    analysisError_generic: "W\xE4hrend der Analyse ist ein Fehler aufgetreten.",
-    uploadInstruction: "Ein Spektrumsbild per Drag & Drop hier ablegen oder zum Ausw\xE4hlen klicken.",
-    takePhoto: "Foto aufnehmen",
-    calibrationAndAnalysis: "Kalibrierung & Analyse",
-    calibrationStep1: "Phase 1: Klicken Sie auf bekannte Peaks in Ihrem Spektrum, um Kalibrierungspunkte hinzuzuf\xFCgen.",
-    undoLast: "Letzten widerrufen",
-    clearAll: "Alle l\xF6schen",
-    calculateCalibration: "Kalibrierung berechnen",
-    calibrationStep2: "Phase 2: \xDCberpr\xFCfen Sie die Qualit\xE4t der linearen Regression.",
-    calibrationStatus: "Status",
-    statusNotCalculated: "Nicht berechnet",
-    statusExcellent: "Ausgezeichnet",
-    statusGood: "Gut",
-    statusCheckPoints: "Punkte \xFCberpr\xFCfen",
-    slope: "Steigung",
-    intercept: "Y-Achsenabschnitt",
-    backToPoints: "Zur\xFCck zu den Punkten",
-    runAnalysis: "Analyse starten",
-    identificationTolerance: "Identifikationstoleranz",
-    identificationToleranceTooltip: "Das Fenster in keV (+/-) zur Suche nach Nuklid-\xDCbereinstimmungen.",
-    runAnalysisAgain: "Analyse erneut starten",
-    extractingCurve: "Kurve wird extrahiert...",
-    detectingPeaks: "Peaks werden erkannt...",
-    backToCalibration: "Zur\xFCck zur Kalibrierung",
-    resetAll: "Alles zur\xFCcksetzen",
-    enterPeakEnergy: "Peak-Energie eingeben",
-    peakEnergyLabel: "Peak-Energie (keV)",
-    peakEnergyUncertaintyLabel: "Unsicherheit (keV, optional)",
-    analysisResultsTitle: "Analyseergebnisse",
-    saveAnalysis: "Analyse speichern",
-    exportCsv: "CSV exportieren",
-    exportHdf5: "HDF5 exportieren",
-    exportNetCdf: "NetCDF exportieren",
-    interactiveModeTooltip: "Interaktiver Modus: Klicken Sie auf das Spektrum, um manuell einen Peak hinzuzuf\xFCgen. Klicken Sie auf ein Peak-Label, um es zu gruppieren.",
-    analysisComplete: "Analyse abgeschlossen. Interaktiver Modus aktiviert.",
+    // Spectro
+    spectroMenuTitle: "Spektrometrie-Tools Men\xFC",
+    uploadInstruction: "Spektrumbild hier ablegen oder klicken.",
     detectedPeaksTitle: "Erkannte Peaks",
     energy_keV: "Energie (keV)",
     fwhm_keV: "FWHM (keV)",
-    group: "Gruppe",
-    nuclide: "M\xF6gliche(s) Nuklid(e)",
-    noPeaksDetected: "Keine Peaks automatisch erkannt.",
-    analyse_groups: "Gruppenanalyse",
-    group_a_total: "Summe Gruppe A",
-    group_b_total: "Summe Gruppe B",
-    ratio_a_b: "Verh\xE4ltnis A / B",
-    peakPositionAdjusterTitle: "Peak-Position anpassen",
-    addPeakManually: "Peak manuell hinzuf\xFCgen",
-    confirmPosition: "Position best\xE4tigen",
-    addPeak: "Peak hinzuf\xFCgen",
-    adjustChannel: "Kanal anpassen",
-    channel: "Kanal",
-    energy: "Energie",
-    suggestedNuclide: "Vorgeschlagenes Nuklid",
-    saveAnalysisModalTitle: "Analyse speichern",
-    analysisName: "Name der Analyse",
-    linkToSource: "Mit vorhandener Quelle verkn\xFCpfen (optional)",
-    noSource: "Keine Quelle",
-    analysisHistoryTitle: "Analysehistorie",
-    noAnalysesSaved: "Noch keine Analysen gespeichert.",
-    analysisNameColumn: "Name",
-    analysisDate: "Datum",
-    analysisTypeColumn: "Typ",
-    linkedSource: "Verkn\xFCpfte Quelle",
-    load: "Laden",
-    delete: "L\xF6schen",
-    confirmDeleteAnalysis: "Sind Sie sicher, dass Sie diese Analyse l\xF6schen m\xF6chten?",
-    n42AnalyzerTitle: "N42-Datei-Analysator",
-    startOver: "Neu anfangen",
-    uploadN42File: "N42-Datei hochladen",
-    fileInfoAndSettings: "Datei-Info & Einstellungen",
-    instrument: "Ger\xE4t",
-    timestamp: "Zeitstempel",
-    liveTime: "Live-Zeit",
-    realTime: "Echtzeit",
-    selectSpectrum: "Spektrum ausw\xE4hlen",
-    yAxisZoom: "Y-Achsen-Zoom",
-    yAxisZoomTooltip: "Passt die maximale Y-Achsen-Skala an, um auf kleinere Peaks zu zoomen.",
-    yAxisClipping: "Y-Achsen-Clipping",
-    yAxisClippingTooltip: "Schneidet Peaks \xFCber einem bestimmten Prozentsatz des Maximums ab, um die Basislinie besser zu sehen.",
-    nuclidePossible: "M\xF6gliches Nuklid (Energie)",
-    n42PeakAddInstruction: "Klicken Sie auf das Diagramm, um manuell einen Peak hinzuzuf\xFCgen. Klicken und ziehen Sie, um einen ROI f\xFCr die Entfaltung auszuw\xE4hlen.",
-    plotTitle: "Spektrumdiagramm",
-    roiSelectionTooltip: "Klicken und ziehen Sie auf dem Diagramm, um einen interessierenden Bereich (ROI) f\xFCr die Entfaltungsanalyse auszuw\xE4hlen.",
-    plotLogScale: "Log-Skala",
-    clippingWarning: "Clipping aktiv",
-    deconvolutionModalTitle: "ROI-Entfaltung",
-    roiAnalysis: "Analyse des interessierenden Bereichs",
-    peaksInRoi: "Im ROI gefundene Peaks",
-    confirmDeconvolution: "Peaks im ROI ersetzen",
-    netSpectrumAnalysis: "Nettospektrumanalyse",
-    bkgSubtractionTitle: "Hintergrundsubtraktion",
-    sampleSpectrum: "Probenspektrum",
-    uploadSample: "Probe hochladen (.n42)",
-    sampleTime: "Messzeit Probe (s)",
-    backgroundSpectrum: "Hintergrundspektrum",
-    uploadBackground: "Hintergrund hochladen (.n42)",
-    bkg_sub_backgroundTime: "Messzeit Hintergrund (s)",
-    calculateNetSpectrum: "Nettospektrum berechnen",
-    error_channelMismatch: "Die Spektren haben nicht die gleiche Anzahl von Kan\xE4len.",
-    spectrumComparisonTitle: "Spektrenvergleich",
-    spectrumA: "Spektrum A",
-    spectrumB: "Spektrum B",
-    loadSpectrum: "Spektrum laden",
-    normalization: "Normalisierung",
-    normNone: "Keine",
-    timeScale: "Nach Zeit (c/s)",
-    countsPerSecond: "Z\xE4hlungen / Sekunde",
-    noSources: "Keine Quellen im Inventar.",
-    sourceTypeMemo: "Memo zu Quellentypen",
-    selectType: "Typ ausw\xE4hlen (optional)",
-    importReviewTitle: "CSV-Import \xFCberpr\xFCfen",
-    importInstructions: "\xDCberpr\xFCfen Sie die zu importierenden Quellen. Konflikte (gleiche ID) sind hervorgehoben.",
-    selectAll: "Alle ausw\xE4hlen",
-    importStatus: "Status",
-    decision: "Entscheidung",
-    conflict: "Konflikt",
-    new: "Neu",
-    skip: "\xDCberspringen",
-    overwrite: "\xDCberschreiben",
-    confirmImport: "Import best\xE4tigen",
-    importCsvTitle: "Quellen aus CSV importieren",
-    importCsvIntro: "W\xE4hlen Sie eine CSV-Datei, die zuvor von dieser Anwendung exportiert wurde. Die Spalten m\xFCssen \xFCbereinstimmen.",
-    selectCsvFile: "W\xE4hlen Sie eine .csv-Datei oder ziehen Sie sie hierher",
-    sourceTypeMemoTitle: "Memo zu Quellentypen (FR-Standard)",
-    typeKey: "Typ",
-    description: "Beschreibung",
-    minActivity: "Min. Aktivit\xE4t (Bq)",
-    maxActivity: "Max. Aktivit\xE4t (Bq)",
-    radiationType: "Strahlungsart",
-    mainEnergyLines: "Hauptenergielinien",
-    noSignificantGamma: "Keine signifikanten Gammalinien",
-    unitConverterTitle: "Radiologischer Einheitenumrechner",
-    unit_category: "Messkategorie",
-    unit_cat_activity: "Aktivit\xE4t",
-    unit_cat_exposure: "Exposition",
-    unit_cat_absorbed_dose: "Absorbierte Dosis",
-    unit_cat_equivalent_dose: "\xC4quivalentdosis",
-    unit_value: "Wert",
-    unit_from: "Von",
-    unit_swap: "Tauschen",
-    unit_result: "Ergebnis",
-    unit_to: "Nach",
-    unit_description: "Einheitenbeschreibungen",
-    unit_desc_bq: "Die SI-Einheit der Radioaktivit\xE4t, die einem Zerfall pro Sekunde entspricht.",
-    unit_desc_ci: "Eine \xE4ltere Aktivit\xE4tseinheit, die urspr\xFCnglich auf der Aktivit\xE4t von einem Gramm Radium-226 basierte.",
-    unit_desc_dpm: "Zerf\xE4lle pro Minute, eine gebr\xE4uchliche Einheit zur Messung der Aktivit\xE4t, insbesondere bei Alpha-/Beta-Quellen.",
-    unit_desc_dps: "Zerf\xE4lle pro Sekunde, \xE4quivalent zum Becquerel.",
-    unit_desc_c_kg: "Coulomb pro Kilogramm, die SI-Einheit der Exposition gegen\xFCber ionisierender Strahlung.",
-    unit_desc_r: "Das R\xF6ntgen, eine \xE4ltere Expositionseinheit, die die Ionisation in der Luft misst.",
-    unit_desc_gy: "Das Gray, die SI-Einheit der absorbierten Dosis, die die pro Kilogramm Materie deponierte Energie misst.",
-    unit_desc_rad: "Eine \xE4ltere Einheit der absorbierten Dosis (Radiation Absorbed Dose).",
-    unit_desc_sv: "Das Sievert, die SI-Einheit der \xC4quivalentdosis, die die biologische Wirkung verschiedener Strahlungsarten ber\xFCcksichtigt.",
-    unit_desc_rem: "Eine \xE4ltere Einheit der \xC4quivalentdosis (R\xF6ntgen Equivalent Man).",
-    // Offline Export Modal
-    exportModalTitle: "Quellendaten exportieren",
-    exportModalIntro: "Dies ist eine Sicherung all Ihrer Quellendaten. Bewahren Sie sie an einem sicheren Ort auf, um Datenverlust zu vermeiden. Sie k\xF6nnen den Text kopieren oder die Datei herunterladen.",
-    copyJson: "JSON kopieren",
-    downloadFile: "Datei herunterladen",
-    shareFile: "Teilen",
-    copied: "Kopiert!"
+    nuclide: "M\xF6gliches Nuklid"
   };
   var es = {
-    // General
-    authorDetails: "Por Christophe PHAM - Inspirado en la norma ISO 11929:2019",
+    // Admin
+    adminPageTitle: "Explorador de Proyectos y Admin",
+    adminWelcome: "Vista de estructura para desarrolladores.",
+    projectExplorer: "\xC1rbol de Archivos",
+    projectExplorerDesc: "Haga clic en (i) para ver la funci\xF3n del archivo.",
+    adminStaticStructureWarning: "Nota: Esta estructura de archivos est\xE1 definida est\xE1ticamente. No se actualiza autom\xE1ticamente.",
+    godMode: "Modo Dios",
+    godModeDesc: "Forzar modo PRO.",
+    enableGodMode: "Activar",
+    disableGodMode: "Desactivar",
+    dataManagement: "Datos",
+    clearLocalStorage: "Reiniciar App",
+    clearIndexedDB: "Borrar DB",
+    fileRole: "Funci\xF3n del archivo",
+    fileInfo: "Informaci\xF3n",
+    // Folder Desc
+    folderDesc_components: "Componentes de UI reutilizables.",
+    folderDesc_pages: "Vistas principales de la aplicaci\xF3n.",
+    folderDesc_services: "L\xF3gica de negocio, c\xE1lculos y acceso a datos.",
+    folderDesc_electron: "Configuraci\xF3n del proceso principal Electron.",
+    folderDesc_n42_analyzer: "Componentes para an\xE1lisis de archivos N42.",
+    folderDesc_source_management: "Componentes para gesti\xF3n de inventario.",
+    folderDesc_spectrum_analyzer: "Componentes para an\xE1lisis de espectro por imagen.",
+    // File Desc
+    fileDesc_App: "Componente ra\xEDz. Gestiona estado global y enrutamiento.",
+    fileDesc_index_tsx: "Punto de entrada React.",
+    fileDesc_index_html: "Punto de entrada HTML.",
+    fileDesc_index_css: "Estilos globales y Tailwind.",
+    fileDesc_types: "Definiciones TypeScript.",
+    fileDesc_translations: "Diccionario de traducci\xF3n.",
+    fileDesc_manifest: "Configuraci\xF3n PWA.",
+    fileDesc_metadata: "Metadatos de desarrollo.",
+    fileDesc_package: "Dependencias npm.",
+    fileDesc_readme: "Documentaci\xF3n del proyecto.",
+    fileDesc_sw: "Service Worker (Soporte offline).",
+    fileDesc_tailwind: "Configuraci\xF3n Tailwind CSS.",
+    fileDesc_Card: "Contenedor gen\xE9rico.",
+    fileDesc_ChartModal: "Modal de gr\xE1ficos ampliados.",
+    fileDesc_ChartPanel: "Panel de gr\xE1ficos principales.",
+    fileDesc_CollapsibleSection: "Secci\xF3n acorde\xF3n para entradas.",
+    fileDesc_DecayCalculatorModal: "Calculadora de decaimiento.",
+    fileDesc_ExportModal: "Modal de exportaci\xF3n JSON.",
+    fileDesc_GeminiBackupModal: "Componente de respaldo.",
+    fileDesc_GeminiHelper: "Funciones auxiliares de IA.",
+    fileDesc_InfoTooltip: "Peque\xF1a burbuja de informaci\xF3n (i).",
+    fileDesc_InputPanel: "Formulario de entrada principal.",
+    fileDesc_LanguageSelector: "Selector de idioma.",
+    fileDesc_ModeSelector: "Selector de modo.",
+    fileDesc_MonteCarloStatsModal: "Estad\xEDsticas de simulaci\xF3n MC.",
+    fileDesc_PeakIdentifierModal: "Identificador de picos.",
+    fileDesc_PeakPositionAdjusterModal: "Ajuste fino de posici\xF3n de pico.",
+    fileDesc_ProAccessModal: "Desbloquear modo PRO.",
+    fileDesc_ReportGeneratorModal: "Generador de informes.",
+    fileDesc_ResultsPanel: "Muestra resultados num\xE9ricos.",
+    fileDesc_SaveAnalysisModal: "Guardar an\xE1lisis de espectro.",
+    fileDesc_ThemeSelector: "Selector de tema.",
+    fileDesc_UnitConverterModal: "Convertidor de unidades.",
+    fileDesc_UpdateNotification: "Notificaci\xF3n de actualizaci\xF3n.",
+    fileDesc_UserGuideModal: "Manual de usuario.",
+    fileDesc_WelcomeModal: "Popup de bienvenida.",
+    fileDesc_AddPeakModal: "A\xF1adir pico manualmente.",
+    fileDesc_ComparisonPlot: "Gr\xE1fico de comparaci\xF3n.",
+    fileDesc_DeconvolutionModal: "Deconvoluci\xF3n en ROI.",
+    fileDesc_EfficiencyCalibrationModal: "Calibraci\xF3n de eficiencia.",
+    fileDesc_SpectrumPlot: "Gr\xE1fico interactivo N42.",
+    fileDesc_AddSourceModal: "A\xF1adir/Editar fuente.",
+    fileDesc_CsvImportModal: "Importaci\xF3n masiva CSV.",
+    fileDesc_ImportReviewModal: "Validar importaci\xF3n.",
+    fileDesc_SourceTooltip: "Detalles de fuente.",
+    fileDesc_SourceTypesMemoModal: "Hoja de referencia de tipos.",
+    fileDesc_AnalysisResults: "Resultados de an\xE1lisis de imagen.",
+    fileDesc_CalibrationPointModal: "Entrada de energ\xEDa para calibraci\xF3n.",
+    fileDesc_CalibrationSidebar: "Gu\xEDa de calibraci\xF3n de imagen.",
+    fileDesc_CameraCapture: "Interfaz de c\xE1mara web.",
+    fileDesc_ImageUploader: "Zona de carga de imagen.",
+    fileDesc_AdminPage: "Esta p\xE1gina (Explorador de Proyecto).",
+    fileDesc_AnalysisHistoryPage: "Historial de an\xE1lisis.",
+    fileDesc_BackgroundSubtractionPage: "Sustracci\xF3n de fondo.",
+    fileDesc_N42AnalyzerPage: "An\xE1lisis N42.",
+    fileDesc_SourceManagementPage: "Inventario de fuentes.",
+    fileDesc_SpectroPage: "Men\xFA de herramientas de espectrometr\xEDa.",
+    fileDesc_SpectrumAnalyzerPage: "An\xE1lisis basado en imagen.",
+    fileDesc_SpectrumComparisonPage: "Comparaci\xF3n de espectros.",
+    fileDesc_analysisHelpers: "Funciones auxiliares de an\xE1lisis.",
+    fileDesc_dbService: "Wrapper IndexedDB.",
+    fileDesc_gammaLibrary: "Biblioteca de radionucleidos.",
+    fileDesc_geminiService: "Servicio de integraci\xF3n IA.",
+    fileDesc_isoCalculations: "Motor de c\xE1lculo ISO 11929.",
+    fileDesc_monteCarloService: "Simulaci\xF3n Monte Carlo.",
+    fileDesc_n42ParserService: "Parser XML N42.",
+    fileDesc_peakIdentifierService: "Algoritmo de identificaci\xF3n de picos.",
+    fileDesc_radionuclides: "Datos de decaimiento simplificados.",
+    fileDesc_sourceTypes: "Definiciones de tipos de fuente.",
+    fileDesc_spectrumAnalyzerService: "Procesamiento de imagen.",
+    fileDesc_electron_main: "Proceso principal Electron.",
+    fileDesc_electron_preload: "Script de precarga Electron.",
+    // Restored General Translations
+    authorDetails: "Por Christophe PHAM - Inspirado en ISO 11929:2019",
     authorCredit: "Creado con \u2764\uFE0F por Christophe PHAM. Todos los derechos reservados.",
     proVersion: "Versi\xF3n PRO",
     unlockPro: "Desbloquear PRO",
-    unitConverter: "Convertidor de Unidades",
+    unitConverter: "Convertidor de unidades",
     identifyPeaks: "Identificar Picos",
     toolsMenu: "Herramientas",
-    userGuide: "Gu\xEDa de Usuario",
-    showWelcomeTooltip: "Mostrar Ayuda de Bienvenida",
-    lockedFeature: "Funci\xF3n PRO. Haz clic para desbloquear.",
-    loading: "Cargando",
-    calculating: "Calculando...",
-    error: "Error",
-    cancel: "Cancelar",
-    close: "Cerrar",
-    ok: "Aceptar",
-    save: "Guardar",
-    submit: "Enviar",
-    counts: "cuentas",
-    cps: "c/s",
-    cpm: "c/min",
-    c_02s: "c/0.2s",
-    days: "d\xEDas",
-    timeFormat: "{y} a, {m} m, {d} d, {h} h",
-    backButton: "Volver",
-    or: "o",
-    printReport: "Imprimir Informe",
-    // Header & Nav
+    userGuide: "Gu\xEDa de usuario",
+    backButton: "Atr\xE1s",
     isoCalculator: "Calculadora ISO",
     spectrometryTools: "Herramientas de Espectrometr\xEDa",
     sourceManagement: "Gesti\xF3n de Fuentes",
     analysisHistory: "Historial de An\xE1lisis",
-    // Modes
     standard: "Est\xE1ndar",
     spectrometry: "Espectrometr\xEDa",
     surfaceControl: "Control de Superficie",
     chambre: "C\xE1mara",
-    linge: "Lavander\xEDa",
-    standardTooltip: "Modo de conteo simple bruto/fondo.",
-    spectrometryTooltip: "An\xE1lisis basado en una Regi\xF3n de Inter\xE9s (ROI) en un espectro.",
-    surfaceControlTooltip: "Calcula el l\xEDmite de detecci\xF3n para monitores de contaminaci\xF3n de superficie.",
-    chambreTooltip: "C\xE1lculo para monitores de contaminaci\xF3n tipo c\xE1mara.",
-    lingeTooltip: "C\xE1lculo para monitores de contaminaci\xF3n de lavander\xEDa.",
-    // Inputs Panel
-    inputs: "Par\xE1metros de Entrada",
+    linge: "Ropa",
+    inputs: "Entradas",
     expertMode: "Modo Experto",
-    sourceMeasurement: "Medici\xF3n de Fuente",
-    grossCount: "Conteo Bruto",
-    grossCountTooltip: "N\xFAmero total de cuentas medidas para la muestra, o la tasa de conteo.",
-    measurementTime: "Tiempo de Medici\xF3n",
-    measurementTimeTooltip: "Duraci\xF3n de la medici\xF3n en segundos.",
-    backgroundMeasurement: "Medici\xF3n de Fondo",
-    backgroundCount: "Conteo de Fondo",
-    backgroundCountTooltip: "N\xFAmero total de cuentas medidas para el fondo, o la tasa de conteo.",
-    backgroundTimeTooltip: "Duraci\xF3n de la medici\xF3n de fondo en segundos.",
-    calibration: "Calibraci\xF3n",
-    calibrationFactor: "Factor de Calibraci\xF3n (w)",
-    calibrationFactorTooltip: "Factor para convertir la tasa de conteo neta (c/s) en actividad (Bq).",
-    autoCalibFactor: "Calcular Factor (w) auto.",
-    autoCalibFactorTooltip: "Calcula autom\xE1ticamente el factor de calibraci\xF3n basado en la eficiencia y el \xE1rea del detector.",
-    calibrationFactorUnit: "Unidad del Factor",
-    calibrationFactorUnitTooltip: "Unidad del factor de calibraci\xF3n. Ej: Bq/(c/s).",
-    relativeUncertainty: "Incertidumbre Relativa (u_rel(w))",
-    relativeUncertaintyTooltip: "Incertidumbre relativa del factor de calibraci\xF3n, en porcentaje.",
-    decayCalculator: "Calculadora de Decaimiento",
-    riskParameters: "Par\xE1metros de Riesgo",
-    k1alpha: "k(1-\u03B1)",
-    k1alphaTooltip: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo I \u03B1 (falso positivo). Generalmente 1.645 para \u03B1=5%.",
-    k1beta: "k(1-\u03B2)",
-    k1betaTooltip: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo II \u03B2 (falso negativo). Generalmente 1.645 para \u03B2=5%.",
-    advancedParameters: "Par\xE1metros Avanzados",
-    correlationCoefficient: "Coeficiente de Correlaci\xF3n",
-    correlationCoefficientTooltip: "Coeficiente de correlaci\xF3n entre la medici\xF3n de fondo y el factor de calibraci\xF3n. A menudo se deja en 0.",
-    bayesianCalculationMode: "Modo de C\xE1lculo Bayesiano",
-    bayesianCalculationModeTooltip: "Utiliza un enfoque bayesiano para la estimaci\xF3n de la actividad, proporcionando una probabilidad de que el efecto est\xE9 presente.",
-    monteCarloMode: "Modo Monte Carlo",
-    enableMonteCarlo: "Activar Monte Carlo",
-    enableMonteCarloTooltip: "Utiliza simulaciones de Monte Carlo para propagar incertidumbres, en lugar del m\xE9todo anal\xEDtico.",
-    numSimulations: "N\xFAmero de Simulaciones",
-    numSimulationsTooltip: "N\xFAmero de iteraciones para la simulaci\xF3n de Monte Carlo. Un n\xFAmero mayor es m\xE1s preciso pero m\xE1s lento.",
-    saveConfig: "Guardar",
-    loadConfig: "Cargar",
-    // Spectrometry Inputs
-    roiMeasurement: "Medici\xF3n en ROI",
-    roiGrossCount: "Cuentas Brutas en ROI",
-    roiGrossCountTooltip: "N\xFAmero total de cuentas dentro de la Regi\xF3n de Inter\xE9s (ROI) del espectro de la muestra.",
-    roiChannels: "Ancho del ROI (canales)",
-    roiChannelsTooltip: "N\xFAmero de canales que componen la Regi\xF3n de Inter\xE9s (ROI).",
-    backgroundTotalCount: "Cuentas Totales de Fondo",
-    backgroundTotalCountTooltip: "N\xFAmero total de cuentas en todo el espectro de fondo.",
-    backgroundChannels: "Canales Totales de Fondo",
-    backgroundChannelsTooltip: "N\xFAmero total de canales en el espectro de fondo.",
-    // Surface/Chambre/Linge Inputs
-    probeParameters: "Par\xE1metros de la Sonda",
-    probeEfficiency: "Eficiencia de la Sonda (%)",
-    probeEfficiencyTooltip: "Eficiencia 2\u03C0 o 4\u03C0 de la sonda de detecci\xF3n.",
-    probeArea: "\xC1rea de la Sonda (cm\xB2)",
-    probeAreaTooltip: "\xC1rea de detecci\xF3n de la sonda en cent\xEDmetros cuadrados.",
-    measurementConditions: "Condiciones de Medici\xF3n",
-    estimatedBackgroundRate: "Tasa de Fondo Est. (c/s)",
-    estimatedBackgroundRateTooltip: "Tasa de conteo de fondo promedio esperada para este dispositivo.",
-    targetActivity: "Actividad Objetivo",
-    targetValue: "Valor Objetivo",
-    targetValueTooltip: "La actividad que el sistema debe ser capaz de detectar.",
-    detectorSetup: "Configuraci\xF3n del Detector",
-    detector: "Detector",
-    enabled: "Activado",
-    detectorType: "Tipo",
-    efficiency: "Eficiencia",
-    background: "Fondo",
-    detectorDimLength: "Longitud (cm)",
-    detectorDimLengthTooltip: "La dimensi\xF3n del detector en la direcci\xF3n del movimiento del transportador.",
-    detectorDimWidth: "Ancho (cm)",
-    detectorDimWidthTooltip: "La dimensi\xF3n del detector perpendicular al movimiento del transportador.",
-    conveyorSetup: "Configuraci\xF3n del Transportador",
-    conveyorSpeed: "Velocidad del Transportador",
-    conveyorSpeedTooltip: "Velocidad a la que se mueven los objetos en el transportador.",
-    // Results Panel
     results: "Resultados",
-    resultUnit: "Unidad",
-    primaryResult: "Resultado Neto (y)",
-    primaryResultTooltip: "La mejor estimaci\xF3n de la actividad neta medida y su incertidumbre est\xE1ndar.",
-    mcPrimaryResultTooltip: "La media de la distribuci\xF3n de Monte Carlo (resultado neto) y su desviaci\xF3n est\xE1ndar.",
-    decisionThreshold: "Umbral de Decisi\xF3n (y*)",
-    decisionThresholdTooltip: "Valor cr\xEDtico. Si el resultado neto (y) es mayor que y*, se decide la presencia de actividad.",
-    detectionLimit: "L\xEDmite de Detecci\xF3n (y#)",
-    detectionLimitTooltip: "Actividad neta m\xEDnima que se puede detectar con una probabilidad \u03B2 de no ser omitida.",
-    meanTimeBetweenFalseAlarms: "Tiempo Medio Entre Falsas Alarmas",
-    meanTimeBetweenFalseAlarmsTooltip: "Tiempo promedio estimado antes de que ocurra una detecci\xF3n falsa (falso positivo), basado en \u03B1 y los tiempos de medici\xF3n.",
-    conclusion: "Conclusi\xF3n",
-    effectPresent: "Presencia de Actividad Detectada (y > y*)",
-    effectNotPresent: "No se Detect\xF3 Actividad (y \u2264 y*)",
-    bestEstimate: "Mejor Estimaci\xF3n (y \xB1 U)",
-    bestEstimateTooltip: "El intervalo de confianza (k=2) para la actividad, calculado solo cuando se detecta actividad.",
-    confidenceInterval: "Intervalo de Confianza (95%)",
-    confidenceIntervalTooltip: "El intervalo en el que el valor real de la actividad tiene un 95% de probabilidad de encontrarse.",
-    uncertaintyBudget: "Presupuesto de Incertidumbre",
-    uncertaintyBudgetTooltip: "Contribuci\xF3n relativa de cada componente a la varianza total del resultado.",
-    budgetGross: "Conteo Bruto",
-    budgetBackground: "Fondo",
-    budgetCalibration: "Calibraci\xF3n (w)",
-    budgetCalibrationTooltip: "Este componente depende del valor del resultado neto (y).",
-    budgetCovariance: "Covarianza",
-    uncertaintyDetails: "Detalles de Incertidumbre",
-    sensitivityCoefficients: "Coeficientes de Sensibilidad",
-    sensitivityCoefficientsTooltip: "Muestra c\xF3mo un cambio en una variable de entrada afecta el resultado de salida.",
-    coeff_gross: "Tasa de Conteo Bruto",
-    coeff_gross_tooltip: "Sensibilidad del resultado a un cambio en la tasa de conteo bruto.",
-    coeff_bkg: "Tasa de Conteo de Fondo",
-    coeff_bkg_tooltip: "Sensibilidad del resultado a un cambio en la tasa de conteo de fondo.",
-    coeff_calib: "Factor de Calibraci\xF3n",
-    coeff_calib_tooltip: "Sensibilidad del resultado a un cambio en el factor de calibraci\xF3n.",
-    probabilityEffectPresent: "Probabilidad de Presencia",
-    probabilityEffectPresentTooltip: "La probabilidad (P(\u03BC > 0)) de que la actividad real sea mayor que cero, calculada mediante un enfoque bayesiano.",
-    detectionLimitMode: "Modo de C\xE1lculo",
-    targetDetectionLimit: "L\xEDmite de Detecci\xF3n Objetivo",
-    targetDetectionLimitTooltip: "Ingrese el l\xEDmite de detecci\xF3n que desea alcanzar. El c\xE1lculo ajustar\xE1 k(1-\u03B2) para lograrlo.",
     calculate: "Calcular",
-    target: "Objetivo",
-    systemCompliant: "El sistema cumple con el objetivo.",
-    systemNonCompliant: "El sistema NO cumple con el objetivo.",
-    // Chart
+    save: "Guardar",
+    cancel: "Cancelar",
+    close: "Cerrar",
+    ok: "OK",
+    error: "Error",
+    loading: "Cargando",
+    calibration: "Calibraci\xF3n",
+    calibrationFactor: "Factor de calibraci\xF3n (w)",
+    decisionThreshold: "Umbral de decisi\xF3n (y*)",
+    detectionLimit: "L\xEDmite de detecci\xF3n (y#)",
+    conclusion: "Conclusi\xF3n",
+    effectPresent: "Actividad detectada (y > y*)",
+    effectNotPresent: "No se detect\xF3 actividad (y \u2264 y*)",
+    meanTimeBetweenFalseAlarms: "Tiempo medio entre falsas alarmas",
     chartTitle: "Representaci\xF3n Gr\xE1fica",
-    activity: "Actividad",
-    h0_legend: "Hip\xF3tesis Nula (Actividad = 0)",
-    h1_legend: "Hip\xF3tesis Alternativa (Actividad = y#)",
-    measurement_distribution_legend: "Distribuci\xF3n de Medida",
-    confidenceIntervalLegend: "Intervalo de Confianza (95%)",
-    alpha_risk_legend: "Riesgo \u03B1 (falso positivo)",
-    beta_risk_legend: "Riesgo \u03B2 (falso negativo)",
-    chartDescription: "Este gr\xE1fico ilustra las distribuciones de probabilidad para la hip\xF3tesis nula (H\u2080), la hip\xF3tesis alternativa (H\u2081) y la medida actual. Ayuda a visualizar los umbrales de decisi\xF3n y los riesgos asociados.",
-    mc_distribution_legend: "Distribuci\xF3n de Monte Carlo",
-    measurement_legend: "Medida",
-    mcChartDescription: "Histograma de los resultados de {n} simulaciones. Muestra la distribuci\xF3n de probabilidad del resultado neto.",
-    viewSimulationStats: "Estad\xEDsticas",
-    viewSimulationStatsTooltip: "Ver estad\xEDsticas detalladas de la simulaci\xF3n de Monte Carlo.",
-    expandChartTooltip: "Expandir Gr\xE1fico",
-    // Errors
-    positiveValuesError: "Los tiempos de medici\xF3n y el factor de calibraci\xF3n deben ser n\xFAmeros positivos.",
-    negativeRateError: "Las tasas de conteo no pueden ser negativas.",
-    kBetaError: "k(1-\u03B2)\xB2 * u_rel(w)\xB2 debe ser menor que 1. Aumente u_rel(w) o disminuya k(1-\u03B2).",
-    targetNotReachable: "El l\xEDmite de detecci\xF3n objetivo no es alcanzable con los par\xE1metros actuales. Intente aumentar los tiempos de medici\xF3n o reducir el fondo.",
-    noActiveDetectors: "No hay detectores activados. Por favor, active al menos un detector para realizar el c\xE1lculo.",
-    positiveSpeedError: "La velocidad del transportador debe ser positiva.",
-    // Pro Modal
-    proUnlockedSuccess: "\xA1Funciones Pro desbloqueadas con \xE9xito!",
-    proAccessTitle: "Acceso a Funciones PRO",
-    proAccessDescription: "Ingrese la contrase\xF1a para desbloquear herramientas avanzadas, incluyendo analizadores de espectro e historial de an\xE1lisis.",
-    passcode: "Contrase\xF1a",
-    incorrectPasscode: "Contrase\xF1a incorrecta.",
-    // Welcome Modal
+    reportGeneratorTitle: "Generar Informe",
+    printReport: "Imprimir Informe",
     welcomeTitle: "Bienvenido al Asistente ISO 11929",
-    welcomeIntro: "Esta herramienta est\xE1 dise\xF1ada para ayudarle a realizar c\xE1lculos de detecci\xF3n seg\xFAn la norma ISO 11929:2019. Aqu\xED tiene un resumen de las caracter\xEDsticas clave:",
-    welcomeFeature1Title: "M\xFAltiples Modos de C\xE1lculo",
-    welcomeFeature1Desc: "Elija entre los modos Est\xE1ndar, Espectrometr\xEDa, Superficie, C\xE1mara y Lavander\xEDa para adaptar los c\xE1lculos a su situaci\xF3n de medici\xF3n espec\xEDfica.",
-    welcomeFeature2Title: "Modo Experto y Monte Carlo",
-    welcomeFeature2Desc: "Active el Modo Experto para ajustar los par\xE1metros de riesgo (k\u03B1, k\u03B2) y utilizar la simulaci\xF3n de Monte Carlo para una propagaci\xF3n robusta de incertidumbres.",
-    welcomeFeature4Title: "Herramientas de Espectrometr\xEDa (PRO)",
-    welcomeFeature4Desc: "Analice espectros a partir de im\xE1genes o archivos N42. Calibre, identifique picos y analice radionucleidos.",
-    welcomeFeature5Title: "Gesti\xF3n de Fuentes",
-    welcomeFeature5Desc: "Gestione un inventario de sus fuentes radiactivas, con c\xE1lculo de decaimiento y seguimiento de conformidad.",
-    welcomeFeature6Title: "Calculadora de Decaimiento e ID de Picos",
-    welcomeFeature6Desc: "Herramientas integradas para calcular r\xE1pidamente el decaimiento radiactivo o identificar picos de energ\xEDa desconocidos.",
-    welcomeConclusion: "Explore los diferentes modos y opciones. Para m\xE1s detalles, consulte la gu\xEDa de usuario.",
     welcomeStart: "Comenzar",
-    // Update Notification
-    updateAvailable: "\xA1Hay una nueva versi\xF3n disponible!",
-    refresh: "Actualizar",
-    // Simulation Stats Modal
-    simulationStatisticsTitle: "Estad\xEDsticas de la Simulaci\xF3n",
-    simulationSummaryIntro: "Resultados basados en {n} iteraciones de la simulaci\xF3n de Monte Carlo.",
-    statMean: "Media",
-    statMedian: "Mediana",
-    statStdDev: "Desviaci\xF3n Est\xE1ndar",
-    statRange: "Rango (M\xEDn; M\xE1x)",
-    statSkewness: "Asimetr\xEDa",
-    statKurtosis: "Curtosis",
-    derivedValuesTitle: "Valores Derivados",
-    decisionThresholdDerivation: "Derivado del percentil {alphaPercentile} de la distribuci\xF3n simulada para la hip\xF3tesis nula (H\u2080).",
-    confidenceIntervalDerivation: "Derivado de los percentiles 2.5% y 97.5% de la distribuci\xF3n de la medida.",
-    // Decay Calculator
-    decayCalculatorTitle: "Calculadora de Decaimiento Radiactivo",
-    decayCalc_referenceActivity: "Actividad de Referencia",
-    decayCalc_referenceUncertainty: "Incertidumbre Relativa (%)",
-    decayCalc_referenceDate: "Fecha de Referencia",
-    measurementDate: "Fecha de Medici\xF3n",
-    selectNuclide: "Seleccionar un Radionucleido",
-    decayResults: "Resultados",
-    halfLife: "Per\xEDodo de semidesintegraci\xF3n",
-    elapsedTime: "Tiempo Transcurrido",
-    correctedActivity: "Actividad Corregida",
-    calculateAndApply: "Calcular y Aplicar",
-    // Peak Identifier
-    peakIdentifierTitle: "Identificador de Picos",
-    peakIdentifierIntro: "Ingrese una lista de energ\xEDas de picos (en keV), una por l\xEDnea, para identificarlos usando la biblioteca de radionucleidos.",
-    peakEnergiesLabel: "Energ\xEDas de los Picos (keV)",
-    toleranceLabel: "Tolerancia (keV)",
-    identify: "Identificar",
-    identificationResults: "Resultados de la Identificaci\xF3n",
-    resultsForPeak: "Resultados para el pico en {energy} \xB1 {tolerance} keV",
-    noNuclidesFound: "No se encontraron nucleidos coincidentes en la biblioteca.",
-    peakId_nuclide: "Nucleido",
-    lineEnergy: "Energ\xEDa de L\xEDnea (keV)",
-    intensity: "Intensidad (%)",
-    delta: "Delta (keV)",
-    gammaAnalysis: "Gamma",
-    alphaAnalysis: "Alfa",
+    // Specific Inputs/Results
+    grossCount: "Conteo Bruto",
+    backgroundCount: "Fondo",
+    measurementTime: "Tiempo de medida",
+    targetValue: "Valor Objetivo",
+    confidenceInterval: "Intervalo de confianza (95%)",
+    bestEstimate: "Mejor estimaci\xF3n",
+    uncertaintyBudget: "Presupuesto de incertidumbre",
     // Source Management
-    sourceInventory: "Inventario de Fuentes",
-    searchSource: "Buscar...",
+    sourceInventory: "Inventario de fuentes",
     addSource: "A\xF1adir Fuente",
     editSource: "Editar Fuente",
     deleteSource: "Eliminar Fuente",
-    confirmDeleteSource: "\xBFEst\xE1 seguro de que desea eliminar esta fuente? Esta acci\xF3n es irreversible.",
-    addSourceTitle: "A\xF1adir Nueva Fuente",
-    editSourceTitle: "Editar Fuente",
     sourceName: "Nombre / ID",
     location: "Ubicaci\xF3n",
-    casier: "Caja de Almacenamiento",
+    casier: "Estante",
     sourceMgmt_nuclide: "Nucleido",
-    sourceType: "Tipo de Fuente",
-    sourceMgmt_referenceActivity: "Actividad de Referencia (Bq)",
-    sourceMgmt_referenceActivityUncertainty: "Incertidumbre Relativa (%)",
-    sourceMgmt_referenceDate: "Fecha de Referencia",
-    certificateNumber: "N\xFAmero de Certificado",
-    currentActivity: "Actividad Actual (Bq)",
+    sourceMgmt_referenceActivity: "Actividad Ref.",
+    sourceMgmt_referenceDate: "Fecha Ref.",
+    currentActivity: "Actividad Actual",
     conformity: "Conformidad",
-    actions: "Acciones",
-    import: "Importar (CSV)",
-    export: "Exportar (CSV)",
-    exportBackup: "Exportar / Guardar",
-    // Theme
-    changeTheme: "Cambiar Tema",
-    themeCyberCyan: "Cyber Cyan",
-    themeLabWhite: "Laboratorio Blanco",
-    themeForestGreen: "Verde Bosque",
-    // Language
-    changeLanguage: "Cambiar Idioma",
-    // === NEW KEYS ===
-    // User Guide
-    guideTitle: "Gu\xEDa de Usuario",
-    guide_intro_title: "Introducci\xF3n",
-    guide_intro_p1: "Este asistente es una herramienta educativa y pr\xE1ctica para aplicar los conceptos de la norma ISO 11929. Permite calcular los l\xEDmites caracter\xEDsticos (umbral de decisi\xF3n, l\xEDmite de detecci\xF3n) y comprender el impacto de diversos par\xE1metros.",
-    guide_main_calc_title: "Calculadora Principal",
-    guide_main_calc_p1: "El n\xFAcleo de la aplicaci\xF3n. Realiza los c\xE1lculos seg\xFAn la norma.",
-    guide_main_calc_modes_title: "Modos de C\xE1lculo",
-    guide_main_calc_modes_p1: "Adapte el c\xE1lculo a su situaci\xF3n de medici\xF3n:",
-    guide_main_calc_modes_li1: "Para conteos simples (muestra y fondo).",
-    guide_main_calc_modes_li2: "Para analizar un pico en un espectro gamma definiendo una Regi\xF3n de Inter\xE9s (ROI).",
-    guide_main_calc_modes_li3_surface: "Dedicado a medidores de contaminaci\xF3n de superficie, para verificar el cumplimiento de un umbral en Bq/cm\xB2.",
-    guide_main_calc_modes_li3_chambre: "Para monitores de contaminaci\xF3n fijos (p\xF3rticos, monitores de herramientas) con un tiempo de medici\xF3n fijo.",
-    guide_main_calc_modes_li3_linge: "Para monitores de cinta transportadora (lavander\xEDa, residuos) donde el tiempo de medici\xF3n depende de la velocidad de la cinta.",
-    guide_main_calc_inputs_title: "Par\xE1metros de Entrada",
-    guide_main_calc_inputs_p1: "Los principales par\xE1metros a proporcionar son:",
-    guide_main_calc_inputs_li1: "Las cuentas y tiempos de medici\xF3n para la muestra (bruto) y el fondo.",
-    guide_main_calc_inputs_li2: "El factor de calibraci\xF3n (w) y su incertidumbre relativa, que relacionan la tasa de conteo con la actividad.",
-    guide_main_calc_inputs_li3: "Los cuantiles k(1-\u03B1) y k(1-\u03B2) que definen los riesgos de error aceptados (t\xEDpicamente 1.645 para 5%).",
-    guide_main_calc_results_title: "Interpretaci\xF3n de los Resultados",
-    guide_main_calc_results_p1: "Los resultados clave son:",
-    guide_main_calc_results_li1: "El valor neto medido debe superar este umbral para concluir la presencia de actividad.",
-    guide_main_calc_results_li2: "La actividad m\xE1s peque\xF1a que se puede esperar detectar con el m\xE9todo de medici\xF3n.",
-    guide_main_calc_results_li3: "Se da una conclusi\xF3n clara: 'Presencia de Actividad Detectada' si y > y*, o no en caso contrario.",
-    guide_main_calc_results_li4: "Visualiza la contribuci\xF3n de cada fuente de incertidumbre (conteo, fondo, calibraci\xF3n) a la incertidumbre total.",
-    guide_main_calc_expert_title: "Modo Experto",
-    guide_main_calc_expert_p1: "Para usuarios avanzados:",
-    guide_main_calc_expert_li1: "Permite tener en cuenta una correlaci\xF3n entre la incertidumbre del fondo y la de la calibraci\xF3n (raramente utilizado).",
-    guide_main_calc_expert_li2: "Utiliza simulaciones estad\xEDsticas para propagar las incertidumbres. Es un m\xE9todo m\xE1s robusto, especialmente a bajos conteos, pero m\xE1s lento.",
-    guide_spec_tools_title: "Herramientas de Espectrometr\xEDa (PRO)",
-    guide_spec_tools_p1: "Esta secci\xF3n proporciona herramientas avanzadas para el an\xE1lisis de espectros gamma y alfa.",
-    guide_spec_analyzer_title: "Analizador de Espectro de Imagen",
-    guide_spec_analyzer_p1: "Una herramienta \xFAnica que extrae datos de una imagen de espectro (captura de pantalla, foto). El proceso consta de 3 fases:",
-    guide_spec_analyzer_phase1_title: "Fase 1: Calibraci\xF3n",
-    guide_spec_analyzer_phase1_p1: "Haga clic en picos conocidos de su espectro e ingrese su energ\xEDa. Se requiere un m\xEDnimo de 2 puntos para calcular una funci\xF3n de calibraci\xF3n lineal.",
-    guide_spec_analyzer_phase2_title: "Fase 2: An\xE1lisis",
-    guide_spec_analyzer_phase2_p1: "Una vez validada la calibraci\xF3n, la aplicaci\xF3n detecta autom\xE1ticamente los picos, calcula su energ\xEDa, FWHM y sugiere posibles identificaciones de radionucleidos. Tambi\xE9n puede agregar picos manualmente.",
-    guide_n42_analyzer_title: "Analizador de Archivos N42",
-    guide_n42_analyzer_p1: "Importe espectros en el formato est\xE1ndar ANSI N42.42.",
-    guide_n42_analyzer_li1: "Cargue un archivo .n42 desde su dispositivo.",
-    guide_n42_analyzer_li2: "La aplicaci\xF3n lee los metadatos (instrumento, tiempo de medici\xF3n) y los datos del espectro.",
-    guide_n42_analyzer_li3: "La calibraci\xF3n de energ\xEDa se lee autom\xE1ticamente del archivo.",
-    guide_n42_analyzer_li4: "Se detectan e identifican los picos. Puede interactuar con el gr\xE1fico para agregar picos manualmente o analizar una regi\xF3n de inter\xE9s (ROI).",
-    guide_source_mgmt_title: "Gesti\xF3n de Fuentes",
-    guide_source_mgmt_p1: "Gestione un inventario de sus fuentes radiactivas de referencia y control.",
-    guide_source_mgmt_li1: "Agregue, edite o elimine fuentes.",
-    guide_source_mgmt_li2: "La actividad de cada fuente se calcula en tiempo real en funci\xF3n de su fecha de referencia y per\xEDodo de semidesintegraci\xF3n.",
-    guide_source_mgmt_li3: "Asocie un tipo a sus fuentes (p. ej., S3, S5) para un seguimiento de conformidad automatizado.",
-    guide_source_mgmt_li4: "Un c\xF3digo de color indica si la actividad de la fuente es conforme, demasiado baja (advertencia) o demasiado alta (error) en comparaci\xF3n con los requisitos de su tipo.",
-    guide_source_mgmt_li5: "Importe y exporte su inventario en formato CSV.",
-    guide_other_tools_title: "Otras Herramientas",
-    guide_other_tools_decay_title: "Calculadora de Decaimiento",
-    guide_other_tools_decay_p1: "Calcula la actividad de una fuente en una fecha dada a partir de su actividad de referencia. El resultado se puede aplicar directamente al factor de calibraci\xF3n de la calculadora principal.",
-    guide_other_tools_peak_title: "Identificador de Picos",
-    guide_other_tools_peak_p1: "Ingrese una o m\xE1s energ\xEDas (en keV) y la herramienta buscar\xE1 en la biblioteca los radionucleidos correspondientes dentro de la tolerancia especificada.",
-    guide_data_mgmt_title: "Gesti\xF3n de Datos",
-    guide_data_mgmt_p1: "Puede guardar la configuraci\xF3n de la calculadora principal (bot\xF3n 'Guardar') y volver a cargarla m\xE1s tarde. Los an\xE1lisis de espectrometr\xEDa se pueden guardar en el historial (icono de disquete) y volver a cargar desde la pesta\xF1a 'Historial de An\xE1lisis'.",
-    // Spectro Page & Sub-pages
+    // Spectro
     spectroMenuTitle: "Men\xFA de Herramientas de Espectrometr\xEDa",
-    analysisType: "Tipo de An\xE1lisis",
-    analysisTypeTooltip: "Seleccione el tipo de radiaci\xF3n a analizar. Esto filtra la biblioteca de nucleidos para la identificaci\xF3n.",
-    spectroMenuImageTitle: "Analizador de Imagen",
-    spectroMenuImageDesc: "Extraer, calibrar y analizar un espectro desde una imagen.",
-    spectroMenuN42Title: "Analizador N42",
-    spectroMenuN42Desc: "Cargar y analizar un espectro en formato ANSI N42.42.",
-    spectroMenuSPCTitle: "Analizador SPC",
-    spectroMenuSPCDesc: "Cargar archivos .SPC (pr\xF3ximamente).",
-    spectroMenuCHNTitle: "Analizador CHN",
-    spectroMenuCHNDesc: "Cargar archivos .CHN (pr\xF3ximamente).",
-    spectroMenuBkgSubTitle: "Sustracci\xF3n de Fondo",
-    spectroMenuBkgSubDesc: "Calcular un espectro neto a partir de dos espectros N42.",
-    spectroMenuCompareTitle: "Comparaci\xF3n de Espectros",
-    spectroMenuCompareDesc: "Superponer dos espectros N42 para comparaci\xF3n visual.",
-    spectrumAnalyzerTitle: "Analizador de Espectro de Imagen",
-    useCamera: "Usar C\xE1mara",
-    analysisError_generic: "Ocurri\xF3 un error durante el an\xE1lisis.",
-    uploadInstruction: "Arrastra y suelta una imagen de espectro, o haz clic para seleccionar.",
-    takePhoto: "Tomar Foto",
-    calibrationAndAnalysis: "Calibraci\xF3n y An\xE1lisis",
-    calibrationStep1: "Fase 1: Haz clic en picos conocidos de tu espectro para a\xF1adir puntos de calibraci\xF3n.",
-    undoLast: "Deshacer",
-    clearAll: "Borrar Todo",
-    calculateCalibration: "Calcular Calibraci\xF3n",
-    calibrationStep2: "Fase 2: Comprueba la calidad de la regresi\xF3n lineal.",
-    calibrationStatus: "Estado",
-    statusNotCalculated: "No calculado",
-    statusExcellent: "Excelente",
-    statusGood: "Bueno",
-    statusCheckPoints: "Revisa tus puntos",
-    slope: "Pendiente",
-    intercept: "Intercepto",
-    backToPoints: "Volver a los Puntos",
-    runAnalysis: "Iniciar An\xE1lisis",
-    identificationTolerance: "Tolerancia de Identificaci\xF3n",
-    identificationToleranceTooltip: "La ventana en keV (+/-) para buscar coincidencias de nucleidos.",
-    runAnalysisAgain: "Iniciar An\xE1lisis de Nuevo",
-    extractingCurve: "Extrayendo curva...",
-    detectingPeaks: "Detectando picos...",
-    backToCalibration: "Volver a Calibraci\xF3n",
-    resetAll: "Reiniciar Todo",
-    enterPeakEnergy: "Introducir Energ\xEDa del Pico",
-    peakEnergyLabel: "Energ\xEDa del Pico (keV)",
-    peakEnergyUncertaintyLabel: "Incertidumbre (keV, opcional)",
-    analysisResultsTitle: "Resultados del An\xE1lisis",
-    saveAnalysis: "Guardar An\xE1lisis",
-    exportCsv: "Exportar CSV",
-    exportHdf5: "Exportar HDF5",
-    exportNetCdf: "Exportar NetCDF",
-    interactiveModeTooltip: "Modo interactivo: Haz clic en el espectro para a\xF1adir un pico manualmente. Haz clic en la etiqueta de un pico para agruparlo.",
-    analysisComplete: "An\xE1lisis completo. Modo interactivo activado.",
+    uploadInstruction: "Arrastre imagen de espectro o haga clic.",
     detectedPeaksTitle: "Picos Detectados",
     energy_keV: "Energ\xEDa (keV)",
     fwhm_keV: "FWHM (keV)",
-    group: "Grupo",
-    nuclide: "Posible(s) Nucleido(s)",
-    noPeaksDetected: "No se detectaron picos autom\xE1ticamente.",
-    analyse_groups: "An\xE1lisis de Grupos",
-    group_a_total: "Total Grupo A",
-    group_b_total: "Total Grupo B",
-    ratio_a_b: "Ratio A / B",
-    peakPositionAdjusterTitle: "Ajustar Posici\xF3n del Pico",
-    addPeakManually: "A\xF1adir Pico Manualmente",
-    confirmPosition: "Confirmar Posici\xF3n",
-    addPeak: "A\xF1adir Pico",
-    adjustChannel: "Ajustar Canal",
-    channel: "Canal",
-    energy: "Energ\xEDa",
-    suggestedNuclide: "Nucleido Sugerido",
-    saveAnalysisModalTitle: "Guardar An\xE1lisis",
-    analysisName: "Nombre del An\xE1lisis",
-    linkToSource: "Vincular a fuente existente (opcional)",
-    noSource: "Sin fuente",
-    analysisHistoryTitle: "Historial de An\xE1lisis",
-    noAnalysesSaved: "A\xFAn no hay an\xE1lisis guardados.",
-    analysisNameColumn: "Nombre",
-    analysisDate: "Fecha",
-    analysisTypeColumn: "Tipo",
-    linkedSource: "Fuente Vinculada",
-    load: "Cargar",
-    delete: "Eliminar",
-    confirmDeleteAnalysis: "\xBFEst\xE1s seguro de que quieres eliminar este an\xE1lisis?",
-    n42AnalyzerTitle: "Analizador de Archivos N42",
-    startOver: "Empezar de Nuevo",
-    uploadN42File: "Subir Archivo N42",
-    fileInfoAndSettings: "Informaci\xF3n y Ajustes del Archivo",
-    instrument: "Instrumento",
-    timestamp: "Marca de Tiempo",
-    liveTime: "Tiempo Vivo",
-    realTime: "Tiempo Real",
-    selectSpectrum: "Seleccionar Espectro",
-    yAxisZoom: "Zoom Eje Y",
-    yAxisZoomTooltip: "Ajusta la escala m\xE1xima del eje Y para hacer zoom en picos m\xE1s peque\xF1os.",
-    yAxisClipping: "Recorte Eje Y",
-    yAxisClippingTooltip: "Recorta los picos por encima de un cierto porcentaje del m\xE1ximo para ver mejor la l\xEDnea de base.",
-    nuclidePossible: "Posible Nucleido (Energ\xEDa)",
-    n42PeakAddInstruction: "Haga clic en el gr\xE1fico para agregar un pico manualmente. Haga clic y arrastre para seleccionar una ROI para la deconvoluci\xF3n.",
-    plotTitle: "Gr\xE1fico del Espectro",
-    roiSelectionTooltip: "Haga clic y arrastre en el gr\xE1fico para seleccionar una Regi\xF3n de Inter\xE9s (ROI) para el an\xE1lisis de deconvoluci\xF3n.",
-    plotLogScale: "Escala Log",
-    clippingWarning: "Recorte Activo",
-    deconvolutionModalTitle: "Deconvoluci\xF3n de ROI",
-    roiAnalysis: "An\xE1lisis de la Regi\xF3n de Inter\xE9s",
-    peaksInRoi: "Picos encontrados en la ROI",
-    confirmDeconvolution: "Reemplazar picos en la ROI",
-    netSpectrumAnalysis: "An\xE1lisis del Espectro Neto",
-    bkgSubtractionTitle: "Sustracci\xF3n de Fondo",
-    sampleSpectrum: "Espectro de la Muestra",
-    uploadSample: "Subir Muestra (.n42)",
-    sampleTime: "Tiempo de Medici\xF3n Muestra (s)",
-    backgroundSpectrum: "Espectro de Fondo",
-    uploadBackground: "Subir Fondo (.n42)",
-    bkg_sub_backgroundTime: "Tiempo de Medici\xF3n Fondo (s)",
-    calculateNetSpectrum: "Calcular Espectro Neto",
-    error_channelMismatch: "Los espectros no tienen el mismo n\xFAmero de canales.",
-    spectrumComparisonTitle: "Comparaci\xF3n de Espectros",
-    spectrumA: "Espectro A",
-    spectrumB: "Espectro B",
-    loadSpectrum: "Cargar Espectro",
-    normalization: "Normalizaci\xF3n",
-    normNone: "Ninguna",
-    timeScale: "Por Tiempo (cps)",
-    countsPerSecond: "Cuentas / Segundo",
-    noSources: "No hay fuentes en el inventario.",
-    sourceTypeMemo: "Memo de Tipos de Fuente",
-    selectType: "Seleccionar un tipo (opcional)",
-    importReviewTitle: "Revisar Importaci\xF3n CSV",
-    importInstructions: "Revise las fuentes a importar. Los conflictos (mismo ID) est\xE1n resaltados.",
-    selectAll: "Seleccionar todo",
-    importStatus: "Estado",
-    decision: "Decisi\xF3n",
-    conflict: "Conflicto",
-    new: "Nuevo",
-    skip: "Omitir",
-    overwrite: "Sobrescribir",
-    confirmImport: "Confirmar Importaci\xF3n",
-    importCsvTitle: "Importar Fuentes desde CSV",
-    importCsvIntro: "Seleccione un archivo CSV previamente exportado desde esta aplicaci\xF3n. Las columnas deben coincidir.",
-    selectCsvFile: "Seleccione un archivo .csv o arr\xE1strelo aqu\xED",
-    sourceTypeMemoTitle: "Memo de Tipos de Fuente (Est\xE1ndar FR)",
-    typeKey: "Tipo",
-    description: "Descripci\xF3n",
-    minActivity: "Actividad M\xEDn (Bq)",
-    maxActivity: "Actividad M\xE1x (Bq)",
-    radiationType: "Tipo de Radiaci\xF3n",
-    mainEnergyLines: "L\xEDneas de Energ\xEDa Principales",
-    noSignificantGamma: "Sin l\xEDneas gamma significativas",
-    unitConverterTitle: "Convertidor de Unidades Radiol\xF3gicas",
-    unit_category: "Categor\xEDa de Medida",
-    unit_cat_activity: "Actividad",
-    unit_cat_exposure: "Exposici\xF3n",
-    unit_cat_absorbed_dose: "Dosis Absorbida",
-    unit_cat_equivalent_dose: "Dosis Equivalente",
-    unit_value: "Valor",
-    unit_from: "De",
-    unit_swap: "Invertir",
-    unit_result: "Resultado",
-    unit_to: "A",
-    unit_description: "Descripci\xF3n de Unidades",
-    unit_desc_bq: "La unidad SI de radiactividad, equivalente a una desintegraci\xF3n por segundo.",
-    unit_desc_ci: "Una unidad antigua de actividad, basada originalmente en la actividad de un gramo de radio-226.",
-    unit_desc_dpm: "Desintegraciones Por Minuto, una unidad com\xFAn para medir actividad, especialmente para fuentes alfa/beta.",
-    unit_desc_dps: "Desintegraciones Por Segundo, equivalente al Becquerel.",
-    unit_desc_c_kg: "Culombios por kilogramo, la unidad SI de exposici\xF3n a la radiaci\xF3n ionizante.",
-    unit_desc_r: "El R\xF6ntgen, una unidad antigua de exposici\xF3n, que mide la ionizaci\xF3n en el aire.",
-    unit_desc_gy: "El Gray, la unidad SI de dosis absorbida, que mide la energ\xEDa depositada por kilogramo de materia.",
-    unit_desc_rad: "Una unidad antigua de dosis absorbida (Radiation Absorbed Dose).",
-    unit_desc_sv: "El Sievert, la unidad SI de dosis equivalente, que tiene en cuenta el efecto biol\xF3gico de diferentes tipos de radiaci\xF3n.",
-    unit_desc_rem: "Una unidad antigua de dosis equivalente (R\xF6ntgen Equivalent Man).",
-    // Offline Export Modal
-    exportModalTitle: "Exportar Datos de Fuentes",
-    exportModalIntro: "Esta es una copia de seguridad de todos los datos de sus fuentes. Gu\xE1rdela en un lugar seguro para evitar la p\xE9rdida de datos. Puede copiar el texto o descargar el archivo.",
-    copyJson: "Copiar JSON",
-    downloadFile: "Descargar Archivo",
-    shareFile: "Compartir",
-    copied: "\xA1Copiado!"
+    nuclide: "Posible Nucleido"
   };
   var translations = { fr, en, de, es };
   function getTranslator(lang) {
@@ -33767,7 +33563,7 @@
   }
 
   // App.tsx
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
   var defaultDetectors = Array(10).fill(null).map(() => ({
     efficiency: 50,
     background: 10,
@@ -33813,32 +33609,34 @@
     numSimulations: 1e4
   };
   var App = () => {
-    const [language, setLanguage] = (0, import_react35.useState)("fr" /* FR */);
-    const [t, setT] = (0, import_react35.useState)(() => getTranslator("fr" /* FR */));
-    const [view, setView] = (0, import_react35.useState)("calculator");
-    const [isExpertMode, setIsExpertMode] = (0, import_react35.useState)(false);
-    const [theme, setTheme] = (0, import_react35.useState)("default");
-    const [inputs, setInputs] = (0, import_react35.useState)(initialInputs);
-    const [results, setResults] = (0, import_react35.useState)(null);
-    const [mode, setMode] = (0, import_react35.useState)("standard");
-    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react35.useState)("calculate");
-    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react35.useState)(100);
-    const [isCalculating, setIsCalculating] = (0, import_react35.useState)(true);
-    const [autoW, setAutoW] = (0, import_react35.useState)(true);
-    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react35.useState)(() => !localStorage.getItem("hasSeenWelcome"));
-    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react35.useState)(false);
-    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react35.useState)(false);
-    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react35.useState)(false);
-    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react35.useState)(false);
-    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react35.useState)(false);
-    const [isReportModalOpen, setIsReportModalOpen] = (0, import_react35.useState)(false);
-    const [isProUser, setIsProUser] = (0, import_react35.useState)(false);
-    const [isProModalOpen, setIsProModalOpen] = (0, import_react35.useState)(false);
-    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react35.useState)(false);
-    const waitingWorkerRef = (0, import_react35.useRef)(null);
-    const [analysisToLoad, setAnalysisToLoad] = (0, import_react35.useState)(null);
-    const toolsMenuRef = (0, import_react35.useRef)(null);
-    (0, import_react35.useEffect)(() => {
+    const [language, setLanguage] = (0, import_react36.useState)("fr" /* FR */);
+    const [t, setT] = (0, import_react36.useState)(() => getTranslator("fr" /* FR */));
+    const [view, setView] = (0, import_react36.useState)("calculator");
+    const [isExpertMode, setIsExpertMode] = (0, import_react36.useState)(false);
+    const [theme, setTheme] = (0, import_react36.useState)("default");
+    const [inputs, setInputs] = (0, import_react36.useState)(initialInputs);
+    const [results, setResults] = (0, import_react36.useState)(null);
+    const [mode, setMode] = (0, import_react36.useState)("standard");
+    const [detectionLimitMode, setDetectionLimitMode] = (0, import_react36.useState)("calculate");
+    const [targetDetectionLimit, setTargetDetectionLimit] = (0, import_react36.useState)(100);
+    const [isCalculating, setIsCalculating] = (0, import_react36.useState)(true);
+    const [autoW, setAutoW] = (0, import_react36.useState)(true);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = (0, import_react36.useState)(() => !localStorage.getItem("hasSeenWelcome"));
+    const [isUserGuideOpen, setIsUserGuideOpen] = (0, import_react36.useState)(false);
+    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = (0, import_react36.useState)(false);
+    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = (0, import_react36.useState)(false);
+    const [isUnitConverterOpen, setIsUnitConverterOpen] = (0, import_react36.useState)(false);
+    const [isToolsMenuOpen, setIsToolsMenuOpen] = (0, import_react36.useState)(false);
+    const [isReportModalOpen, setIsReportModalOpen] = (0, import_react36.useState)(false);
+    const [isProUser, setIsProUser] = (0, import_react36.useState)(false);
+    const [isProModalOpen, setIsProModalOpen] = (0, import_react36.useState)(false);
+    const [isUpdateAvailable, setIsUpdateAvailable] = (0, import_react36.useState)(false);
+    const waitingWorkerRef = (0, import_react36.useRef)(null);
+    const [analysisToLoad, setAnalysisToLoad] = (0, import_react36.useState)(null);
+    const toolsMenuRef = (0, import_react36.useRef)(null);
+    const footerClickCountRef = (0, import_react36.useRef)(0);
+    const footerLastClickTimeRef = (0, import_react36.useRef)(0);
+    (0, import_react36.useEffect)(() => {
       if (localStorage.getItem("isProUser") === "true") {
         setIsProUser(true);
       }
@@ -33872,14 +33670,14 @@
         });
       }
     };
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       localStorage.setItem("app-theme", theme);
       document.documentElement.classList.remove("theme-lab", "theme-forest");
       if (theme !== "default") {
         document.documentElement.classList.add(`theme-${theme}`);
       }
     }, [theme]);
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       if (!isToolsMenuOpen)
         return;
       const handleClickOutside = (event) => {
@@ -33892,7 +33690,7 @@
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [isToolsMenuOpen]);
-    const autoCalculatedW = (0, import_react35.useMemo)(() => {
+    const autoCalculatedW = (0, import_react36.useMemo)(() => {
       if (!autoW || mode !== "chambre" && mode !== "linge") {
         return null;
       }
@@ -33902,7 +33700,7 @@
       const avgEfficiency = activeDetectors.reduce((sum, d) => sum + d.efficiency / 100, 0) / activeDetectors.length;
       return avgEfficiency > 0 ? 1 / avgEfficiency : null;
     }, [autoW, mode, inputs.detectors]);
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       if (autoCalculatedW !== null && (autoCalculatedW !== inputs.calibrationFactor || inputs.calibrationFactorUnit !== "Bq/(c/s)")) {
         setInputs((prev) => ({
           ...prev,
@@ -33937,7 +33735,7 @@
       setIsProModalOpen(false);
       alert(t("proUnlockedSuccess"));
     };
-    const calculate = (0, import_react35.useCallback)(() => {
+    const calculate = (0, import_react36.useCallback)(() => {
       setIsCalculating(true);
       setTimeout(() => {
         let t_g = inputs.grossTime;
@@ -34040,7 +33838,7 @@
         setIsCalculating(false);
       }, 50);
     }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       calculate();
     }, [calculate]);
     const handleSaveConfig = () => {
@@ -34080,10 +33878,28 @@
       setAnalysisToLoad(record);
       setView("spectro");
     };
-    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_jsx_runtime43.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+    const handleFooterClick = () => {
+      const now = Date.now();
+      if (now - footerLastClickTimeRef.current < 2e3) {
+        footerClickCountRef.current += 1;
+      } else {
+        footerClickCountRef.current = 1;
+      }
+      footerLastClickTimeRef.current = now;
+      if (footerClickCountRef.current >= 5) {
+        footerClickCountRef.current = 0;
+        setTimeout(() => {
+          const pwd = prompt("Admin Password:");
+          if (pwd === "42") {
+            setView("admin");
+          }
+        }, 100);
+      }
+    };
+    const renderCalculatorView = () => /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_jsx_runtime44.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ModeSelector_default, { currentMode: mode, onModeChange: setMode, t }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
           InputPanel_default,
           {
             inputs,
@@ -34103,8 +33919,8 @@
             onAutoWChange: setAutoW
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
             ResultsPanel_default,
             {
               results,
@@ -34120,7 +33936,7 @@
               onOpenReportModal: () => setIsReportModalOpen(true)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
             ChartPanel_default,
             {
               results: typeof results === "string" ? null : results,
@@ -34145,11 +33961,13 @@
         case "calculator":
           return renderCalculatorView();
         case "spectro":
-          return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
+          return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SpectroPage_default, { t, onOpenPeakIdentifier: () => setIsPeakIdentifierOpen(true), analysisToLoad, clearAnalysisToLoad: () => setAnalysisToLoad(null) });
         case "sources":
-          return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(SourceManagementPage_default, { t });
+          return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SourceManagementPage_default, { t });
         case "history":
-          return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
+          return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
+        case "admin":
+          return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(AdminPage_default, { t, onBack: () => setView("calculator"), inputs, isProUser, setProUser: (val) => setIsProUser(val) });
         default:
           return renderCalculatorView();
       }
@@ -34160,59 +33978,59 @@
       { key: "sources", label: t("sourceManagement"), locked: false },
       { key: "history", label: t("analysisHistory"), locked: true }
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("header", { className: "mb-6 no-print", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("header", { className: "mb-6 no-print", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex justify-between items-start mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-2xl sm:text-3xl font-bold text-cyan-400", children: "ISO 11929 Assistant" }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-xs text-gray-500", children: t("authorDetails") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
-            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex items-center space-x-2 sm:space-x-3", children: [
+            isProUser ? /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg", children: t("proVersion") }) : /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("button", { onClick: () => setIsProModalOpen(true), className: "text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "hidden sm:inline", children: t("unlockPro") })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
-              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("a", { href: "#", onClick: (e) => {
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: () => setIsUnitConverterOpen(true), title: t("unitConverter"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: () => setIsPeakIdentifierOpen(true), title: t("identifyPeaks"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "relative", ref: toolsMenuRef, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: () => setIsToolsMenuOpen((prev) => !prev), title: t("toolsMenu"), className: "p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" }) }) }),
+              isToolsMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsUserGuideOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("userGuide") }),
-                /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("a", { href: "#", onClick: (e) => {
+                /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("a", { href: "#", onClick: (e) => {
                   e.preventDefault();
                   setIsWelcomeModalOpen(true);
                   setIsToolsMenuOpen(false);
                 }, className: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700", children: t("showWelcomeTooltip") })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ThemeSelector_default, { currentTheme: theme, setTheme, t }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(LanguageSelector_default, { currentLanguage: language, setLanguage: handleLanguageChange, t })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("nav", { className: "flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
           "button",
           {
             onClick: () => handleNavItemClick(item.key),
             className: `px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center space-x-2 ${view === item.key ? "bg-cyan-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
             title: item.locked && !isProUser ? t("lockedFeature") : item.label,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { children: item.label }),
-              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { children: item.label }),
+              item.locked && !isProUser && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4 text-yellow-400", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { fillRule: "evenodd", d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z", clipRule: "evenodd" }) })
             ]
           },
           item.key
         )) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("main", { children: renderView() }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("main", { children: renderView() }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(UpdateNotification_default, { isOpen: isUpdateAvailable, onUpdate: handleUpdate, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(WelcomeModal_default, { isOpen: isWelcomeModalOpen, onClose: handleCloseWelcome, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(UserGuideModal_default, { isOpen: isUserGuideOpen, onClose: () => setIsUserGuideOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(PeakIdentifierModal_default, { isOpen: isPeakIdentifierOpen, onClose: () => setIsPeakIdentifierOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
         DecayCalculatorModal_default,
         {
           isOpen: isDecayCalculatorOpen,
@@ -34224,7 +34042,7 @@
           unit: inputs.calibrationFactorUnit.split("/")[0] || "Bq"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
         UnitConverterModal_default,
         {
           isOpen: isUnitConverterOpen,
@@ -34232,7 +34050,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
         ProAccessModal_default,
         {
           isOpen: isProModalOpen,
@@ -34241,7 +34059,7 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
         ReportGeneratorModal_default,
         {
           isOpen: isReportModalOpen,
@@ -34251,20 +34069,20 @@
           t
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { children: t("authorCredit") }) })
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("footer", { className: "text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print cursor-pointer", onClick: handleFooterClick, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "select-none", children: t("authorCredit") }) })
     ] });
   };
   var App_default = App;
 
   // index.tsx
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
   var rootElement = document.getElementById("root");
   if (!rootElement) {
     throw new Error("Could not find the root element to mount the app.");
   }
   var root = import_client.default.createRoot(rootElement);
   root.render(
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_react36.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(App_default, {}) })
+    /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_react37.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(App_default, {}) })
   );
 })();
 /*! Bundled license information:
