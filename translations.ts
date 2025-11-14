@@ -333,6 +333,9 @@ const fr: Translations = {
     adminVariablesTitle: "Structures de Données & Variables Clés",
     adminInputsTitle: "État d'Entrée (type `Inputs`)",
     adminResultsTitle: "État de Résultat (type `Results`)",
+    adminLiveStateTitle: "État de l'application en direct",
+    adminInputsState: "État des entrées",
+    adminResultsState: "État des résultats",
 
     // Theme
     changeTheme: "Changer le thème",
@@ -1058,6 +1061,9 @@ const en: Translations = {
     adminVariablesTitle: "Key Data Structures & Variables",
     adminInputsTitle: "Input State (`Inputs` type)",
     adminResultsTitle: "Result State (`Results` type)",
+    adminLiveStateTitle: "Live Application State",
+    adminInputsState: "Inputs State",
+    adminResultsState: "Results State",
 
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
@@ -1984,6 +1990,9 @@ const de: Translations = {
     adminVariablesTitle: "Schlüsseldatenstrukturen & Variablen",
     adminInputsTitle: "Eingabestatus (Typ `Inputs`)",
     adminResultsTitle: "Ergebnisstatus (Typ `Results`)",
+    adminLiveStateTitle: "Live-Anwendungsstatus",
+    adminInputsState: "Eingabestatus",
+    adminResultsState: "Ergebnisstatus",
 
     folderDesc_components: "Wiederverwendbare UI-Komponenten.",
     folderDesc_pages: "Hauptansichten der Anwendung.",

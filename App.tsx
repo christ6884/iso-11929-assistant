@@ -478,7 +478,7 @@ const App: React.FC = () => {
             case 'history':
                 return <AnalysisHistoryPage t={t} onLoadAnalysis={handleLoadAnalysis} />;
             case 'admin':
-                return <AdminPage t={t} onBack={() => setView('calculator')} inputs={inputs} isProUser={isProUser} setProUser={(val) => setIsProUser(val)}/>;
+                return <AdminPage t={t} onBack={() => setView('calculator')} inputs={inputs} results={results} isProUser={isProUser} setProUser={(val) => setIsProUser(val)}/>;
             default:
                 return renderCalculatorView();
         }

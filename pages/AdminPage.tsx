@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from '../components/Card';
-import { Inputs } from '../types';
+import { Inputs, Results } from '../types';
 import { db } from '../services/dbService';
 import InfoTooltip from '../components/InfoTooltip';
 import CollapsibleSection from '../components/CollapsibleSection';
@@ -9,6 +9,7 @@ interface AdminPageProps {
     t: any;
     onBack: () => void;
     inputs: Inputs;
+    results: Results | string | null;
     isProUser: boolean;
     setProUser: (value: boolean) => void;
 }
@@ -151,7 +152,7 @@ const FileTree: React.FC<{ nodes: FileNode[]; t: any; onInfoClick: (node: FileNo
 };
 
 
-const AdminPage: React.FC<AdminPageProps> = ({ t, onBack, inputs, isProUser, setProUser }) => {
+const AdminPage: React.FC<AdminPageProps> = ({ t, onBack, inputs, results, isProUser, setProUser }) => {
     const [infoFile, setInfoFile] = useState<FileNode | null>(null);
     
     const handleClearLocalStorage = () => {
@@ -213,44 +214,17 @@ const AdminPage: React.FC<AdminPageProps> = ({ t, onBack, inputs, isProUser, set
             
             <p className="text-gray-400 mb-6">{t('adminWelcome')}</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card title={t('projectExplorer')}>
-                     <p className="text-xs text-gray-500 mb-4">{t('projectExplorerDesc')}</p>
-                     <div className="max-h-[50vh] overflow-y-auto">
-                        <FileTree nodes={projectStructure} t={t} onInfoClick={setInfoFile} />
-                     </div>
-                     <p className="text-xs text-gray-600 mt-4">{t('adminStaticStructureWarning')}</p>
-                </Card>
-                <div className="space-y-6">
-                     <Card title={t('fileInfo')}>
-                        {infoFile ? (
-                            <div className="p-3 min-h-[120px]">
-                                <h4 className="font-bold text-cyan-400 mb-2">{infoFile.name}</h4>
-                                <p className="text-sm text-gray-300">{t(infoFile.descKey) || "No description available."}</p>
-                            </div>
-                        ) : (
-                            <p className="text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center">{t('adminInfoPlaceholder')}</p>
-                        )}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                {/* --- LEFT COLUMN (SCROLLABLE CONTENT) --- */}
+                <div className="lg:col-span-2 space-y-6">
+                    <Card title={t('projectExplorer')}>
+                        <p className="text-xs text-gray-500 mb-4">{t('projectExplorerDesc')}</p>
+                        <div className="max-h-[60vh] overflow-y-auto pr-2">
+                            <FileTree nodes={projectStructure} t={t} onInfoClick={setInfoFile} />
+                        </div>
+                        <p className="text-xs text-gray-600 mt-4">{t('adminStaticStructureWarning')}</p>
                     </Card>
-                     <Card title={t('godMode')}>
-                         <p className="text-sm text-gray-400 mb-4">{t('godModeDesc')}</p>
-                         <button onClick={handleGodMode} className={`w-full py-2 px-4 rounded-lg font-bold ${isProUser ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-cyan-600 hover:bg-cyan-700'}`}>
-                            {isProUser ? t('disableGodMode') : t('enableGodMode')}
-                         </button>
-                    </Card>
-                     <Card title={t('dataManagement')}>
-                         <div className="space-y-4">
-                            <button onClick={handleClearLocalStorage} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
-                                {t('clearLocalStorage')}
-                            </button>
-                            <button onClick={handleClearDB} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
-                                {t('clearIndexedDB')}
-                            </button>
-                         </div>
-                    </Card>
-                </div>
 
-                <div className="md:col-span-2">
                     <Card title={t('adminVariablesTitle')}>
                         <CollapsibleSection title={t('adminInputsTitle')} defaultOpen={false}>
                             <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4">
@@ -272,6 +246,48 @@ const AdminPage: React.FC<AdminPageProps> = ({ t, onBack, inputs, isProUser, set
                                 ))}
                             </div>
                         </CollapsibleSection>
+                    </Card>
+                </div>
+
+                {/* --- RIGHT COLUMN (STICKY) --- */}
+                <div className="lg:col-span-1 sticky top-6 space-y-6">
+                    <Card title={t('adminLiveStateTitle')}>
+                        <CollapsibleSection title={t('adminInputsState')} defaultOpen={false}>
+                            <pre className="text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto">
+                                <code>{JSON.stringify(inputs, null, 2)}</code>
+                            </pre>
+                        </CollapsibleSection>
+                        <CollapsibleSection title={t('adminResultsState')} defaultOpen={false}>
+                            <pre className="text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto">
+                                <code>{JSON.stringify(results, null, 2)}</code>
+                            </pre>
+                        </CollapsibleSection>
+                    </Card>
+                    <Card title={t('fileInfo')}>
+                        {infoFile ? (
+                            <div className="p-3 min-h-[120px]">
+                                <h4 className="font-bold text-cyan-400 mb-2">{infoFile.name}</h4>
+                                <p className="text-sm text-gray-300">{t(infoFile.descKey) || "No description available."}</p>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center">{t('adminInfoPlaceholder')}</p>
+                        )}
+                    </Card>
+                    <Card title={t('godMode')}>
+                        <p className="text-sm text-gray-400 mb-4">{t('godModeDesc')}</p>
+                        <button onClick={handleGodMode} className={`w-full py-2 px-4 rounded-lg font-bold ${isProUser ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-cyan-600 hover:bg-cyan-700'}`}>
+                            {isProUser ? t('disableGodMode') : t('enableGodMode')}
+                        </button>
+                    </Card>
+                    <Card title={t('dataManagement')}>
+                        <div className="space-y-4">
+                            <button onClick={handleClearLocalStorage} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+                                {t('clearLocalStorage')}
+                            </button>
+                            <button onClick={handleClearDB} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+                                {t('clearIndexedDB')}
+                            </button>
+                        </div>
                     </Card>
                 </div>
             </div>
