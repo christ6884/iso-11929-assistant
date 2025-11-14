@@ -31384,42 +31384,27 @@
       type: "folder",
       descKey: "folderDesc_components",
       children: [
-        {
-          name: "n42-analyzer",
-          type: "folder",
-          descKey: "folderDesc_n42_analyzer",
-          children: [
-            { name: "AddPeakModal.tsx", type: "file", descKey: "fileDesc_AddPeakModal" },
-            { name: "ComparisonPlot.tsx", type: "file", descKey: "fileDesc_ComparisonPlot" },
-            { name: "DeconvolutionModal.tsx", type: "file", descKey: "fileDesc_DeconvolutionModal" },
-            { name: "EfficiencyCalibrationModal.tsx", type: "file", descKey: "fileDesc_EfficiencyCalibrationModal" },
-            { name: "SpectrumPlot.tsx", type: "file", descKey: "fileDesc_SpectrumPlot" }
-          ]
-        },
-        {
-          name: "source-management",
-          type: "folder",
-          descKey: "folderDesc_source_management",
-          children: [
-            { name: "AddSourceModal.tsx", type: "file", descKey: "fileDesc_AddSourceModal" },
-            { name: "CsvImportModal.tsx", type: "file", descKey: "fileDesc_CsvImportModal" },
-            { name: "ImportReviewModal.tsx", type: "file", descKey: "fileDesc_ImportReviewModal" },
-            { name: "SourceTooltip.tsx", type: "file", descKey: "fileDesc_SourceTooltip" },
-            { name: "SourceTypesMemoModal.tsx", type: "file", descKey: "fileDesc_SourceTypesMemoModal" }
-          ]
-        },
-        {
-          name: "spectrum-analyzer",
-          type: "folder",
-          descKey: "folderDesc_spectrum_analyzer",
-          children: [
-            { name: "AnalysisResults.tsx", type: "file", descKey: "fileDesc_AnalysisResults" },
-            { name: "CalibrationPointModal.tsx", type: "file", descKey: "fileDesc_CalibrationPointModal" },
-            { name: "CalibrationSidebar.tsx", type: "file", descKey: "fileDesc_CalibrationSidebar" },
-            { name: "CameraCapture.tsx", type: "file", descKey: "fileDesc_CameraCapture" },
-            { name: "ImageUploader.tsx", type: "file", descKey: "fileDesc_ImageUploader" }
-          ]
-        },
+        { name: "n42-analyzer", type: "folder", descKey: "folderDesc_n42_analyzer", children: [
+          { name: "AddPeakModal.tsx", type: "file", descKey: "fileDesc_AddPeakModal" },
+          { name: "ComparisonPlot.tsx", type: "file", descKey: "fileDesc_ComparisonPlot" },
+          { name: "DeconvolutionModal.tsx", type: "file", descKey: "fileDesc_DeconvolutionModal" },
+          { name: "EfficiencyCalibrationModal.tsx", type: "file", descKey: "fileDesc_EfficiencyCalibrationModal" },
+          { name: "SpectrumPlot.tsx", type: "file", descKey: "fileDesc_SpectrumPlot" }
+        ] },
+        { name: "source-management", type: "folder", descKey: "folderDesc_source_management", children: [
+          { name: "AddSourceModal.tsx", type: "file", descKey: "fileDesc_AddSourceModal" },
+          { name: "CsvImportModal.tsx", type: "file", descKey: "fileDesc_CsvImportModal" },
+          { name: "ImportReviewModal.tsx", type: "file", descKey: "fileDesc_ImportReviewModal" },
+          { name: "SourceTooltip.tsx", type: "file", descKey: "fileDesc_SourceTooltip" },
+          { name: "SourceTypesMemoModal.tsx", type: "file", descKey: "fileDesc_SourceTypesMemoModal" }
+        ] },
+        { name: "spectrum-analyzer", type: "folder", descKey: "folderDesc_spectrum_analyzer", children: [
+          { name: "AnalysisResults.tsx", type: "file", descKey: "fileDesc_AnalysisResults" },
+          { name: "CalibrationPointModal.tsx", type: "file", descKey: "fileDesc_CalibrationPointModal" },
+          { name: "CalibrationSidebar.tsx", type: "file", descKey: "fileDesc_CalibrationSidebar" },
+          { name: "CameraCapture.tsx", type: "file", descKey: "fileDesc_CameraCapture" },
+          { name: "ImageUploader.tsx", type: "file", descKey: "fileDesc_ImageUploader" }
+        ] },
         { name: "Card.tsx", type: "file", descKey: "fileDesc_Card" },
         { name: "ChartModal.tsx", type: "file", descKey: "fileDesc_ChartModal" },
         { name: "ChartPanel.tsx", type: "file", descKey: "fileDesc_ChartPanel" },
@@ -31444,15 +31429,6 @@
         { name: "UpdateNotification.tsx", type: "file", descKey: "fileDesc_UpdateNotification" },
         { name: "UserGuideModal.tsx", type: "file", descKey: "fileDesc_UserGuideModal" },
         { name: "WelcomeModal.tsx", type: "file", descKey: "fileDesc_WelcomeModal" }
-      ]
-    },
-    {
-      name: "electron",
-      type: "folder",
-      descKey: "folderDesc_electron",
-      children: [
-        { name: "main.js", type: "file", descKey: "fileDesc_electron_main" },
-        { name: "preload.js", type: "file", descKey: "fileDesc_electron_preload" }
       ]
     },
     {
@@ -31488,176 +31464,167 @@
         { name: "spectrumAnalyzerService.ts", type: "file", descKey: "fileDesc_spectrumAnalyzerService" }
       ]
     },
+    {
+      name: "electron",
+      type: "folder",
+      descKey: "folderDesc_electron",
+      children: [
+        { name: "main.js", type: "file", descKey: "fileDesc_electron_main" },
+        { name: "preload.js", type: "file", descKey: "fileDesc_electron_preload" }
+      ]
+    },
     { name: "App.tsx", type: "file", descKey: "fileDesc_App" },
-    { name: "index.css", type: "file", descKey: "fileDesc_index_css" },
-    { name: "index.html", type: "file", descKey: "fileDesc_index_html" },
     { name: "index.tsx", type: "file", descKey: "fileDesc_index_tsx" },
+    { name: "index.html", type: "file", descKey: "fileDesc_index_html" },
+    { name: "index.css", type: "file", descKey: "fileDesc_index_css" },
+    { name: "types.ts", type: "file", descKey: "fileDesc_types" },
+    { name: "translations.ts", type: "file", descKey: "fileDesc_translations" },
     { name: "manifest.json", type: "file", descKey: "fileDesc_manifest" },
     { name: "metadata.json", type: "file", descKey: "fileDesc_metadata" },
     { name: "package.json", type: "file", descKey: "fileDesc_package" },
+    { name: "README.md", type: "file", descKey: "fileDesc_readme" },
     { name: "service-worker.js", type: "file", descKey: "fileDesc_sw" },
-    { name: "tailwind.config.js", type: "file", descKey: "fileDesc_tailwind" },
-    { name: "translations.ts", type: "file", descKey: "fileDesc_translations" },
-    { name: "types.ts", type: "file", descKey: "fileDesc_types" }
+    { name: "tailwind.config.js", type: "file", descKey: "fileDesc_tailwind" }
   ];
-  var FileTreeItem = ({ node, path, depth, selectedPath, onSelect }) => {
-    const [isOpen, setIsOpen] = (0, import_react34.useState)(true);
-    const currentPath = `${path}/${node.name}`;
-    const isSelected = selectedPath === currentPath;
-    const handleToggle = (e) => {
-      e.stopPropagation();
-      if (node.type === "folder") {
-        setIsOpen(!isOpen);
-      }
-      onSelect(node, currentPath);
-    };
-    const getIcon = () => {
-      if (node.type === "folder") {
-        return isOpen ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-4 h-4 text-yellow-400", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-4 h-4 text-yellow-400", fill: "currentColor", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { d: "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" }) });
-      }
-      if (node.name.endsWith(".tsx"))
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-cyan-400 text-xs font-bold", children: "TSX" });
-      if (node.name.endsWith(".ts"))
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-blue-400 text-xs font-bold", children: "TS" });
-      if (node.name.endsWith(".css"))
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-pink-400 text-xs font-bold", children: "#" });
-      if (node.name.endsWith(".json"))
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-yellow-300 text-xs font-bold" });
-      if (node.name.endsWith(".html"))
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-orange-400 text-xs font-bold", children: "<>" });
-      return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-gray-400 text-xs", children: "?" });
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "select-none", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
-        "div",
-        {
-          className: `flex items-center space-x-2 py-1 px-2 cursor-pointer transition-colors ${isSelected ? "bg-cyan-900/50 text-white" : "text-gray-300 hover:bg-gray-800"}`,
-          style: { paddingLeft: `${depth * 12 + 8}px` },
-          onClick: handleToggle,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "w-4 h-4 flex items-center justify-center", children: getIcon() }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: `text-sm ${isSelected ? "font-semibold" : ""}`, children: node.name }),
-            node.type === "folder" && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-500 ml-auto", children: isOpen ? "\u25BC" : "\u25B6" })
-          ]
-        }
-      ),
-      node.type === "folder" && isOpen && node.children && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { children: node.children.map((child) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-        FileTreeItem,
-        {
-          node: child,
-          path: currentPath,
-          depth: depth + 1,
-          selectedPath,
-          onSelect
-        },
-        child.name
-      )) })
-    ] });
+  var FileTree = ({ nodes, t, onInfoClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("ul", { className: "text-sm", children: nodes.map((node) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("li", { className: "ml-4 my-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: node.type === "folder" ? "\u{1F4C1}" : "\u{1F4C4}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "font-mono", children: node.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: () => onInfoClick(node), className: "text-cyan-400 hover:text-cyan-300 text-xs", children: "(i)" })
+      ] }),
+      node.children && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(FileTree, { nodes: node.children, t, onInfoClick })
+    ] }, node.name)) });
   };
   var AdminPage = ({ t, onBack, inputs, isProUser, setProUser }) => {
-    const [selectedNode, setSelectedNode] = (0, import_react34.useState)(null);
-    const [selectedPath, setSelectedPath] = (0, import_react34.useState)(null);
-    const handleSelect = (node, path) => {
-      setSelectedNode(node);
-      setSelectedPath(path);
-    };
-    const handleClearDB = async () => {
-      if (confirm("Warning: This will delete all saved sources and analysis history. Are you sure?")) {
-        try {
-          await db.deleteSource("all");
-          const req = indexedDB.deleteDatabase("ISOAssistantDB");
-          req.onsuccess = () => alert("Database deleted. Please refresh.");
-          req.onerror = () => alert("Failed to delete DB.");
-        } catch (e) {
-          alert("Error clearing DB");
-        }
-      }
-    };
+    const [infoFile, setInfoFile] = (0, import_react34.useState)(null);
     const handleClearLocalStorage = () => {
-      if (confirm("Reset all app settings (theme, language, etc)?")) {
+      if (window.confirm("This will reset all application settings, including PRO mode. Are you sure?")) {
         localStorage.clear();
         window.location.reload();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-6", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex justify-between items-center", children: [
+    const handleClearDB = async () => {
+      if (window.confirm("This will DELETE all saved sources and analyses. This action is irreversible. Are you sure?")) {
+        try {
+          await db.clearAnalyses();
+          await db.clearSources();
+          alert("Database has been cleared.");
+        } catch (error) {
+          console.error("Failed to clear IndexedDB:", error);
+          alert("Failed to clear database.");
+        }
+      }
+    };
+    const handleGodMode = () => {
+      if (!isProUser) {
+        localStorage.setItem("isProUser", "true");
+        setProUser(true);
+      } else {
+        localStorage.removeItem("isProUser");
+        setProUser(false);
+      }
+    };
+    const inputVars = [
+      "grossCount",
+      "grossCountUnit",
+      "grossTime",
+      "backgroundCount",
+      "backgroundCountUnit",
+      "backgroundTime",
+      "roiGrossCount",
+      "roiChannels",
+      "backgroundTotalCount",
+      "backgroundChannels",
+      "probeEfficiency",
+      "probeArea",
+      "estimatedBackgroundRate",
+      "targetValue",
+      "targetUnit",
+      "conveyorSpeed",
+      "conveyorSpeedUnit",
+      "chamberLength",
+      "chamberWidth",
+      "chamberHeight",
+      "detectors",
+      "chambreLingeTime",
+      "chambreLingeTarget",
+      "chambreLingeTargetUnit",
+      "calibrationFactor",
+      "calibrationFactorUnit",
+      "calibrationFactorUncertainty",
+      "k1alpha",
+      "k1beta",
+      "correlationCoefficient",
+      "monteCarloMode",
+      "useBayesianMode",
+      "numSimulations"
+    ];
+    const resultVars = [
+      "calculationMethod",
+      "currentMode",
+      "primaryResult",
+      "primaryUncertainty",
+      "decisionThreshold",
+      "detectionLimit",
+      "isEffectPresent",
+      "bestEstimate",
+      "bestEstimateUncertainty",
+      "confidenceIntervalLower",
+      "confidenceIntervalUpper",
+      "k1alpha",
+      "k1beta",
+      "alphaProbability",
+      "betaProbability",
+      "meanTimeBetweenFalseAlarms",
+      "uncertaintyAtZero",
+      "uncertaintyAtDetectionLimit",
+      "varianceComponents",
+      "sensitivityCoefficients",
+      "probabilityEffectPresent",
+      "histogramData",
+      "numSimulations",
+      "monteCarloStats"
+    ];
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
         /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("adminPageTitle") }),
         /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
           /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: t("backButton") })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: "System Controls", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex flex-wrap gap-4 items-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-gray-300 font-semibold", children: [
-            t("godMode"),
-            ":"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-            "button",
-            {
-              onClick: () => setProUser(!isProUser),
-              className: `px-3 py-1 rounded text-xs font-bold ${isProUser ? "bg-green-600 text-white" : "bg-red-600 text-white"}`,
-              children: isProUser ? t("enableGodMode") : t("disableGodMode")
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-xs text-gray-500 ml-2", children: [
-            "(",
-            t("godModeDesc"),
-            ")"
-          ] })
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-gray-400 mb-6", children: t("adminWelcome") }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Card_default, { title: t("projectExplorer"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-500 mb-4", children: t("projectExplorerDesc") }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "max-h-[50vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(FileTree, { nodes: projectStructure, t, onInfoClick: setInfoFile }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-600 mt-4", children: t("adminStaticStructureWarning") })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("span", { className: "text-gray-300 font-semibold", children: [
-            t("dataManagement"),
-            ":"
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: t("fileInfo"), children: infoFile ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "p-3 min-h-[120px]", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h4", { className: "font-bold text-cyan-400 mb-2", children: infoFile.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-sm text-gray-300", children: t(infoFile.descKey) || "No description available." })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center", children: t("adminInfoPlaceholder") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Card_default, { title: t("godMode"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-sm text-gray-400 mb-4", children: t("godModeDesc") }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleGodMode, className: `w-full py-2 px-4 rounded-lg font-bold ${isProUser ? "bg-yellow-600 hover:bg-yellow-700" : "bg-cyan-600 hover:bg-cyan-700"}`, children: isProUser ? t("disableGodMode") : t("enableGodMode") })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearLocalStorage, className: "bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs", children: t("clearLocalStorage") }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearDB, className: "bg-red-900 hover:bg-red-800 text-white px-2 py-1 rounded text-xs", children: t("clearIndexedDB") })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "lg:col-span-1 bg-gray-900 rounded-lg border border-gray-700 flex flex-col", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "p-3 border-b border-gray-700 bg-gray-800 rounded-t-lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h3", { className: "text-sm font-bold text-gray-300", children: t("projectExplorer") }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-xs text-gray-500 mt-1", children: t("projectExplorerDesc") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "flex-1 overflow-y-auto p-2 font-mono text-sm", children: projectStructure.map((node) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-            FileTreeItem,
-            {
-              node,
-              path: "",
-              depth: 0,
-              selectedPath,
-              onSelect: handleSelect
-            },
-            node.name
-          )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "p-2 border-t border-gray-700 bg-gray-800/50 text-xs text-gray-500 text-center", children: t("adminStaticStructureWarning") })
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: t("dataManagement"), children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearLocalStorage, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearLocalStorage") }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("button", { onClick: handleClearDB, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearIndexedDB") })
+          ] }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "lg:col-span-2", children: selectedNode ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: selectedNode.name, className: "h-full flex flex-col", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-700 p-3 rounded", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-400 block", children: "Type" }),
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-sm font-mono text-white capitalize", children: selectedNode.type })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "bg-gray-700 p-3 rounded", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs text-gray-400 block", children: "Path" }),
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "text-xs font-mono text-cyan-300 break-all", children: selectedPath })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h4", { className: "text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1", children: t("fileRole") }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "bg-gray-900/50 p-4 rounded border border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-gray-200", children: t(selectedNode.descKey) }) })
-          ] }),
-          selectedNode.type === "folder" && selectedNode.children && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("h4", { className: "text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1", children: "Contents" }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("ul", { className: "list-disc list-inside text-sm text-gray-400", children: selectedNode.children.map((child) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("li", { children: child.name }, child.name)) })
-          ] })
-        ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "h-full flex items-center justify-center bg-gray-800 rounded-lg border border-gray-700 border-dashed", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "text-center text-gray-500", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { className: "w-16 h-16 mx-auto mb-4 opacity-50", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { children: t("adminWelcome") })
-        ] }) }) })
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "md:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(Card_default, { title: t("adminVariablesTitle"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(CollapsibleSection_default, { title: t("adminInputsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: inputVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+          ] }, v)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(CollapsibleSection_default, { title: t("adminResultsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: resultVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+          ] }, v)) }) })
+        ] }) })
       ] })
     ] });
   };
@@ -32164,6 +32131,10 @@
     clearIndexedDB: "Vider DB",
     fileRole: "R\xF4le du fichier",
     fileInfo: "Information",
+    adminInfoPlaceholder: "Cliquez sur l'ic\xF4ne (i) \xE0 c\xF4t\xE9 d'un fichier ou d'un dossier pour voir sa description ici.",
+    adminVariablesTitle: "Structures de Donn\xE9es & Variables Cl\xE9s",
+    adminInputsTitle: "\xC9tat d'Entr\xE9e (type `Inputs`)",
+    adminResultsTitle: "\xC9tat de R\xE9sultat (type `Results`)",
     // Theme
     changeTheme: "Changer le th\xE8me",
     themeCyberCyan: "Cyber Cyan",
@@ -32174,7 +32145,7 @@
     // User Guide
     guideTitle: "Guide d'utilisation",
     guide_intro_title: "Introduction",
-    guide_intro_p1: "Cet assistant est un outil p\xE9dagogique et pratique pour appliquer les concepts de la norme ISO 11929. Il aide \xE0 calculer les limites caract\xE9ristiques (seuil de d\xE9cision, limite de d\xE9tection) et \xE0 comprendre l'impact des diff\xE9rents param\xE8tres.",
+    guide_intro_p1: "Cet assistant est un outil p\xE9dagogique et pratique pour appliquer les concepts de la norme ISO 11929. Il aide \xE0 calculer les limites caract\xE9ristiques (seuil de d\xE9cision, limite de d\xE9tection) et \xE0 comprendre l'impact des diff\xE9rents param\xE8tres. La version actuelle du logiciel (V6.4.4) est affich\xE9e sous l'ic\xF4ne de s\xE9lection de la langue dans l'en-t\xEAte.",
     guide_main_calc_title: "Calculateur Principal",
     guide_main_calc_p1: "Le c\u0153ur de l'application. Effectue les calculs conform\xE9ment \xE0 la norme.",
     guide_main_calc_modes_title: "Modes d'Analyse",
@@ -32202,25 +32173,11 @@
     guide_spec_tools_title: "Outils de Spectrom\xE9trie",
     guide_spec_tools_p1: "Accessible aux utilisateurs PRO via l'onglet Spectrom\xE9trie.",
     guide_spec_analyzer_title: "Analyseur d'Image",
-    guide_spec_analyzer_p1: "Extrait des donn\xE9es d'une image de spectre (capture d'\xE9cran ou photo).",
+    guide_spec_analyzer_p1: "Extraire des donn\xE9es d'une image de spectre (capture d'\xE9cran ou photo).",
     guide_spec_analyzer_phase1_title: "\xC9talonnage",
     guide_spec_analyzer_phase1_p1: "Cliquez sur des pics connus (ex: Cs-137 \xE0 662 keV) pour \xE9tablir la relation canal-\xE9nergie.",
     guide_spec_analyzer_phase2_title: "Analyse",
     guide_spec_analyzer_phase2_p1: "Le syst\xE8me extrait la courbe, d\xE9tecte les pics et tente de les identifier par rapport \xE0 la biblioth\xE8que.",
-    guide_n42_analyzer_title: "Analyseur N42",
-    guide_n42_analyzer_p1: "Charge et visualise les fichiers standard ANSI N42.42.",
-    guide_n42_analyzer_li1: "Visualisation interactive (zoom, \xE9chelle log).",
-    guide_n42_analyzer_li2: "D\xE9tection automatique des pics.",
-    guide_n42_analyzer_li3: "Identification des radionucl\xE9ides.",
-    guide_n42_analyzer_li4: "Soustraction de bruit de fond et comparaison.",
-    guide_source_mgmt_title: "Gestion des Sources",
-    guide_source_mgmt_p1: "G\xE9rez votre inventaire de sources de contr\xF4le.",
-    guide_source_mgmt_li1: "Ajouter/Modifier/Supprimer des sources.",
-    guide_source_mgmt_li2: "Calcul automatique de l'activit\xE9 actuelle (d\xE9croissance).",
-    guide_source_mgmt_li3: "V\xE9rification de conformit\xE9 par rapport aux types standard (S1, S2, etc.).",
-    guide_source_mgmt_li4: "Import/Export CSV.",
-    guide_source_mgmt_li5: "Base de donn\xE9es locale (IndexedDB).",
-    guide_other_tools_title: "Autres Outils",
     guide_other_tools_decay_title: "Calculateur de D\xE9croissance",
     guide_other_tools_decay_p1: "Utilitaire rapide pour calculer l'activit\xE9 actuelle de n'importe quel nucl\xE9ide sans l'ajouter \xE0 l'inventaire.",
     guide_other_tools_peak_title: "Identificateur de Pics",
@@ -32493,7 +32450,65 @@
     fileDesc_sourceTypes: "D\xE9finitions des types de sources.",
     fileDesc_spectrumAnalyzerService: "Traitement d'image pour extraction de courbe.",
     fileDesc_electron_main: "Processus principal Electron.",
-    fileDesc_electron_preload: "Script de pr\xE9chargement Electron."
+    fileDesc_electron_preload: "Script de pr\xE9chargement Electron.",
+    // Variable descriptions
+    varDesc_grossCount: "Nombre total de coups mesur\xE9s pour l'\xE9chantillon. Peut aussi \xEAtre un d\xE9bit si l'unit\xE9 n'est pas 'coups'.",
+    varDesc_grossCountUnit: "L'unit\xE9 pour le comptage brut (coups, c/s, c/min, c/0.2s).",
+    varDesc_grossTime: "Dur\xE9e de la mesure de l'\xE9chantillon en secondes.",
+    varDesc_backgroundCount: "Nombre total de coups mesur\xE9s pour le bruit de fond. Peut aussi \xEAtre un d\xE9bit.",
+    varDesc_backgroundCountUnit: "L'unit\xE9 pour le comptage de bruit de fond.",
+    varDesc_backgroundTime: "Dur\xE9e de la mesure du bruit de fond en secondes.",
+    varDesc_roiGrossCount: "(Spectrom\xE9trie) Nombre de coups bruts dans la R\xE9gion d'Int\xE9r\xEAt (ROI).",
+    varDesc_roiChannels: "(Spectrom\xE9trie) Nombre de canaux dans la ROI.",
+    varDesc_backgroundTotalCount: "(Spectrom\xE9trie) Nombre total de coups dans tout le spectre de bruit de fond.",
+    varDesc_backgroundChannels: "(Spectrom\xE9trie) Nombre total de canaux dans le spectre de bruit de fond.",
+    varDesc_probeEfficiency: "(Contr\xF4le Surfacique) Efficacit\xE9 de la sonde en pourcentage (%).",
+    varDesc_probeArea: "(Contr\xF4le Surfacique) Surface de la sonde en cm\xB2.",
+    varDesc_estimatedBackgroundRate: "(Contr\xF4le Surfacique) Taux de comptage de bruit de fond attendu en c/s.",
+    varDesc_targetValue: "(Contr\xF4le Surfacique) Valeur d'activit\xE9 cible \xE0 atteindre.",
+    varDesc_targetUnit: "(Contr\xF4le Surfacique) Unit\xE9 de l'activit\xE9 cible.",
+    varDesc_conveyorSpeed: "(Linge) Vitesse du convoyeur.",
+    varDesc_conveyorSpeedUnit: "(Linge) Unit\xE9 de la vitesse du convoyeur (cm/min ou m/min).",
+    varDesc_chamberLength: "Longueur de la chambre (non utilis\xE9e dans les calculs actuels).",
+    varDesc_chamberWidth: "Largeur de la chambre (non utilis\xE9e dans les calculs actuels).",
+    varDesc_chamberHeight: "Hauteur de la chambre (non utilis\xE9e dans les calculs actuels).",
+    varDesc_detectors: "(Chambre/Linge) Tableau des configurations des d\xE9tecteurs.",
+    varDesc_chambreLingeTime: "(Chambre) Temps de mesure fixe pour le mode chambre.",
+    varDesc_chambreLingeTarget: "(Chambre/Linge) Activit\xE9 cible \xE0 atteindre.",
+    varDesc_chambreLingeTargetUnit: "(Chambre/Linge) Unit\xE9 de l'activit\xE9 cible.",
+    varDesc_calibrationFactor: "Facteur de conversion 'w' pour passer du taux de comptage net (c/s) \xE0 l'activit\xE9 (Bq).",
+    varDesc_calibrationFactorUnit: "Unit\xE9 du facteur de calibrage (ex: Bq/(c/s)).",
+    varDesc_calibrationFactorUncertainty: "Incertitude relative du facteur de calibrage en pourcentage (%).",
+    varDesc_k1alpha: "Quantile de la loi normale pour la probabilit\xE9 d'erreur de premi\xE8re esp\xE8ce \u03B1 (faux positif).",
+    varDesc_k1beta: "Quantile de la loi normale pour la probabilit\xE9 d'erreur de seconde esp\xE8ce \u03B2 (faux n\xE9gatif).",
+    varDesc_correlationCoefficient: "Coefficient de corr\xE9lation entre l'incertitude du bruit de fond et de l'\xE9talonnage.",
+    varDesc_monteCarloMode: "Bool\xE9en pour activer/d\xE9sactiver le mode de simulation Monte Carlo.",
+    varDesc_useBayesianMode: "Bool\xE9en pour activer/d\xE9sactiver le mode de calcul Bay\xE9sien.",
+    varDesc_numSimulations: "Nombre d'it\xE9rations pour la simulation Monte Carlo.",
+    varDesc_calculationMethod: "La m\xE9thode utilis\xE9e pour le calcul ('analytical', 'monteCarlo', 'bayesian').",
+    varDesc_currentMode: "Le mode d'analyse actuel ('standard', 'spectrometry', etc.).",
+    varDesc_primaryResult: "Le r\xE9sultat net calcul\xE9 (y), meilleure estimation de l'activit\xE9.",
+    varDesc_primaryUncertainty: "L'incertitude type compos\xE9e sur le r\xE9sultat net (u(y)).",
+    varDesc_decisionThreshold: "Le seuil de d\xE9cision (y*). Si y > y*, on d\xE9cide que l'activit\xE9 est pr\xE9sente.",
+    varDesc_detectionLimit: "La limite de d\xE9tection (y#). La plus petite activit\xE9 d\xE9tectable de mani\xE8re fiable.",
+    varDesc_isEffectPresent: "Bool\xE9en indiquant si le r\xE9sultat net d\xE9passe le seuil de d\xE9cision.",
+    varDesc_bestEstimate: "Meilleure estimation de l'activit\xE9, affich\xE9e uniquement si l'activit\xE9 est d\xE9tect\xE9e.",
+    varDesc_bestEstimateUncertainty: "Incertitude \xE9largie (k=2) sur la meilleure estimation.",
+    varDesc_confidenceIntervalLower: "Borne inf\xE9rieure de l'intervalle de confiance \xE0 95%.",
+    varDesc_confidenceIntervalUpper: "Borne sup\xE9rieure de l'intervalle de confiance \xE0 95%.",
+    varDesc_k1alpha: "La valeur de k(1-\u03B1) utilis\xE9e dans le calcul.",
+    varDesc_k1beta: "La valeur de k(1-\u03B2) utilis\xE9e dans le calcul.",
+    varDesc_alphaProbability: "La probabilit\xE9 d'erreur de type I (\u03B1) calcul\xE9e \xE0 partir de k(1-\u03B1).",
+    varDesc_betaProbability: "La probabilit\xE9 d'erreur de type II (\u03B2) calcul\xE9e \xE0 partir de k(1-\u03B2).",
+    varDesc_meanTimeBetweenFalseAlarms: "Temps moyen estim\xE9 avant une fausse alarme, bas\xE9 sur \u03B1.",
+    varDesc_uncertaintyAtZero: "Incertitude type pour une activit\xE9 nulle (u\u2080), utilis\xE9e pour calculer y*.",
+    varDesc_uncertaintyAtDetectionLimit: "Incertitude type \xE0 la limite de d\xE9tection (u#).",
+    varDesc_varianceComponents: "Objet d\xE9taillant la contribution de chaque source \xE0 la variance totale.",
+    varDesc_sensitivityCoefficients: "Objet d\xE9taillant la sensibilit\xE9 du r\xE9sultat aux variations des entr\xE9es.",
+    varDesc_probabilityEffectPresent: "(Bay\xE9sien) Probabilit\xE9 que l'activit\xE9 r\xE9elle soit sup\xE9rieure \xE0 z\xE9ro.",
+    varDesc_histogramData: "(Monte Carlo) Tableau des r\xE9sultats de chaque simulation.",
+    varDesc_numSimulations: "(Monte Carlo) Nombre de simulations effectu\xE9es.",
+    varDesc_monteCarloStats: "(Monte Carlo) Objet contenant les statistiques d\xE9taill\xE9es de la simulation."
   };
   var en = {
     authorDetails: "By Christophe PHAM - Inspired by ISO 11929:2019",
@@ -32772,6 +32787,10 @@
     clearIndexedDB: "Clear DB",
     fileRole: "File Role",
     fileInfo: "Information",
+    adminInfoPlaceholder: "Click the (i) icon next to a file or folder to see its description here.",
+    adminVariablesTitle: "Key Data Structures & Variables",
+    adminInputsTitle: "Input State (`Inputs` type)",
+    adminResultsTitle: "Result State (`Results` type)",
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
     themeLabWhite: "Lab White",
@@ -32780,7 +32799,7 @@
     // User Guide
     guideTitle: "User Guide",
     guide_intro_title: "Introduction",
-    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It helps calculate characteristic limits (decision threshold, detection limit) and understand the impact of different parameters.",
+    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It helps calculate characteristic limits (decision threshold, detection limit) and understand the impact of different parameters. The current software version (V6.4.4) is displayed under the language selection icon in the header.",
     guide_main_calc_title: "Main Calculator",
     guide_main_calc_p1: "The heart of the application. Performs calculations according to the standard.",
     guide_main_calc_modes_title: "Analysis Modes",
@@ -32813,20 +32832,6 @@
     guide_spec_analyzer_phase1_p1: "Click on known peaks (e.g., Cs-137 at 662 keV) to establish channel-energy relation.",
     guide_spec_analyzer_phase2_title: "Analysis",
     guide_spec_analyzer_phase2_p1: "System extracts curve, detects peaks, and attempts to identify them against the library.",
-    guide_n42_analyzer_title: "N42 Analyzer",
-    guide_n42_analyzer_p1: "Loads and visualizes ANSI N42.42 standard files.",
-    guide_n42_analyzer_li1: "Interactive visualization (zoom, log scale).",
-    guide_n42_analyzer_li2: "Automatic peak detection.",
-    guide_n42_analyzer_li3: "Nuclide identification.",
-    guide_n42_analyzer_li4: "Background subtraction and comparison.",
-    guide_source_mgmt_title: "Source Management",
-    guide_source_mgmt_p1: "Manage your check source inventory.",
-    guide_source_mgmt_li1: "Add/Edit/Delete sources.",
-    guide_source_mgmt_li2: "Automatic calculation of current activity (decay).",
-    guide_source_mgmt_li3: "Conformity check against standard types (S1, S2, etc.).",
-    guide_source_mgmt_li4: "CSV Import/Export.",
-    guide_source_mgmt_li5: "Local database (IndexedDB).",
-    guide_other_tools_title: "Other Tools",
     guide_other_tools_decay_title: "Decay Calculator",
     guide_other_tools_decay_p1: "Quick utility to calculate current activity of any nuclide without adding to inventory.",
     guide_other_tools_peak_title: "Peak Identifier",
@@ -33096,7 +33101,65 @@
     fileDesc_sourceTypes: "Source types defs.",
     fileDesc_spectrumAnalyzerService: "Image processing.",
     fileDesc_electron_main: "Electron main.",
-    fileDesc_electron_preload: "Electron preload."
+    fileDesc_electron_preload: "Electron preload.",
+    // Variable descriptions
+    varDesc_grossCount: "Total counts measured for the sample. Can also be a rate if unit is not 'counts'.",
+    varDesc_grossCountUnit: "The unit for the gross count ('counts', 'c/s', 'c/min', 'c/0.2s').",
+    varDesc_grossTime: "Duration of the sample measurement in seconds.",
+    varDesc_backgroundCount: "Total counts measured for the background. Can also be a rate.",
+    varDesc_backgroundCountUnit: "The unit for the background count.",
+    varDesc_backgroundTime: "Duration of the background measurement in seconds.",
+    varDesc_roiGrossCount: "(Spectrometry) Number of gross counts within the Region of Interest (ROI).",
+    varDesc_roiChannels: "(Spectrometry) Number of channels within the ROI.",
+    varDesc_backgroundTotalCount: "(Spectrometry) Total number of counts in the entire background spectrum.",
+    varDesc_backgroundChannels: "(Spectrometry) Total number of channels in the background spectrum.",
+    varDesc_probeEfficiency: "(Surface Control) Efficiency of the probe in percent (%).",
+    varDesc_probeArea: "(Surface Control) Area of the probe in cm\xB2.",
+    varDesc_estimatedBackgroundRate: "(Surface Control) Expected background count rate in c/s.",
+    varDesc_targetValue: "(Surface Control) Target activity value to be achieved.",
+    varDesc_targetUnit: "(Surface Control) Unit of the target activity.",
+    varDesc_conveyorSpeed: "(Laundry) Speed of the conveyor.",
+    varDesc_conveyorSpeedUnit: "(Laundry) Unit for the conveyor speed (cm/min or m/min).",
+    varDesc_chamberLength: "Length of the chamber (not used in current calculations).",
+    varDesc_chamberWidth: "Width of the chamber (not used in current calculations).",
+    varDesc_chamberHeight: "Height of the chamber (not used in current calculations).",
+    varDesc_detectors: "(Chamber/Laundry) Array of detector configurations.",
+    varDesc_chambreLingeTime: "(Chamber) Fixed measurement time for chamber mode.",
+    varDesc_chambreLingeTarget: "(Chamber/Laundry) Target activity to be achieved.",
+    varDesc_chambreLingeTargetUnit: "(Chamber/Laundry) Unit of the target activity.",
+    varDesc_calibrationFactor: "Conversion factor 'w' to get from net count rate (c/s) to activity (Bq).",
+    varDesc_calibrationFactorUnit: "Unit of the calibration factor (e.g., Bq/(c/s)).",
+    varDesc_calibrationFactorUncertainty: "Relative uncertainty of the calibration factor in percent (%).",
+    varDesc_k1alpha: "Quantile of the normal distribution for the Type I error probability \u03B1 (false positive).",
+    varDesc_k1beta: "Quantile of the normal distribution for the Type II error probability \u03B2 (false negative).",
+    varDesc_correlationCoefficient: "Correlation coefficient between background and calibration uncertainty.",
+    varDesc_monteCarloMode: "Boolean to enable/disable Monte Carlo simulation mode.",
+    varDesc_useBayesianMode: "Boolean to enable/disable Bayesian calculation mode.",
+    varDesc_numSimulations: "Number of iterations for the Monte Carlo simulation.",
+    varDesc_calculationMethod: "The method used for the calculation ('analytical', 'monteCarlo', 'bayesian').",
+    varDesc_currentMode: "The current analysis mode ('standard', 'spectrometry', etc.).",
+    varDesc_primaryResult: "The calculated net result (y), best estimate of the activity.",
+    varDesc_primaryUncertainty: "The combined standard uncertainty on the net result (u(y)).",
+    varDesc_decisionThreshold: "The decision threshold (y*). If y > y*, activity is decided to be present.",
+    varDesc_detectionLimit: "The detection limit (y#). The smallest reliably detectable activity.",
+    varDesc_isEffectPresent: "Boolean indicating if the net result exceeds the decision threshold.",
+    varDesc_bestEstimate: "Best estimate of activity, only shown when activity is detected.",
+    varDesc_bestEstimateUncertainty: "Expanded uncertainty (k=2) on the best estimate.",
+    varDesc_confidenceIntervalLower: "Lower bound of the 95% confidence interval.",
+    varDesc_confidenceIntervalUpper: "Upper bound of the 95% confidence interval.",
+    varDesc_k1alpha: "The value of k(1-\u03B1) used in the calculation.",
+    varDesc_k1beta: "The value of k(1-\u03B2) used in the calculation.",
+    varDesc_alphaProbability: "The Type I error probability (\u03B1) calculated from k(1-\u03B1).",
+    varDesc_betaProbability: "The Type II error probability (\u03B2) calculated from k(1-\u03B2).",
+    varDesc_meanTimeBetweenFalseAlarms: "Estimated mean time before a false alarm, based on \u03B1.",
+    varDesc_uncertaintyAtZero: "Standard uncertainty for zero activity (u\u2080), used to calculate y*.",
+    varDesc_uncertaintyAtDetectionLimit: "Standard uncertainty at the detection limit (u#).",
+    varDesc_varianceComponents: "Object detailing the contribution of each source to the total variance.",
+    varDesc_sensitivityCoefficients: "Object detailing the sensitivity of the result to changes in inputs.",
+    varDesc_probabilityEffectPresent: "(Bayesian) Probability that the true activity is greater than zero.",
+    varDesc_histogramData: "(Monte Carlo) Array of the results from each simulation iteration.",
+    varDesc_numSimulations: "(Monte Carlo) The number of simulations performed.",
+    varDesc_monteCarloStats: "(Monte Carlo) Object containing detailed statistics of the simulation."
   };
   var de = {
     // General
@@ -33577,6 +33640,10 @@
     clearIndexedDB: "DB leeren",
     fileRole: "Dateirole",
     fileInfo: "Information",
+    adminInfoPlaceholder: "Klicken Sie auf das (i)-Symbol neben einer Datei oder einem Ordner, um hier eine Beschreibung anzuzeigen.",
+    adminVariablesTitle: "Schl\xFCsseldatenstrukturen & Variablen",
+    adminInputsTitle: "Eingabestatus (Typ `Inputs`)",
+    adminResultsTitle: "Ergebnisstatus (Typ `Results`)",
     folderDesc_components: "Wiederverwendbare UI-Komponenten.",
     folderDesc_pages: "Hauptansichten der Anwendung.",
     folderDesc_services: "Gesch\xE4ftslogik und Datenzugriff.",
@@ -33659,7 +33726,7 @@
     // Guide DE
     guideTitle: "Benutzerhandbuch",
     guide_intro_title: "Einf\xFChrung",
-    guide_intro_p1: "Dieser Assistent ist ein p\xE4dagogisches und praktisches Werkzeug zur Anwendung der Konzepte der Norm ISO 11929. Er hilft bei der Berechnung charakteristischer Grenzen (Entscheidungsschwelle, Nachweisgrenze) und beim Verst\xE4ndnis der Auswirkungen verschiedener Parameter.",
+    guide_intro_p1: "Dieser Assistent ist ein p\xE4dagogisches und praktisches Werkzeug zur Anwendung der Konzepte der Norm ISO 11929. Er hilft bei der Berechnung charakteristischer Grenzen (Entscheidungsschwelle, Nachweisgrenze) und beim Verst\xE4ndnis der Auswirkungen verschiedener Parameter. Die aktuelle Softwareversion (V6.4.4) wird unter dem Sprachauswahlsymbol in der Kopfzeile angezeigt.",
     guide_main_calc_title: "Hauptrechner",
     guide_main_calc_p1: "Das Herzst\xFCck der Anwendung. F\xFChrt Berechnungen gem\xE4\xDF der Norm durch.",
     guide_main_calc_modes_title: "Analysemodi",
@@ -33692,26 +33759,70 @@
     guide_spec_analyzer_phase1_p1: "Klicken Sie auf bekannte Peaks (z.B. Cs-137 bei 662 keV), um die Kanal-Energie-Beziehung herzustellen.",
     guide_spec_analyzer_phase2_title: "Analyse",
     guide_spec_analyzer_phase2_p1: "Das System extrahiert die Kurve, erkennt Peaks und versucht, sie anhand der Bibliothek zu identifizieren.",
-    guide_n42_analyzer_title: "N42-Analysator",
-    guide_n42_analyzer_p1: "L\xE4dt und visualisiert ANSI N42.42 Standarddateien.",
-    guide_n42_analyzer_li1: "Interaktive Visualisierung (Zoom, Log-Skala).",
-    guide_n42_analyzer_li2: "Automatische Peakerkennung.",
-    guide_n42_analyzer_li3: "Radionuklid-Identifizierung.",
-    guide_n42_analyzer_li4: "Hintergrundsubtraktion und Vergleich.",
-    guide_source_mgmt_title: "Quellenverwaltung",
-    guide_source_mgmt_p1: "Verwalten Sie Ihr Pr\xFCfquelleninventar.",
-    guide_source_mgmt_li1: "Quellen hinzuf\xFCgen/bearbeiten/l\xF6schen.",
-    guide_source_mgmt_li2: "Automatische Berechnung der aktuellen Aktivit\xE4t (Zerfall).",
-    guide_source_mgmt_li3: "Konformit\xE4tspr\xFCfung gegen Standardtypen (S1, S2, usw.).",
-    guide_source_mgmt_li4: "CSV Import/Export.",
-    guide_source_mgmt_li5: "Lokale Datenbank (IndexedDB).",
-    guide_other_tools_title: "Andere Tools",
     guide_other_tools_decay_title: "Zerfallsrechner",
     guide_other_tools_decay_p1: "Schnelles Dienstprogramm zur Berechnung der aktuellen Aktivit\xE4t eines beliebigen Nuklids, ohne es zum Inventar hinzuzuf\xFCgen.",
     guide_other_tools_peak_title: "Peak-Identifikator",
     guide_other_tools_peak_p1: "Geben Sie eine Liste von Energien ein, um passende Nuklide zu finden.",
     guide_data_mgmt_title: "Datenverwaltung",
-    guide_data_mgmt_p1: "Speichern Sie Ihre vollst\xE4ndige Konfiguration (Eingaben + Modus) \xFCber die Schaltfl\xE4chen 'Speichern/Laden' im Eingabepanel."
+    guide_data_mgmt_p1: "Speichern Sie Ihre vollst\xE4ndige Konfiguration (Eingaben + Modus) \xFCber die Schaltfl\xE4chen 'Speichern/Laden' im Eingabepanel.",
+    // Variable descriptions
+    varDesc_grossCount: "Gesamtzahl der f\xFCr die Probe gemessenen Impulse. Kann auch eine Rate sein, wenn die Einheit nicht 'Impulse' ist.",
+    varDesc_grossCountUnit: "Die Einheit f\xFCr die Bruttoz\xE4hlung (Impulse, Imp/s, Imp/min, Imp/0.2s).",
+    varDesc_grossTime: "Dauer der Probenmessung in Sekunden.",
+    varDesc_backgroundCount: "Gesamtzahl der f\xFCr den Hintergrund gemessenen Impulse. Kann auch eine Rate sein.",
+    varDesc_backgroundCountUnit: "Die Einheit f\xFCr die Hintergrundz\xE4hlung.",
+    varDesc_backgroundTime: "Dauer der Hintergrundmessung in Sekunden.",
+    varDesc_roiGrossCount: "(Spektrometrie) Anzahl der Bruttoimpulse innerhalb der Region of Interest (ROI).",
+    varDesc_roiChannels: "(Spektrometrie) Anzahl der Kan\xE4le innerhalb der ROI.",
+    varDesc_backgroundTotalCount: "(Spektrometrie) Gesamtzahl der Impulse im gesamten Hintergrundspektrum.",
+    varDesc_backgroundChannels: "(Spektrometrie) Gesamtzahl der Kan\xE4le im Hintergrundspektrum.",
+    varDesc_probeEfficiency: "(Oberfl\xE4chenkontrolle) Effizienz der Sonde in Prozent (%).",
+    varDesc_probeArea: "(Oberfl\xE4chenkontrolle) Fl\xE4che der Sonde in cm\xB2.",
+    varDesc_estimatedBackgroundRate: "(Oberfl\xE4chenkontrolle) Erwartete Hintergrundz\xE4hlrate in Imp/s.",
+    varDesc_targetValue: "(Oberfl\xE4chenkontrolle) Zu erreichender Zielaktivit\xE4tswert.",
+    varDesc_targetUnit: "(Oberfl\xE4chenkontrolle) Einheit der Zielaktivit\xE4t.",
+    varDesc_conveyorSpeed: "(W\xE4sche) Geschwindigkeit des F\xF6rderbandes.",
+    varDesc_conveyorSpeedUnit: "(W\xE4sche) Einheit f\xFCr die F\xF6rderbandgeschwindigkeit (cm/min oder m/min).",
+    varDesc_chamberLength: "L\xE4nge der Kammer (wird in aktuellen Berechnungen nicht verwendet).",
+    varDesc_chamberWidth: "Breite der Kammer (wird in aktuellen Berechnungen nicht verwendet).",
+    varDesc_chamberHeight: "H\xF6he der Kammer (wird in aktuellen Berechnungen nicht verwendet).",
+    varDesc_detectors: "(Kammer/W\xE4sche) Array von Detektorkonfigurationen.",
+    varDesc_chambreLingeTime: "(Kammer) Feste Messzeit f\xFCr den Kammermodus.",
+    varDesc_chambreLingeTarget: "(Kammer/W\xE4sche) Zu erreichende Zielaktivit\xE4t.",
+    varDesc_chambreLingeTargetUnit: "(Kammer/W\xE4sche) Einheit der Zielaktivit\xE4t.",
+    varDesc_calibrationFactor: "Umrechnungsfaktor 'w', um von der Nettoz\xE4hlrate (Imp/s) zur Aktivit\xE4t (Bq) zu gelangen.",
+    varDesc_calibrationFactorUnit: "Einheit des Kalibrierfaktors (z.B. Bq/(Imp/s)).",
+    varDesc_calibrationFactorUncertainty: "Relative Unsicherheit des Kalibrierfaktors in Prozent (%).",
+    varDesc_k1alpha: "Quantil der Normalverteilung f\xFCr die Wahrscheinlichkeit eines Fehlers I. Art \u03B1 (falsch positiv).",
+    varDesc_k1beta: "Quantil der Normalverteilung f\xFCr die Wahrscheinlichkeit eines Fehlers II. Art \u03B2 (falsch negativ).",
+    varDesc_correlationCoefficient: "Korrelationskoeffizient zwischen Hintergrund- und Kalibrierunsicherheit.",
+    varDesc_monteCarloMode: "Boolescher Wert zum Aktivieren/Deaktivieren des Monte-Carlo-Simulationsmodus.",
+    varDesc_useBayesianMode: "Boolescher Wert zum Aktivieren/Deaktivieren des Bayes'schen Berechnungsmodus.",
+    varDesc_numSimulations: "Anzahl der Iterationen f\xFCr die Monte-Carlo-Simulation.",
+    varDesc_calculationMethod: "Die f\xFCr die Berechnung verwendete Methode ('analytical', 'monteCarlo', 'bayesian').",
+    varDesc_currentMode: "Der aktuelle Analysemodus ('standard', 'spectrometry', etc.).",
+    varDesc_primaryResult: "Das berechnete Nettoergebnis (y), beste Sch\xE4tzung der Aktivit\xE4t.",
+    varDesc_primaryUncertainty: "Die kombinierte Standardunsicherheit des Nettoergebnisses (u(y)).",
+    varDesc_decisionThreshold: "Die Entscheidungsschwelle (y*). Wenn y > y*, wird Aktivit\xE4t als vorhanden angenommen.",
+    varDesc_detectionLimit: "Die Nachweisgrenze (y#). Die kleinste zuverl\xE4ssig nachweisbare Aktivit\xE4t.",
+    varDesc_isEffectPresent: "Boolescher Wert, der angibt, ob das Nettoergebnis die Entscheidungsschwelle \xFCberschreitet.",
+    varDesc_bestEstimate: "Beste Sch\xE4tzung der Aktivit\xE4t, wird nur angezeigt, wenn Aktivit\xE4t nachgewiesen wird.",
+    varDesc_bestEstimateUncertainty: "Erweiterte Unsicherheit (k=2) der besten Sch\xE4tzung.",
+    varDesc_confidenceIntervalLower: "Untere Grenze des 95%-Konfidenzintervalls.",
+    varDesc_confidenceIntervalUpper: "Obere Grenze des 95%-Konfidenzintervalls.",
+    varDesc_k1alpha: "Der im Berechnung verwendete Wert von k(1-\u03B1).",
+    varDesc_k1beta: "Der im Berechnung verwendete Wert von k(1-\u03B2).",
+    varDesc_alphaProbability: "Die aus k(1-\u03B1) berechnete Fehlerwahrscheinlichkeit I. Art (\u03B1).",
+    varDesc_betaProbability: "Die aus k(1-\u03B2) berechnete Fehlerwahrscheinlichkeit II. Art (\u03B2).",
+    varDesc_meanTimeBetweenFalseAlarms: "Gesch\xE4tzte mittlere Zeit bis zu einem Fehlalarm, basierend auf \u03B1.",
+    varDesc_uncertaintyAtZero: "Standardunsicherheit f\xFCr null Aktivit\xE4t (u\u2080), zur Berechnung von y* verwendet.",
+    varDesc_uncertaintyAtDetectionLimit: "Standardunsicherheit an der Nachweisgrenze (u#).",
+    varDesc_varianceComponents: "Objekt, das den Beitrag jeder Quelle zur Gesamtvarianz detailliert.",
+    varDesc_sensitivityCoefficients: "Objekt, das die Empfindlichkeit des Ergebnisses auf \xC4nderungen der Eingaben detailliert.",
+    varDesc_probabilityEffectPresent: "(Bayes'sch) Wahrscheinlichkeit, dass die wahre Aktivit\xE4t gr\xF6\xDFer als Null ist.",
+    varDesc_histogramData: "(Monte Carlo) Array der Ergebnisse aus jeder Simulationsiteration.",
+    varDesc_numSimulations: "(Monte Carlo) Die Anzahl der durchgef\xFChrten Simulationen.",
+    varDesc_monteCarloStats: "(Monte Carlo) Objekt, das detaillierte Statistiken der Simulation enth\xE4lt."
   };
   var es = {
     // General
@@ -34181,7 +34292,7 @@
     // Guide ES
     guideTitle: "Gu\xEDa del usuario",
     guide_intro_title: "Introducci\xF3n",
-    guide_intro_p1: "Este asistente es una herramienta educativa y pr\xE1ctica para aplicar los conceptos de la norma ISO 11929. Ayuda a calcular los l\xEDmites caracter\xEDsticos (umbral de decisi\xF3n, l\xEDmite de detecci\xF3n) y a comprender el impacto de diferentes par\xE1metros.",
+    guide_intro_p1: "Este asistente es una herramienta educativa y pr\xE1ctica para aplicar los conceptos de la norma ISO 11929. Ayuda a calcular los l\xEDmites caracter\xEDsticos (umbral de decisi\xF3n, l\xEDmite de detecci\xF3n) y a comprender el impacto de diferentes par\xE1metros. La versi\xF3n actual del software (V6.4.4) se muestra debajo del icono de selecci\xF3n de idioma en el encabezado.",
     guide_main_calc_title: "Calculadora Principal",
     guide_main_calc_p1: "El coraz\xF3n de la aplicaci\xF3n. Realiza los c\xE1lculos de acuerdo con la norma.",
     guide_main_calc_modes_title: "Modos de An\xE1lisis",
@@ -34214,20 +34325,6 @@
     guide_spec_analyzer_phase1_p1: "Haga clic en picos conocidos (por ejemplo, Cs-137 a 662 keV) para establecer la relaci\xF3n canal-energ\xEDa.",
     guide_spec_analyzer_phase2_title: "An\xE1lisis",
     guide_spec_analyzer_phase2_p1: "El sistema extrae la curva, detecta picos e intenta identificarlos contra la biblioteca.",
-    guide_n42_analyzer_title: "Analizador N42",
-    guide_n42_analyzer_p1: "Carga y visualiza archivos est\xE1ndar ANSI N42.42.",
-    guide_n42_analyzer_li1: "Visualizaci\xF3n interactiva (zoom, escala log).",
-    guide_n42_analyzer_li2: "Detecci\xF3n autom\xE1tica de picos.",
-    guide_n42_analyzer_li3: "Identificaci\xF3n de radionucleidos.",
-    guide_n42_analyzer_li4: "Sustracci\xF3n de fondo y comparaci\xF3n.",
-    guide_source_mgmt_title: "Gesti\xF3n de Fuentes",
-    guide_source_mgmt_p1: "Administre su inventario de fuentes de verificaci\xF3n.",
-    guide_source_mgmt_li1: "A\xF1adir/Editar/Eliminar fuentes.",
-    guide_source_mgmt_li2: "C\xE1lculo autom\xE1tico de actividad actual (decaimiento).",
-    guide_source_mgmt_li3: "Verificaci\xF3n de conformidad contra tipos est\xE1ndar (S1, S2, etc.).",
-    guide_source_mgmt_li4: "Importar/Exportar CSV.",
-    guide_source_mgmt_li5: "Base de datos local (IndexedDB).",
-    guide_other_tools_title: "Otras Herramientas",
     guide_other_tools_decay_title: "Calculadora de Decaimiento",
     guide_other_tools_decay_p1: "Utilidad r\xE1pida para calcular la actividad actual de cualquier nucleido sin a\xF1adirlo al inventario.",
     guide_other_tools_peak_title: "Identificador de Picos",
@@ -34235,6 +34332,10 @@
     guide_data_mgmt_title: "Gesti\xF3n de Datos",
     guide_data_mgmt_p1: "Guarde su configuraci\xF3n completa (Entradas + Modo) a trav\xE9s de los botones 'Guardar/Cargar' en el panel de entrada.",
     // Admin & File Descs (Same keys as FR)
+    adminInfoPlaceholder: "Haga clic en el icono (i) junto a un archivo o carpeta para ver su descripci\xF3n aqu\xED.",
+    adminVariablesTitle: "Estructuras de Datos y Variables Clave",
+    adminInputsTitle: "Estado de Entrada (tipo `Inputs`)",
+    adminResultsTitle: "Estado de Resultado (tipo `Results`)",
     folderDesc_components: "Componentes UI reutilizables.",
     folderDesc_pages: "Vistas principales de la aplicaci\xF3n.",
     folderDesc_services: "L\xF3gica de negocio y acceso a datos.",
@@ -34301,42 +34402,83 @@
     fileDesc_SpectroPage: "Men\xFA espectro.",
     fileDesc_SpectrumAnalyzerPage: "Vista espectro imagen.",
     fileDesc_SpectrumComparisonPage: "Vista comparaci\xF3n.",
-    fileDesc_analysisHelpers: "Utils an\xE1lisis.",
+    fileDesc_analysisHelpers: "Utilidades an\xE1lisis.",
     fileDesc_dbService: "Wrapper BD.",
-    fileDesc_gammaLibrary: "Bib nucleidos.",
+    fileDesc_gammaLibrary: "Librer\xEDa nucleidos.",
     fileDesc_geminiService: "Servicio IA.",
     fileDesc_isoCalculations: "Motor ISO.",
     fileDesc_monteCarloService: "Motor MC.",
     fileDesc_n42ParserService: "Parser N42.",
-    fileDesc_peakIdentifierService: "Algo ID.",
+    fileDesc_peakIdentifierService: "Algo. identificaci\xF3n.",
     fileDesc_radionuclides: "Datos decaimiento.",
-    fileDesc_sourceTypes: "Defs tipos fuente.",
+    fileDesc_sourceTypes: "Defs. tipos fuente.",
     fileDesc_spectrumAnalyzerService: "Procesamiento imagen.",
     fileDesc_electron_main: "Main Electron.",
-    fileDesc_electron_preload: "Preload Electron."
+    fileDesc_electron_preload: "Preload Electron.",
+    // Variable descriptions
+    varDesc_grossCount: "Total de cuentas medidas para la muestra. Tambi\xE9n puede ser una tasa si la unidad no es 'cuentas'.",
+    varDesc_grossCountUnit: "La unidad para el conteo bruto (cuentas, c/s, c/min, c/0.2s).",
+    varDesc_grossTime: "Duraci\xF3n de la medici\xF3n de la muestra en segundos.",
+    varDesc_backgroundCount: "Total de cuentas medidas para el fondo. Tambi\xE9n puede ser una tasa.",
+    varDesc_backgroundCountUnit: "La unidad para el conteo de fondo.",
+    varDesc_backgroundTime: "Duraci\xF3n de la medici\xF3n de fondo en segundos.",
+    varDesc_roiGrossCount: "(Espectrometr\xEDa) N\xFAmero de cuentas brutas dentro de la Regi\xF3n de Inter\xE9s (ROI).",
+    varDesc_roiChannels: "(Espectrometr\xEDa) N\xFAmero de canales dentro de la ROI.",
+    varDesc_backgroundTotalCount: "(Espectrometr\xEDa) N\xFAmero total de cuentas en todo el espectro de fondo.",
+    varDesc_backgroundChannels: "(Espectrometr\xEDa) N\xFAmero total de canales en el espectro de fondo.",
+    varDesc_probeEfficiency: "(Control Superficial) Eficiencia de la sonda en porcentaje (%).",
+    varDesc_probeArea: "(Control Superficial) \xC1rea de la sonda en cm\xB2.",
+    varDesc_estimatedBackgroundRate: "(Control Superficial) Tasa de conteo de fondo esperada en c/s.",
+    varDesc_targetValue: "(Control Superficial) Valor de actividad objetivo a alcanzar.",
+    varDesc_targetUnit: "(Control Superficial) Unidad de la actividad objetivo.",
+    varDesc_conveyorSpeed: "(Ropa) Velocidad de la cinta transportadora.",
+    varDesc_conveyorSpeedUnit: "(Ropa) Unidad para la velocidad de la cinta transportadora (cm/min o m/min).",
+    varDesc_chamberLength: "Longitud de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
+    varDesc_chamberWidth: "Ancho de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
+    varDesc_chamberHeight: "Altura de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
+    varDesc_detectors: "(C\xE1mara/Ropa) Matriz de configuraciones de detectores.",
+    varDesc_chambreLingeTime: "(C\xE1mara) Tiempo de medici\xF3n fijo para el modo de c\xE1mara.",
+    varDesc_chambreLingeTarget: "(C\xE1mara/Ropa) Actividad objetivo a alcanzar.",
+    varDesc_chambreLingeTargetUnit: "(C\xE1mara/Ropa) Unidad de la actividad objetivo.",
+    varDesc_calibrationFactor: "Factor de conversi\xF3n 'w' para pasar de la tasa de conteo neta (c/s) a la actividad (Bq).",
+    varDesc_calibrationFactorUnit: "Unidad del factor de calibraci\xF3n (ej: Bq/(c/s)).",
+    varDesc_calibrationFactorUncertainty: "Incertidumbre relativa del factor de calibraci\xF3n en porcentaje (%).",
+    varDesc_k1alpha: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo I \u03B1 (falso positivo).",
+    varDesc_k1beta: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo II \u03B2 (falso negativo).",
+    varDesc_correlationCoefficient: "Coeficiente de correlaci\xF3n entre la incertidumbre del fondo y la de calibraci\xF3n.",
+    varDesc_monteCarloMode: "Booleano para habilitar/deshabilitar el modo de simulaci\xF3n Monte Carlo.",
+    varDesc_useBayesianMode: "Booleano para habilitar/deshabilitar el modo de c\xE1lculo Bayesiano.",
+    varDesc_numSimulations: "N\xFAmero de iteraciones para la simulaci\xF3n Monte Carlo.",
+    varDesc_calculationMethod: "El m\xE9todo utilizado para el c\xE1lculo ('analytical', 'monteCarlo', 'bayesian').",
+    varDesc_currentMode: "El modo de an\xE1lisis actual ('standard', 'spectrometry', etc.).",
+    varDesc_primaryResult: "El resultado neto calculado (y), la mejor estimaci\xF3n de la actividad.",
+    varDesc_primaryUncertainty: "La incertidumbre est\xE1ndar combinada sobre el resultado neto (u(y)).",
+    varDesc_decisionThreshold: "El umbral de decisi\xF3n (y*). Si y > y*, se decide que la actividad est\xE1 presente.",
+    varDesc_detectionLimit: "El l\xEDmite de detecci\xF3n (y#). La actividad m\xE1s peque\xF1a detectable de manera fiable.",
+    varDesc_isEffectPresent: "Booleano que indica si el resultado neto excede el umbral de decisi\xF3n.",
+    varDesc_bestEstimate: "La mejor estimaci\xF3n de la actividad, solo se muestra cuando se detecta actividad.",
+    varDesc_bestEstimateUncertainty: "Incertidumbre expandida (k=2) sobre la mejor estimaci\xF3n.",
+    varDesc_confidenceIntervalLower: "L\xEDmite inferior del intervalo de confianza del 95%.",
+    varDesc_confidenceIntervalUpper: "L\xEDmite superior del intervalo de confianza del 95%.",
+    varDesc_k1alpha: "El valor de k(1-\u03B1) utilizado en el c\xE1lculo.",
+    varDesc_k1beta: "El valor de k(1-\u03B2) utilizado en el c\xE1lculo.",
+    varDesc_alphaProbability: "La probabilidad de error de Tipo I (\u03B1) calculada a partir de k(1-\u03B1).",
+    varDesc_betaProbability: "La probabilidad de error de Tipo II (\u03B2) calculada a partir de k(1-\u03B2).",
+    varDesc_meanTimeBetweenFalseAlarms: "Tiempo medio estimado antes de una falsa alarma, basado en \u03B1.",
+    varDesc_uncertaintyAtZero: "Incertidumbre est\xE1ndar para actividad cero (u\u2080), utilizada para calcular y*.",
+    varDesc_uncertaintyAtDetectionLimit: "Incertidumbre est\xE1ndar en el l\xEDmite de detecci\xF3n (u#).",
+    varDesc_varianceComponents: "Objeto que detalla la contribuci\xF3n de cada fuente a la varianza total.",
+    varDesc_sensitivityCoefficients: "Objeto que detalla la sensibilidad del resultado a los cambios en las entradas.",
+    varDesc_probabilityEffectPresent: "(Bayesiano) Probabilidad de que la actividad real sea mayor que cero.",
+    varDesc_histogramData: "(Monte Carlo) Matriz de los resultados de cada iteraci\xF3n de la simulaci\xF3n.",
+    varDesc_numSimulations: "(Monte Carlo) El n\xFAmero de simulaciones realizadas.",
+    varDesc_monteCarloStats: "(Monte Carlo) Objeto que contiene estad\xEDsticas detalladas de la simulaci\xF3n."
   };
-  var getTranslator = (lang) => {
-    let translations;
-    switch (lang) {
-      case "fr" /* FR */:
-        translations = fr;
-        break;
-      case "en" /* EN */:
-        translations = en;
-        break;
-      case "de" /* DE */:
-        translations = de;
-        break;
-      case "es" /* ES */:
-        translations = es;
-        break;
-      default:
-        translations = fr;
-    }
-    return (key) => {
-      return translations[key] || key;
-    };
-  };
+  var translations = { fr, en, de, es };
+  function getTranslator(lang) {
+    const langTranslations = translations[lang] || fr;
+    return (key) => langTranslations[key] || key;
+  }
 
   // services/isoCalculations.ts
   var erf = (x) => {
