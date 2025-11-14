@@ -44,7 +44,6 @@ const PeakPositionAdjusterModal: React.FC<PeakPositionAdjusterModalProps> = ({
   
   const topMatch = useMemo(() => {
     if (currentEnergy <= 0) return null;
-    // FIX: Added analysisType to the identifyPeaks call to satisfy its signature.
     const results = identifyPeaks([currentEnergy], identificationTolerance, analysisType);
     return results[0]?.matches[0] || null;
   }, [currentEnergy, identificationTolerance, analysisType]);

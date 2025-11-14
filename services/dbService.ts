@@ -106,7 +106,6 @@ class DBService {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
             const store = transaction.objectStore(ANALYSES_STORE_NAME);
-            // Fix: Cast the constructed record to AnalysisRecord to solve a TypeScript error with discriminated unions and spread syntax.
             const newRecord = {
                 id: crypto.randomUUID(),
                 date: new Date().toISOString(),
@@ -139,6 +138,30 @@ class DBService {
             const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
             const store = transaction.objectStore(ANALYSES_STORE_NAME);
             const request = store.delete(id);
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+        });
+    }
+
+    // --- Data Clearing ---
+
+    public async clearSources(): Promise<void> {
+        const db = await this.getDb();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(SOURCES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(SOURCES_STORE_NAME);
+            store.clear();
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+        });
+    }
+
+    public async clearAnalyses(): Promise<void> {
+        const db = await this.getDb();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(ANALYSES_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(ANALYSES_STORE_NAME);
+            store.clear();
             transaction.oncomplete = () => resolve();
             transaction.onerror = () => reject(transaction.error);
         });

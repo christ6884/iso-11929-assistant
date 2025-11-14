@@ -31,12 +31,18 @@ const formatMeanTime = (meanTime: MeanTime, t: any) => {
         .replace('{h}', meanTime.hours);
 }
 
-const InputRow: React.FC<{ label: string; children: React.ReactNode; tooltipText?: string; }> = ({ label, children, tooltipText }) => (
+const InputRow: React.FC<{ label: React.ReactNode; children: React.ReactNode; tooltipText?: string; }> = ({ label, children, tooltipText }) => (
     <div className="grid grid-cols-2 gap-4 items-center">
-        <label className="text-sm text-gray-300 flex items-center space-x-2">
-            <span>{label}</span>
-            {tooltipText && <InfoTooltip text={tooltipText} />}
-        </label>
+        <div className="text-sm text-gray-300 flex items-center space-x-2">
+            {typeof label === 'string' ? (
+                <>
+                    <span>{label}</span>
+                    {tooltipText && <InfoTooltip text={tooltipText} />}
+                </>
+            ) : (
+                label
+            )}
+        </div>
         {children}
     </div>
 );
@@ -88,6 +94,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
 
     const renderCalibrationSection = () => {
         const showAutoW = mode === 'surface' || mode === 'chambre' || mode === 'linge';
+        const showTools = ['standard', 'spectrometry', 'surface'].includes(mode);
         return (
              <CollapsibleSection title={t('calibration')} defaultOpen={true}>
                 <div className="space-y-3 p-2">
@@ -98,15 +105,18 @@ const InputPanel: React.FC<InputPanelProps> = ({
                             </div>
                         </InputRow>
                     )}
-                    <InputRow label={t('calibrationFactor')} tooltipText={t('calibrationFactorTooltip')}>
-                        <div className="relative">
-                            <NumberInput name="calibrationFactor" value={inputs.calibrationFactor} onChange={onInputChange} step={0.0001} disabled={showAutoW && autoW} />
-                             {mode === 'standard' && (
-                                <button onClick={onOpenDecayCalculator} className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300" title={t('decayCalculator')}>
+                    <InputRow label={
+                        <span className="flex items-center space-x-2">
+                            <span>{t('calibrationFactor')}</span>
+                            <InfoTooltip text={t('calibrationFactorTooltip')} />
+                            {showTools && (
+                                <button onClick={onOpenDecayCalculator} className="text-cyan-400 hover:text-cyan-300" title={t('decayCalculator')}>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" /></svg>
                                 </button>
                             )}
-                        </div>
+                        </span>
+                    }>
+                        <NumberInput name="calibrationFactor" value={inputs.calibrationFactor} onChange={onInputChange} step={0.0001} disabled={showAutoW && autoW} />
                     </InputRow>
                      <InputRow label={t('calibrationFactorUnit')} tooltipText={t('calibrationFactorUnitTooltip')}>
                         <input type="text" value={inputs.calibrationFactorUnit} onChange={(e) => onInputChange('calibrationFactorUnit', e.target.value)} disabled={showAutoW && autoW} className="w-full bg-gray-700 p-2 rounded-md text-white disabled:bg-gray-800 disabled:text-gray-400" />

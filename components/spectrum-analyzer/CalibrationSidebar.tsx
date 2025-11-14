@@ -186,7 +186,6 @@ const CalibrationSidebar: React.FC<CalibrationSidebarProps> = ({
     </div>
   );
 
-  // FIX: The original file was incomplete and missing the main return statement for the component, causing a type error.
   return (
     <Card title={t('calibrationAndAnalysis')}>
         {step === 'add' && renderStep1_AddPoints()}
@@ -196,5 +195,4 @@ const CalibrationSidebar: React.FC<CalibrationSidebarProps> = ({
   );
 };
 
-// FIX: Added the missing default export, which caused the import error in SpectrumAnalyzerPage.
 export default CalibrationSidebar;

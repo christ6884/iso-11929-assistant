@@ -263,4 +263,6 @@ export type AnalysisRecord = {
 export interface Radionuclide {
   name: string;
   halfLifeSeconds: number;
+  gammaConstant?: number; // (µSv/h)/MBq @ 1m
+  effectiveEnergy_MeV?: number;
 }

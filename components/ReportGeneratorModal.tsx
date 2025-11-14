@@ -15,9 +15,8 @@ const generateGaussianPoints = (mean: number, stdDev: number, range: {min: numbe
     return points;
 };
 
-// Fix: Added missing 'formatNumber' helper function to resolve multiple 'Cannot find name' errors.
 const formatNumber = (num: number | string | null | undefined) => {
-    if (num === null || num === undefined || !isFinite(num as number)) return 'N/A';
+    if (num === null || num === undefined) return 'N/A';
     if (typeof num === 'string') return num;
     if (Math.abs(num) < 0.001 && num !== 0) return num.toExponential(3);
     const fixed = num.toFixed(3);
