@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import { Inputs } from '../types';
 import { db } from '../services/dbService';
+import InfoTooltip from '../components/InfoTooltip';
+import CollapsibleSection from '../components/CollapsibleSection';
 
 interface AdminPageProps {
     t: any;
@@ -29,42 +30,27 @@ const projectStructure: FileNode[] = [
         type: 'folder',
         descKey: 'folderDesc_components',
         children: [
-            { 
-                name: 'n42-analyzer', 
-                type: 'folder', 
-                descKey: 'folderDesc_n42_analyzer',
-                children: [
+            { name: 'n42-analyzer', type: 'folder', descKey: 'folderDesc_n42_analyzer', children: [
                     { name: 'AddPeakModal.tsx', type: 'file', descKey: 'fileDesc_AddPeakModal' },
                     { name: 'ComparisonPlot.tsx', type: 'file', descKey: 'fileDesc_ComparisonPlot' },
                     { name: 'DeconvolutionModal.tsx', type: 'file', descKey: 'fileDesc_DeconvolutionModal' },
                     { name: 'EfficiencyCalibrationModal.tsx', type: 'file', descKey: 'fileDesc_EfficiencyCalibrationModal' },
                     { name: 'SpectrumPlot.tsx', type: 'file', descKey: 'fileDesc_SpectrumPlot' },
-                ]
-            },
-            { 
-                name: 'source-management', 
-                type: 'folder', 
-                descKey: 'folderDesc_source_management',
-                children: [
+            ]},
+            { name: 'source-management', type: 'folder', descKey: 'folderDesc_source_management', children: [
                     { name: 'AddSourceModal.tsx', type: 'file', descKey: 'fileDesc_AddSourceModal' },
                     { name: 'CsvImportModal.tsx', type: 'file', descKey: 'fileDesc_CsvImportModal' },
                     { name: 'ImportReviewModal.tsx', type: 'file', descKey: 'fileDesc_ImportReviewModal' },
                     { name: 'SourceTooltip.tsx', type: 'file', descKey: 'fileDesc_SourceTooltip' },
                     { name: 'SourceTypesMemoModal.tsx', type: 'file', descKey: 'fileDesc_SourceTypesMemoModal' },
-                ]
-            },
-            { 
-                name: 'spectrum-analyzer', 
-                type: 'folder', 
-                descKey: 'folderDesc_spectrum_analyzer',
-                children: [
+            ]},
+            { name: 'spectrum-analyzer', type: 'folder', descKey: 'folderDesc_spectrum_analyzer', children: [
                     { name: 'AnalysisResults.tsx', type: 'file', descKey: 'fileDesc_AnalysisResults' },
                     { name: 'CalibrationPointModal.tsx', type: 'file', descKey: 'fileDesc_CalibrationPointModal' },
                     { name: 'CalibrationSidebar.tsx', type: 'file', descKey: 'fileDesc_CalibrationSidebar' },
                     { name: 'CameraCapture.tsx', type: 'file', descKey: 'fileDesc_CameraCapture' },
                     { name: 'ImageUploader.tsx', type: 'file', descKey: 'fileDesc_ImageUploader' },
-                ]
-            },
+            ]},
             { name: 'Card.tsx', type: 'file', descKey: 'fileDesc_Card' },
             { name: 'ChartModal.tsx', type: 'file', descKey: 'fileDesc_ChartModal' },
             { name: 'ChartPanel.tsx', type: 'file', descKey: 'fileDesc_ChartPanel' },
@@ -89,15 +75,6 @@ const projectStructure: FileNode[] = [
             { name: 'UpdateNotification.tsx', type: 'file', descKey: 'fileDesc_UpdateNotification' },
             { name: 'UserGuideModal.tsx', type: 'file', descKey: 'fileDesc_UserGuideModal' },
             { name: 'WelcomeModal.tsx', type: 'file', descKey: 'fileDesc_WelcomeModal' },
-        ]
-    },
-    {
-        name: 'electron',
-        type: 'folder',
-        descKey: 'folderDesc_electron',
-        children: [
-            { name: 'main.js', type: 'file', descKey: 'fileDesc_electron_main' },
-            { name: 'preload.js', type: 'file', descKey: 'fileDesc_electron_preload' },
         ]
     },
     {
@@ -133,218 +110,173 @@ const projectStructure: FileNode[] = [
             { name: 'spectrumAnalyzerService.ts', type: 'file', descKey: 'fileDesc_spectrumAnalyzerService' },
         ]
     },
+    {
+        name: 'electron',
+        type: 'folder',
+        descKey: 'folderDesc_electron',
+        children: [
+            { name: 'main.js', type: 'file', descKey: 'fileDesc_electron_main' },
+            { name: 'preload.js', type: 'file', descKey: 'fileDesc_electron_preload' },
+        ]
+    },
     { name: 'App.tsx', type: 'file', descKey: 'fileDesc_App' },
-    { name: 'index.css', type: 'file', descKey: 'fileDesc_index_css' },
-    { name: 'index.html', type: 'file', descKey: 'fileDesc_index_html' },
     { name: 'index.tsx', type: 'file', descKey: 'fileDesc_index_tsx' },
+    { name: 'index.html', type: 'file', descKey: 'fileDesc_index_html' },
+    { name: 'index.css', type: 'file', descKey: 'fileDesc_index_css' },
+    { name: 'types.ts', type: 'file', descKey: 'fileDesc_types' },
+    { name: 'translations.ts', type: 'file', descKey: 'fileDesc_translations' },
     { name: 'manifest.json', type: 'file', descKey: 'fileDesc_manifest' },
     { name: 'metadata.json', type: 'file', descKey: 'fileDesc_metadata' },
     { name: 'package.json', type: 'file', descKey: 'fileDesc_package' },
+    { name: 'README.md', type: 'file', descKey: 'fileDesc_readme' },
     { name: 'service-worker.js', type: 'file', descKey: 'fileDesc_sw' },
     { name: 'tailwind.config.js', type: 'file', descKey: 'fileDesc_tailwind' },
-    { name: 'translations.ts', type: 'file', descKey: 'fileDesc_translations' },
-    { name: 'types.ts', type: 'file', descKey: 'fileDesc_types' },
 ];
 
-const FileTreeItem: React.FC<{ 
-    node: FileNode; 
-    path: string; 
-    depth: number; 
-    selectedPath: string | null;
-    onSelect: (node: FileNode, path: string) => void;
-}> = ({ node, path, depth, selectedPath, onSelect }) => {
-    const [isOpen, setIsOpen] = useState(true); // Default open to show structure
-    const currentPath = `${path}/${node.name}`;
-    const isSelected = selectedPath === currentPath;
-
-    const handleToggle = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (node.type === 'folder') {
-            setIsOpen(!isOpen);
-        }
-        onSelect(node, currentPath);
-    };
-
-    const getIcon = () => {
-        if (node.type === 'folder') {
-            return isOpen ? (
-                <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /></svg>
-            ) : (
-                <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /></svg>
-            );
-        }
-        if (node.name.endsWith('.tsx')) return <span className="text-cyan-400 text-xs font-bold">TSX</span>;
-        if (node.name.endsWith('.ts')) return <span className="text-blue-400 text-xs font-bold">TS</span>;
-        if (node.name.endsWith('.css')) return <span className="text-pink-400 text-xs font-bold">#</span>;
-        if (node.name.endsWith('.json')) return <span className="text-yellow-300 text-xs font-bold">{}</span>;
-        if (node.name.endsWith('.html')) return <span className="text-orange-400 text-xs font-bold">&lt;&gt;</span>;
-        return <span className="text-gray-400 text-xs">?</span>;
-    };
-
+const FileTree: React.FC<{ nodes: FileNode[]; t: any; onInfoClick: (node: FileNode) => void }> = ({ nodes, t, onInfoClick }) => {
     return (
-        <div className="select-none">
-            <div 
-                className={`flex items-center space-x-2 py-1 px-2 cursor-pointer transition-colors ${isSelected ? 'bg-cyan-900/50 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
-                style={{ paddingLeft: `${depth * 12 + 8}px` }}
-                onClick={handleToggle}
-            >
-                <span className="w-4 h-4 flex items-center justify-center">{getIcon()}</span>
-                <span className={`text-sm ${isSelected ? 'font-semibold' : ''}`}>{node.name}</span>
-                {node.type === 'folder' && (
-                    <span className="text-xs text-gray-500 ml-auto">
-                        {isOpen ? '▼' : '▶'}
-                    </span>
-                )}
-            </div>
-            {node.type === 'folder' && isOpen && node.children && (
-                <div>
-                    {node.children.map(child => (
-                        <FileTreeItem 
-                            key={child.name} 
-                            node={child} 
-                            path={currentPath} 
-                            depth={depth + 1} 
-                            selectedPath={selectedPath}
-                            onSelect={onSelect}
-                        />
-                    ))}
-                </div>
-            )}
-        </div>
+        <ul className="text-sm">
+            {nodes.map(node => (
+                <li key={node.name} className="ml-4 my-1">
+                    <div className="flex items-center space-x-2">
+                        <span>{node.type === 'folder' ? '📁' : '📄'}</span>
+                        <span className="font-mono">{node.name}</span>
+                        <button onClick={() => onInfoClick(node)} className="text-cyan-400 hover:text-cyan-300 text-xs">(i)</button>
+                    </div>
+                    {node.children && <FileTree nodes={node.children} t={t} onInfoClick={onInfoClick} />}
+                </li>
+            ))}
+        </ul>
     );
 };
 
+
 const AdminPage: React.FC<AdminPageProps> = ({ t, onBack, inputs, isProUser, setProUser }) => {
-    const [selectedNode, setSelectedNode] = useState<FileNode | null>(null);
-    const [selectedPath, setSelectedPath] = useState<string | null>(null);
-
-    const handleSelect = (node: FileNode, path: string) => {
-        setSelectedNode(node);
-        setSelectedPath(path);
-    };
-
-    const handleClearDB = async () => {
-        if(confirm("Warning: This will delete all saved sources and analysis history. Are you sure?")) {
-            try {
-                await db.deleteSource('all'); // Not implemented in dbService but standard indexedDB wipe is:
-                const req = indexedDB.deleteDatabase('ISOAssistantDB');
-                req.onsuccess = () => alert("Database deleted. Please refresh.");
-                req.onerror = () => alert("Failed to delete DB.");
-            } catch(e) {
-                alert("Error clearing DB");
-            }
-        }
-    };
-
+    const [infoFile, setInfoFile] = useState<FileNode | null>(null);
+    
     const handleClearLocalStorage = () => {
-        if(confirm("Reset all app settings (theme, language, etc)?")) {
+        if (window.confirm("This will reset all application settings, including PRO mode. Are you sure?")) {
             localStorage.clear();
             window.location.reload();
         }
     };
+    
+    const handleClearDB = async () => {
+        if (window.confirm("This will DELETE all saved sources and analyses. This action is irreversible. Are you sure?")) {
+            try {
+                await db.clearAnalyses();
+                await db.clearSources();
+                alert("Database has been cleared.");
+            } catch (error) {
+                console.error("Failed to clear IndexedDB:", error);
+                alert("Failed to clear database.");
+            }
+        }
+    };
 
+    const handleGodMode = () => {
+        if (!isProUser) {
+            localStorage.setItem('isProUser', 'true');
+            setProUser(true);
+        } else {
+            localStorage.removeItem('isProUser');
+            setProUser(false);
+        }
+    }
+
+    const inputVars = [
+        'grossCount', 'grossCountUnit', 'grossTime', 'backgroundCount', 'backgroundCountUnit', 'backgroundTime',
+        'roiGrossCount', 'roiChannels', 'backgroundTotalCount', 'backgroundChannels', 'probeEfficiency', 'probeArea',
+        'estimatedBackgroundRate', 'targetValue', 'targetUnit', 'conveyorSpeed', 'conveyorSpeedUnit',
+        'chamberLength', 'chamberWidth', 'chamberHeight', 'detectors', 'chambreLingeTime', 'chambreLingeTarget',
+        'chambreLingeTargetUnit', 'calibrationFactor', 'calibrationFactorUnit', 'calibrationFactorUncertainty',
+        'k1alpha', 'k1beta', 'correlationCoefficient', 'monteCarloMode', 'useBayesianMode', 'numSimulations'
+    ];
+
+    const resultVars = [
+        'calculationMethod', 'currentMode', 'primaryResult', 'primaryUncertainty', 'decisionThreshold', 'detectionLimit',
+        'isEffectPresent', 'bestEstimate', 'bestEstimateUncertainty', 'confidenceIntervalLower', 'confidenceIntervalUpper',
+        'k1alpha', 'k1beta', 'alphaProbability', 'betaProbability', 'meanTimeBetweenFalseAlarms', 'uncertaintyAtZero',
+        'uncertaintyAtDetectionLimit', 'varianceComponents', 'sensitivityCoefficients', 'probabilityEffectPresent',
+        'histogramData', 'numSimulations', 'monteCarloStats'
+    ];
+    
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
+        <div>
+            <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-300">{t('adminPageTitle')}</h2>
                 <button onClick={onBack} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
                     <span>{t('backButton')}</span>
                 </button>
             </div>
+            
+            <p className="text-gray-400 mb-6">{t('adminWelcome')}</p>
 
-            {/* Admin Toolbar */}
-            <Card title="System Controls">
-                <div className="flex flex-wrap gap-4 items-center">
-                    <div className="flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700">
-                        <span className="text-gray-300 font-semibold">{t('godMode')}:</span>
-                        <button 
-                            onClick={() => setProUser(!isProUser)}
-                            className={`px-3 py-1 rounded text-xs font-bold ${isProUser ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}
-                        >
-                            {isProUser ? t('enableGodMode') : t('disableGodMode')}
-                        </button>
-                        <span className="text-xs text-gray-500 ml-2">({t('godModeDesc')})</span>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2 bg-gray-900 p-2 rounded border border-gray-700">
-                        <span className="text-gray-300 font-semibold">{t('dataManagement')}:</span>
-                        <button onClick={handleClearLocalStorage} className="bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs">{t('clearLocalStorage')}</button>
-                        <button onClick={handleClearDB} className="bg-red-900 hover:bg-red-800 text-white px-2 py-1 rounded text-xs">{t('clearIndexedDB')}</button>
-                    </div>
-                </div>
-            </Card>
-
-            {/* Project Explorer */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
-                <div className="lg:col-span-1 bg-gray-900 rounded-lg border border-gray-700 flex flex-col">
-                    <div className="p-3 border-b border-gray-700 bg-gray-800 rounded-t-lg">
-                        <h3 className="text-sm font-bold text-gray-300">{t('projectExplorer')}</h3>
-                        <p className="text-xs text-gray-500 mt-1">{t('projectExplorerDesc')}</p>
-                    </div>
-                    <div className="flex-1 overflow-y-auto p-2 font-mono text-sm">
-                        {projectStructure.map(node => (
-                            <FileTreeItem 
-                                key={node.name} 
-                                node={node} 
-                                path="" 
-                                depth={0} 
-                                selectedPath={selectedPath}
-                                onSelect={handleSelect}
-                            />
-                        ))}
-                    </div>
-                    <div className="p-2 border-t border-gray-700 bg-gray-800/50 text-xs text-gray-500 text-center">
-                        {t('adminStaticStructureWarning')}
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card title={t('projectExplorer')}>
+                     <p className="text-xs text-gray-500 mb-4">{t('projectExplorerDesc')}</p>
+                     <div className="max-h-[50vh] overflow-y-auto">
+                        <FileTree nodes={projectStructure} t={t} onInfoClick={setInfoFile} />
+                     </div>
+                     <p className="text-xs text-gray-600 mt-4">{t('adminStaticStructureWarning')}</p>
+                </Card>
+                <div className="space-y-6">
+                     <Card title={t('fileInfo')}>
+                        {infoFile ? (
+                            <div className="p-3 min-h-[120px]">
+                                <h4 className="font-bold text-cyan-400 mb-2">{infoFile.name}</h4>
+                                <p className="text-sm text-gray-300">{t(infoFile.descKey) || "No description available."}</p>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center">{t('adminInfoPlaceholder')}</p>
+                        )}
+                    </Card>
+                     <Card title={t('godMode')}>
+                         <p className="text-sm text-gray-400 mb-4">{t('godModeDesc')}</p>
+                         <button onClick={handleGodMode} className={`w-full py-2 px-4 rounded-lg font-bold ${isProUser ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-cyan-600 hover:bg-cyan-700'}`}>
+                            {isProUser ? t('disableGodMode') : t('enableGodMode')}
+                         </button>
+                    </Card>
+                     <Card title={t('dataManagement')}>
+                         <div className="space-y-4">
+                            <button onClick={handleClearLocalStorage} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+                                {t('clearLocalStorage')}
+                            </button>
+                            <button onClick={handleClearDB} className="w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+                                {t('clearIndexedDB')}
+                            </button>
+                         </div>
+                    </Card>
                 </div>
 
-                <div className="lg:col-span-2">
-                    {selectedNode ? (
-                        <Card title={selectedNode.name} className="h-full flex flex-col">
-                            <div className="space-y-6">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-gray-700 p-3 rounded">
-                                        <span className="text-xs text-gray-400 block">Type</span>
-                                        <span className="text-sm font-mono text-white capitalize">{selectedNode.type}</span>
+                <div className="md:col-span-2">
+                    <Card title={t('adminVariablesTitle')}>
+                        <CollapsibleSection title={t('adminInputsTitle')} defaultOpen={false}>
+                            <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4">
+                                {inputVars.map(v => (
+                                    <div key={v} className="flex items-center space-x-2">
+                                        <span className="font-mono text-sm text-gray-300">{v}</span>
+                                        <InfoTooltip text={t(`varDesc_${v}`)} />
                                     </div>
-                                    <div className="bg-gray-700 p-3 rounded">
-                                        <span className="text-xs text-gray-400 block">Path</span>
-                                        <span className="text-xs font-mono text-cyan-300 break-all">{selectedPath}</span>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h4 className="text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1">{t('fileRole')}</h4>
-                                    <div className="bg-gray-900/50 p-4 rounded border border-gray-700">
-                                        <p className="text-gray-200">{t(selectedNode.descKey)}</p>
-                                    </div>
-                                </div>
-
-                                {selectedNode.type === 'folder' && selectedNode.children && (
-                                    <div>
-                                        <h4 className="text-sm font-bold text-gray-300 mb-2 border-b border-gray-600 pb-1">Contents</h4>
-                                        <ul className="list-disc list-inside text-sm text-gray-400">
-                                            {selectedNode.children.map(child => (
-                                                <li key={child.name}>{child.name}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
+                                ))}
                             </div>
-                        </Card>
-                    ) : (
-                        <div className="h-full flex items-center justify-center bg-gray-800 rounded-lg border border-gray-700 border-dashed">
-                            <div className="text-center text-gray-500">
-                                <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <p>{t('adminWelcome')}</p>
+                        </CollapsibleSection>
+                        <CollapsibleSection title={t('adminResultsTitle')} defaultOpen={false}>
+                            <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4">
+                                {resultVars.map(v => (
+                                     <div key={v} className="flex items-center space-x-2">
+                                        <span className="font-mono text-sm text-gray-300">{v}</span>
+                                        <InfoTooltip text={t(`varDesc_${v}`)} />
+                                    </div>
+                                ))}
                             </div>
-                        </div>
-                    )}
+                        </CollapsibleSection>
+                    </Card>
                 </div>
             </div>
         </div>
     );
-};
+}
 
 export default AdminPage;
