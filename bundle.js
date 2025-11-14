@@ -24601,10 +24601,10 @@
     return t("timeFormat").replace("{y}", meanTime.years).replace("{m}", meanTime.months).replace("{d}", meanTime.days).replace("{h}", meanTime.hours);
   };
   var InputRow = ({ label, children, tooltipText }) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "grid grid-cols-2 gap-4 items-center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-sm text-gray-300 flex items-center space-x-2", children: typeof label === "string" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: label }),
       tooltipText && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: tooltipText })
-    ] }),
+    ] }) : label }),
     children
   ] });
   var NumberInput = ({ name, value, onChange, min = 0, step = 0.01, disabled = false }) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -24660,12 +24660,14 @@
     const rateUnitOptions = countUnitOptions.filter((opt) => opt.value !== "counts" /* COUNTS */);
     const renderCalibrationSection = () => {
       const showAutoW = mode === "surface" || mode === "chambre" || mode === "linge";
+      const showTools = ["standard", "spectrometry", "surface"].includes(mode);
       return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CollapsibleSection_default, { title: t("calibration"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "space-y-3 p-2", children: [
         showAutoW && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("autoCalibFactor"), tooltipText: t("autoCalibFactorTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-right", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "checkbox", checked: autoW, onChange: (e) => onAutoWChange(e.target.checked), className: "form-checkbox h-5 w-5 text-cyan-500 cursor-pointer" }) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("calibrationFactor"), tooltipText: t("calibrationFactorTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "calibrationFactor", value: inputs.calibrationFactor, onChange: onInputChange, step: 1e-4, disabled: showAutoW && autoW }),
-          mode === "standard" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: onOpenDecayCalculator, className: "absolute right-2 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300", title: t("decayCalculator"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z", clipRule: "evenodd" }) }) })
-        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: t("calibrationFactor") }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InfoTooltip_default, { text: t("calibrationFactorTooltip") }),
+          showTools && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: onOpenDecayCalculator, className: "text-cyan-400 hover:text-cyan-300", title: t("decayCalculator"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z", clipRule: "evenodd" }) }) })
+        ] }), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "calibrationFactor", value: inputs.calibrationFactor, onChange: onInputChange, step: 1e-4, disabled: showAutoW && autoW }) }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("calibrationFactorUnit"), tooltipText: t("calibrationFactorUnitTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "text", value: inputs.calibrationFactorUnit, onChange: (e) => onInputChange("calibrationFactorUnit", e.target.value), disabled: showAutoW && autoW, className: "w-full bg-gray-700 p-2 rounded-md text-white disabled:bg-gray-800 disabled:text-gray-400" }) }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(InputRow, { label: t("relativeUncertainty"), tooltipText: t("relativeUncertaintyTooltip"), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center space-x-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NumberInput, { name: "calibrationFactorUncertainty", value: inputs.calibrationFactorUncertainty, onChange: onInputChange, disabled: showAutoW && autoW }),
@@ -26938,86 +26940,61 @@
   var hour2 = 3600;
   var radionuclides = {
     gamma: [
-      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2 },
-      { name: "Antimony-124 (Sb-124)", halfLifeSeconds: 60.2 * day2 },
-      { name: "Antimony-125 (Sb-125)", halfLifeSeconds: 2.75855 * year2 },
-      // BIPM-5
-      { name: "Barium-133 (Ba-133)", halfLifeSeconds: 10.54 * year2 },
-      // BIPM-5
-      { name: "Barium-140 (Ba-140)", halfLifeSeconds: 12.753 * day2 },
-      // BIPM-5
-      { name: "Beryllium-7 (Be-7)", halfLifeSeconds: 53.22 * day2 },
-      // BIPM-5
-      { name: "Bismuth-207 (Bi-207)", halfLifeSeconds: 31.55 * year2 },
-      { name: "Cadmium-109 (Cd-109)", halfLifeSeconds: 461.4 * day2 },
-      // BIPM-5
-      { name: "Cerium-141 (Ce-141)", halfLifeSeconds: 32.5 * day2 },
-      { name: "Cerium-144 (Ce-144)", halfLifeSeconds: 284.9 * day2 },
-      { name: "Cesium-134 (Cs-134)", halfLifeSeconds: 2.0652 * year2 },
-      { name: "Cesium-137 (Cs-137)", halfLifeSeconds: 30.08 * year2 },
-      { name: "Chromium-51 (Cr-51)", halfLifeSeconds: 27.703 * day2 },
-      // BIPM-5
-      { name: "Cobalt-56 (Co-56)", halfLifeSeconds: 77.236 * day2 },
-      { name: "Cobalt-57 (Co-57)", halfLifeSeconds: 271.8 * day2 },
-      // BIPM-5
-      { name: "Cobalt-58 (Co-58)", halfLifeSeconds: 70.86 * day2 },
-      { name: "Cobalt-60 (Co-60)", halfLifeSeconds: 5.271 * year2 },
-      { name: "Copper-64 (Cu-64)", halfLifeSeconds: 12.701 * hour2 },
-      // BIPM-5
-      { name: "Europium-152 (Eu-152)", halfLifeSeconds: 13.537 * year2 },
-      { name: "Europium-154 (Eu-154)", halfLifeSeconds: 8.6 * year2 },
-      { name: "Europium-155 (Eu-155)", halfLifeSeconds: 4.76 * year2 },
-      { name: "Fluorine-18 (F-18)", halfLifeSeconds: 1.8288 * hour2 },
-      // BIPM-5
-      { name: "Gallium-66 (Ga-66)", halfLifeSeconds: 9.49 * hour2 },
-      // BIPM-5
-      { name: "Gallium-67 (Ga-67)", halfLifeSeconds: 3.2613 * day2 },
-      // BIPM-5
-      { name: "Indium-111 (In-111)", halfLifeSeconds: 2.8049 * day2 },
-      { name: "Iodine-123 (I-123)", halfLifeSeconds: 13.2234 * hour2 },
-      // BIPM-5
-      { name: "Iodine-125 (I-125)", halfLifeSeconds: 59.4 * day2 },
-      { name: "Iodine-129 (I-129)", halfLifeSeconds: 157e5 * year2 },
-      { name: "Iodine-131 (I-131)", halfLifeSeconds: 8.0233 * day2 },
-      // BIPM-5
+      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
+      { name: "Antimony-124 (Sb-124)", halfLifeSeconds: 60.2 * day2, gammaConstant: 260, effectiveEnergy_MeV: 1.691 },
+      { name: "Antimony-125 (Sb-125)", halfLifeSeconds: 2.75855 * year2, effectiveEnergy_MeV: 0.428 },
+      { name: "Barium-133 (Ba-133)", halfLifeSeconds: 10.54 * year2, gammaConstant: 56.4, effectiveEnergy_MeV: 0.356 },
+      { name: "Barium-140 (Ba-140)", halfLifeSeconds: 12.753 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.537 },
+      { name: "Beryllium-7 (Be-7)", halfLifeSeconds: 53.22 * day2, gammaConstant: 4.8, effectiveEnergy_MeV: 0.477 },
+      { name: "Bismuth-207 (Bi-207)", halfLifeSeconds: 31.55 * year2, gammaConstant: 200, effectiveEnergy_MeV: 0.57 },
+      { name: "Cadmium-109 (Cd-109)", halfLifeSeconds: 461.4 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.088 },
+      { name: "Cerium-141 (Ce-141)", halfLifeSeconds: 32.5 * day2, gammaConstant: 12.1, effectiveEnergy_MeV: 0.145 },
+      { name: "Cerium-144 (Ce-144)", halfLifeSeconds: 284.9 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.133 },
+      { name: "Cesium-134 (Cs-134)", halfLifeSeconds: 2.0652 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.795 },
+      { name: "Cesium-137 (Cs-137)", halfLifeSeconds: 30.08 * year2, gammaConstant: 89, effectiveEnergy_MeV: 0.662 },
+      { name: "Chromium-51 (Cr-51)", halfLifeSeconds: 27.703 * day2, gammaConstant: 4.6, effectiveEnergy_MeV: 0.32 },
+      { name: "Cobalt-56 (Co-56)", halfLifeSeconds: 77.236 * day2, gammaConstant: 490, effectiveEnergy_MeV: 0.847 },
+      { name: "Cobalt-57 (Co-57)", halfLifeSeconds: 271.8 * day2, gammaConstant: 2.5, effectiveEnergy_MeV: 0.122 },
+      { name: "Cobalt-58 (Co-58)", halfLifeSeconds: 70.86 * day2, gammaConstant: 150, effectiveEnergy_MeV: 0.811 },
+      { name: "Cobalt-60 (Co-60)", halfLifeSeconds: 5.271 * year2, gammaConstant: 353, effectiveEnergy_MeV: 1.25 },
+      { name: "Copper-64 (Cu-64)", halfLifeSeconds: 12.701 * hour2, gammaConstant: 31.5, effectiveEnergy_MeV: 0.511 },
+      { name: "Europium-152 (Eu-152)", halfLifeSeconds: 13.537 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.408 },
+      { name: "Europium-154 (Eu-154)", halfLifeSeconds: 8.6 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.274 },
+      { name: "Europium-155 (Eu-155)", halfLifeSeconds: 4.76 * year2, effectiveEnergy_MeV: 0.105 },
+      { name: "Fluorine-18 (F-18)", halfLifeSeconds: 1.8288 * hour2, gammaConstant: 150, effectiveEnergy_MeV: 0.511 },
+      { name: "Gallium-66 (Ga-66)", halfLifeSeconds: 9.49 * hour2, effectiveEnergy_MeV: 1.039 },
+      { name: "Gallium-67 (Ga-67)", halfLifeSeconds: 3.2613 * day2, gammaConstant: 22.1, effectiveEnergy_MeV: 0.093 },
+      { name: "Indium-111 (In-111)", halfLifeSeconds: 2.8049 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.245 },
+      { name: "Iodine-123 (I-123)", halfLifeSeconds: 13.2234 * hour2, gammaConstant: 42.1, effectiveEnergy_MeV: 0.159 },
+      { name: "Iodine-125 (I-125)", halfLifeSeconds: 59.4 * day2, gammaConstant: 40.1, effectiveEnergy_MeV: 0.035 },
+      { name: "Iodine-129 (I-129)", halfLifeSeconds: 157e5 * year2, gammaConstant: 16.3, effectiveEnergy_MeV: 0.04 },
+      { name: "Iodine-131 (I-131)", halfLifeSeconds: 8.0233 * day2, gammaConstant: 59.3, effectiveEnergy_MeV: 0.364 },
       { name: "Iron-55 (Fe-55)", halfLifeSeconds: 2.737 * year2 },
-      { name: "Iron-59 (Fe-59)", halfLifeSeconds: 44.495 * day2 },
-      // BIPM-5
-      { name: "Krypton-85 (Kr-85)", halfLifeSeconds: 10.752 * year2 },
-      // BIPM-5
-      { name: "Lanthanum-140 (La-140)", halfLifeSeconds: 1.6785 * day2 },
-      // BIPM-5
-      { name: "Lutetium-177 (Lu-177)", halfLifeSeconds: 6.647 * day2 },
-      { name: "Manganese-54 (Mn-54)", halfLifeSeconds: 312.13 * day2 },
-      // BIPM-5
-      { name: "Manganese-56 (Mn-56)", halfLifeSeconds: 2.57878 * hour2 },
-      // BIPM-5
-      { name: "Molybdenum-99 (Mo-99)", halfLifeSeconds: 2.7479 * day2 },
-      // BIPM-5
-      { name: "Niobium-94 (Nb-94)", halfLifeSeconds: 20300 * year2 },
-      { name: "Niobium-95 (Nb-95)", halfLifeSeconds: 34.991 * day2 },
-      { name: "Potassium-40 (K-40)", halfLifeSeconds: 1248e6 * year2 },
-      { name: "Ruthenium-103 (Ru-103)", halfLifeSeconds: 39.26 * day2 },
-      { name: "Ruthenium-106 (Ru-106)", halfLifeSeconds: 371.8 * day2 },
-      { name: "Samarium-153 (Sm-153)", halfLifeSeconds: 1.928 * day2 },
-      { name: "Scandium-46 (Sc-46)", halfLifeSeconds: 83.788 * day2 },
-      // BIPM-5
-      { name: "Selenium-75 (Se-75)", halfLifeSeconds: 119.78 * day2 },
-      { name: "Silver-110m (Ag-110m)", halfLifeSeconds: 249.78 * day2 },
-      // BIPM-5
-      { name: "Sodium-22 (Na-22)", halfLifeSeconds: 2.6027 * year2 },
-      { name: "Sodium-24 (Na-24)", halfLifeSeconds: 14.9574 * hour2 },
-      // BIPM-5
-      { name: "Strontium-85 (Sr-85)", halfLifeSeconds: 64.85 * day2 },
-      // BIPM-5
-      { name: "Technetium-99m (Tc-99m)", halfLifeSeconds: 6.0067 * hour2 },
-      // BIPM-5
-      { name: "Thallium-201 (Tl-201)", halfLifeSeconds: 3.04 * day2 },
-      { name: "Xenon-133 (Xe-133)", halfLifeSeconds: 5.243 * day2 },
-      { name: "Yttrium-88 (Y-88)", halfLifeSeconds: 106.626 * day2 },
-      // BIPM-5
-      { name: "Zinc-65 (Zn-65)", halfLifeSeconds: 244.01 * day2 },
-      { name: "Zirconium-95 (Zr-95)", halfLifeSeconds: 64.032 * day2 }
+      { name: "Iron-59 (Fe-59)", halfLifeSeconds: 44.495 * day2, gammaConstant: 171, effectiveEnergy_MeV: 1.099 },
+      { name: "Krypton-85 (Kr-85)", halfLifeSeconds: 10.752 * year2, effectiveEnergy_MeV: 0.514 },
+      { name: "Lanthanum-140 (La-140)", halfLifeSeconds: 1.6785 * day2, gammaConstant: 280, effectiveEnergy_MeV: 1.596 },
+      { name: "Lutetium-177 (Lu-177)", halfLifeSeconds: 6.647 * day2, effectiveEnergy_MeV: 0.208 },
+      { name: "Manganese-54 (Mn-54)", halfLifeSeconds: 312.13 * day2, gammaConstant: 128.8, effectiveEnergy_MeV: 0.835 },
+      { name: "Manganese-56 (Mn-56)", halfLifeSeconds: 2.57878 * hour2, effectiveEnergy_MeV: 0.847 },
+      { name: "Molybdenum-99 (Mo-99)", halfLifeSeconds: 2.7479 * day2, gammaConstant: 39.5, effectiveEnergy_MeV: 0.74 },
+      { name: "Niobium-94 (Nb-94)", halfLifeSeconds: 20300 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.871 },
+      { name: "Niobium-95 (Nb-95)", halfLifeSeconds: 34.991 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.766 },
+      { name: "Potassium-40 (K-40)", halfLifeSeconds: 1248e6 * year2, gammaConstant: 22.4, effectiveEnergy_MeV: 1.461 },
+      { name: "Ruthenium-103 (Ru-103)", halfLifeSeconds: 39.26 * day2, gammaConstant: 79.5, effectiveEnergy_MeV: 0.497 },
+      { name: "Ruthenium-106 (Ru-106)", halfLifeSeconds: 371.8 * day2, gammaConstant: 34.9, effectiveEnergy_MeV: 0.512 },
+      { name: "Samarium-153 (Sm-153)", halfLifeSeconds: 1.928 * day2, effectiveEnergy_MeV: 0.103 },
+      { name: "Scandium-46 (Sc-46)", halfLifeSeconds: 83.788 * day2, gammaConstant: 290, effectiveEnergy_MeV: 0.889 },
+      { name: "Selenium-75 (Se-75)", halfLifeSeconds: 119.78 * day2, gammaConstant: 52.1, effectiveEnergy_MeV: 0.265 },
+      { name: "Silver-110m (Ag-110m)", halfLifeSeconds: 249.78 * day2, gammaConstant: 390, effectiveEnergy_MeV: 0.658 },
+      { name: "Sodium-22 (Na-22)", halfLifeSeconds: 2.6027 * year2, gammaConstant: 326.6, effectiveEnergy_MeV: 1.275 },
+      { name: "Sodium-24 (Na-24)", halfLifeSeconds: 14.9574 * hour2, gammaConstant: 490, effectiveEnergy_MeV: 1.369 },
+      { name: "Strontium-85 (Sr-85)", halfLifeSeconds: 64.85 * day2, gammaConstant: 80.8, effectiveEnergy_MeV: 0.514 },
+      { name: "Technetium-99m (Tc-99m)", halfLifeSeconds: 6.0067 * hour2, gammaConstant: 20.9, effectiveEnergy_MeV: 0.14 },
+      { name: "Thallium-201 (Tl-201)", halfLifeSeconds: 3.04 * day2, effectiveEnergy_MeV: 0.167 },
+      { name: "Xenon-133 (Xe-133)", halfLifeSeconds: 5.243 * day2, gammaConstant: 12.3, effectiveEnergy_MeV: 0.081 },
+      { name: "Yttrium-88 (Y-88)", halfLifeSeconds: 106.626 * day2, gammaConstant: 410, effectiveEnergy_MeV: 1.836 },
+      { name: "Zinc-65 (Zn-65)", halfLifeSeconds: 244.01 * day2, gammaConstant: 75.3, effectiveEnergy_MeV: 1.116 },
+      { name: "Zirconium-95 (Zr-95)", halfLifeSeconds: 64.032 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.757 }
     ].sort((a, b) => a.name.localeCompare(b.name)),
     beta: [
       { name: "Calcium-45 (Ca-45)", halfLifeSeconds: 162.61 * day2 },
@@ -27039,7 +27016,7 @@
       { name: "Yttrium-90 (Y-90)", halfLifeSeconds: 64.1 * hour2 }
     ].sort((a, b) => a.name.localeCompare(b.name)),
     alpha: [
-      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2 },
+      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
       { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
       { name: "Curium-242 (Cm-242)", halfLifeSeconds: 162.8 * day2 },
       { name: "Curium-243 (Cm-243)", halfLifeSeconds: 29.1 * year2 },
@@ -27067,10 +27044,74 @@
     ].sort((a, b) => a.name.localeCompare(b.name)),
     neutron: [
       { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
-      { name: "Americium-241/Be (Am-Be)", halfLifeSeconds: 432.2 * year2 }
-      // Driven by Am-241
+      { name: "Americium-241/Be (Am-Be)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 4.4 }
+      // Driven by Am-241 for half-life, effective energy from neutron emission
     ]
   };
+
+  // services/shieldingData.ts
+  var shieldingMaterials = [
+    {
+      name: "Lead (Pb)",
+      density_g_cm3: 11.34,
+      mu: [
+        { energy_MeV: 0.1, value: 57.6 },
+        { energy_MeV: 0.3, value: 3.59 },
+        { energy_MeV: 0.5, value: 1.46 },
+        { energy_MeV: 0.8, value: 0.89 },
+        { energy_MeV: 1, value: 0.77 },
+        { energy_MeV: 1.5, value: 0.6 },
+        { energy_MeV: 2, value: 0.52 },
+        { energy_MeV: 3, value: 0.49 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 2.2, alpha1: -0.07, alpha2: 0.05 },
+        { energy_MeV: 1, A: 2.15, alpha1: -0.06, alpha2: 0.046 },
+        { energy_MeV: 2, A: 1.95, alpha1: -0.05, alpha2: 0.038 },
+        { energy_MeV: 3, A: 1.8, alpha1: -0.04, alpha2: 0.032 }
+      ]
+    },
+    {
+      name: "Steel (Fe)",
+      density_g_cm3: 7.87,
+      mu: [
+        { energy_MeV: 0.1, value: 2.76 },
+        { energy_MeV: 0.3, value: 0.69 },
+        { energy_MeV: 0.5, value: 0.52 },
+        { energy_MeV: 0.8, value: 0.42 },
+        { energy_MeV: 1, value: 0.37 },
+        { energy_MeV: 1.5, value: 0.3 },
+        { energy_MeV: 2, value: 0.26 },
+        { energy_MeV: 3, value: 0.22 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 10.9, alpha1: -0.09, alpha2: 0.06 },
+        { energy_MeV: 1, A: 8.4, alpha1: -0.1, alpha2: 0.03 },
+        { energy_MeV: 2, A: 6.2, alpha1: -0.09, alpha2: 0.02 },
+        { energy_MeV: 3, A: 5.1, alpha1: -0.08, alpha2: 0.015 }
+      ]
+    },
+    {
+      name: "Concrete",
+      density_g_cm3: 2.35,
+      mu: [
+        { energy_MeV: 0.1, value: 0.39 },
+        { energy_MeV: 0.3, value: 0.22 },
+        { energy_MeV: 0.5, value: 0.18 },
+        { energy_MeV: 0.8, value: 0.14 },
+        { energy_MeV: 1, value: 0.13 },
+        { energy_MeV: 1.5, value: 0.1 },
+        { energy_MeV: 2, value: 0.09 },
+        { energy_MeV: 3, value: 0.07 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 12.5, alpha1: -0.06, alpha2: 0.03 },
+        { energy_MeV: 1, A: 9.9, alpha1: -0.07, alpha2: 0.01 },
+        { energy_MeV: 2, A: 7, alpha1: -0.06, alpha2: 5e-3 },
+        { energy_MeV: 3, A: 5.8, alpha1: -0.05, alpha2: 3e-3 }
+      ]
+    }
+  ];
 
   // components/DecayCalculatorModal.tsx
   var import_jsx_runtime15 = __toESM(require_jsx_runtime());
@@ -27080,14 +27121,70 @@
     const day3 = date.getDate().toString().padStart(2, "0");
     return `${year3}-${month}-${day3}`;
   };
+  var DoseRateDisplay = ({ dose_uSv_h, label, colorClass }) => {
+    const format = (val) => {
+      if (typeof val === "string")
+        return val;
+      return val.toPrecision(3);
+    };
+    let si_val = dose_uSv_h;
+    let si_unit = "\xB5Sv/h";
+    if (si_val >= 1e3) {
+      si_val /= 1e3;
+      si_unit = "mSv/h";
+    }
+    if (si_val >= 1e3) {
+      si_val /= 1e3;
+      si_unit = "Sv/h";
+    }
+    const dose_mrem_h = dose_uSv_h * 0.1;
+    let rem_val = dose_mrem_h;
+    let rem_unit = "mrem/h";
+    if (rem_val >= 1e3) {
+      rem_val /= 1e3;
+      rem_unit = "rem/h";
+    }
+    let r_val = dose_mrem_h;
+    let r_unit = "mR/h";
+    if (r_val >= 1e3) {
+      r_val /= 1e3;
+      r_unit = "R/h";
+    }
+    if (dose_uSv_h === 0 || !isFinite(dose_uSv_h)) {
+      si_val = "0.00";
+      rem_val = "0.00";
+      r_val = "0.00";
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "text-gray-400 font-semibold", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: `grid grid-cols-3 text-center mt-1 font-mono text-md ${colorClass}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "font-bold", children: format(si_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "text-xs text-gray-500", children: si_unit })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "font-bold", children: format(rem_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "text-xs text-gray-500", children: rem_unit })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "font-bold", children: format(r_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "text-xs text-gray-500", children: r_unit })
+        ] })
+      ] })
+    ] });
+  };
   var DecayCalculatorModal = ({ isOpen, onClose, onApply, t, initialActivity, initialUncertainty, unit }) => {
     const [refActivity, setRefActivity] = (0, import_react11.useState)(initialActivity);
     const [refUncertainty, setRefUncertainty] = (0, import_react11.useState)(initialUncertainty);
     const [refDate, setRefDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
     const [measDate, setMeasDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
     const [selectedNuclideKey, setSelectedNuclideKey] = (0, import_react11.useState)("gamma-0");
+    const [shieldMaterialName, setShieldMaterialName] = (0, import_react11.useState)("none");
+    const [shieldThickness, setShieldThickness] = (0, import_react11.useState)(0);
+    const [sourceBox, setSourceBox] = (0, import_react11.useState)([]);
     const [correctedActivity, setCorrectedActivity] = (0, import_react11.useState)(null);
     const [elapsedDays, setElapsedDays] = (0, import_react11.useState)(null);
+    const [doseRate, setDoseRate] = (0, import_react11.useState)(null);
     const selectedNuclide = (0, import_react11.useMemo)(() => {
       const [type, indexStr] = selectedNuclideKey.split("-");
       const index = parseInt(indexStr, 10);
@@ -27096,15 +27193,42 @@
       }
       return null;
     }, [selectedNuclideKey]);
+    const shieldMaterial = (0, import_react11.useMemo)(() => {
+      return shieldingMaterials.find((m) => m.name === shieldMaterialName) || null;
+    }, [shieldMaterialName]);
     (0, import_react11.useEffect)(() => {
       setRefActivity(initialActivity);
       setRefUncertainty(initialUncertainty);
+      setSourceBox([]);
     }, [initialActivity, initialUncertainty, isOpen]);
+    const interpolate = (points, energy) => {
+      if (points.length === 0)
+        return null;
+      if (points.length === 1 || energy <= points[0].energy_MeV)
+        return points[0].value;
+      if (energy >= points[points.length - 1].energy_MeV)
+        return points[points.length - 1].value;
+      const upperIndex = points.findIndex((p) => p.energy_MeV > energy);
+      if (upperIndex === -1 || upperIndex === 0)
+        return points[0].value;
+      const lower = points[upperIndex - 1];
+      const upper = points[upperIndex];
+      const fraction = (energy - lower.energy_MeV) / (upper.energy_MeV - lower.energy_MeV);
+      if (typeof lower.value === "number") {
+        return lower.value + fraction * (upper.value - lower.value);
+      }
+      const interpolated = {};
+      for (const key in lower.value) {
+        interpolated[key] = lower.value[key] + fraction * (upper.value[key] - lower.value[key]);
+      }
+      return interpolated;
+    };
     (0, import_react11.useEffect)(() => {
-      const calculateDecay = () => {
+      const calculate = () => {
         if (!selectedNuclide || !refDate || !measDate || refActivity <= 0) {
           setCorrectedActivity(null);
           setElapsedDays(null);
+          setDoseRate(null);
           return;
         }
         const refTime = new Date(refDate).getTime();
@@ -27112,6 +27236,7 @@
         if (isNaN(refTime) || isNaN(measTime)) {
           setCorrectedActivity(null);
           setElapsedDays(null);
+          setDoseRate(null);
           return;
         }
         const elapsedTimeSeconds = (measTime - refTime) / 1e3;
@@ -27119,15 +27244,67 @@
         const lambda = Math.log(2) / selectedNuclide.halfLifeSeconds;
         const newActivity = refActivity * Math.exp(-lambda * elapsedTimeSeconds);
         setCorrectedActivity(newActivity);
+        const gammaConstant = selectedNuclide.gammaConstant;
+        if (!gammaConstant || gammaConstant <= 0 || newActivity <= 0) {
+          setDoseRate(null);
+          return;
+        }
+        const activityMBq = newActivity / 1e6;
+        let doseRateAt1m = gammaConstant * activityMBq;
+        let doseRateAt1cm = doseRateAt1m * 1e4;
+        setDoseRate({ contact: doseRateAt1cm, oneMeter: doseRateAt1m });
       };
-      calculateDecay();
+      calculate();
     }, [refActivity, refDate, measDate, selectedNuclide]);
+    const totalDoseRate = (0, import_react11.useMemo)(() => {
+      if (sourceBox.length === 0)
+        return null;
+      let totalContact = 0;
+      let totalOneMeter = 0;
+      sourceBox.forEach((source) => {
+        const { nuclide, activity } = source;
+        const gammaConstant = nuclide.gammaConstant;
+        if (!gammaConstant || gammaConstant <= 0 || activity <= 0) {
+          return;
+        }
+        const activityMBq = activity / 1e6;
+        let doseRateAt1m = gammaConstant * activityMBq;
+        let doseRateAt1cm = doseRateAt1m * 1e4;
+        if (shieldMaterial && shieldThickness > 0 && nuclide.effectiveEnergy_MeV) {
+          const mu = interpolate(shieldMaterial.mu.map((p) => ({ energy_MeV: p.energy_MeV, value: p.value })), nuclide.effectiveEnergy_MeV);
+          const buildupCoeffs = interpolate(shieldMaterial.buildup.map((p) => ({ energy_MeV: p.energy_MeV, value: { A: p.A, alpha1: p.alpha1, alpha2: p.alpha2 } })), nuclide.effectiveEnergy_MeV);
+          if (mu && buildupCoeffs) {
+            const mu_x = mu * shieldThickness;
+            const buildupFactor = buildupCoeffs.A * Math.exp(buildupCoeffs.alpha1 * mu_x) + (1 - buildupCoeffs.A) * Math.exp(buildupCoeffs.alpha2 * mu_x);
+            const attenuationFactor = Math.exp(-mu_x);
+            doseRateAt1m *= buildupFactor * attenuationFactor;
+            doseRateAt1cm *= buildupFactor * attenuationFactor;
+          }
+        }
+        totalContact += doseRateAt1cm;
+        totalOneMeter += doseRateAt1m;
+      });
+      return { contact: totalContact, oneMeter: totalOneMeter };
+    }, [sourceBox, shieldMaterial, shieldThickness]);
     if (!isOpen)
       return null;
     const handleApply = () => {
       if (correctedActivity !== null) {
         onApply(correctedActivity, refUncertainty);
       }
+    };
+    const handleAddSourceToBox = () => {
+      if (selectedNuclide && correctedActivity !== null && correctedActivity > 0) {
+        const newSource = {
+          id: crypto.randomUUID(),
+          nuclide: selectedNuclide,
+          activity: correctedActivity
+        };
+        setSourceBox((prev) => [...prev, newSource]);
+      }
+    };
+    const handleRemoveSource = (id) => {
+      setSourceBox((prev) => prev.filter((s) => s.id !== id));
     };
     const formatNumber4 = (num) => {
       if (num === null)
@@ -27137,69 +27314,129 @@
       const fixed = num.toFixed(3);
       return fixed.endsWith(".000") ? parseInt(fixed).toString() : fixed;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Card_default, { title: t("decayCalculatorTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
-            t("decayCalc_referenceActivity"),
-            " (",
-            unit,
-            ")"
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-800/70 rounded-lg shadow-xl backdrop-blur-md border border-gray-700 flex flex-col max-h-[90vh]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h2", { className: "text-lg font-semibold text-cyan-400 bg-gray-900/50 px-6 py-3 rounded-t-lg border-b border-gray-700 flex-shrink-0", children: t("decayCalculatorTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "p-6 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
+              t("decayCalc_referenceActivity"),
+              " (",
+              unit,
+              ")"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "number", value: refActivity, onChange: (e) => setRefActivity(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "number", value: refActivity, onChange: (e) => setRefActivity(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceUncertainty") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "number", value: refUncertainty, onChange: (e) => setRefUncertainty(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceDate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "date", value: refDate, onChange: (e) => setRefDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("measurementDate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "date", value: measDate, onChange: (e) => setMeasDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+          ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceUncertainty") }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "number", value: refUncertainty, onChange: (e) => setRefUncertainty(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("selectNuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("select", { value: selectedNuclideKey, onChange: (e) => setSelectedNuclideKey(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type, nuclides]) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("optgroup", { label: type.charAt(0).toUpperCase() + type.slice(1), children: nuclides.map((nuclide, index) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: `${type}-${index}`, children: nuclide.name }, `${type}-${index}`)) }, type)) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceDate") }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "date", value: refDate, onChange: (e) => setRefDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("measurementDate") }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "date", value: measDate, onChange: (e) => setMeasDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("selectNuclide") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("select", { value: selectedNuclideKey, onChange: (e) => setSelectedNuclideKey(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type, nuclides]) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("optgroup", { label: type.charAt(0).toUpperCase() + type.slice(1), children: nuclides.map((nuclide, index) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: `${type}-${index}`, children: nuclide.name }, `${type}-${index}`)) }, type)) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "border-t border-gray-700 pt-4 mt-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayResults") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "text-gray-400", children: [
-              t("halfLife"),
-              ":"
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "border-t border-gray-700 pt-4 mt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayResults") }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "text-gray-400", children: [
+                t("halfLife"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "font-mono", children: selectedNuclide ? `${(selectedNuclide.halfLifeSeconds / (365.25 * 24 * 3600)).toFixed(4)} years` : "N/A" })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "font-mono", children: selectedNuclide ? `${(selectedNuclide.halfLifeSeconds / (365.25 * 24 * 3600)).toFixed(4)} years` : "N/A" })
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "text-gray-400", children: [
+                t("elapsedTime"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "font-mono", children: elapsedDays !== null ? `${formatNumber4(elapsedDays)} ${t("days")}` : "N/A" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between text-lg font-bold text-cyan-300 pt-2 border-t border-gray-600 mt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { children: [
+                t("correctedActivity"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "font-mono", children: [
+                formatNumber4(correctedActivity),
+                " ",
+                unit
+              ] })
+            ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "text-gray-400", children: [
-              t("elapsedTime"),
-              ":"
+          doseRate && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: [
+              t("estimatedDoseRate"),
+              " (Unshielded)"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "font-mono", children: elapsedDays !== null ? `${formatNumber4(elapsedDays)} ${t("days")}` : "N/A" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-between text-lg font-bold text-cyan-300 pt-2 border-t border-gray-600 mt-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { children: [
-              t("correctedActivity"),
-              ":"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "font-mono", children: [
-              formatNumber4(correctedActivity),
-              " ",
-              unit
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
             ] })
           ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-end space-x-4 pt-4", children: [
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CollapsibleSection_default, { title: t("decayCalc_cumulativeTitle"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "p-2 space-y-4", children: [
+          sourceBox.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "max-h-40 overflow-y-auto border border-gray-700 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "p-2", children: t("sourceMgmt_nuclide") }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("th", { className: "p-2 text-right", children: [
+                t("activity"),
+                " (",
+                unit,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "p-2" })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { className: "text-gray-200", children: sourceBox.map((s) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { className: "border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "p-2", children: s.nuclide.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "p-2 font-mono text-right", children: s.activity.toExponential(2) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "p-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => handleRemoveSource(s.id), title: t("decayCalc_removeSource"), className: "text-red-400 hover:text-red-300", children: "\xD7" }) })
+            ] }, s.id)) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("shieldingOptional") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("shieldingMaterial") }),
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("select", { value: shieldMaterialName, onChange: (e) => setShieldMaterialName(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: "none", children: "None" }),
+                  shieldingMaterials.map((m) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: m.name, children: m.name }, m.name))
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
+                  t("shieldingThickness"),
+                  " (cm)"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "number", value: shieldThickness, onChange: (e) => setShieldThickness(parseFloat(e.target.value) || 0), min: "0", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white", disabled: shieldMaterialName === "none" })
+              ] })
+            ] })
+          ] }),
+          totalDoseRate && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayCalc_totalDoseRate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "text-xs text-gray-500 mt-2", children: t("doseRateDisclaimer") })
+          ] })
+        ] }) })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex justify-end items-center space-x-2 p-6 border-t border-gray-700 flex-shrink-0 bg-gray-800/70 rounded-b-lg", children: [
         /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: handleAddSourceToBox, disabled: correctedActivity === null || correctedActivity <= 0, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("decayCalc_addToBox") }),
         /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: handleApply, disabled: correctedActivity === null, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("calculateAndApply") })
       ] })
-    ] }) }) }) });
+    ] }) }) });
   };
   var DecayCalculatorModal_default = DecayCalculatorModal;
 
@@ -28306,6 +28543,27 @@
         const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
         const store = transaction.objectStore(ANALYSES_STORE_NAME);
         const request = store.delete(id);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    // --- Data Clearing ---
+    async clearSources() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        store.clear();
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    async clearAnalyses() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(ANALYSES_STORE_NAME);
+        store.clear();
         transaction.oncomplete = () => resolve();
         transaction.onerror = () => reject(transaction.error);
       });
@@ -31666,7 +31924,7 @@
     return points;
   };
   var formatNumber3 = (num) => {
-    if (num === null || num === void 0 || !isFinite(num))
+    if (num === null || num === void 0)
       return "N/A";
     if (typeof num === "string")
       return num;
@@ -31903,7 +32161,7 @@
     calibrationFactorUnitTooltip: "Unit\xE9 du facteur d'\xE9talonnage. Ex: Bq/(c/s).",
     relativeUncertainty: "Incertitude relative (u_rel(w))",
     relativeUncertaintyTooltip: "Incertitude relative sur le facteur d'\xE9talonnage, en pourcentage.",
-    decayCalculator: "Calculateur de d\xE9croissance",
+    decayCalculator: "Calculateur de d\xE9croissance & D\xE9bit de Dose",
     riskParameters: "Param\xE8tres de risque",
     k1alpha: "k(1-\u03B1)",
     k1alphaTooltip: "Quantile de la loi normale pour la probabilit\xE9 d'erreur de premi\xE8re esp\xE8ce \u03B1 (faux positif). Habituellement 1.645 pour \u03B1=5%.",
@@ -32071,6 +32329,18 @@
     elapsedTime: "Temps \xE9coul\xE9",
     correctedActivity: "Activit\xE9 corrig\xE9e",
     calculateAndApply: "Calculer et Appliquer",
+    estimatedDoseRate: "D\xE9bit de dose estim\xE9",
+    doseRateAt1cm: "Au contact (1 cm)",
+    doseRateAt1m: "\xC0 1 m\xE8tre",
+    shieldingOptional: "Blindage (Optionnel)",
+    shieldingMaterial: "Mat\xE9riau",
+    shieldingThickness: "\xC9paisseur",
+    doseRateDisclaimer: "Note : Calcul approximatif pour une source ponctuelle. L'effet d'accumulation (build-up) est pris en compte.",
+    decayCalc_cumulativeTitle: "Calculateur de Dose Cumul\xE9e",
+    decayCalc_addToBox: "Ajouter \xE0 la bo\xEEte",
+    decayCalc_sourceBox: "Sources dans la bo\xEEte",
+    decayCalc_totalDoseRate: "D\xE9bit de Dose Total Blind\xE9",
+    decayCalc_removeSource: "Retirer la source",
     // Peak Identifier
     peakIdentifierTitle: "Identification de pics",
     peakIdentifierIntro: "Entrez une liste d'\xE9nergies de pics (en keV), une par ligne, pour les identifier \xE0 l'aide de la biblioth\xE8que de radionucl\xE9ides.",
@@ -32496,8 +32766,6 @@
     varDesc_bestEstimateUncertainty: "Incertitude \xE9largie (k=2) sur la meilleure estimation.",
     varDesc_confidenceIntervalLower: "Borne inf\xE9rieure de l'intervalle de confiance \xE0 95%.",
     varDesc_confidenceIntervalUpper: "Borne sup\xE9rieure de l'intervalle de confiance \xE0 95%.",
-    varDesc_k1alpha: "La valeur de k(1-\u03B1) utilis\xE9e dans le calcul.",
-    varDesc_k1beta: "La valeur de k(1-\u03B2) utilis\xE9e dans le calcul.",
     varDesc_alphaProbability: "La probabilit\xE9 d'erreur de type I (\u03B1) calcul\xE9e \xE0 partir de k(1-\u03B1).",
     varDesc_betaProbability: "La probabilit\xE9 d'erreur de type II (\u03B2) calcul\xE9e \xE0 partir de k(1-\u03B2).",
     varDesc_meanTimeBetweenFalseAlarms: "Temps moyen estim\xE9 avant une fausse alarme, bas\xE9 sur \u03B1.",
@@ -32507,7 +32775,6 @@
     varDesc_sensitivityCoefficients: "Objet d\xE9taillant la sensibilit\xE9 du r\xE9sultat aux variations des entr\xE9es.",
     varDesc_probabilityEffectPresent: "(Bay\xE9sien) Probabilit\xE9 que l'activit\xE9 r\xE9elle soit sup\xE9rieure \xE0 z\xE9ro.",
     varDesc_histogramData: "(Monte Carlo) Tableau des r\xE9sultats de chaque simulation.",
-    varDesc_numSimulations: "(Monte Carlo) Nombre de simulations effectu\xE9es.",
     varDesc_monteCarloStats: "(Monte Carlo) Objet contenant les statistiques d\xE9taill\xE9es de la simulation."
   };
   var en = {
@@ -32572,7 +32839,7 @@
     calibrationFactorUnitTooltip: "Unit of the calibration factor. E.g., Bq/(c/s).",
     relativeUncertainty: "Relative Uncertainty (u_rel(w))",
     relativeUncertaintyTooltip: "Relative uncertainty of the calibration factor, in percent.",
-    decayCalculator: "Decay Calculator",
+    decayCalculator: "Decay & Dose Rate Calculator",
     riskParameters: "Risk Parameters",
     k1alpha: "k(1-\u03B1)",
     k1alphaTooltip: "Quantile of the normal distribution for the probability of error of the first kind \u03B1 (false positive). Usually 1.645 for \u03B1=5%.",
@@ -32730,6 +32997,18 @@
     elapsedTime: "Elapsed Time",
     correctedActivity: "Corrected Activity",
     calculateAndApply: "Calculate & Apply",
+    estimatedDoseRate: "Estimated Dose Rate",
+    doseRateAt1cm: "At contact (1 cm)",
+    doseRateAt1m: "At 1 meter",
+    shieldingOptional: "Shielding (Optional)",
+    shieldingMaterial: "Material",
+    shieldingThickness: "Thickness",
+    doseRateDisclaimer: "Note: Approximate calculation for a point source, includes build-up effect.",
+    decayCalc_cumulativeTitle: "Cumulative Dose Rate Calculator",
+    decayCalc_addToBox: "Add to Box",
+    decayCalc_sourceBox: "Sources in Box",
+    decayCalc_totalDoseRate: "Total Shielded Dose Rate",
+    decayCalc_removeSource: "Remove source",
     peakIdentifierTitle: "Peak Identifier",
     peakIdentifierIntro: "Enter a list of peak energies (in keV), one per line, to identify them using the radionuclide library.",
     peakEnergiesLabel: "Peak Energies (keV)",
@@ -33147,8 +33426,6 @@
     varDesc_bestEstimateUncertainty: "Expanded uncertainty (k=2) on the best estimate.",
     varDesc_confidenceIntervalLower: "Lower bound of the 95% confidence interval.",
     varDesc_confidenceIntervalUpper: "Upper bound of the 95% confidence interval.",
-    varDesc_k1alpha: "The value of k(1-\u03B1) used in the calculation.",
-    varDesc_k1beta: "The value of k(1-\u03B2) used in the calculation.",
     varDesc_alphaProbability: "The Type I error probability (\u03B1) calculated from k(1-\u03B1).",
     varDesc_betaProbability: "The Type II error probability (\u03B2) calculated from k(1-\u03B2).",
     varDesc_meanTimeBetweenFalseAlarms: "Estimated mean time before a false alarm, based on \u03B1.",
@@ -33158,7 +33435,6 @@
     varDesc_sensitivityCoefficients: "Object detailing the sensitivity of the result to changes in inputs.",
     varDesc_probabilityEffectPresent: "(Bayesian) Probability that the true activity is greater than zero.",
     varDesc_histogramData: "(Monte Carlo) Array of the results from each simulation iteration.",
-    varDesc_numSimulations: "(Monte Carlo) The number of simulations performed.",
     varDesc_monteCarloStats: "(Monte Carlo) Object containing detailed statistics of the simulation."
   };
   var de = {
@@ -33227,7 +33503,7 @@
     calibrationFactorUnitTooltip: "Einheit des Kalibrierfaktors. Z.B. Bq/(Imp/s).",
     relativeUncertainty: "Relative Unsicherheit (u_rel(w))",
     relativeUncertaintyTooltip: "Relative Unsicherheit des Kalibrierfaktors in Prozent.",
-    decayCalculator: "Zerfallsrechner",
+    decayCalculator: "Zerfalls- & Dosisratenrechner",
     riskParameters: "Risikoparameter",
     k1alpha: "k(1-\u03B1)",
     k1alphaTooltip: "Quantil der Normalverteilung f\xFCr die Wahrscheinlichkeit des Fehlers 1. Art \u03B1 (falsch positiv). \xDCblicherweise 1,645 f\xFCr \u03B1=5%.",
@@ -33395,6 +33671,18 @@
     elapsedTime: "Verstrichene Zeit",
     correctedActivity: "Korrigierte Aktivit\xE4t",
     calculateAndApply: "Berechnen & Anwenden",
+    estimatedDoseRate: "Gesch\xE4tzte Dosisleistung",
+    doseRateAt1cm: "Bei Kontakt (1 cm)",
+    doseRateAt1m: "In 1 Meter",
+    shieldingOptional: "Abschirmung (Optional)",
+    shieldingMaterial: "Material",
+    shieldingThickness: "Dicke",
+    doseRateDisclaimer: "Hinweis: Ungef\xE4hre Berechnung f\xFCr eine Punktquelle, mit Ber\xFCcksichtigung des Aufbaufaktors.",
+    decayCalc_cumulativeTitle: "Kumulativer Dosisleistungsrechner",
+    decayCalc_addToBox: "Zur Box hinzuf\xFCgen",
+    decayCalc_sourceBox: "Quellen in der Box",
+    decayCalc_totalDoseRate: "Gesamte abgeschirmte Dosisleistung",
+    decayCalc_removeSource: "Quelle entfernen",
     // Peak Identifier
     peakIdentifierTitle: "Peak-Identifikator",
     peakIdentifierIntro: "Geben Sie eine Liste von Peak-Energien (in keV) ein, eine pro Zeile.",
@@ -33810,8 +34098,6 @@
     varDesc_bestEstimateUncertainty: "Erweiterte Unsicherheit (k=2) der besten Sch\xE4tzung.",
     varDesc_confidenceIntervalLower: "Untere Grenze des 95%-Konfidenzintervalls.",
     varDesc_confidenceIntervalUpper: "Obere Grenze des 95%-Konfidenzintervalls.",
-    varDesc_k1alpha: "Der im Berechnung verwendete Wert von k(1-\u03B1).",
-    varDesc_k1beta: "Der im Berechnung verwendete Wert von k(1-\u03B2).",
     varDesc_alphaProbability: "Die aus k(1-\u03B1) berechnete Fehlerwahrscheinlichkeit I. Art (\u03B1).",
     varDesc_betaProbability: "Die aus k(1-\u03B2) berechnete Fehlerwahrscheinlichkeit II. Art (\u03B2).",
     varDesc_meanTimeBetweenFalseAlarms: "Gesch\xE4tzte mittlere Zeit bis zu einem Fehlalarm, basierend auf \u03B1.",
@@ -33821,7 +34107,6 @@
     varDesc_sensitivityCoefficients: "Objekt, das die Empfindlichkeit des Ergebnisses auf \xC4nderungen der Eingaben detailliert.",
     varDesc_probabilityEffectPresent: "(Bayes'sch) Wahrscheinlichkeit, dass die wahre Aktivit\xE4t gr\xF6\xDFer als Null ist.",
     varDesc_histogramData: "(Monte Carlo) Array der Ergebnisse aus jeder Simulationsiteration.",
-    varDesc_numSimulations: "(Monte Carlo) Die Anzahl der durchgef\xFChrten Simulationen.",
     varDesc_monteCarloStats: "(Monte Carlo) Objekt, das detaillierte Statistiken der Simulation enth\xE4lt."
   };
   var es = {
@@ -33890,7 +34175,7 @@
     calibrationFactorUnitTooltip: "Unidad del factor de calibraci\xF3n. Ej: Bq/(c/s).",
     relativeUncertainty: "Incertidumbre relativa (u_rel(w))",
     relativeUncertaintyTooltip: "Incertidumbre relativa del factor de calibraci\xF3n, en porcentaje.",
-    decayCalculator: "Calculadora de decaimiento",
+    decayCalculator: "Calculadora de Decaimiento y Tasa de Dosis",
     riskParameters: "Par\xE1metros de riesgo",
     k1alpha: "k(1-\u03B1)",
     k1alphaTooltip: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de primera especie \u03B1 (falso positivo). Generalmente 1.645 para \u03B1=5%.",
@@ -33922,8 +34207,6 @@
     probeParameters: "Par\xE1metros de la sonde",
     probeEfficiency: "Eficiencia de sonda (%)",
     probeEfficiencyTooltip: "Eficiencia 2\u03C0 o 4\u03C0 de la sonda de detecci\xF3n.",
-    probeArea: "\xC1rea de sonda (cm\xB2)",
-    probeAreaTooltip: "\xC1rea de detecci\xF3n de la sonda en cent\xEDmetros cuadrados.",
     measurementConditions: "Condiciones de medici\xF3n",
     estimatedBackgroundRate: "Tasa de fondo est. (c/s)",
     estimatedBackgroundRateTooltip: "Tasa de conteo de fondo promedio esperada para este dispositivo.",
@@ -34058,6 +34341,18 @@
     elapsedTime: "Tiempo transcurrido",
     correctedActivity: "Actividad corregida",
     calculateAndApply: "Calcular y Aplicar",
+    estimatedDoseRate: "Tasa de Dosis Estimada",
+    doseRateAt1cm: "En contacto (1 cm)",
+    doseRateAt1m: "A 1 metro",
+    shieldingOptional: "Blindaje (Opcional)",
+    shieldingMaterial: "Material",
+    shieldingThickness: "Espesor",
+    doseRateDisclaimer: "Nota: C\xE1lculo aproximado para una fuente puntual, incluye efecto de acumulaci\xF3n (build-up).",
+    decayCalc_cumulativeTitle: "Calculadora de Dosis Acumulada",
+    decayCalc_addToBox: "A\xF1adir a la Caja",
+    decayCalc_sourceBox: "Fuentes en la Caja",
+    decayCalc_totalDoseRate: "Tasa de Dosis Total Blindada",
+    decayCalc_removeSource: "Quitar fuente",
     // Peak Identifier
     peakIdentifierTitle: "Identificador de picos",
     peakIdentifierIntro: "Ingrese una lista de energ\xEDas de picos (en keV), una por l\xEDnea.",
@@ -34251,234 +34546,15 @@
     mainEnergyLines: "L\xEDneas de Energ\xEDa Principales",
     noSignificantGamma: "Sin l\xEDnea gamma significativa",
     // Unit Converter (Missing ES)
-    unitConverterTitle: "Convertidor de Unidades Radiol\xF3gicas",
-    unit_category: "Categor\xEDa de Medici\xF3n",
-    unit_cat_activity: "Actividad",
-    unit_cat_exposure: "Exposici\xF3n",
-    unit_cat_absorbed_dose: "Dosis Absorbida",
-    unit_cat_equivalent_dose: "Dosis Equivalente",
-    unit_value: "Valor",
-    unit_from: "De",
-    unit_swap: "Intercambiar",
-    unit_result: "Resultado",
-    unit_to: "A",
-    unit_description: "Descripciones de Unidades",
-    unit_desc_bq: "La unidad SI de actividad radiactiva, igual a una desintegraci\xF3n por segundo.",
-    unit_desc_ci: "Una antigua unidad de actividad, basada originalmente en la actividad de un gramo de radio-226.",
-    unit_desc_dpm: "Desintegraciones por minuto, una unidad com\xFAn para medir la actividad, especialmente para fuentes alfa/beta.",
-    unit_desc_dps: "Desintegraciones por segundo, equivalente al Becquerel.",
-    unit_desc_c_kg: "Culombios por kilogramo, la unidad SI de exposici\xF3n a la radiaci\xF3n ionizante.",
-    unit_desc_r: "El R\xF6ntgen, una antigua unidad de exposici\xF3n, que mide la ionizaci\xF3n en el aire.",
-    unit_desc_gy: "El Gray, la unidad SI de dosis absorbida, que mide la energ\xEDa depositada por kilogramo de materia.",
-    unit_desc_rad: "Una antigua unidad de dosis absorbida (Radiation Absorbed Dose).",
-    unit_desc_sv: "El Sievert, la unidad SI de dosis equivalente, que tiene en cuenta el efecto biol\xF3gico de diferentes tipos de radiaci\xF3n.",
-    unit_desc_rem: "Una antigua unidad de dosis equivalente (R\xF6ntgen Equivalent Man).",
-    exportModalTitle: "Exportar Datos de Fuentes",
-    exportModalIntro: "Esta es una copia de seguridad de todas sus fuentes. Gu\xE1rdela en un lugar seguro para evitar la p\xE9rdida de datos. Puede copiar el texto o descargar el archivo.",
-    copyJson: "Copiar JSON",
-    downloadFile: "Descargar Archivo",
-    shareFile: "Compartir",
-    copied: "\xA1Copiado!",
-    confirmAddPeak: "\xBFDesea agregar manualmente un pico en esta posici\xF3n?",
-    reportGeneratorTitle: "Generar Informe",
-    operatorName: "Nombre del Operador",
-    sampleId: "ID de Muestra",
-    reportDate: "Fecha del Informe",
-    reportInputs: "Datos de Entrada",
-    reportResults: "Resultados",
-    comments: "Comentarios",
-    noResultsToDisplay: "No hay resultados para mostrar.",
-    chartNotAvailable: "Gr\xE1fico no disponible.",
-    // Guide ES
-    guideTitle: "Gu\xEDa del usuario",
-    guide_intro_title: "Introducci\xF3n",
-    guide_intro_p1: "Este asistente es una herramienta educativa y pr\xE1ctica para aplicar los conceptos de la norma ISO 11929. Ayuda a calcular los l\xEDmites caracter\xEDsticos (umbral de decisi\xF3n, l\xEDmite de detecci\xF3n) y a comprender el impacto de diferentes par\xE1metros. La versi\xF3n actual del software (V6.4.4) se muestra debajo del icono de selecci\xF3n de idioma en el encabezado.",
-    guide_main_calc_title: "Calculadora Principal",
-    guide_main_calc_p1: "El coraz\xF3n de la aplicaci\xF3n. Realiza los c\xE1lculos de acuerdo con la norma.",
-    guide_main_calc_modes_title: "Modos de An\xE1lisis",
-    guide_main_calc_modes_p1: "Seleccione el modo apropiado a trav\xE9s de la barra de pesta\xF1as superior.",
-    guide_main_calc_modes_li1: "Para mediciones simples con tiempos de conteo definidos.",
-    guide_main_calc_modes_li2: "Similar al Est\xE1ndar, pero usa ROI y tama\xF1os de espectro completo para escalar el fondo.",
-    guide_main_calc_modes_li3_surface: "Calcula el umbral y el l\xEDmite en t\xE9rminos de actividad superficial, utilizando la eficiencia y el \xE1rea de la sonda.",
-    guide_main_calc_modes_li3_chambre: "Para monitores con tiempo fijo.",
-    guide_main_calc_modes_li3_linge: "Para monitores de cinta transportadora, calcula el tiempo de medici\xF3n efectivo basado en la velocidad.",
-    guide_main_calc_inputs_title: "Entradas",
-    guide_main_calc_inputs_p1: "Complete los campos requeridos. Los tooltips (i) proporcionan detalles sobre cada par\xE1metro.",
-    guide_main_calc_inputs_li1: "Ingrese cuentas brutas o tasa, y tiempo de medici\xF3n.",
-    guide_main_calc_inputs_li2: "El factor 'w' (por ejemplo, eficiencia inversa). Para los modos Superficie/C\xE1mara/Ropa, esto se puede calcular autom\xE1ticamente.",
-    guide_main_calc_inputs_li3: "Define probabilidades de error (\u03B1, \u03B2).",
-    guide_main_calc_results_title: "Resultados",
-    guide_main_calc_results_p1: "El panel derecho muestra los valores calculados.",
-    guide_main_calc_results_li1: "Si resultado neto > y*, el efecto est\xE1 presente.",
-    guide_main_calc_results_li2: "Actividad detectable m\xE1s peque\xF1a de manera fiable.",
-    guide_main_calc_results_li3: "Declaraci\xF3n clara de la presencia o ausencia de actividad.",
-    guide_main_calc_results_li4: "(Modo Experto) Muestra la contribuci\xF3n de cada entrada a la incertidumbre total.",
-    guide_main_calc_expert_title: "Caracter\xEDsticas de Experto",
-    guide_main_calc_expert_p1: "Active el 'Modo Experto' para m\xE1s opciones.",
-    guide_main_calc_expert_li1: "Ajuste si el fondo y la calibraci\xF3n est\xE1n correlacionados.",
-    guide_main_calc_expert_li2: "Use simulaci\xF3n num\xE9rica en lugar de f\xF3rmulas anal\xEDticas para una mejor precisi\xF3n estad\xEDstica.",
-    guide_spec_tools_title: "Herramientas de Espectrometr\xEDa",
-    guide_spec_tools_p1: "Accesible para usuarios PRO a trav\xE9s de la pesta\xF1a Espectrometr\xEDa.",
-    guide_spec_analyzer_title: "Analizador de Imagen",
-    guide_spec_analyzer_p1: "Extrae datos de una imagen de espectro (captura de pantalla o foto).",
-    guide_spec_analyzer_phase1_title: "Calibraci\xF3n",
-    guide_spec_analyzer_phase1_p1: "Haga clic en picos conocidos (por ejemplo, Cs-137 a 662 keV) para establecer la relaci\xF3n canal-energ\xEDa.",
-    guide_spec_analyzer_phase2_title: "An\xE1lisis",
-    guide_spec_analyzer_phase2_p1: "El sistema extrae la curva, detecta picos e intenta identificarlos contra la biblioteca.",
-    guide_other_tools_decay_title: "Calculadora de Decaimiento",
-    guide_other_tools_decay_p1: "Utilidad r\xE1pida para calcular la actividad actual de cualquier nucleido sin a\xF1adirlo al inventario.",
-    guide_other_tools_peak_title: "Identificador de Picos",
-    guide_other_tools_peak_p1: "Ingrese una lista de energ\xEDas para encontrar nucleidos coincidentes.",
-    guide_data_mgmt_title: "Gesti\xF3n de Datos",
-    guide_data_mgmt_p1: "Guarde su configuraci\xF3n completa (Entradas + Modo) a trav\xE9s de los botones 'Guardar/Cargar' en el panel de entrada.",
-    // Admin & File Descs (Same keys as FR)
-    adminInfoPlaceholder: "Haga clic en el icono (i) junto a un archivo o carpeta para ver su descripci\xF3n aqu\xED.",
-    adminVariablesTitle: "Estructuras de Datos y Variables Clave",
-    adminInputsTitle: "Estado de Entrada (tipo `Inputs`)",
-    adminResultsTitle: "Estado de Resultado (tipo `Results`)",
-    folderDesc_components: "Componentes UI reutilizables.",
-    folderDesc_pages: "Vistas principales de la aplicaci\xF3n.",
-    folderDesc_services: "L\xF3gica de negocio y acceso a datos.",
-    folderDesc_electron: "Configuraci\xF3n proceso principal Electron.",
-    folderDesc_n42_analyzer: "Componentes an\xE1lisis archivos N42.",
-    folderDesc_source_management: "Componentes gesti\xF3n inventario fuentes.",
-    folderDesc_spectrum_analyzer: "Componentes an\xE1lisis espectro imagen.",
-    fileDesc_App: "Componente ra\xEDz. Gestiona estado global y enrutamiento.",
-    fileDesc_index_tsx: "Punto entrada React.",
-    fileDesc_index_html: "Punto entrada HTML.",
-    fileDesc_index_css: "Estilos globales y directivas Tailwind.",
-    fileDesc_types: "Definiciones TypeScript.",
-    fileDesc_translations: "Diccionario traducciones.",
-    fileDesc_manifest: "Config PWA.",
-    fileDesc_metadata: "Metadatos dev.",
-    fileDesc_package: "Dependencias npm.",
-    fileDesc_readme: "Documentaci\xF3n.",
-    fileDesc_sw: "Service Worker.",
-    fileDesc_tailwind: "Config Tailwind.",
-    fileDesc_Card: "Contenedor gen\xE9rico.",
-    fileDesc_ChartModal: "Modal gr\xE1ficos.",
-    fileDesc_ChartPanel: "Panel gr\xE1ficos.",
-    fileDesc_CollapsibleSection: "Secci\xF3n acorde\xF3n.",
-    fileDesc_DecayCalculatorModal: "Herramienta decaimiento.",
-    fileDesc_ExportModal: "Modal respaldo.",
-    fileDesc_GeminiBackupModal: "Componente respaldo.",
-    fileDesc_GeminiHelper: "Ayuda IA.",
-    fileDesc_InfoTooltip: "Ayuda tooltip.",
-    fileDesc_InputPanel: "Formulario entrada principal.",
-    fileDesc_LanguageSelector: "Selector idioma.",
-    fileDesc_ModeSelector: "Botones modo.",
-    fileDesc_MonteCarloStatsModal: "Modal estats MC.",
-    fileDesc_PeakIdentifierModal: "Herramienta picos.",
-    fileDesc_PeakPositionAdjusterModal: "Ajustador picos.",
-    fileDesc_ProAccessModal: "Desbloqueo Pro.",
-    fileDesc_ReportGeneratorModal: "Herramienta reporte.",
-    fileDesc_ResultsPanel: "Visualizaci\xF3n resultados.",
-    fileDesc_SaveAnalysisModal: "Guardar an\xE1lisis.",
-    fileDesc_ThemeSelector: "Selector tema.",
-    fileDesc_UnitConverterModal: "Convertidor unidades.",
-    fileDesc_UpdateNotification: "Alerta actualizaci\xF3n.",
-    fileDesc_UserGuideModal: "Gu\xEDa usuario.",
-    fileDesc_WelcomeModal: "Popup bienvenida.",
-    fileDesc_AddPeakModal: "Modal agregar pico.",
-    fileDesc_ComparisonPlot: "Gr\xE1fico comparaci\xF3n.",
-    fileDesc_DeconvolutionModal: "Herramienta deconvoluci\xF3n.",
-    fileDesc_EfficiencyCalibrationModal: "Placeholder calib ef.",
-    fileDesc_SpectrumPlot: "Gr\xE1fico espectro.",
-    fileDesc_AddSourceModal: "Formulario fuente.",
-    fileDesc_CsvImportModal: "Importar CSV.",
-    fileDesc_ImportReviewModal: "Revisi\xF3n importaci\xF3n.",
-    fileDesc_SourceTooltip: "Detalles fuente.",
-    fileDesc_SourceTypesMemoModal: "Info tipos fuente.",
-    fileDesc_AnalysisResults: "Resultados an\xE1lisis imagen.",
-    fileDesc_CalibrationPointModal: "Entrada punto calib.",
-    fileDesc_CalibrationSidebar: "Gu\xEDa calib.",
-    fileDesc_CameraCapture: "Captura webcam.",
-    fileDesc_ImageUploader: "Carga imagen.",
-    fileDesc_AdminPage: "Vista admin.",
-    fileDesc_AnalysisHistoryPage: "Vista historial.",
-    fileDesc_BackgroundSubtractionPage: "Vista resta fondo.",
-    fileDesc_N42AnalyzerPage: "Vista N42.",
-    fileDesc_SourceManagementPage: "Vista fuentes.",
-    fileDesc_SpectroPage: "Men\xFA espectro.",
-    fileDesc_SpectrumAnalyzerPage: "Vista espectro imagen.",
-    fileDesc_SpectrumComparisonPage: "Vista comparaci\xF3n.",
-    fileDesc_analysisHelpers: "Utilidades an\xE1lisis.",
-    fileDesc_dbService: "Wrapper BD.",
-    fileDesc_gammaLibrary: "Librer\xEDa nucleidos.",
-    fileDesc_geminiService: "Servicio IA.",
-    fileDesc_isoCalculations: "Motor ISO.",
-    fileDesc_monteCarloService: "Motor MC.",
-    fileDesc_n42ParserService: "Parser N42.",
-    fileDesc_peakIdentifierService: "Algo. identificaci\xF3n.",
-    fileDesc_radionuclides: "Datos decaimiento.",
-    fileDesc_sourceTypes: "Defs. tipos fuente.",
-    fileDesc_spectrumAnalyzerService: "Procesamiento imagen.",
-    fileDesc_electron_main: "Main Electron.",
-    fileDesc_electron_preload: "Preload Electron.",
-    // Variable descriptions
-    varDesc_grossCount: "Total de cuentas medidas para la muestra. Tambi\xE9n puede ser una tasa si la unidad no es 'cuentas'.",
-    varDesc_grossCountUnit: "La unidad para el conteo bruto (cuentas, c/s, c/min, c/0.2s).",
-    varDesc_grossTime: "Duraci\xF3n de la medici\xF3n de la muestra en segundos.",
-    varDesc_backgroundCount: "Total de cuentas medidas para el fondo. Tambi\xE9n puede ser una tasa.",
-    varDesc_backgroundCountUnit: "La unidad para el conteo de fondo.",
-    varDesc_backgroundTime: "Duraci\xF3n de la medici\xF3n de fondo en segundos.",
-    varDesc_roiGrossCount: "(Espectrometr\xEDa) N\xFAmero de cuentas brutas dentro de la Regi\xF3n de Inter\xE9s (ROI).",
-    varDesc_roiChannels: "(Espectrometr\xEDa) N\xFAmero de canales dentro de la ROI.",
-    varDesc_backgroundTotalCount: "(Espectrometr\xEDa) N\xFAmero total de cuentas en todo el espectro de fondo.",
-    varDesc_backgroundChannels: "(Espectrometr\xEDa) N\xFAmero total de canales en el espectro de fondo.",
-    varDesc_probeEfficiency: "(Control Superficial) Eficiencia de la sonda en porcentaje (%).",
-    varDesc_probeArea: "(Control Superficial) \xC1rea de la sonda en cm\xB2.",
-    varDesc_estimatedBackgroundRate: "(Control Superficial) Tasa de conteo de fondo esperada en c/s.",
-    varDesc_targetValue: "(Control Superficial) Valor de actividad objetivo a alcanzar.",
-    varDesc_targetUnit: "(Control Superficial) Unidad de la actividad objetivo.",
-    varDesc_conveyorSpeed: "(Ropa) Velocidad de la cinta transportadora.",
-    varDesc_conveyorSpeedUnit: "(Ropa) Unidad para la velocidad de la cinta transportadora (cm/min o m/min).",
-    varDesc_chamberLength: "Longitud de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
-    varDesc_chamberWidth: "Ancho de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
-    varDesc_chamberHeight: "Altura de la c\xE1mara (no utilizada en los c\xE1lculos actuales).",
-    varDesc_detectors: "(C\xE1mara/Ropa) Matriz de configuraciones de detectores.",
-    varDesc_chambreLingeTime: "(C\xE1mara) Tiempo de medici\xF3n fijo para el modo de c\xE1mara.",
-    varDesc_chambreLingeTarget: "(C\xE1mara/Ropa) Actividad objetivo a alcanzar.",
-    varDesc_chambreLingeTargetUnit: "(C\xE1mara/Ropa) Unidad de la actividad objetivo.",
-    varDesc_calibrationFactor: "Factor de conversi\xF3n 'w' para pasar de la tasa de conteo neta (c/s) a la actividad (Bq).",
-    varDesc_calibrationFactorUnit: "Unidad del factor de calibraci\xF3n (ej: Bq/(c/s)).",
-    varDesc_calibrationFactorUncertainty: "Incertidumbre relativa del factor de calibraci\xF3n en porcentaje (%).",
-    varDesc_k1alpha: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo I \u03B1 (falso positivo).",
-    varDesc_k1beta: "Cuantil de la distribuci\xF3n normal para la probabilidad de error de Tipo II \u03B2 (falso negativo).",
-    varDesc_correlationCoefficient: "Coeficiente de correlaci\xF3n entre la incertidumbre del fondo y la de calibraci\xF3n.",
-    varDesc_monteCarloMode: "Booleano para habilitar/deshabilitar el modo de simulaci\xF3n Monte Carlo.",
-    varDesc_useBayesianMode: "Booleano para habilitar/deshabilitar el modo de c\xE1lculo Bayesiano.",
-    varDesc_numSimulations: "N\xFAmero de iteraciones para la simulaci\xF3n Monte Carlo.",
-    varDesc_calculationMethod: "El m\xE9todo utilizado para el c\xE1lculo ('analytical', 'monteCarlo', 'bayesian').",
-    varDesc_currentMode: "El modo de an\xE1lisis actual ('standard', 'spectrometry', etc.).",
-    varDesc_primaryResult: "El resultado neto calculado (y), la mejor estimaci\xF3n de la actividad.",
-    varDesc_primaryUncertainty: "La incertidumbre est\xE1ndar combinada sobre el resultado neto (u(y)).",
-    varDesc_decisionThreshold: "El umbral de decisi\xF3n (y*). Si y > y*, se decide que la actividad est\xE1 presente.",
-    varDesc_detectionLimit: "El l\xEDmite de detecci\xF3n (y#). La actividad m\xE1s peque\xF1a detectable de manera fiable.",
-    varDesc_isEffectPresent: "Booleano que indica si el resultado neto excede el umbral de decisi\xF3n.",
-    varDesc_bestEstimate: "La mejor estimaci\xF3n de la actividad, solo se muestra cuando se detecta actividad.",
-    varDesc_bestEstimateUncertainty: "Incertidumbre expandida (k=2) sobre la mejor estimaci\xF3n.",
-    varDesc_confidenceIntervalLower: "L\xEDmite inferior del intervalo de confianza del 95%.",
-    varDesc_confidenceIntervalUpper: "L\xEDmite superior del intervalo de confianza del 95%.",
-    varDesc_k1alpha: "El valor de k(1-\u03B1) utilizado en el c\xE1lculo.",
-    varDesc_k1beta: "El valor de k(1-\u03B2) utilizado en el c\xE1lculo.",
-    varDesc_alphaProbability: "La probabilidad de error de Tipo I (\u03B1) calculada a partir de k(1-\u03B1).",
-    varDesc_betaProbability: "La probabilidad de error de Tipo II (\u03B2) calculada a partir de k(1-\u03B2).",
-    varDesc_meanTimeBetweenFalseAlarms: "Tiempo medio estimado antes de una falsa alarma, basado en \u03B1.",
-    varDesc_uncertaintyAtZero: "Incertidumbre est\xE1ndar para actividad cero (u\u2080), utilizada para calcular y*.",
-    varDesc_uncertaintyAtDetectionLimit: "Incertidumbre est\xE1ndar en el l\xEDmite de detecci\xF3n (u#).",
-    varDesc_varianceComponents: "Objeto que detalla la contribuci\xF3n de cada fuente a la varianza total.",
-    varDesc_sensitivityCoefficients: "Objeto que detalla la sensibilidad del resultado a los cambios en las entradas.",
-    varDesc_probabilityEffectPresent: "(Bayesiano) Probabilidad de que la actividad real sea mayor que cero.",
-    varDesc_histogramData: "(Monte Carlo) Matriz de los resultados de cada iteraci\xF3n de la simulaci\xF3n.",
-    varDesc_numSimulations: "(Monte Carlo) El n\xFAmero de simulaciones realizadas.",
-    varDesc_monteCarloStats: "(Monte Carlo) Objeto que contiene estad\xEDsticas detalladas de la simulaci\xF3n."
+    unitConverterTitle: "Convertidor de unidades radiol\xF3gicas"
   };
   var translations = { fr, en, de, es };
-  function getTranslator(lang) {
-    const langTranslations = translations[lang] || fr;
-    return (key) => langTranslations[key] || key;
-  }
+  var getTranslator = (lang) => {
+    const langTranslations = translations[lang] || translations["fr" /* FR */];
+    return (key) => {
+      return langTranslations[key] || key;
+    };
+  };
 
   // services/isoCalculations.ts
   var erf = (x) => {
