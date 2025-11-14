@@ -31819,7 +31819,7 @@
       node.children && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: node.children, t, onInfoClick })
     ] }, node.name)) });
   };
-  var AdminPage = ({ t, onBack, inputs, isProUser, setProUser }) => {
+  var AdminPage = ({ t, onBack, inputs, results, isProUser, setProUser }) => {
     const [infoFile, setInfoFile] = (0, import_react34.useState)(null);
     const handleClearLocalStorage = () => {
       if (window.confirm("This will reset all application settings, including PRO mode. Are you sure?")) {
@@ -31918,13 +31918,29 @@
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-gray-400 mb-6", children: t("adminWelcome") }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("projectExplorer"), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-500 mb-4", children: t("projectExplorerDesc") }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "max-h-[50vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: projectStructure, t, onInfoClick: setInfoFile }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-600 mt-4", children: t("adminStaticStructureWarning") })
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 items-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("projectExplorer"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-500 mb-4", children: t("projectExplorerDesc") }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "max-h-[60vh] overflow-y-auto pr-2", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: projectStructure, t, onInfoClick: setInfoFile }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-600 mt-4", children: t("adminStaticStructureWarning") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminVariablesTitle"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: inputVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+            ] }, v)) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: resultVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+            ] }, v)) }) })
+          ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "space-y-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-1 sticky top-6 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminLiveStateTitle"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(inputs, null, 2) }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(results, null, 2) }) }) })
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Card_default, { title: t("fileInfo"), children: infoFile ? /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "p-3 min-h-[120px]", children: [
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h4", { className: "font-bold text-cyan-400 mb-2", children: infoFile.name }),
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-300", children: t(infoFile.descKey) || "No description available." })
@@ -31937,17 +31953,7 @@
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearLocalStorage, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearLocalStorage") }),
             /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearDB, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearIndexedDB") })
           ] }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "md:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminVariablesTitle"), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: inputVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
-          ] }, v)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: resultVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
-          ] }, v)) }) })
-        ] }) })
+        ] })
       ] })
     ] });
   };
@@ -32471,6 +32477,9 @@
     adminVariablesTitle: "Structures de Donn\xE9es & Variables Cl\xE9s",
     adminInputsTitle: "\xC9tat d'Entr\xE9e (type `Inputs`)",
     adminResultsTitle: "\xC9tat de R\xE9sultat (type `Results`)",
+    adminLiveStateTitle: "\xC9tat de l'application en direct",
+    adminInputsState: "\xC9tat des entr\xE9es",
+    adminResultsState: "\xC9tat des r\xE9sultats",
     // Theme
     changeTheme: "Changer le th\xE8me",
     themeCyberCyan: "Cyber Cyan",
@@ -33164,6 +33173,9 @@
     adminVariablesTitle: "Key Data Structures & Variables",
     adminInputsTitle: "Input State (`Inputs` type)",
     adminResultsTitle: "Result State (`Results` type)",
+    adminLiveStateTitle: "Live Application State",
+    adminInputsState: "Inputs State",
+    adminResultsState: "Results State",
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
     themeLabWhite: "Lab White",
@@ -34054,6 +34066,9 @@
     adminVariablesTitle: "Schl\xFCsseldatenstrukturen & Variablen",
     adminInputsTitle: "Eingabestatus (Typ `Inputs`)",
     adminResultsTitle: "Ergebnisstatus (Typ `Results`)",
+    adminLiveStateTitle: "Live-Anwendungsstatus",
+    adminInputsState: "Eingabestatus",
+    adminResultsState: "Ergebnisstatus",
     folderDesc_components: "Wiederverwendbare UI-Komponenten.",
     folderDesc_pages: "Hauptansichten der Anwendung.",
     folderDesc_services: "Gesch\xE4ftslogik und Datenzugriff.",
@@ -35540,7 +35555,7 @@
         case "history":
           return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(AnalysisHistoryPage_default, { t, onLoadAnalysis: handleLoadAnalysis });
         case "admin":
-          return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(AdminPage_default, { t, onBack: () => setView("calculator"), inputs, isProUser, setProUser: (val) => setIsProUser(val) });
+          return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(AdminPage_default, { t, onBack: () => setView("calculator"), inputs, results, isProUser, setProUser: (val) => setIsProUser(val) });
         default:
           return renderCalculatorView();
       }
