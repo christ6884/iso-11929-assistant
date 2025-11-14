@@ -16,6 +16,7 @@ const fr: Translations = {
     identifyPeaks: "Identifier des pics",
     toolsMenu: "Outils",
     userGuide: "Guide d'utilisation",
+    tutorialsAndExamples: "Tutoriels & Exemples",
     showWelcomeTooltip: "Afficher l'aide de bienvenue",
     lockedFeature: "Fonctionnalité PRO. Cliquez pour débloquer.",
     loading: "Chargement",
@@ -712,6 +713,39 @@ const fr: Translations = {
     varDesc_probabilityEffectPresent: "(Bayésien) Probabilité que l'activité réelle soit supérieure à zéro.",
     varDesc_histogramData: "(Monte Carlo) Tableau des résultats de chaque simulation.",
     varDesc_monteCarloStats: "(Monte Carlo) Objet contenant les statistiques détaillées de la simulation.",
+
+    // Tutorials
+    tutorials_title: "Tutoriels & Exemples Pratiques",
+    tutorials_intro: "Ce guide vous montre comment utiliser les fonctionnalités clés de l'application à travers des scénarios réels. Chaque exemple est conçu pour être rapide et facile à suivre.",
+
+    tutorial1_title: "Exemple 1 : Calcul ISO 11929 de base",
+    tutorial1_step1: "Restez en mode 'Standard'. Dans 'Mesure source', entrez un comptage brut de 150 coups pour un temps de 60s.",
+    tutorial1_step2: "Dans 'Mesure bruit de fond', entrez 600 coups pour 600s (soit 1 c/s).",
+    tutorial1_step3: "Dans 'Étalonnage', mettez un facteur `w` de 1.25 Bq/(c/s) avec 5% d'incertitude.",
+    tutorial1_step4: "Observez les résultats : le seuil de décision y* est d'environ 0.29 Bq. Le résultat net y (1.88 Bq) est supérieur, donc l'activité est détectée.",
+
+    tutorial2_title: "Exemple 2 : Calcul de décroissance",
+    tutorial2_step1: "Cliquez sur l'icône 🕘 à côté de 'Facteur d'étalonnage'.",
+    tutorial2_step2: "Entrez une activité de référence de 37000 Bq pour du Cobalt-60, avec une date de référence d'il y a un an.",
+    tutorial2_step3: "Cliquez sur 'Calculer et Appliquer'. Le facteur d'étalonnage est mis à jour avec l'activité corrigée (environ 32260 Bq) et le débit de dose estimé s'affiche.",
+    
+    tutorial3_title: "Exemple 3 : Impact d'un blindage",
+    tutorial3_step1: "Ouvrez à nouveau le calculateur de décroissance (🕘). Les données de la source de Co-60 sont conservées.",
+    tutorial3_step2: "Dans la section 'Blindage', sélectionnez 'Plomb (Pb)' comme matériau.",
+    tutorial3_step3: "Entrez une épaisseur de 5 cm. Le débit de dose total blindé apparaît.",
+    tutorial3_step4: "Observez : le débit de dose à 1m passe de ~11.4 mSv/h (non blindé) à ~140 µSv/h (blindé), montrant l'efficacité du blindage.",
+    
+    tutorial4_title: "Exemple 4 : Colis de transport (Dose cumulée)",
+    tutorial4_step1: "Dans le calculateur de décroissance, avec la source de Co-60 calculée, cliquez sur 'Ajouter à la boîte'.",
+    tutorial4_step2: "Changez le nucléide pour du Césium-137. Entrez 50000 Bq à la date du jour et cliquez sur 'Ajouter à la boîte'.",
+    tutorial4_step3: "La section 'Calculateur de Dose Cumulée' montre maintenant les deux sources.",
+    tutorial4_step4: "Le débit de dose total pour le 'colis' est calculé en tenant compte du blindage de 5cm de plomb, vous donnant le débit de dose final de votre colis.",
+
+    tutorial5_title: "Exemple 5 : Analyse de spectre simple",
+    tutorial5_step1: "Allez dans 'Outils de Spectrométrie' (PRO) et choisissez 'Analyseur N42'.",
+    tutorial5_step2: "Chargez un fichier N42. Le spectre s'affiche avec les pics détectés automatiquement.",
+    tutorial5_step3: "Cliquez sur un pic dans le tableau des résultats pour le surligner sur le graphique.",
+    tutorial5_step4: "Cliquez-glissez sur le graphique pour sélectionner une zone complexe (ROI) et voir la déconvolution de pics multiples.",
 };
 
 const en: Translations = {
@@ -723,6 +757,7 @@ const en: Translations = {
     identifyPeaks: "Identify Peaks",
     toolsMenu: "Tools",
     userGuide: "User Guide",
+    tutorialsAndExamples: "Tutorials & Examples",
     showWelcomeTooltip: "Show Welcome Help",
     lockedFeature: "PRO feature. Click to unlock.",
     loading: "Loading",
@@ -1398,6 +1433,39 @@ const en: Translations = {
     varDesc_probabilityEffectPresent: "(Bayesian) Probability that the true activity is greater than zero.",
     varDesc_histogramData: "(Monte Carlo) Array of the results from each simulation iteration.",
     varDesc_monteCarloStats: "(Monte Carlo) Object containing detailed statistics of the simulation.",
+
+    // Tutorials
+    tutorials_title: "Tutorials & Practical Examples",
+    tutorials_intro: "This guide shows you how to use the app's key features through real-world scenarios. Each example is designed to be quick and easy to follow.",
+
+    tutorial1_title: "Example 1: Basic ISO 11929 Calculation",
+    tutorial1_step1: "Stay in 'Standard' mode. In 'Source Measurement', enter a gross count of 150 counts for a 60s time.",
+    tutorial1_step2: "In 'Background Measurement', enter 600 counts for 600s (which is 1 c/s).",
+    tutorial1_step3: "In 'Calibration', set a factor `w` of 1.25 Bq/(c/s) with 5% uncertainty.",
+    tutorial1_step4: "Observe the results: the decision threshold y* is about 0.29 Bq. The net result y (1.88 Bq) is higher, so activity is detected.",
+
+    tutorial2_title: "Example 2: Decay Calculation",
+    tutorial2_step1: "Click the 🕘 icon next to 'Calibration Factor'.",
+    tutorial2_step2: "Enter a reference activity of 37000 Bq for Cobalt-60, with a reference date from one year ago.",
+    tutorial2_step3: "Click 'Calculate & Apply'. The calibration factor is updated with the corrected activity (around 32260 Bq) and the estimated dose rate is displayed.",
+    
+    tutorial3_title: "Example 3: Impact of Shielding",
+    tutorial3_step1: "Open the decay calculator (🕘) again. The Co-60 source data is preserved.",
+    tutorial3_step2: "In the 'Shielding' section, select 'Lead (Pb)' as the material.",
+    tutorial3_step3: "Enter a thickness of 5 cm. The total shielded dose rate appears.",
+    tutorial3_step4: "Observe: the dose rate at 1m drops from ~11.4 mSv/h (unshielded) to ~140 µSv/h (shielded), showing the shield's effectiveness.",
+    
+    tutorial4_title: "Example 4: Shipping Package (Cumulative Dose)",
+    tutorial4_step1: "In the decay calculator, with the calculated Co-60 source, click 'Add to Box'.",
+    tutorial4_step2: "Change the nuclide to Cesium-137. Enter 50000 Bq as of today's date and click 'Add to Box'.",
+    tutorial4_step3: "The 'Cumulative Dose Rate Calculator' section now shows both sources.",
+    tutorial4_step4: "The total dose rate for the 'package' is calculated, accounting for the 5cm lead shield, giving you the final dose rate of your package.",
+
+    tutorial5_title: "Example 5: Simple Spectrum Analysis",
+    tutorial5_step1: "Go to 'Spectrometry Tools' (PRO) and choose 'N42 Analyzer'.",
+    tutorial5_step2: "Load an N42 file. The spectrum is displayed with automatically detected peaks.",
+    tutorial5_step3: "Click on a peak in the results table to highlight it on the graph.",
+    tutorial5_step4: "Click and drag on the plot to select a complex area (ROI) and see the deconvolution of multiple peaks.",
 };
 
 const de: Translations = {
@@ -1410,6 +1478,7 @@ const de: Translations = {
     identifyPeaks: "Peaks identifizieren",
     toolsMenu: "Werkzeuge",
     userGuide: "Benutzerhandbuch",
+    tutorialsAndExamples: "Tutorien & Beispiele",
     showWelcomeTooltip: "Willkommenshilfe anzeigen",
     lockedFeature: "PRO-Funktion. Klicken zum Freischalten.",
     loading: "Laden",
@@ -2095,6 +2164,39 @@ const de: Translations = {
     varDesc_probabilityEffectPresent: "(Bayes'sch) Wahrscheinlichkeit, dass die wahre Aktivität größer als Null ist.",
     varDesc_histogramData: "(Monte Carlo) Array der Ergebnisse aus jeder Simulationsiteration.",
     varDesc_monteCarloStats: "(Monte Carlo) Objekt, das detaillierte Statistiken der Simulation enthält.",
+    
+    // Tutorials
+    tutorials_title: "Tutorien & Praktische Beispiele",
+    tutorials_intro: "Diese Anleitung zeigt Ihnen, wie Sie die Hauptfunktionen der App anhand realer Szenarien verwenden. Jedes Beispiel ist so gestaltet, dass es schnell und einfach zu befolgen ist.",
+
+    tutorial1_title: "Beispiel 1: Grundlegende ISO 11929-Berechnung",
+    tutorial1_step1: "Bleiben Sie im 'Standard'-Modus. Geben Sie unter 'Quellenmessung' eine Bruttozählung von 150 Impulsen für eine Zeit von 60s ein.",
+    tutorial1_step2: "Geben Sie unter 'Nulleffektmessung' 600 Impulse für 600s ein (was 1 Imp/s entspricht).",
+    tutorial1_step3: "Setzen Sie unter 'Kalibrierung' einen Faktor `w` von 1.25 Bq/(Imp/s) mit 5% Unsicherheit.",
+    tutorial1_step4: "Beobachten Sie die Ergebnisse: Die Entscheidungsschwelle y* liegt bei etwa 0.29 Bq. Das Nettoergebnis y (1.88 Bq) ist höher, daher wird Aktivität nachgewiesen.",
+
+    tutorial2_title: "Beispiel 2: Zerfallsberechnung",
+    tutorial2_step1: "Klicken Sie auf das 🕘-Symbol neben 'Kalibrierfaktor'.",
+    tutorial2_step2: "Geben Sie eine Referenzaktivität von 37000 Bq für Kobalt-60 mit einem Referenzdatum von vor einem Jahr ein.",
+    tutorial2_step3: "Klicken Sie auf 'Berechnen & Anwenden'. Der Kalibrierfaktor wird mit der korrigierten Aktivität (ca. 32260 Bq) aktualisiert und die geschätzte Dosisleistung wird angezeigt.",
+    
+    tutorial3_title: "Beispiel 3: Auswirkung der Abschirmung",
+    tutorial3_step1: "Öffnen Sie den Zerfallsrechner (🕘) erneut. Die Daten der Co-60-Quelle bleiben erhalten.",
+    tutorial3_step2: "Wählen Sie im Abschnitt 'Abschirmung' 'Blei (Pb)' als Material aus.",
+    tutorial3_step3: "Geben Sie eine Dicke von 5 cm ein. Die gesamte abgeschirmte Dosisleistung erscheint.",
+    tutorial3_step4: "Beobachten Sie: Die Dosisleistung in 1m Entfernung sinkt von ~11,4 mSv/h (unabgeschirmt) auf ~140 µSv/h (abgeschirmt), was die Wirksamkeit der Abschirmung zeigt.",
+    
+    tutorial4_title: "Beispiel 4: Versandstück (Kumulative Dosis)",
+    tutorial4_step1: "Klicken Sie im Zerfallsrechner bei der berechneten Co-60-Quelle auf 'Zur Box hinzufügen'.",
+    tutorial4_step2: "Ändern Sie das Nuklid auf Cäsium-137. Geben Sie 50000 Bq zum heutigen Datum ein und klicken Sie auf 'Zur Box hinzufügen'.",
+    tutorial4_step3: "Der Abschnitt 'Kumulativer Dosisleistungsrechner' zeigt nun beide Quellen an.",
+    tutorial4_step4: "Die Gesamtdosisleistung für das 'Paket' wird unter Berücksichtigung der 5cm Bleiabschirmung berechnet und gibt Ihnen die endgültige Dosisleistung Ihres Pakets.",
+
+    tutorial5_title: "Beispiel 5: Einfache Spektrumanalyse",
+    tutorial5_step1: "Gehen Sie zu 'Spektrometrie-Tools' (PRO) und wählen Sie 'N42-Analysator'.",
+    tutorial5_step2: "Laden Sie eine N42-Datei. Das Spektrum wird mit automatisch erkannten Peaks angezeigt.",
+    tutorial5_step3: "Klicken Sie auf einen Peak in der Ergebnistabelle, um ihn im Diagramm hervorzuheben.",
+    tutorial5_step4: "Klicken und ziehen Sie im Diagramm, um einen komplexen Bereich (ROI) auszuwählen und die Entfaltung mehrerer Peaks zu sehen.",
 };
 
 const es: Translations = {
@@ -2107,6 +2209,7 @@ const es: Translations = {
     identifyPeaks: "Identificar picos",
     toolsMenu: "Herramientas",
     userGuide: "Guía del usuario",
+    tutorialsAndExamples: "Tutoriales y Ejemplos",
     showWelcomeTooltip: "Mostrar ayuda de bienvenida",
     lockedFeature: "Función PRO. Haga clic para desbloquear.",
     loading: "Cargando",
@@ -2552,9 +2655,41 @@ const es: Translations = {
     
     // Unit Converter (Missing ES)
     unitConverterTitle: "Convertidor de unidades radiológicas",
+    
+    // Tutorials
+    tutorials_title: "Tutoriales y Ejemplos Prácticos",
+    tutorials_intro: "Esta guía le muestra cómo utilizar las características clave de la aplicación a través de escenarios del mundo real. Cada ejemplo está diseñado para ser rápido y fácil de seguir.",
+
+    tutorial1_title: "Ejemplo 1: Cálculo Básico de ISO 11929",
+    tutorial1_step1: "Permanezca en el modo 'Estándar'. En 'Medición de fuente', ingrese un conteo bruto de 150 cuentas durante 60s.",
+    tutorial1_step2: "En 'Medición de fondo', ingrese 600 cuentas durante 600s (que es 1 c/s).",
+    tutorial1_step3: "En 'Calibración', establezca un factor `w` de 1.25 Bq/(c/s) con un 5% de incertidumbre.",
+    tutorial1_step4: "Observe los resultados: el umbral de decisión y* es de aproximadamente 0.29 Bq. El resultado neto y (1.88 Bq) es mayor, por lo que se detecta actividad.",
+
+    tutorial2_title: "Ejemplo 2: Cálculo de Decaimiento",
+    tutorial2_step1: "Haga clic en el icono 🕘 junto a 'Factor de calibración'.",
+    tutorial2_step2: "Ingrese una actividad de referencia de 37000 Bq para Cobalto-60, con una fecha de referencia de hace un año.",
+    tutorial2_step3: "Haga clic en 'Calcular y Aplicar'. El factor de calibración se actualiza con la actividad corregida (alrededor de 32260 Bq) y se muestra la tasa de dosis estimada.",
+    
+    tutorial3_title: "Ejemplo 3: Impacto del Blindaje",
+    tutorial3_step1: "Abra de nuevo la calculadora de decaimiento (🕘). Los datos de la fuente de Co-60 se conservan.",
+    tutorial3_step2: "En la sección 'Blindaje', seleccione 'Plomo (Pb)' como material.",
+    tutorial3_step3: "Ingrese un espesor de 5 cm. Aparece la tasa de dosis total blindada.",
+    tutorial3_step4: "Observe: la tasa de dosis a 1m disminuye de ~11.4 mSv/h (sin blindaje) a ~140 µSv/h (blindado), lo que demuestra la eficacia del blindaje.",
+    
+    tutorial4_title: "Ejemplo 4: Paquete de Envío (Dosis Acumulada)",
+    tutorial4_step1: "En la calculadora de decaimiento, con la fuente de Co-60 calculada, haga clic en 'Añadir a la Caja'.",
+    tutorial4_step2: "Cambie el nucleido a Cesio-137. Ingrese 50000 Bq a la fecha de hoy y haga clic en 'Añadir a la Caja'.",
+    tutorial4_step3: "La sección 'Calculadora de Dosis Acumulada' ahora muestra ambas fuentes.",
+    tutorial4_step4: "La tasa de dosis total para el 'paquete' se calcula, teniendo en cuenta el blindaje de plomo de 5 cm, lo que le da la tasa de dosis final de su paquete.",
+
+    tutorial5_title: "Ejemplo 5: Análisis Simple de Espectro",
+    tutorial5_step1: "Vaya a 'Herramientas de Espectrometría' (PRO) y elija 'Analizador N42'.",
+    tutorial5_step2: "Cargue un archivo N42. El espectro se muestra con los picos detectados automáticamente.",
+    tutorial5_step3: "Haga clic en un pico en la tabla de resultados para resaltarlo en el gráfico.",
+    tutorial5_step4: "Haga clic y arrastre en el gráfico para seleccionar un área compleja (ROI) y ver la deconvolución de múltiples picos.",
 };
 
-// FIX: Add the missing translations object and getTranslator export.
 const translations: Record<Language, Translations> = { fr, en, de, es };
 
 export const getTranslator = (lang: Language): ((key: string) => string) => {

@@ -8,6 +8,7 @@ import LanguageSelector from './components/LanguageSelector.tsx';
 import ThemeSelector from './components/ThemeSelector.tsx';
 import WelcomeModal from './components/WelcomeModal.tsx';
 import UserGuideModal from './components/UserGuideModal.tsx';
+import TutorialsModal from './components/TutorialsModal.tsx';
 import PeakIdentifierModal from './components/PeakIdentifierModal.tsx';
 import DecayCalculatorModal from './components/DecayCalculatorModal.tsx';
 import ProAccessModal from './components/ProAccessModal.tsx';
@@ -87,6 +88,7 @@ const App: React.FC = () => {
     
     const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(() => !localStorage.getItem('hasSeenWelcome'));
     const [isUserGuideOpen, setIsUserGuideOpen] = useState(false);
+    const [isTutorialsModalOpen, setIsTutorialsModalOpen] = useState(false);
     const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = useState(false);
     const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = useState(false);
     const [isUnitConverterOpen, setIsUnitConverterOpen] = useState(false);
@@ -520,14 +522,18 @@ const App: React.FC = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
                             </button>
                             {isToolsMenuOpen && (
-                                <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20">
+                                <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20">
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsTutorialsModalOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('tutorialsAndExamples')}</a>
                                     <a href="#" onClick={(e) => { e.preventDefault(); setIsUserGuideOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('userGuide')}</a>
                                     <a href="#" onClick={(e) => { e.preventDefault(); setIsWelcomeModalOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('showWelcomeTooltip')}</a>
                                 </div>
                             )}
                         </div>
                         <ThemeSelector currentTheme={theme} setTheme={setTheme} t={t} />
-                        <LanguageSelector currentLanguage={language} setLanguage={handleLanguageChange} t={t} />
+                        <div className="relative">
+                            <LanguageSelector currentLanguage={language} setLanguage={handleLanguageChange} t={t} />
+                            <span className="absolute -bottom-4 inset-x-0 text-center text-[10px] text-gray-500 select-none pointer-events-none">V6.4.4</span>
+                        </div>
                     </div>
                 </div>
                 <nav className="flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2">
@@ -553,6 +559,7 @@ const App: React.FC = () => {
             <UpdateNotification isOpen={isUpdateAvailable} onUpdate={handleUpdate} t={t} />
             <WelcomeModal isOpen={isWelcomeModalOpen} onClose={handleCloseWelcome} t={t} />
             <UserGuideModal isOpen={isUserGuideOpen} onClose={() => setIsUserGuideOpen(false)} t={t} />
+            <TutorialsModal isOpen={isTutorialsModalOpen} onClose={() => setIsTutorialsModalOpen(false)} t={t} />
             <PeakIdentifierModal isOpen={isPeakIdentifierOpen} onClose={() => setIsPeakIdentifierOpen(false)} t={t} />
             <DecayCalculatorModal 
                 isOpen={isDecayCalculatorOpen}
