@@ -1,381 +1,258 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { Language, View, AnalysisMode, Inputs, Results, Detector, CountUnit, TargetUnit, DetectionLimitMode, AnalysisRecord } from './types.ts';
+import React, { useState, useEffect, useCallback } from 'react';
+import { getTranslator } from './translations.ts';
+import {
+    Inputs, Results, AnalysisMode, CountUnit, TargetUnit, Language, DetectionLimitMode,
+    View, AnalysisRecord, Detector
+} from './types.ts';
+import { calculateAll, findK1betaForTarget } from './services/isoCalculations.ts';
+import { runMonteCarloSimulation } from './services/monteCarloService.ts';
+
 import InputPanel from './components/InputPanel.tsx';
 import ResultsPanel from './components/ResultsPanel.tsx';
-import ChartPanel from './components/ChartPanel.tsx';
 import ModeSelector from './components/ModeSelector.tsx';
+import ChartPanel from './components/ChartPanel.tsx';
 import LanguageSelector from './components/LanguageSelector.tsx';
 import ThemeSelector from './components/ThemeSelector.tsx';
-import WelcomeModal from './components/WelcomeModal.tsx';
-import UserGuideModal from './components/UserGuideModal.tsx';
-import TutorialsModal from './components/TutorialsModal.tsx';
-import PeakIdentifierModal from './components/PeakIdentifierModal.tsx';
+import ReportGeneratorModal from './components/ReportGeneratorModal.tsx';
 import DecayCalculatorModal from './components/DecayCalculatorModal.tsx';
 import ProAccessModal from './components/ProAccessModal.tsx';
+import WelcomeModal from './components/WelcomeModal.tsx';
+import UpdateNotification from './components/UpdateNotification.tsx';
+import TutorialsModal from './components/TutorialsModal.tsx';
+import UserGuideModal from './components/UserGuideModal.tsx';
 import UnitConverterModal from './components/UnitConverterModal.tsx';
+import PeakIdentifierModal from './components/PeakIdentifierModal.tsx';
+
 import SpectroPage from './pages/SpectroPage.tsx';
 import SourceManagementPage from './pages/SourceManagementPage.tsx';
 import AnalysisHistoryPage from './pages/AnalysisHistoryPage.tsx';
 import AdminPage from './pages/AdminPage.tsx';
-import UpdateNotification from './components/UpdateNotification.tsx';
-import ReportGeneratorModal from './components/ReportGeneratorModal.tsx';
-import { getTranslator } from './translations.ts';
-import { calculateAll, findK1betaForTarget, probability_from_quantile } from './services/isoCalculations.ts';
-import { runMonteCarloSimulation } from './services/monteCarloService.ts';
 
-// Default state for inputs
-const defaultDetectors: Detector[] = Array(10).fill(null).map(() => ({
-    efficiency: 50,
-    background: 10,
-    backgroundUnit: CountUnit.CPS,
-    type: 'beta',
-    length: 50,
-    width: 10,
-    enabled: true,
-}));
-
-const initialInputs: Inputs = {
-  grossCount: 120,
-  grossCountUnit: CountUnit.COUNTS,
-  grossTime: 60,
-  backgroundCount: 600,
-  backgroundCountUnit: CountUnit.COUNTS,
-  backgroundTime: 600,
-  roiGrossCount: 50,
-  roiChannels: 20,
-  backgroundTotalCount: 10000,
-  backgroundChannels: 1024,
-  probeEfficiency: 25,
-  probeArea: 100,
-  estimatedBackgroundRate: 10,
-  targetValue: 0.4,
-  targetUnit: TargetUnit.BQ_CM2,
-  conveyorSpeed: 5,
-  conveyorSpeedUnit: 'm_min',
-  chamberLength: 100,
-  chamberWidth: 50,
-  chamberHeight: 50,
-  detectors: defaultDetectors,
-  chambreLingeTime: 10,
-  chambreLingeTarget: 100,
-  chambreLingeTargetUnit: TargetUnit.BQ,
-  calibrationFactor: 1,
-  calibrationFactorUnit: 'Bq/(c/s)',
-  calibrationFactorUncertainty: 5,
-  k1alpha: 1.645,
-  k1beta: 1.645,
-  correlationCoefficient: 0,
-  monteCarloMode: false,
-  useBayesianMode: false,
-  numSimulations: 10000,
+const defaultInputs: Inputs = {
+    grossCount: 100,
+    grossCountUnit: CountUnit.COUNTS,
+    grossTime: 60,
+    backgroundCount: 10,
+    backgroundCountUnit: CountUnit.COUNTS,
+    backgroundTime: 60,
+    roiGrossCount: 100,
+    roiChannels: 10,
+    backgroundTotalCount: 1000,
+    backgroundChannels: 1024,
+    probeEfficiency: 10,
+    probeArea: 100,
+    estimatedBackgroundRate: 0.1,
+    targetValue: 1,
+    targetUnit: TargetUnit.BQ_CM2,
+    conveyorSpeed: 100,
+    conveyorSpeedUnit: 'cm_min',
+    chamberLength: 100,
+    chamberWidth: 50,
+    chamberHeight: 50,
+    detectors: Array(9).fill(null).map(() => ({
+        efficiency: 10,
+        background: 1,
+        backgroundUnit: CountUnit.CPS,
+        type: 'beta',
+        length: 30,
+        width: 15,
+        enabled: true,
+    } as Detector)),
+    chambreLingeTime: 10,
+    chambreLingeTarget: 1,
+    chambreLingeTargetUnit: TargetUnit.BQ,
+    calibrationFactor: 1,
+    calibrationFactorUnit: 'Bq/(c/s)',
+    calibrationFactorUncertainty: 5,
+    k1alpha: 1.645,
+    k1beta: 1.645,
+    correlationCoefficient: 0,
+    monteCarloMode: false,
+    useBayesianMode: false,
+    numSimulations: 10000,
 };
 
 const App: React.FC = () => {
     const [language, setLanguage] = useState<Language>(Language.FR);
-    const [t, setT] = useState(() => getTranslator(Language.FR));
-    const [view, setView] = useState<View>('calculator');
-    const [isExpertMode, setIsExpertMode] = useState(false);
-    const [theme, setTheme] = useState<string>('default');
-    
-    const [inputs, setInputs] = useState<Inputs>(initialInputs);
-    const [results, setResults] = useState<Results | string | null>(null);
+    const [theme, setTheme] = useState('default');
     const [mode, setMode] = useState<AnalysisMode>('standard');
-    
+    const [view, setView] = useState<View>('calculator');
+    const [inputs, setInputs] = useState<Inputs>(defaultInputs);
+    const [results, setResults] = useState<Results | string | null>(null);
+    const [isExpertMode, setIsExpertMode] = useState(false);
     const [detectionLimitMode, setDetectionLimitMode] = useState<DetectionLimitMode>('calculate');
-    const [targetDetectionLimit, setTargetDetectionLimit] = useState(100);
-    const [isCalculating, setIsCalculating] = useState(true);
-    const [autoW, setAutoW] = useState(true);
-    
-    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(() => !localStorage.getItem('hasSeenWelcome'));
-    const [isUserGuideOpen, setIsUserGuideOpen] = useState(false);
-    const [isTutorialsModalOpen, setIsTutorialsModalOpen] = useState(false);
-    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = useState(false);
-    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = useState(false);
-    const [isUnitConverterOpen, setIsUnitConverterOpen] = useState(false);
-    const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
+    const [targetDetectionLimit, setTargetDetectionLimit] = useState(10);
+    const [autoW, setAutoW] = useState(false);
+    const [isCalculating, setIsCalculating] = useState(false);
+
+    // Modals
     const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+    const [isDecayCalculatorOpen, setIsDecayCalculatorOpen] = useState(false);
+    const [isProAccessModalOpen, setIsProAccessModalOpen] = useState(false);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
+    const [isTutorialsModalOpen, setIsTutorialsModalOpen] = useState(false);
+    const [isUserGuideModalOpen, setIsUserGuideModalOpen] = useState(false);
+    const [isUnitConverterOpen, setIsUnitConverterOpen] = useState(false);
+    const [isPeakIdentifierOpen, setIsPeakIdentifierOpen] = useState(false);
+    const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
     const [isProUser, setIsProUser] = useState(false);
-    const [isProModalOpen, setIsProModalOpen] = useState(false);
-
-    const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
-    const waitingWorkerRef = useRef<ServiceWorker | null>(null);
-
     const [analysisToLoad, setAnalysisToLoad] = useState<AnalysisRecord | null>(null);
 
-    const toolsMenuRef = useRef<HTMLDivElement>(null);
-    
-    // Admin/Secret trigger state
-    const footerClickCountRef = useRef(0);
-    const footerLastClickTimeRef = useRef(0);
+    const t = getTranslator(language);
 
     useEffect(() => {
-        if (localStorage.getItem('isProUser') === 'true') {
-            setIsProUser(true);
-        }
-        const savedTheme = localStorage.getItem('app-theme') || 'default';
-        setTheme(savedTheme);
-        
-        // Service Worker Update Logic
-        if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-            // Only register the service worker on http or https protocols to avoid errors in sandboxed environments (like 'blob:' URLs).
-            navigator.serviceWorker.register('service-worker.js').then(reg => {
-                reg.onupdatefound = () => {
-                    const installingWorker = reg.installing;
-                    if (installingWorker) {
-                        installingWorker.onstatechange = () => {
-                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                waitingWorkerRef.current = installingWorker;
-                                setIsUpdateAvailable(true);
-                            }
-                        };
-                    }
-                };
-            }).catch(error => {
-                console.error('Service worker registration failed:', error);
-            });
-        }
-    }, []);
-
-    const handleUpdate = () => {
-        if (waitingWorkerRef.current) {
-            waitingWorkerRef.current.postMessage({ type: 'SKIP_WAITING' });
-            waitingWorkerRef.current = null;
-            setIsUpdateAvailable(false);
-            // Reload the page once the new service worker has taken control.
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                window.location.reload();
-            });
-        }
-    };
-
-    useEffect(() => {
-        localStorage.setItem('app-theme', theme);
-        document.documentElement.classList.remove('theme-lab', 'theme-forest');
-        if (theme !== 'default') {
-            document.documentElement.classList.add(`theme-${theme}`);
+        // Apply theme
+        document.documentElement.className = theme;
+        if (theme === 'lab') {
+            document.documentElement.style.setProperty('--bg-color', '#f3f4f6');
+            document.documentElement.style.setProperty('--text-color', '#1f2937');
+        } else {
+            document.documentElement.style.removeProperty('--bg-color');
+            document.documentElement.style.removeProperty('--text-color');
         }
     }, [theme]);
 
     useEffect(() => {
-        if (!isToolsMenuOpen) return;
-
-        const handleClickOutside = (event: MouseEvent) => {
-            if (toolsMenuRef.current && !toolsMenuRef.current.contains(event.target as Node)) {
-                setIsToolsMenuOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isToolsMenuOpen]);
-
-    const autoCalculatedW = useMemo(() => {
-        if (!autoW || (mode !== 'chambre' && mode !== 'linge')) {
-            return null;
+        const storedPro = localStorage.getItem('isProUser');
+        if (storedPro === 'true') setIsProUser(true);
+        
+        const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+        if (!hasSeenWelcome) {
+            setIsWelcomeModalOpen(true);
+            localStorage.setItem('hasSeenWelcome', 'true');
         }
-        const activeDetectors = inputs.detectors.filter(d => d.enabled);
-        if (activeDetectors.length === 0) return null;
-        
-        const avgEfficiency = activeDetectors.reduce((sum, d) => sum + d.efficiency / 100, 0) / activeDetectors.length;
-        
-        return avgEfficiency > 0 ? 1 / avgEfficiency : null;
-    }, [autoW, mode, inputs.detectors]);
+    }, []);
 
+    // Calculation Logic
     useEffect(() => {
-        if (autoCalculatedW !== null && 
-            (autoCalculatedW !== inputs.calibrationFactor || inputs.calibrationFactorUnit !== 'Bq/(c/s)')) {
-            setInputs(prev => ({
-                ...prev,
-                calibrationFactor: autoCalculatedW,
-                calibrationFactorUnit: 'Bq/(c/s)',
-                calibrationFactorUncertainty: 5, // Reset uncertainty to a default for auto-calc
-            }));
-        }
-    }, [autoCalculatedW, inputs.calibrationFactor, inputs.calibrationFactorUnit]);
-    
-    const handleLanguageChange = (lang: Language) => {
-        setLanguage(lang);
-        setT(() => getTranslator(lang));
-    };
+        setIsCalculating(true);
+        const timer = setTimeout(() => {
+            try {
+                let calculatedResults: Results | string;
+                
+                const t_g = (mode === 'chambre' || mode === 'linge') ? inputs.chambreLingeTime : inputs.grossTime;
+                const t_0 = inputs.backgroundTime;
+                
+                let effectiveW = inputs.calibrationFactor;
+                
+                // Auto W Logic
+                if (autoW) {
+                    if (mode === 'surface' && inputs.probeArea > 0 && inputs.probeEfficiency > 0) {
+                        effectiveW = 1 / ((inputs.probeEfficiency / 100) * inputs.probeArea);
+                    } else if ((mode === 'chambre' || mode === 'linge') && inputs.detectors.length > 0) {
+                        const activeDetectors = inputs.detectors.filter(d => d.enabled);
+                        if (activeDetectors.length > 0) {
+                            let totalEffArea = 0;
+                            activeDetectors.forEach(d => {
+                                totalEffArea += (d.efficiency / 100) * (d.length * d.width);
+                            });
+                            if (totalEffArea > 0) effectiveW = 1 / totalEffArea;
+                        }
+                    }
+                }
 
-    const handleInputChange = (name: keyof Inputs, value: any) => {
+                // Linge: Effective time calculation based on speed
+                let effectiveTg = t_g;
+                if (mode === 'linge' && inputs.conveyorSpeed > 0) {
+                    const activeDetectors = inputs.detectors.filter(d => d.enabled);
+                    if (activeDetectors.length > 0) {
+                        // Use average length of detectors in movement direction
+                        const avgLength = activeDetectors.reduce((sum, d) => sum + d.length, 0) / activeDetectors.length;
+                        // Speed is in cm/min or m/min
+                        const speedCmSec = inputs.conveyorSpeedUnit === 'm_min' 
+                            ? (inputs.conveyorSpeed * 100) / 60 
+                            : inputs.conveyorSpeed / 60;
+                        
+                        if (speedCmSec > 0) {
+                            effectiveTg = avgLength / speedCmSec;
+                        }
+                    }
+                }
+                
+                // Chambre/Linge: Aggregate background
+                let effectiveBkgCount = inputs.backgroundCount;
+                if (mode === 'chambre' || mode === 'linge') {
+                    const activeDetectors = inputs.detectors.filter(d => d.enabled);
+                    effectiveBkgCount = activeDetectors.reduce((sum, d) => {
+                        let rate = d.background;
+                        if (d.backgroundUnit === CountUnit.CPM) rate /= 60;
+                        if (d.backgroundUnit === CountUnit.C_02S) rate /= 0.2;
+                        return sum + rate;
+                    }, 0);
+                }
+
+                const params = {
+                    mode,
+                    inputs: { 
+                        ...inputs, 
+                        calibrationFactor: effectiveW,
+                        backgroundCount: (mode === 'chambre' || mode === 'linge') ? effectiveBkgCount : inputs.backgroundCount,
+                        chambreLingeTime: effectiveTg // Use calculated time for these modes
+                    },
+                    t_g: (mode === 'chambre' || mode === 'linge') ? effectiveTg : inputs.grossTime,
+                    t_0: t_0,
+                    w: effectiveW,
+                    u_rel_w: inputs.calibrationFactorUncertainty / 100,
+                    k1alpha: inputs.k1alpha,
+                    k1beta: inputs.k1beta,
+                    correlationCoefficient: inputs.correlationCoefficient,
+                    numSimulations: inputs.numSimulations
+                };
+
+                if (inputs.monteCarloMode) {
+                    calculatedResults = runMonteCarloSimulation(params, t);
+                } else {
+                    if (detectionLimitMode === 'target') {
+                        // Conversion for target limit if necessary (e.g. surface units to Bq)
+                        let targetInBq = targetDetectionLimit;
+                        // Simple pass-through for now, assuming user inputs Bq equivalent or service handles it
+                        // Ideally, findK1betaForTarget should handle unit conversion or expect Bq. 
+                        // Given current service implementation, it expects value comparable to 'y'.
+                        
+                        const k1beta = findK1betaForTarget(params, targetInBq, t);
+                        if (typeof k1beta === 'number') {
+                             calculatedResults = calculateAll({ ...params, k1beta }, t);
+                        } else {
+                             calculatedResults = k1beta; // Error string
+                        }
+                    } else {
+                        calculatedResults = calculateAll(params, t);
+                    }
+                }
+                
+                setResults(calculatedResults);
+                
+                // Sync back auto-calculated values for display if needed
+                if (autoW && effectiveW !== inputs.calibrationFactor) {
+                    // We don't invoke setInputs here to avoid loop, just use effectiveW in calculation
+                    // But for UI consistency we might want to show it. 
+                    // The InputPanel handles disabled input display if we passed effectiveW, but we passed inputs.
+                }
+
+            } catch (e) {
+                setResults(t('error'));
+                console.error(e);
+            } finally {
+                setIsCalculating(false);
+            }
+        }, 200);
+        return () => clearTimeout(timer);
+    }, [inputs, mode, detectionLimitMode, targetDetectionLimit, autoW, t]);
+
+
+    const handleInputChange = useCallback((name: keyof Inputs, value: any) => {
         setInputs(prev => ({ ...prev, [name]: value }));
-    };
-    
-    const handleDetectorChange = (index: number, field: keyof Detector, value: any) => {
+    }, []);
+
+    const handleDetectorChange = useCallback((index: number, field: keyof Detector, value: any) => {
         setInputs(prev => {
             const newDetectors = [...prev.detectors];
             newDetectors[index] = { ...newDetectors[index], [field]: value };
             return { ...prev, detectors: newDetectors };
         });
-    };
-    
-    const handleCloseWelcome = () => {
-        localStorage.setItem('hasSeenWelcome', 'true');
-        setIsWelcomeModalOpen(false);
-    };
-    
-    const handleUnlockSuccess = () => {
-        localStorage.setItem('isProUser', 'true');
-        setIsProUser(true);
-        setIsProModalOpen(false);
-        alert(t('proUnlockedSuccess'));
-    };
+    }, []);
 
-    const calculate = useCallback(() => {
-        setIsCalculating(true);
-        setTimeout(() => {
-            let t_g = inputs.grossTime;
-            let t_0 = inputs.backgroundTime;
-            let w = inputs.calibrationFactor;
-            if (inputs.calibrationFactorUnit.toLowerCase().startsWith('dpm')) {
-                w = inputs.calibrationFactor / 60; // Convert dpm to Bq
-            }
-            let u_rel_w = inputs.calibrationFactorUncertainty / 100;
-            let currentInputs = { ...inputs };
-
-            if (mode === 'surface') {
-                t_0 = 1;
-                if (autoW) {
-                    w = (inputs.probeEfficiency / 100) * inputs.probeArea;
-                    u_rel_w = 0;
-                }
-                currentInputs = {
-                    ...inputs,
-                    backgroundCount: inputs.estimatedBackgroundRate,
-                    backgroundCountUnit: CountUnit.CPS,
-                    backgroundTime: 1,
-                };
-            } else if (mode === 'chambre' || mode === 'linge') {
-                const activeDetectors = inputs.detectors.filter(d => d.enabled);
-                if (activeDetectors.length === 0) {
-                    setResults(t('noActiveDetectors'));
-                    setIsCalculating(false);
-                    return;
-                }
-                
-                t_0 = 1;
-
-                if (mode === 'linge') {
-                    const speed_cm_s = (inputs.conveyorSpeedUnit === 'm_min' ? inputs.conveyorSpeed * 100 : inputs.conveyorSpeed) / 60;
-                    if (speed_cm_s <= 0) {
-                        setResults(t('positiveSpeedError'));
-                        setIsCalculating(false);
-                        return;
-                    }
-                    const avgDetectorWidth = activeDetectors.length > 0 ? activeDetectors.reduce((sum, d) => sum + d.width, 0) / activeDetectors.length : 0;
-                    t_g = avgDetectorWidth > 0 ? avgDetectorWidth / speed_cm_s : 0;
-                } else { // chambre
-                    t_g = inputs.chambreLingeTime;
-                }
-                
-                const totalBackgroundRate = activeDetectors.reduce((sum, d) => {
-                    let rateInCPS = 0;
-                    switch (d.backgroundUnit) {
-                        case CountUnit.CPS:
-                            rateInCPS = d.background;
-                            break;
-                        case CountUnit.CPM:
-                            rateInCPS = d.background / 60;
-                            break;
-                        case CountUnit.C_02S:
-                            rateInCPS = d.background / 0.2;
-                            break;
-                        default:
-                            rateInCPS = d.background; 
-                    }
-                    return sum + rateInCPS;
-                }, 0);
-
-                currentInputs = {
-                    ...inputs,
-                    backgroundCount: totalBackgroundRate,
-                    backgroundCountUnit: CountUnit.CPS,
-                    backgroundTime: 1,
-                };
-            }
-            
-            const baseInputs = {
-                mode, 
-                inputs: currentInputs, 
-                t_g, t_0, w, u_rel_w,
-                k1alpha: inputs.k1alpha,
-                correlationCoefficient: inputs.correlationCoefficient
-            };
-
-            let result: Results | string | null = null;
-
-            if (detectionLimitMode === 'target' && (mode === 'standard' || mode === 'spectrometry')) {
-                const k1betaResult = findK1betaForTarget(baseInputs, targetDetectionLimit, t);
-                if (typeof k1betaResult === 'number') {
-                    const finalResult = inputs.monteCarloMode
-                        ? runMonteCarloSimulation({ ...baseInputs, k1beta: k1betaResult, numSimulations: inputs.numSimulations }, t)
-                        : calculateAll({ ...baseInputs, k1beta: k1betaResult }, t);
-                    result = finalResult;
-                    setInputs(prev => ({...prev, k1beta: k1betaResult}));
-                } else {
-                    result = k1betaResult;
-                }
-            } else {
-                result = inputs.monteCarloMode
-                    ? runMonteCarloSimulation({ ...baseInputs, k1beta: inputs.k1beta, numSimulations: inputs.numSimulations }, t)
-                    : calculateAll({ ...baseInputs, k1beta: inputs.k1beta }, t);
-            }
-
-            if (inputs.useBayesianMode && typeof result === 'object' && result !== null) {
-                const { primaryResult, primaryUncertainty } = result;
-                if (primaryUncertainty > 0) {
-                    const z = primaryResult / primaryUncertainty;
-                    // This is the CDF of the standard normal distribution, giving P(Z <= z)
-                    // which corresponds to P(μ > 0)
-                    const probability = probability_from_quantile(z); 
-                    result.probabilityEffectPresent = probability;
-                    result.calculationMethod = 'bayesian';
-                }
-            }
-
-            setResults(result);
-            setIsCalculating(false);
-        }, 50);
-    }, [inputs, mode, t, detectionLimitMode, targetDetectionLimit, autoW]);
-
-    useEffect(() => {
-        calculate();
-    }, [calculate]);
-
-    const handleSaveConfig = () => {
-        const config = { inputs, mode, isExpertMode, autoW, detectionLimitMode, targetDetectionLimit };
-        const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `iso-assistant-config-${mode}-${new Date().toISOString().split('T')[0]}.json`;
-        link.click();
-    };
-
-    const handleLoadConfig = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const config = JSON.parse(e.target?.result as string);
-                    setInputs(prev => ({ ...prev, ...config.inputs, detectors: config.inputs.detectors || defaultDetectors }));
-                    setMode(config.mode || 'standard');
-                    setIsExpertMode(config.isExpertMode || false);
-                    setAutoW(config.autoW ?? true);
-                    setDetectionLimitMode(config.detectionLimitMode || 'calculate');
-                    setTargetDetectionLimit(config.targetDetectionLimit || 100);
-                } catch (err) {
-                    console.error("Failed to load config", err);
-                    alert("Invalid configuration file.");
-                }
-            };
-            reader.readAsText(file);
-        }
-    };
-    
     const handleApplyDecay = (newActivity: number, newUncertainty: number) => {
         setInputs(prev => {
             let r_net = 0;
@@ -408,7 +285,7 @@ const App: React.FC = () => {
             }
 
             let newW = newActivity;
-            // Only apply the formula w = A / R_net if R_net is positive
+            // Application de la formule w = A / R_net (Activité / Taux net)
             if (r_net > 0) {
                 newW = newActivity / r_net;
             }
@@ -422,219 +299,202 @@ const App: React.FC = () => {
         setIsDecayCalculatorOpen(false);
     };
 
-    const handleLoadAnalysis = (record: AnalysisRecord) => {
-        setAnalysisToLoad(record);
-        setView('spectro');
+    const loadConfig = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const loaded = JSON.parse(e.target?.result as string);
+                if (loaded.inputs) setInputs(loaded.inputs);
+                if (loaded.mode) setMode(loaded.mode);
+            } catch (err) {
+                alert("Invalid config file");
+            }
+        };
+        reader.readAsText(file);
     };
 
-    const handleFooterClick = () => {
-        const now = Date.now();
-        // Increased timeout to 2000ms (2 seconds) to make it easier to trigger
-        if (now - footerLastClickTimeRef.current < 2000) {
-            footerClickCountRef.current += 1;
-        } else {
-            footerClickCountRef.current = 1;
-        }
-        footerLastClickTimeRef.current = now;
-
-        if (footerClickCountRef.current >= 5) {
-            footerClickCountRef.current = 0;
-            // Small timeout to ensure the prompt appears after the click event settles
-            setTimeout(() => {
-                const pwd = prompt("Admin Password:");
-                if (pwd === "42") {
-                    setView('admin');
-                }
-            }, 100);
-        }
+    const saveConfig = () => {
+        const data = { inputs, mode, version: "6.4.6" };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "iso-assistant-config.json";
+        a.click();
+        URL.revokeObjectURL(url);
     };
 
-    const renderCalculatorView = () => (
-        <>
-            <div className="flex justify-center mb-6">
-                <ModeSelector currentMode={mode} onModeChange={setMode} t={t} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-1">
-                    <InputPanel 
-                        inputs={inputs}
-                        onInputChange={handleInputChange}
-                        onDetectorChange={handleDetectorChange}
-                        mode={mode}
-                        t={t}
-                        isExpertMode={isExpertMode}
-                        onExpertModeToggle={() => setIsExpertMode(p => !p)}
-                        onRunSimulation={calculate}
-                        onSaveConfig={handleSaveConfig}
-                        onLoadConfig={handleLoadConfig}
-                        onOpenDecayCalculator={() => setIsDecayCalculatorOpen(true)}
-                        isCalculating={isCalculating}
-                        results={results}
-                        autoW={autoW}
-                        onAutoWChange={setAutoW}
-                    />
-                </div>
-                <div className="lg:col-span-2 space-y-6">
-                    <ResultsPanel
-                        results={results}
-                        t={t}
-                        inputs={inputs}
-                        mode={mode}
-                        detectionLimitMode={detectionLimitMode}
-                        onDetectionLimitModeChange={setDetectionLimitMode}
-                        targetDetectionLimit={targetDetectionLimit}
-                        onTargetDetectionLimitChange={setTargetDetectionLimit}
-                        isCalculating={isCalculating}
-                        isExpertMode={isExpertMode}
-                        onOpenReportModal={() => setIsReportModalOpen(true)}
-                    />
-                    <ChartPanel
-                        results={typeof results === 'string' ? null : results}
-                        t={t}
-                        mode={mode}
-                        calibrationFactorUnit={inputs.calibrationFactorUnit}
-                    />
-                </div>
-            </div>
-        </>
-    );
-
-    const handleNavItemClick = (targetView: View) => {
-        const lockedViews: View[] = ['spectro', 'history']; 
-        if (lockedViews.includes(targetView) && !isProUser) {
-            setIsProModalOpen(true);
-        } else {
-            setView(targetView);
-        }
-    };
-
+    // View Routing
     const renderView = () => {
-        switch(view) {
-            case 'calculator':
-                return renderCalculatorView();
+        switch (view) {
             case 'spectro':
-                return <SpectroPage t={t} onOpenPeakIdentifier={() => setIsPeakIdentifierOpen(true)} analysisToLoad={analysisToLoad} clearAnalysisToLoad={() => setAnalysisToLoad(null)} />;
+                return <SpectroPage 
+                    t={t} 
+                    onOpenPeakIdentifier={() => setIsPeakIdentifierOpen(true)} 
+                    analysisToLoad={analysisToLoad}
+                    clearAnalysisToLoad={() => setAnalysisToLoad(null)}
+                />;
             case 'sources':
                 return <SourceManagementPage t={t} />;
             case 'history':
-                return <AnalysisHistoryPage t={t} onLoadAnalysis={handleLoadAnalysis} />;
+                return <AnalysisHistoryPage t={t} onLoadAnalysis={(record) => {
+                    setAnalysisToLoad(record);
+                    setView('spectro');
+                }} />;
             case 'admin':
-                return <AdminPage t={t} onBack={() => setView('calculator')} inputs={inputs} results={results} isProUser={isProUser} setProUser={(val) => setIsProUser(val)}/>;
+                return <AdminPage t={t} onBack={() => setView('calculator')} inputs={inputs} results={results} isProUser={isProUser} setProUser={setIsProUser} />;
+            case 'calculator':
             default:
-                return renderCalculatorView();
+                return (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+                        <div className="space-y-6">
+                            <InputPanel 
+                                inputs={inputs} 
+                                onInputChange={handleInputChange} 
+                                onDetectorChange={handleDetectorChange}
+                                mode={mode} 
+                                t={t} 
+                                isExpertMode={isExpertMode}
+                                onExpertModeToggle={() => setIsExpertMode(!isExpertMode)}
+                                onRunSimulation={() => {}} // Auto-runs now
+                                onSaveConfig={saveConfig}
+                                onLoadConfig={loadConfig}
+                                onOpenDecayCalculator={() => setIsDecayCalculatorOpen(true)}
+                                isCalculating={isCalculating}
+                                results={results}
+                                autoW={autoW}
+                                onAutoWChange={setAutoW}
+                            />
+                        </div>
+                        <div className="space-y-6">
+                            <ResultsPanel 
+                                results={results} 
+                                t={t} 
+                                inputs={inputs} 
+                                mode={mode}
+                                detectionLimitMode={detectionLimitMode}
+                                onDetectionLimitModeChange={setDetectionLimitMode}
+                                targetDetectionLimit={targetDetectionLimit}
+                                onTargetDetectionLimitChange={setTargetDetectionLimit}
+                                isExpertMode={isExpertMode}
+                                isCalculating={isCalculating}
+                                onOpenReportModal={() => setIsReportModalOpen(true)}
+                            />
+                            <ChartPanel 
+                                results={typeof results !== 'string' ? results : null} 
+                                t={t} 
+                                mode={mode} 
+                                calibrationFactorUnit={inputs.calibrationFactorUnit} 
+                            />
+                        </div>
+                    </div>
+                );
         }
     };
-    
-    const navItems = [
-        { key: 'calculator', label: t('isoCalculator'), locked: false },
-        { key: 'spectro', label: t('spectrometryTools'), locked: true },
-        { key: 'sources', label: t('sourceManagement'), locked: false },
-        { key: 'history', label: t('analysisHistory'), locked: true },
-    ];
+
+    const handleProFeatureClick = (targetView: View) => {
+        if (isProUser) {
+            setView(targetView);
+        } else {
+            setIsProAccessModalOpen(true);
+        }
+    };
 
     return (
-        <div className="bg-gray-900 min-h-screen text-white font-sans p-4 sm:p-6 lg:p-8">
-            <header className="mb-6 no-print">
-                <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-cyan-400">ISO 11929 Assistant</h1>
-                        <p className="text-xs text-gray-500">{t('authorDetails')}</p>
+        <div className="min-h-screen bg-gray-900 text-gray-100 font-sans transition-colors duration-300">
+            {/* Header */}
+            <header className="bg-gray-800 shadow-md sticky top-0 z-40 border-b border-gray-700 print-hidden">
+                <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                    <div className="flex items-center space-x-4">
+                        <div className="bg-cyan-500 p-2 rounded-lg shadow-lg shadow-cyan-500/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-bold text-gray-100 tracking-tight">{t('isoCalculator')}</h1>
+                            <p className="text-xs text-gray-400">ISO 11929:2019 • v6.4.6</p>
+                        </div>
                     </div>
-                    <div className="flex items-center space-x-2 sm:space-x-3">
-                        {isProUser ? (
-                            <span className="text-sm font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full shadow-lg">{t('proVersion')}</span>
-                        ) : (
-                            <button onClick={() => setIsProModalOpen(true)} className="text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 p-2 rounded-md bg-gray-800 border border-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                <span className="hidden sm:inline">{t('unlockPro')}</span>
+                    
+                    <div className="hidden md:flex items-center space-x-6">
+                        <nav className="flex space-x-1 bg-gray-700 p-1 rounded-lg">
+                            <button onClick={() => setView('calculator')} className={`px-4 py-2 text-sm font-medium rounded-md transition ${view === 'calculator' ? 'bg-gray-600 text-white shadow' : 'text-gray-300 hover:text-white hover:bg-gray-600/50'}`}>{t('isoCalculator')}</button>
+                            <button onClick={() => handleProFeatureClick('spectro')} className={`px-4 py-2 text-sm font-medium rounded-md transition flex items-center ${view === 'spectro' ? 'bg-gray-600 text-white shadow' : 'text-gray-300 hover:text-white hover:bg-gray-600/50'}`}>
+                                {t('spectrometryTools')} {!isProUser && <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>}
                             </button>
-                        )}
-                        <button onClick={() => setIsUnitConverterOpen(true)} title={t('unitConverter')} className="p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" />
-                            </svg>
-                        </button>
-                        <button onClick={() => setIsPeakIdentifierOpen(true)} title={t('identifyPeaks')} className="p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
-                        </button>
+                            <button onClick={() => setView('sources')} className={`px-4 py-2 text-sm font-medium rounded-md transition ${view === 'sources' ? 'bg-gray-600 text-white shadow' : 'text-gray-300 hover:text-white hover:bg-gray-600/50'}`}>{t('sourceManagement')}</button>
+                            <button onClick={() => handleProFeatureClick('history')} className={`px-4 py-2 text-sm font-medium rounded-md transition flex items-center ${view === 'history' ? 'bg-gray-600 text-white shadow' : 'text-gray-300 hover:text-white hover:bg-gray-600/50'}`}>
+                                {t('analysisHistory')} {!isProUser && <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>}
+                            </button>
+                        </nav>
+                    </div>
 
-                        <div className="relative" ref={toolsMenuRef}>
-                             <button onClick={() => setIsToolsMenuOpen(prev => !prev)} title={t('toolsMenu')} className="p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:text-cyan-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                    <div className="flex items-center space-x-3">
+                        {/* Tools Menu */}
+                        <div className="relative group">
+                            <button className="p-2 rounded-md bg-gray-700 text-gray-300 hover:text-white hover:bg-gray-600 flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" /></svg>
+                                <span className="hidden sm:inline text-sm">{t('toolsMenu')}</span>
                             </button>
-                            {isToolsMenuOpen && (
-                                <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-20">
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsTutorialsModalOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('tutorialsAndExamples')}</a>
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsUserGuideOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('userGuide')}</a>
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsWelcomeModalOpen(true); setIsToolsMenuOpen(false); }} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">{t('showWelcomeTooltip')}</a>
-                                </div>
-                            )}
+                            <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl hidden group-hover:block z-50">
+                                <button onClick={() => setIsDecayCalculatorOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white first:rounded-t-lg">{t('decayCalculator')}</button>
+                                <button onClick={() => setIsPeakIdentifierOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">{t('identifyPeaks')}</button>
+                                <button onClick={() => setIsUnitConverterOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">{t('unitConverter')}</button>
+                                <div className="border-t border-gray-700 my-1"></div>
+                                <button onClick={() => setIsTutorialsModalOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">{t('tutorialsAndExamples')}</button>
+                                <button onClick={() => setIsUserGuideModalOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">{t('userGuide')}</button>
+                                <button onClick={() => setIsWelcomeModalOpen(true)} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">{t('showWelcomeTooltip')}</button>
+                                <div className="border-t border-gray-700 my-1"></div>
+                                <button onClick={() => !isProUser && setIsProAccessModalOpen(true)} className={`block w-full text-left px-4 py-2 text-sm ${isProUser ? 'text-green-400 cursor-default' : 'text-yellow-400 hover:bg-gray-700 hover:text-yellow-300'} last:rounded-b-lg`}>
+                                    {isProUser ? t('proVersion') : t('unlockPro')}
+                                </button>
+                                <button onClick={() => setView('admin')} className="block w-full text-left px-4 py-2 text-xs text-gray-500 hover:bg-gray-700 hover:text-gray-300 last:rounded-b-lg">Admin</button>
+                            </div>
                         </div>
+
                         <ThemeSelector currentTheme={theme} setTheme={setTheme} t={t} />
-                        <div className="relative">
-                            <LanguageSelector currentLanguage={language} setLanguage={handleLanguageChange} t={t} />
-                            <span className="absolute -bottom-4 inset-x-0 text-center text-[10px] text-gray-500 select-none pointer-events-none">V6.4.4</span>
-                        </div>
+                        <LanguageSelector currentLanguage={language} setLanguage={setLanguage} t={t} />
                     </div>
                 </div>
-                <nav className="flex flex-wrap gap-2 text-sm border-b border-gray-700 pb-2">
-                    {navItems.map(item => (
-                        <button key={item.key} onClick={() => handleNavItemClick(item.key as View)}
-                            className={`px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center space-x-2 ${view === item.key ? 'bg-cyan-600 text-white' : 'text-gray-300 hover:bg-gray-700'}`}
-                            title={item.locked && !isProUser ? t('lockedFeature') : item.label}>
-                            <span>{item.label}</span>
-                             {item.locked && !isProUser && (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                                </svg>
-                            )}
-                        </button>
-                    ))}
-                </nav>
             </header>
 
-            <main>
+            {/* Main Content */}
+            <main className="max-w-7xl mx-auto px-4 py-8 print-main">
+                {view === 'calculator' && (
+                    <div className="mb-8 print-hidden">
+                        <ModeSelector currentMode={mode} onModeChange={setMode} t={t} />
+                    </div>
+                )}
+                
                 {renderView()}
             </main>
-            
-            <UpdateNotification isOpen={isUpdateAvailable} onUpdate={handleUpdate} t={t} />
-            <WelcomeModal isOpen={isWelcomeModalOpen} onClose={handleCloseWelcome} t={t} />
-            <UserGuideModal isOpen={isUserGuideOpen} onClose={() => setIsUserGuideOpen(false)} t={t} />
-            <TutorialsModal isOpen={isTutorialsModalOpen} onClose={() => setIsTutorialsModalOpen(false)} t={t} />
-            <PeakIdentifierModal isOpen={isPeakIdentifierOpen} onClose={() => setIsPeakIdentifierOpen(false)} t={t} />
+
+            <footer className="border-t border-gray-800 mt-12 py-8 text-center text-gray-500 text-sm print-hidden">
+                <p>{t('authorDetails')}</p>
+                <p className="mt-1">{t('authorCredit')}</p>
+            </footer>
+
+            {/* Modals */}
+            <ReportGeneratorModal isOpen={isReportModalOpen} onClose={() => setIsReportModalOpen(false)} inputs={inputs} results={results} t={t} />
             <DecayCalculatorModal 
-                isOpen={isDecayCalculatorOpen}
-                onClose={() => setIsDecayCalculatorOpen(false)}
-                onApply={handleApplyDecay}
+                isOpen={isDecayCalculatorOpen} 
+                onClose={() => setIsDecayCalculatorOpen(false)} 
+                onApply={handleApplyDecay} 
                 t={t}
                 initialActivity={inputs.calibrationFactor}
                 initialUncertainty={inputs.calibrationFactorUncertainty}
-                unit={inputs.calibrationFactorUnit.split('/')[0] || 'Bq'}
+                unit={inputs.calibrationFactorUnit}
             />
-            <UnitConverterModal 
-                isOpen={isUnitConverterOpen}
-                onClose={() => setIsUnitConverterOpen(false)}
-                t={t}
-            />
-            <ProAccessModal 
-                isOpen={isProModalOpen}
-                onClose={() => setIsProModalOpen(false)}
-                onSuccess={handleUnlockSuccess}
-                t={t}
-            />
-            <ReportGeneratorModal
-                isOpen={isReportModalOpen}
-                onClose={() => setIsReportModalOpen(false)}
-                inputs={inputs}
-                results={results}
-                t={t}
-            />
-
-            <footer className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-800 no-print cursor-pointer" onClick={handleFooterClick}>
-                <p className="select-none">{t('authorCredit')}</p>
-            </footer>
+            <ProAccessModal isOpen={isProAccessModalOpen} onClose={() => setIsProAccessModalOpen(false)} onSuccess={() => { setIsProUser(true); localStorage.setItem('isProUser', 'true'); setIsProAccessModalOpen(false); }} t={t} />
+            <WelcomeModal isOpen={isWelcomeModalOpen} onClose={() => setIsWelcomeModalOpen(false)} t={t} />
+            <UpdateNotification isOpen={isUpdateAvailable} onUpdate={() => window.location.reload()} t={t} />
+            <TutorialsModal isOpen={isTutorialsModalOpen} onClose={() => setIsTutorialsModalOpen(false)} t={t} />
+            <UserGuideModal isOpen={isUserGuideModalOpen} onClose={() => setIsUserGuideModalOpen(false)} t={t} />
+            <UnitConverterModal isOpen={isUnitConverterOpen} onClose={() => setIsUnitConverterOpen(false)} t={t} />
+            <PeakIdentifierModal isOpen={isPeakIdentifierOpen} onClose={() => setIsPeakIdentifierOpen(false)} t={t} />
         </div>
     );
-}
+};
 
 export default App;
