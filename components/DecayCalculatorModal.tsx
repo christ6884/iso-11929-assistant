@@ -1,8 +1,13 @@
+
+
+
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { radionuclides } from '../services/radionuclides.ts';
 import { Radionuclide } from '../types.ts';
 import { shieldingMaterials, ShieldingMaterial } from '../services/shieldingData.ts';
 import CollapsibleSection from './CollapsibleSection.tsx';
+import { getLocalizedNuclideName } from '../translations.ts';
 
 interface DecayCalculatorModalProps {
   isOpen: boolean;
@@ -86,7 +91,7 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
   const [measDate, setMeasDate] = useState(formatDateForInput(new Date()));
   const [selectedNuclideKey, setSelectedNuclideKey] = useState('gamma-0');
   
-  const [shieldMaterialName, setShieldMaterialName] = useState('none');
+  const [shieldMaterialId, setShieldMaterialId] = useState('none');
   const [shieldThickness, setShieldThickness] = useState(0);
   const [sourceBox, setSourceBox] = useState<SourceInBox[]>([]);
 
@@ -104,8 +109,8 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
   }, [selectedNuclideKey]);
 
   const shieldMaterial = useMemo(() => {
-    return shieldingMaterials.find(m => m.name === shieldMaterialName) || null;
-  }, [shieldMaterialName]);
+    return shieldingMaterials.find(m => m.id === shieldMaterialId) || null;
+  }, [shieldMaterialId]);
   
   useEffect(() => {
     setRefActivity(initialActivity);
@@ -274,7 +279,7 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
                     {Object.entries(radionuclides).map(([type, nuclides]) => (
                         <optgroup key={type} label={type.charAt(0).toUpperCase() + type.slice(1)}>
                             {nuclides.map((nuclide, index) => (
-                                <option key={`${type}-${index}`} value={`${type}-${index}`}>{nuclide.name}</option>
+                                <option key={`${type}-${index}`} value={`${type}-${index}`}>{getLocalizedNuclideName(nuclide.name, t)}</option>
                             ))}
                         </optgroup>
                     ))}
@@ -318,7 +323,7 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
                                     <tbody className="text-gray-200">
                                     {sourceBox.map(s => (
                                         <tr key={s.id} className="border-t border-gray-700">
-                                            <td className="p-2">{s.nuclide.name}</td>
+                                            <td className="p-2">{getLocalizedNuclideName(s.nuclide.name, t)}</td>
                                             <td className="p-2 font-mono text-right">{s.activity.toExponential(2)}</td>
                                             <td className="p-2 text-center">
                                                 <button onClick={() => handleRemoveSource(s.id)} title={t('decayCalc_removeSource')} className="text-red-400 hover:text-red-300">&times;</button>
@@ -335,14 +340,14 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-sm text-gray-300 mb-1 block">{t('shieldingMaterial')}</label>
-                                    <select value={shieldMaterialName} onChange={(e) => setShieldMaterialName(e.target.value)} className="w-full bg-gray-700 p-2 rounded-md text-white">
-                                        <option value="none">None</option>
-                                        {shieldingMaterials.map(m => <option key={m.name} value={m.name}>{m.name}</option>)}
+                                    <select value={shieldMaterialId} onChange={(e) => setShieldMaterialId(e.target.value)} className="w-full bg-gray-700 p-2 rounded-md text-white">
+                                        <option value="none">{t('shielding_none')}</option>
+                                        {shieldingMaterials.map(m => <option key={m.id} value={m.id}>{t(`shielding_${m.id}`)}</option>)}
                                     </select>
                                 </div>
                                 <div>
                                     <label className="text-sm text-gray-300 mb-1 block">{t('shieldingThickness')} (cm)</label>
-                                    <input type="number" value={shieldThickness} onChange={(e) => setShieldThickness(parseFloat(e.target.value) || 0)} min="0" className="w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" disabled={shieldMaterialName === 'none'}/>
+                                    <input type="number" value={shieldThickness} onChange={(e) => setShieldThickness(parseFloat(e.target.value) || 0)} min="0" className="w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" disabled={shieldMaterialId === 'none'}/>
                                 </div>
                             </div>
                         </div>

@@ -1,8 +1,11 @@
+
+
 import React, { useState, useEffect } from 'react';
 import Card from '../Card';
 import { Source } from '../../types';
 import { radionuclides } from '../../services/radionuclides';
 import { sourceTypes } from '../../services/sourceTypes';
+import { getLocalizedNuclideName } from '../../translations';
 
 interface AddSourceModalProps {
   isOpen: boolean;
@@ -108,7 +111,7 @@ const AddSourceModal: React.FC<AddSourceModalProps> = ({ isOpen, onClose, onSave
                                     {Object.entries(radionuclides).map(([type, nuclidesOfType]) => (
                                         <optgroup key={type} label={type.charAt(0).toUpperCase() + type.slice(1)}>
                                             {nuclidesOfType.map((n) => (
-                                                <option key={n.name} value={n.name}>{n.name}</option>
+                                                <option key={n.name} value={n.name}>{getLocalizedNuclideName(n.name, t)}</option>
                                             ))}
                                         </optgroup>
                                     ))}
