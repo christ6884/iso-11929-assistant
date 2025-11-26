@@ -1,11 +1,8 @@
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import Card from './Card.tsx';
 import { PeakIdentificationResult, NuclideData } from '../types.ts';
 import { identifyPeaks } from '../services/peakIdentifierService.ts';
 import { nuclideLibrary } from '../services/gammaLibrary.ts';
-import { getLocalizedNuclideName } from '../translations.ts';
 
 interface PeakIdentifierModalProps {
   isOpen: boolean;
@@ -103,7 +100,7 @@ const PeakIdentifierModal: React.FC<PeakIdentifierModalProps> = ({ isOpen, onClo
                         {result.matches.length > 0 ? (
                             <table className="w-full text-xs text-left">
                                 <thead className="text-gray-400"><tr><th className="py-1 px-2">{t('peakId_nuclide')}</th><th className="py-1 px-2 text-right">{t('lineEnergy')}</th><th className="py-1 px-2 text-right">{t('intensity')}</th><th className="py-1 px-2 text-right">{t('delta')}</th></tr></thead>
-                                <tbody>{result.matches.map((match, i) => (<tr key={i} className="border-t border-gray-700"><td className="py-1 px-2 font-semibold text-cyan-300">{getLocalizedNuclideName(match.nuclide.name, t)}</td><td className="py-1 px-2 font-mono text-right text-gray-300">{match.line.energy_keV.toFixed(2)}</td><td className="py-1 px-2 font-mono text-right text-gray-300">{match.line.intensity_percent.toFixed(2)}</td><td className={`py-1 px-2 font-mono text-right ${match.delta_keV >= 0 ? 'text-green-400' : 'text-red-400'}`}>{match.delta_keV.toFixed(2)}</td></tr>))}</tbody>
+                                <tbody>{result.matches.map((match, i) => (<tr key={i} className="border-t border-gray-700"><td className="py-1 px-2 font-semibold text-cyan-300">{match.nuclide.name}</td><td className="py-1 px-2 font-mono text-right text-gray-300">{match.line.energy_keV.toFixed(2)}</td><td className="py-1 px-2 font-mono text-right text-gray-300">{match.line.intensity_percent.toFixed(2)}</td><td className={`py-1 px-2 font-mono text-right ${match.delta_keV >= 0 ? 'text-green-400' : 'text-red-400'}`}>{match.delta_keV.toFixed(2)}</td></tr>))}</tbody>
                             </table>
                         ) : (<p className="text-gray-500 text-sm">{t('noNuclidesFound')}</p>)}
                     </div>
@@ -122,7 +119,7 @@ const PeakIdentifierModal: React.FC<PeakIdentifierModalProps> = ({ isOpen, onClo
         onChange={e => setSelectedNuclideName(e.target.value)}
         className="w-full bg-gray-700 p-2 rounded-md text-white"
       >
-        {allNuclides.map(n => <option key={n.name} value={n.name}>{getLocalizedNuclideName(n.name, t)}</option>)}
+        {allNuclides.map(n => <option key={n.name} value={n.name}>{n.name}</option>)}
       </select>
       {selectedNuclideData && (
         <div className="mt-4 border-t border-gray-700 pt-4">

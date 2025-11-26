@@ -5,7 +5,7 @@ import BackgroundSubtractionPage from './BackgroundSubtractionPage';
 import SpectrumComparisonPage from './SpectrumComparisonPage';
 import Card from '../components/Card';
 import InfoTooltip from '../components/InfoTooltip';
-import { AnalysisRecord } from '../types';
+import { AnalysisRecord } from '../types.ts';
 
 interface SpectroPageProps {
     t: any;
@@ -34,13 +34,11 @@ const SpectroPage: React.FC<SpectroPageProps> = ({ t, onOpenPeakIdentifier, anal
     }
 
     if (mode === 'image') {
-        // Fix: Used logical AND (&&) instead of optional chaining (?.) to ensure TypeScript can correctly narrow the type of analysisToLoad.data.
         const dataToLoad = (analysisToLoad && analysisToLoad.analysisType === 'image') ? analysisToLoad.data : undefined;
         return <SpectrumAnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }
 
     if (mode === 'n42') {
-        // Fix: Used logical AND (&&) instead of optional chaining (?.) to ensure TypeScript can correctly narrow the type of analysisToLoad.data.
         const dataToLoad = (analysisToLoad && analysisToLoad.analysisType === 'n42') ? analysisToLoad.data : undefined;
         return <N42AnalyzerPage t={t} onBack={handleBack} onOpenPeakIdentifier={onOpenPeakIdentifier} analysisType={analysisType} dataToLoad={dataToLoad} />;
     }

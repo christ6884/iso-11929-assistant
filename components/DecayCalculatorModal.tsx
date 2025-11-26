@@ -1,13 +1,10 @@
 
 
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { radionuclides } from '../services/radionuclides.ts';
 import { Radionuclide } from '../types.ts';
 import { shieldingMaterials, ShieldingMaterial } from '../services/shieldingData.ts';
 import CollapsibleSection from './CollapsibleSection.tsx';
-import { getLocalizedNuclideName } from '../translations.ts';
 
 interface DecayCalculatorModalProps {
   isOpen: boolean;
@@ -279,7 +276,7 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
                     {Object.entries(radionuclides).map(([type, nuclides]) => (
                         <optgroup key={type} label={type.charAt(0).toUpperCase() + type.slice(1)}>
                             {nuclides.map((nuclide, index) => (
-                                <option key={`${type}-${index}`} value={`${type}-${index}`}>{getLocalizedNuclideName(nuclide.name, t)}</option>
+                                <option key={`${type}-${index}`} value={`${type}-${index}`}>{nuclide.name}</option>
                             ))}
                         </optgroup>
                     ))}
@@ -323,7 +320,7 @@ const DecayCalculatorModal: React.FC<DecayCalculatorModalProps> = ({ isOpen, onC
                                     <tbody className="text-gray-200">
                                     {sourceBox.map(s => (
                                         <tr key={s.id} className="border-t border-gray-700">
-                                            <td className="p-2">{getLocalizedNuclideName(s.nuclide.name, t)}</td>
+                                            <td className="p-2">{s.nuclide.name}</td>
                                             <td className="p-2 font-mono text-right">{s.activity.toExponential(2)}</td>
                                             <td className="p-2 text-center">
                                                 <button onClick={() => handleRemoveSource(s.id)} title={t('decayCalc_removeSource')} className="text-red-400 hover:text-red-300">&times;</button>

@@ -1,11 +1,8 @@
-
-
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { Source } from '../../types';
 import { radionuclides } from '../../services/radionuclides';
 import { nuclideLibrary } from '../../services/gammaLibrary';
-import { getLocalizedNuclideName } from '../../translations';
 
 interface SourceTooltipProps {
     source: Source;
@@ -43,9 +40,6 @@ const SourceTooltip: React.FC<SourceTooltipProps> = ({ source, position, t }) =>
         zIndex: 100,
     };
 
-    // Localize nuclide name in tooltip title if it matches format
-    const localizedNuclideName = getLocalizedNuclideName(source.nuclide, t);
-
     return createPortal(
         <div 
             style={tooltipStyle}
@@ -53,10 +47,6 @@ const SourceTooltip: React.FC<SourceTooltipProps> = ({ source, position, t }) =>
         >
             <h4 className="font-bold text-sm text-cyan-400 mb-2 border-b border-gray-700 pb-1">{source.name}</h4>
             <div className="space-y-1">
-                 <div className="flex justify-between">
-                    <span className="text-gray-400">{t('sourceMgmt_nuclide')}:</span>
-                    <span className="font-mono">{localizedNuclideName}</span>
-                </div>
                  <div className="flex justify-between">
                     <span className="text-gray-400">{t('halfLife')}:</span>
                     <span className="font-mono">{nuclideData ? formatHalfLife(halfLifeYears) : 'N/A'}</span>

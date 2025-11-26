@@ -1,11 +1,8 @@
-
-
 import React, { useLayoutEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import Card from '../Card';
 import { AnalysisResult, Point, CalibrationFunction, InteractivePeak, DetectedPeak } from '../../types';
 import InfoTooltip from '../InfoTooltip';
-import { getLocalizedNuclideName } from '../../translations';
 
 interface AnalysisResultsProps {
   imageSrc: string;
@@ -218,7 +215,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                     {matches.length > 0 ? (
                         matches.slice(0, 3).map((match, matchIndex) => (
                             <div key={matchIndex} className={`grid grid-cols-3 gap-2 ${matchIndex > 0 ? 'mt-1 pt-1 border-t border-gray-800 print:border-gray-400' : ''}`}>
-                                <span className="font-bold text-gray-100 col-span-1 print:text-black">{getLocalizedNuclideName(match.nuclide.name, t)}</span>
+                                <span className="font-bold text-gray-100 col-span-1 print:text-black">{match.nuclide.name}</span>
                                 <span className="font-mono text-gray-200 text-right print:text-black">{match.line.energy_keV.toFixed(2)}</span>
                                 <span className="font-mono text-gray-300 text-right print:text-black">{match.line.intensity_percent.toFixed(2)}%</span>
                             </div>
@@ -311,7 +308,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                                     
                                     let tooltipText = `${energy.toFixed(1)} keV`;
                                     if (interactivePoint.topMatch) {
-                                        tooltipText += `\n~ ${getLocalizedNuclideName(interactivePoint.topMatch.nuclide.name, t)}`;
+                                        tooltipText += `\n~ ${interactivePoint.topMatch.nuclide.name}`;
                                     }
 
                                     return <>

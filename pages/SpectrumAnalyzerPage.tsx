@@ -8,12 +8,9 @@ import CalibrationPointModal from '../components/spectrum-analyzer/CalibrationPo
 import PeakPositionAdjusterModal from '../components/PeakPositionAdjusterModal';
 import SaveAnalysisModal from '../components/SaveAnalysisModal';
 import { db } from '../services/dbService';
-// Fix: Corrected import path
-import { CalibrationPoint, Point, CalibrationFunction, AnalysisResult, DetectedPeak, InteractivePeak, ImageAnalysisData } from '../types';
+import { CalibrationPoint, Point, CalibrationFunction, AnalysisResult, DetectedPeak, InteractivePeak, ImageAnalysisData } from '../types.ts';
 import { analyzeSpectrum } from '../services/spectrumAnalyzerService';
-// Fix: Corrected import path
 import { calculateFWHM } from '../services/analysisHelpers';
-// Fix: Added missing import for identifyPeaks to resolve multiple 'Cannot find name' errors.
 import { identifyPeaks } from '../services/peakIdentifierService';
 
 interface SpectrumAnalyzerPageProps {
@@ -44,7 +41,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
   const [interactivePoint, setInteractivePoint] = useState<InteractivePeak | null>(null);
   const [isAdjusterOpen, setIsAdjusterOpen] = useState(false);
   const [adjusterInitialX, setAdjusterInitialX] = useState(0);
-  // Fix: Initialized useRef with null to satisfy the requirement of providing an initial value.
   const adjusterCallback = useRef<((x: number) => void) | null>(null);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
 
@@ -75,7 +71,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
     setInteractivePoint(null);
   }, []);
 
-  // Fix: Wrapped handleImageLoaded in useCallback to ensure a stable function reference and prevent potential stale closures.
   const handleImageLoaded = useCallback(async (dataUrl: string) => {
     resetState();
     setImageDataUrl(dataUrl);
@@ -137,7 +132,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
             const preciseY = pointOnCurve ? pointOnCurve.y : (y / imageRef.current!.offsetHeight) * imageRef.current!.naturalHeight;
             const energy = calibrationFunction.slope * preciseX + calibrationFunction.intercept;
             const newPeak: DetectedPeak = { x: preciseX, y: preciseY, energy, manual: true };
-            // FIX: Added analysisType to the identifyPeaks call.
             const identified = identifyPeaks([energy], identificationTolerance, analysisType);
             const newMatches = identified.length > 0 ? identified[0].matches : [];
 
@@ -164,8 +158,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
       return spectrumPoints.map(p => ({ x: p.x, y: naturalHeight - p.y }));
   }, [spectrumPoints, imageRef.current?.naturalHeight]);
 
-  // Fix: Refactored `runFullAnalysis` to use a functional update for `setAnalysisResult`.
-  // This removes `analysisResult` from the `useCallback` dependency array, preventing unnecessary re-creations of this callback and potential stale state issues.
   const runFullAnalysis = useCallback((isRerun?: boolean) => {
     if (!initialAnalysisResult || !calibrationFunction) return;
     
@@ -202,8 +194,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
   }, [initialAnalysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
 
 
-  // FIX: This useEffect hook was refactored to use the updater form of setAnalysisResult,
-  // which ensures it always has the latest state without needing `analysisResult` in the dependency array, thus preventing an infinite loop.
   useEffect(() => {
     // This effect handles re-identification when tolerance changes.
     if (analysisStatus === 'complete' && calibrationFunction) {
@@ -212,7 +202,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
 
         const currentPeaks = prev.detectedPeaks;
         const peakEnergies = currentPeaks.map(p => p.energy);
-        // FIX: Added analysisType to the identifyPeaks call.
         const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
 
         const nuclideMatches = new Map<number, any[]>();
@@ -223,7 +212,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
         return { ...prev, nuclideMatches };
       });
     }
-    // FIX: Added analysisType to the dependency array.
   }, [identificationTolerance, analysisStatus, calibrationFunction, analysisType]);
 
 
@@ -243,7 +231,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
     );
     
     const energy = calibrationFunction.slope * closestPoint.x + calibrationFunction.intercept;
-    // FIX: Added analysisType to the identifyPeaks call.
     const identificationResults = identifyPeaks([energy], identificationTolerance, analysisType);
     const topMatch = identificationResults[0]?.matches[0];
 
@@ -314,12 +301,10 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-300">{t('spectrumAnalyzerTitle')}</h2>
         <div className="flex items-center space-x-2">
-            {/* Fix: Wrapped onOpenPeakIdentifier in an arrow function to prevent passing MouseEvent to a function that expects no arguments. */}
             <button onClick={() => onOpenPeakIdentifier()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z" clipRule="evenodd" /></svg>
                 <span className="hidden sm:inline">{t('identifyPeaks')}</span>
             </button>
-            {/* Fix: Wrapped onBack in an arrow function to prevent passing MouseEvent to a function that expects no arguments. */}
             <button onClick={() => onBack()} className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
                 <span>{t('backButton')}</span>
@@ -347,7 +332,6 @@ const SpectrumAnalyzerPage: React.FC<SpectrumAnalyzerPageProps> = ({ t, onBack, 
             t={t}
             analysisStatus={analysisStatus}
             step={step}
-// Fix: Corrected prop names to pass the correct handler functions.
             onMouseMove={handleMouseMove}
             onMouseLeave={() => setInteractivePoint(null)}
             onImageClick={handleImageClick}
