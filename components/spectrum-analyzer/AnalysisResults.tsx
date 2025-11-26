@@ -64,6 +64,46 @@ const Tooltip: React.FC<{ eventCoords: Point, text: string }> = ({ eventCoords, 
     return createPortal(el, document.body);
 };
 
+const Magnifier: React.FC<{ 
+    src: string, 
+    x: number, 
+    y: number, 
+    clientX: number, 
+    clientY: number, 
+    imgWidth: number, 
+    imgHeight: number 
+}> = ({ src, x, y, clientX, clientY, imgWidth, imgHeight }) => {
+    const zoom = 2.5;
+    const size = 120;
+    
+    // Calculate position of the background image so that (x,y) is in the center of the magnifier
+    const bgX = (size / 2) - (x * zoom);
+    const bgY = (size / 2) - (y * zoom);
+
+    const style: React.CSSProperties = {
+        top: clientY - size - 15, // Position above the cursor
+        left: clientX - size / 2,
+        width: size,
+        height: size,
+        backgroundImage: `url('${src}')`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: `${imgWidth * zoom}px ${imgHeight * zoom}px`,
+        backgroundPosition: `${bgX}px ${bgY}px`,
+    };
+
+    return createPortal(
+        <div 
+            className="fixed pointer-events-none border-2 border-cyan-400 bg-gray-900 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.5)] z-[100]"
+            style={style}
+        >
+            {/* Crosshair */}
+            <div className="absolute top-1/2 left-0 w-full h-px bg-cyan-400/60 transform -translate-y-1/2"></div>
+            <div className="absolute left-1/2 top-0 h-full w-px bg-cyan-400/60 transform -translate-x-1/2"></div>
+        </div>,
+        document.body
+    );
+}
+
 
 const AnalysisResults: React.FC<AnalysisResultsProps> = ({
     imageSrc, imageRef, analysisResult, spectrumPoints, calibrationFunction, interactivePoint, sidebar, t,
@@ -71,6 +111,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
     onMouseMove, onMouseLeave, onImageClick, onTogglePeakGroup, onExportCsv, onSaveAnalysis
 }) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number; naturalWidth: number; naturalHeight: number } | null>(null);
+  const [magnifier, setMagnifier] = useState<{x: number, y: number, clientX: number, clientY: number} | null>(null);
 
   useLayoutEffect(() => {
     if (imageRef.current) {
@@ -97,6 +138,27 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
         }
     }
   }, [imageRef, imageSrc]);
+
+  const handleMouseMoveLocal = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (imageRef.current) {
+          const rect = imageRef.current.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          // Only show magnifier if inside the image bounds
+          if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+              setMagnifier({ x, y, clientX: e.clientX, clientY: e.clientY });
+          } else {
+              setMagnifier(null);
+          }
+      }
+      onMouseMove(e);
+  };
+
+  const handleMouseLeaveLocal = () => {
+      setMagnifier(null);
+      onMouseLeave();
+  }
 
   const groupCounts = useMemo(() => {
     if (!analysisResult || !imageSize || !imageSize.naturalHeight) {
@@ -209,51 +271,65 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                         alt="Spectrum" 
                         className={`w-full h-auto rounded-lg print-img ${step === 'add' || (analysisStatus === 'complete' && spectrumPoints) ? 'cursor-crosshair' : ''}`}
                     />
-                    {step === 'analyze' && (analysisStatus === 'complete' && spectrumPoints && spectrumPoints.length > 0) && (
-                        <div 
-                            className="absolute inset-0 cursor-crosshair no-print"
-                            onMouseMove={onMouseMove}
-                            onMouseLeave={onMouseLeave}
-                        >
-                            {analysisResult?.detectedPeaks.map((peak, index) => {
-                                const screenCoords = getScreenCoords(peak);
-                                if (!screenCoords) return null;
-                                return (
-                                    <div 
-                                        key={`peak-wrapper-${index}`}
-                                        className="absolute cursor-pointer"
-                                        style={{ left: screenCoords.x, top: screenCoords.y }}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onTogglePeakGroup(index);
-                                        }}
-                                    >
-                                        <Marker 
-                                            position={{x:0, y:0}} 
-                                            text={peak.energy.toFixed(1)} 
-                                            type={peak.manual ? 'manual' : 'auto'} 
-                                            group={peak.group}
-                                        />
-                                    </div>
-                                );
-                            })}
-                            
-                            {interactivePoint && (() => {
-                                const screenCoords = getScreenCoords(interactivePoint.point);
-                                if (!screenCoords || !calibrationFunction) return null;
-                                const energy = calibrationFunction.slope * interactivePoint.point.x + calibrationFunction.intercept;
+                    <div 
+                        className="absolute inset-0 cursor-crosshair no-print"
+                        onMouseMove={handleMouseMoveLocal}
+                        onMouseLeave={handleMouseLeaveLocal}
+                    >
+                        {step === 'analyze' && (analysisStatus === 'complete' && spectrumPoints && spectrumPoints.length > 0) && (
+                            <>
+                                {analysisResult?.detectedPeaks.map((peak, index) => {
+                                    const screenCoords = getScreenCoords(peak);
+                                    if (!screenCoords) return null;
+                                    return (
+                                        <div 
+                                            key={`peak-wrapper-${index}`}
+                                            className="absolute cursor-pointer"
+                                            style={{ left: screenCoords.x, top: screenCoords.y }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onTogglePeakGroup(index);
+                                            }}
+                                        >
+                                            <Marker 
+                                                position={{x:0, y:0}} 
+                                                text={peak.energy.toFixed(1)} 
+                                                type={peak.manual ? 'manual' : 'auto'} 
+                                                group={peak.group}
+                                            />
+                                        </div>
+                                    );
+                                })}
                                 
-                                let tooltipText = `${energy.toFixed(1)} keV`;
-                                if (interactivePoint.topMatch) {
-                                    tooltipText += `\n~ ${interactivePoint.topMatch.nuclide.name}`;
-                                }
+                                {interactivePoint && (() => {
+                                    const screenCoords = getScreenCoords(interactivePoint.point);
+                                    if (!screenCoords || !calibrationFunction) return null;
+                                    const energy = calibrationFunction.slope * interactivePoint.point.x + calibrationFunction.intercept;
+                                    
+                                    let tooltipText = `${energy.toFixed(1)} keV`;
+                                    if (interactivePoint.topMatch) {
+                                        tooltipText += `\n~ ${interactivePoint.topMatch.nuclide.name}`;
+                                    }
 
-                                return <>
-                                    <Cursor position={screenCoords} />
-                                    <Tooltip eventCoords={{x: interactivePoint.eventCoords.x + (imageRef.current?.getBoundingClientRect().left ?? 0) , y: interactivePoint.eventCoords.y + (imageRef.current?.getBoundingClientRect().top ?? 0)}} text={tooltipText} />
-                                </>;
-                            })()}
-                        </div>
+                                    return <>
+                                        <Cursor position={screenCoords} />
+                                        <Tooltip eventCoords={{x: interactivePoint.eventCoords.x + (imageRef.current?.getBoundingClientRect().left ?? 0) , y: interactivePoint.eventCoords.y + (imageRef.current?.getBoundingClientRect().top ?? 0)}} text={tooltipText} />
+                                    </>;
+                                })()}
+                            </>
+                        )}
+                    </div>
+                    {/* Render Magnifier only when hovering and image dimensions are known */}
+                    {magnifier && imageSize && (step === 'add' || step === 'analyze') && (
+                        <Magnifier 
+                            src={imageSrc} 
+                            x={magnifier.x} 
+                            y={magnifier.y} 
+                            clientX={magnifier.clientX} 
+                            clientY={magnifier.clientY}
+                            imgWidth={imageSize.width}
+                            imgHeight={imageSize.height}
+                        />
                     )}
                 </div>
 
