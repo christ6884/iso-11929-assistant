@@ -26867,6 +26867,5376 @@
     return results;
   }
 
+  // components/PeakIdentifierModal.tsx
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  var PeakIdentifierModal = ({ isOpen, onClose, t }) => {
+    const [mode, setMode] = (0, import_react10.useState)("energy");
+    const [peakEnergiesText, setPeakEnergiesText] = (0, import_react10.useState)("");
+    const [tolerance, setTolerance] = (0, import_react10.useState)(2);
+    const [energyResults, setEnergyResults] = (0, import_react10.useState)(null);
+    const [selectedNuclideName, setSelectedNuclideName] = (0, import_react10.useState)("");
+    const [analysisType, setAnalysisType] = (0, import_react10.useState)("gamma");
+    const allNuclides = (0, import_react10.useMemo)(() => nuclideLibrary.sort((a, b) => a.name.localeCompare(b.name)), []);
+    const selectedNuclideData = (0, import_react10.useMemo)(() => {
+      return allNuclides.find((n) => n.name === selectedNuclideName) || null;
+    }, [selectedNuclideName, allNuclides]);
+    (0, import_react10.useEffect)(() => {
+      if (isOpen) {
+        setPeakEnergiesText("");
+        setEnergyResults(null);
+        setSelectedNuclideName(allNuclides.length > 0 ? allNuclides[0].name : "");
+      }
+      const handleEsc = (event) => {
+        if (event.key === "Escape") {
+          onClose();
+        }
+      };
+      window.addEventListener("keydown", handleEsc);
+      return () => window.removeEventListener("keydown", handleEsc);
+    }, [isOpen, onClose, allNuclides]);
+    if (!isOpen)
+      return null;
+    const handleIdentifyByEnergy = () => {
+      const energies = peakEnergiesText.split("\n").map((line) => parseFloat(line.trim())).filter((num) => !isNaN(num) && num > 0);
+      const identificationResults = identifyPeaks(energies, tolerance, analysisType);
+      setEnergyResults(identificationResults);
+    };
+    const renderByEnergyMode = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "text-sm text-gray-400", children: t("peakIdentifierIntro") }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "md:col-span-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("peakEnergiesLabel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+            "textarea",
+            {
+              value: peakEnergiesText,
+              onChange: (e) => setPeakEnergiesText(e.target.value),
+              rows: 6,
+              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-sm text-white",
+              placeholder: "661.7\n1173.2\n1332.5"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("toleranceLabel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+            "input",
+            {
+              type: "number",
+              value: tolerance,
+              onChange: (e) => setTolerance(parseFloat(e.target.value) || 0),
+              step: "0.1",
+              min: "0.1",
+              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+            "button",
+            {
+              onClick: handleIdentifyByEnergy,
+              className: "w-full mt-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300",
+              children: t("identify")
+            }
+          )
+        ] })
+      ] }),
+      energyResults && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4 border-t border-gray-700 pt-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("identificationResults") }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "space-y-4 max-h-64 overflow-y-auto pr-2", children: energyResults.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("resultsForPeak").replace("{energy}", result.inputEnergy_keV.toFixed(2)).replace("{tolerance}", tolerance.toFixed(2)) }),
+          result.matches.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("peakId_nuclide") }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("lineEnergy") }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("intensity") }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("delta") })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: result.matches.map((match, i) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { className: "border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-semibold text-cyan-300", children: match.nuclide.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: match.line.energy_keV.toFixed(2) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: match.line.intensity_percent.toFixed(2) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: `py-1 px-2 font-mono text-right ${match.delta_keV >= 0 ? "text-green-400" : "text-red-400"}`, children: match.delta_keV.toFixed(2) })
+            ] }, i)) })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "text-gray-500 text-sm", children: t("noNuclidesFound") })
+        ] }, index)) })
+      ] })
+    ] });
+    const renderByNuclideMode = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("searchNuclide") }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        "select",
+        {
+          value: selectedNuclideName,
+          onChange: (e) => setSelectedNuclideName(e.target.value),
+          className: "w-full bg-gray-700 p-2 rounded-md text-white",
+          children: allNuclides.map((n) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: n.name, children: n.name }, n.name))
+        }
+      ),
+      selectedNuclideData && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4 border-t border-gray-700 pt-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("emissionLines") }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "max-h-80 overflow-y-auto pr-2", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "w-full text-xs text-left", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("lineEnergy") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("intensity") }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("radiationType") })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: selectedNuclideData.lines.filter((line) => line.type === analysisType).sort((a, b) => b.intensity_percent - a.intensity_percent).map((line, i) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { className: "border-t border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-cyan-300", children: line.energy_keV.toFixed(2) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: line.intensity_percent.toFixed(3) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 capitalize", children: line.type })
+          ] }, i)) })
+        ] }) })
+      ] })
+    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Card_default, { title: t("peakIdentifierTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex bg-gray-800 rounded-md p-1 my-2 border border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setMode("energy"), className: `flex-1 p-1 text-sm rounded ${mode === "energy" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("modeByEnergy") }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setMode("nuclide"), className: `flex-1 p-1 text-sm rounded ${mode === "nuclide" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("modeByNuclide") })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1 my-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-1 text-sm rounded ${analysisType === "gamma" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("gammaAnalysis") }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-1 text-sm rounded ${analysisType === "alpha" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("alphaAnalysis") })
+      ] }),
+      mode === "energy" ? renderByEnergyMode() : renderByNuclideMode(),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex justify-end pt-4 border-t border-gray-700 mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("close") }) })
+    ] }) }) }) });
+  };
+  var PeakIdentifierModal_default = PeakIdentifierModal;
+
+  // components/DecayCalculatorModal.tsx
+  var import_react11 = __toESM(require_react());
+
+  // services/radionuclides.ts
+  var year2 = 31556926;
+  var day2 = 86400;
+  var hour2 = 3600;
+  var radionuclides = {
+    gamma: [
+      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
+      { name: "Antimony-124 (Sb-124)", halfLifeSeconds: 60.2 * day2, gammaConstant: 260, effectiveEnergy_MeV: 1.691 },
+      { name: "Antimony-125 (Sb-125)", halfLifeSeconds: 2.75855 * year2, effectiveEnergy_MeV: 0.428 },
+      { name: "Barium-133 (Ba-133)", halfLifeSeconds: 10.54 * year2, gammaConstant: 56.4, effectiveEnergy_MeV: 0.356 },
+      { name: "Barium-140 (Ba-140)", halfLifeSeconds: 12.753 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.537 },
+      { name: "Beryllium-7 (Be-7)", halfLifeSeconds: 53.22 * day2, gammaConstant: 4.8, effectiveEnergy_MeV: 0.477 },
+      { name: "Bismuth-207 (Bi-207)", halfLifeSeconds: 31.55 * year2, gammaConstant: 200, effectiveEnergy_MeV: 0.57 },
+      { name: "Cadmium-109 (Cd-109)", halfLifeSeconds: 461.4 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.088 },
+      { name: "Cerium-141 (Ce-141)", halfLifeSeconds: 32.5 * day2, gammaConstant: 12.1, effectiveEnergy_MeV: 0.145 },
+      { name: "Cerium-144 (Ce-144)", halfLifeSeconds: 284.9 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.133 },
+      { name: "Cesium-134 (Cs-134)", halfLifeSeconds: 2.0652 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.795 },
+      { name: "Cesium-137 (Cs-137)", halfLifeSeconds: 30.08 * year2, gammaConstant: 89, effectiveEnergy_MeV: 0.662 },
+      { name: "Chromium-51 (Cr-51)", halfLifeSeconds: 27.703 * day2, gammaConstant: 4.6, effectiveEnergy_MeV: 0.32 },
+      { name: "Cobalt-56 (Co-56)", halfLifeSeconds: 77.236 * day2, gammaConstant: 490, effectiveEnergy_MeV: 0.847 },
+      { name: "Cobalt-57 (Co-57)", halfLifeSeconds: 271.8 * day2, gammaConstant: 2.5, effectiveEnergy_MeV: 0.122 },
+      { name: "Cobalt-58 (Co-58)", halfLifeSeconds: 70.86 * day2, gammaConstant: 150, effectiveEnergy_MeV: 0.811 },
+      { name: "Cobalt-60 (Co-60)", halfLifeSeconds: 5.271 * year2, gammaConstant: 353, effectiveEnergy_MeV: 1.25 },
+      { name: "Copper-64 (Cu-64)", halfLifeSeconds: 12.701 * hour2, gammaConstant: 31.5, effectiveEnergy_MeV: 0.511 },
+      { name: "Europium-152 (Eu-152)", halfLifeSeconds: 13.537 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.408 },
+      { name: "Europium-154 (Eu-154)", halfLifeSeconds: 8.6 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.274 },
+      { name: "Europium-155 (Eu-155)", halfLifeSeconds: 4.76 * year2, effectiveEnergy_MeV: 0.105 },
+      { name: "Fluorine-18 (F-18)", halfLifeSeconds: 1.8288 * hour2, gammaConstant: 150, effectiveEnergy_MeV: 0.511 },
+      { name: "Gallium-66 (Ga-66)", halfLifeSeconds: 9.49 * hour2, effectiveEnergy_MeV: 1.039 },
+      { name: "Gallium-67 (Ga-67)", halfLifeSeconds: 3.2613 * day2, gammaConstant: 22.1, effectiveEnergy_MeV: 0.093 },
+      { name: "Indium-111 (In-111)", halfLifeSeconds: 2.8049 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.245 },
+      { name: "Iodine-123 (I-123)", halfLifeSeconds: 13.2234 * hour2, gammaConstant: 42.1, effectiveEnergy_MeV: 0.159 },
+      { name: "Iodine-125 (I-125)", halfLifeSeconds: 59.4 * day2, gammaConstant: 40.1, effectiveEnergy_MeV: 0.035 },
+      { name: "Iodine-129 (I-129)", halfLifeSeconds: 157e5 * year2, gammaConstant: 16.3, effectiveEnergy_MeV: 0.04 },
+      { name: "Iodine-131 (I-131)", halfLifeSeconds: 8.0233 * day2, gammaConstant: 59.3, effectiveEnergy_MeV: 0.364 },
+      { name: "Iron-55 (Fe-55)", halfLifeSeconds: 2.737 * year2 },
+      { name: "Iron-59 (Fe-59)", halfLifeSeconds: 44.495 * day2, gammaConstant: 171, effectiveEnergy_MeV: 1.099 },
+      { name: "Krypton-85 (Kr-85)", halfLifeSeconds: 10.752 * year2, effectiveEnergy_MeV: 0.514 },
+      { name: "Lanthanum-140 (La-140)", halfLifeSeconds: 1.6785 * day2, gammaConstant: 280, effectiveEnergy_MeV: 1.596 },
+      { name: "Lead-210 (Pb-210)", halfLifeSeconds: 22.23 * year2, gammaConstant: 4e-3, effectiveEnergy_MeV: 0.0465 },
+      { name: "Lutetium-177 (Lu-177)", halfLifeSeconds: 6.647 * day2, effectiveEnergy_MeV: 0.208 },
+      { name: "Manganese-54 (Mn-54)", halfLifeSeconds: 312.13 * day2, gammaConstant: 128.8, effectiveEnergy_MeV: 0.835 },
+      { name: "Manganese-56 (Mn-56)", halfLifeSeconds: 2.57878 * hour2, effectiveEnergy_MeV: 0.847 },
+      { name: "Molybdenum-99 (Mo-99)", halfLifeSeconds: 2.7479 * day2, gammaConstant: 39.5, effectiveEnergy_MeV: 0.74 },
+      { name: "Niobium-94 (Nb-94)", halfLifeSeconds: 20300 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.871 },
+      { name: "Niobium-95 (Nb-95)", halfLifeSeconds: 34.991 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.766 },
+      { name: "Potassium-40 (K-40)", halfLifeSeconds: 1248e6 * year2, gammaConstant: 22.4, effectiveEnergy_MeV: 1.461 },
+      { name: "Ruthenium-103 (Ru-103)", halfLifeSeconds: 39.26 * day2, gammaConstant: 79.5, effectiveEnergy_MeV: 0.497 },
+      { name: "Ruthenium-106 (Ru-106)", halfLifeSeconds: 371.8 * day2, gammaConstant: 34.9, effectiveEnergy_MeV: 0.512 },
+      { name: "Samarium-153 (Sm-153)", halfLifeSeconds: 1.928 * day2, effectiveEnergy_MeV: 0.103 },
+      { name: "Scandium-46 (Sc-46)", halfLifeSeconds: 83.788 * day2, gammaConstant: 290, effectiveEnergy_MeV: 0.889 },
+      { name: "Selenium-75 (Se-75)", halfLifeSeconds: 119.78 * day2, gammaConstant: 52.1, effectiveEnergy_MeV: 0.265 },
+      { name: "Silver-110m (Ag-110m)", halfLifeSeconds: 249.78 * day2, gammaConstant: 390, effectiveEnergy_MeV: 0.658 },
+      { name: "Sodium-22 (Na-22)", halfLifeSeconds: 2.6027 * year2, gammaConstant: 326.6, effectiveEnergy_MeV: 1.275 },
+      { name: "Sodium-24 (Na-24)", halfLifeSeconds: 14.9574 * hour2, gammaConstant: 490, effectiveEnergy_MeV: 1.369 },
+      { name: "Strontium-85 (Sr-85)", halfLifeSeconds: 64.85 * day2, gammaConstant: 80.8, effectiveEnergy_MeV: 0.514 },
+      { name: "Technetium-99m (Tc-99m)", halfLifeSeconds: 6.0067 * hour2, gammaConstant: 20.9, effectiveEnergy_MeV: 0.14 },
+      { name: "Thallium-201 (Tl-201)", halfLifeSeconds: 3.04 * day2, effectiveEnergy_MeV: 0.167 },
+      { name: "Xenon-133 (Xe-133)", halfLifeSeconds: 5.243 * day2, gammaConstant: 12.3, effectiveEnergy_MeV: 0.081 },
+      { name: "Yttrium-88 (Y-88)", halfLifeSeconds: 106.626 * day2, gammaConstant: 410, effectiveEnergy_MeV: 1.836 },
+      { name: "Zinc-65 (Zn-65)", halfLifeSeconds: 244.01 * day2, gammaConstant: 75.3, effectiveEnergy_MeV: 1.116 },
+      { name: "Zirconium-95 (Zr-95)", halfLifeSeconds: 64.032 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.757 }
+    ].sort((a, b) => a.name.localeCompare(b.name)),
+    beta: [
+      { name: "Calcium-45 (Ca-45)", halfLifeSeconds: 162.61 * day2 },
+      { name: "Carbon-14 (C-14)", halfLifeSeconds: 5700 * year2 },
+      { name: "Chlorine-36 (Cl-36)", halfLifeSeconds: 301e3 * year2 },
+      { name: "Hydrogen-3 (H-3 Tritium)", halfLifeSeconds: 12.32 * year2 },
+      { name: "Nickel-63 (Ni-63)", halfLifeSeconds: 100.1 * year2 },
+      { name: "Phosphorus-32 (P-32)", halfLifeSeconds: 14.284 * day2 },
+      // BIPM-5
+      { name: "Phosphorus-33 (P-33)", halfLifeSeconds: 25.383 * day2 },
+      // BIPM-5
+      { name: "Promethium-147 (Pm-147)", halfLifeSeconds: 2.6234 * year2 },
+      { name: "Strontium-89 (Sr-89)", halfLifeSeconds: 50.57 * day2 },
+      // BIPM-5
+      { name: "Strontium-90 (Sr-90)", halfLifeSeconds: 28.79 * year2 },
+      { name: "Sulfur-35 (S-35)", halfLifeSeconds: 87.51 * day2 },
+      { name: "Technetium-99 (Tc-99)", halfLifeSeconds: 211e3 * year2 },
+      { name: "Thallium-204 (Tl-204)", halfLifeSeconds: 3.78 * year2 },
+      { name: "Yttrium-90 (Y-90)", halfLifeSeconds: 64.1 * hour2 }
+    ].sort((a, b) => a.name.localeCompare(b.name)),
+    alpha: [
+      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
+      { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
+      { name: "Curium-242 (Cm-242)", halfLifeSeconds: 162.8 * day2 },
+      { name: "Curium-243 (Cm-243)", halfLifeSeconds: 29.1 * year2 },
+      { name: "Curium-244 (Cm-244)", halfLifeSeconds: 18.1 * year2 },
+      { name: "Curium-248 (Cm-248)", halfLifeSeconds: 348e3 * year2 },
+      { name: "Einsteinium-253 (Es-253)", halfLifeSeconds: 20.5 * day2 },
+      { name: "Fermium-257 (Fm-257)", halfLifeSeconds: 100.5 * day2 },
+      { name: "Neptunium-237 (Np-237)", halfLifeSeconds: 2144e3 * year2 },
+      { name: "Plutonium-238 (Pu-238)", halfLifeSeconds: 87.7 * year2 },
+      { name: "Plutonium-239 (Pu-239)", halfLifeSeconds: 24110 * year2 },
+      { name: "Plutonium-240 (Pu-240)", halfLifeSeconds: 6561 * year2 },
+      { name: "Plutonium-241 (Pu-241)", halfLifeSeconds: 14.35 * year2 },
+      { name: "Plutonium-242 (Pu-242)", halfLifeSeconds: 373e3 * year2 },
+      { name: "Polonium-210 (Po-210)", halfLifeSeconds: 138.376 * day2 },
+      { name: "Protactinium-231 (Pa-231)", halfLifeSeconds: 32800 * year2 },
+      { name: "Radium-226 (Ra-226)", halfLifeSeconds: 1600 * year2 },
+      { name: "Thorium-228 (Th-228)", halfLifeSeconds: 1.91 * year2 },
+      { name: "Thorium-229 (Th-229)", halfLifeSeconds: 7880 * year2 },
+      { name: "Thorium-232 (Th-232)", halfLifeSeconds: 1405e7 * year2 },
+      { name: "Thorium-234 (Th-234)", halfLifeSeconds: 24.1 * day2 },
+      { name: "Uranium-233 (U-233)", halfLifeSeconds: 159200 * year2 },
+      { name: "Uranium-234 (U-234)", halfLifeSeconds: 245500 * year2 },
+      { name: "Uranium-235 (U-235)", halfLifeSeconds: 704e6 * year2 },
+      { name: "Uranium-238 (U-238)", halfLifeSeconds: 4468e6 * year2 }
+    ].sort((a, b) => a.name.localeCompare(b.name)),
+    neutron: [
+      { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
+      { name: "Americium-241/Be (Am-Be)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 4.4 }
+      // Driven by Am-241 for half-life, effective energy from neutron emission
+    ]
+  };
+
+  // services/shieldingData.ts
+  var shieldingMaterials = [
+    {
+      name: "Lead (Pb)",
+      density_g_cm3: 11.34,
+      mu: [
+        { energy_MeV: 0.1, value: 57.6 },
+        { energy_MeV: 0.3, value: 3.59 },
+        { energy_MeV: 0.5, value: 1.46 },
+        { energy_MeV: 0.8, value: 0.89 },
+        { energy_MeV: 1, value: 0.77 },
+        { energy_MeV: 1.5, value: 0.6 },
+        { energy_MeV: 2, value: 0.52 },
+        { energy_MeV: 3, value: 0.49 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 2.2, alpha1: -0.07, alpha2: 0.05 },
+        { energy_MeV: 1, A: 2.15, alpha1: -0.06, alpha2: 0.046 },
+        { energy_MeV: 2, A: 1.95, alpha1: -0.05, alpha2: 0.038 },
+        { energy_MeV: 3, A: 1.8, alpha1: -0.04, alpha2: 0.032 }
+      ]
+    },
+    {
+      name: "Steel (Fe)",
+      density_g_cm3: 7.87,
+      mu: [
+        { energy_MeV: 0.1, value: 2.76 },
+        { energy_MeV: 0.3, value: 0.69 },
+        { energy_MeV: 0.5, value: 0.52 },
+        { energy_MeV: 0.8, value: 0.42 },
+        { energy_MeV: 1, value: 0.37 },
+        { energy_MeV: 1.5, value: 0.3 },
+        { energy_MeV: 2, value: 0.26 },
+        { energy_MeV: 3, value: 0.22 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 10.9, alpha1: -0.09, alpha2: 0.06 },
+        { energy_MeV: 1, A: 8.4, alpha1: -0.1, alpha2: 0.03 },
+        { energy_MeV: 2, A: 6.2, alpha1: -0.09, alpha2: 0.02 },
+        { energy_MeV: 3, A: 5.1, alpha1: -0.08, alpha2: 0.015 }
+      ]
+    },
+    {
+      name: "Concrete",
+      density_g_cm3: 2.35,
+      mu: [
+        { energy_MeV: 0.1, value: 0.39 },
+        { energy_MeV: 0.3, value: 0.22 },
+        { energy_MeV: 0.5, value: 0.18 },
+        { energy_MeV: 0.8, value: 0.14 },
+        { energy_MeV: 1, value: 0.13 },
+        { energy_MeV: 1.5, value: 0.1 },
+        { energy_MeV: 2, value: 0.09 },
+        { energy_MeV: 3, value: 0.07 }
+      ],
+      buildup: [
+        { energy_MeV: 0.5, A: 12.5, alpha1: -0.06, alpha2: 0.03 },
+        { energy_MeV: 1, A: 9.9, alpha1: -0.07, alpha2: 0.01 },
+        { energy_MeV: 2, A: 7, alpha1: -0.06, alpha2: 5e-3 },
+        { energy_MeV: 3, A: 5.8, alpha1: -0.05, alpha2: 3e-3 }
+      ]
+    }
+  ];
+
+  // components/DecayCalculatorModal.tsx
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var formatDateForInput = (date) => {
+    const year3 = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day3 = date.getDate().toString().padStart(2, "0");
+    return `${year3}-${month}-${day3}`;
+  };
+  var DoseRateDisplay = ({ dose_uSv_h, label, colorClass }) => {
+    const format = (val) => {
+      if (typeof val === "string")
+        return val;
+      return val.toPrecision(3);
+    };
+    let si_num = dose_uSv_h;
+    let si_unit = "\xB5Sv/h";
+    if (si_num >= 1e3) {
+      si_num /= 1e3;
+      si_unit = "mSv/h";
+    }
+    if (si_num >= 1e3) {
+      si_num /= 1e3;
+      si_unit = "Sv/h";
+    }
+    let si_val = si_num;
+    const dose_mrem_h = dose_uSv_h * 0.1;
+    let rem_num = dose_mrem_h;
+    let rem_unit = "mrem/h";
+    if (rem_num >= 1e3) {
+      rem_num /= 1e3;
+      rem_unit = "rem/h";
+    }
+    let rem_val = rem_num;
+    let r_num = dose_mrem_h;
+    let r_unit = "mR/h";
+    if (r_num >= 1e3) {
+      r_num /= 1e3;
+      r_unit = "R/h";
+    }
+    let r_val = r_num;
+    if (dose_uSv_h === 0 || !isFinite(dose_uSv_h)) {
+      si_val = "0.00";
+      rem_val = "0.00";
+      r_val = "0.00";
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-gray-400 font-semibold", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: `grid grid-cols-3 text-center mt-1 font-mono text-md ${colorClass}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(si_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: si_unit })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(rem_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: rem_unit })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(r_val) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: r_unit })
+        ] })
+      ] })
+    ] });
+  };
+  var DecayCalculatorModal = ({ isOpen, onClose, onApply, t, initialActivity, initialUncertainty, unit }) => {
+    const [refActivity, setRefActivity] = (0, import_react11.useState)(initialActivity);
+    const [refUncertainty, setRefUncertainty] = (0, import_react11.useState)(initialUncertainty);
+    const [refDate, setRefDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
+    const [measDate, setMeasDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
+    const [selectedNuclideKey, setSelectedNuclideKey] = (0, import_react11.useState)("gamma-0");
+    const [shieldMaterialId, setShieldMaterialId] = (0, import_react11.useState)("none");
+    const [shieldThickness, setShieldThickness] = (0, import_react11.useState)(0);
+    const [sourceBox, setSourceBox] = (0, import_react11.useState)([]);
+    const [correctedActivity, setCorrectedActivity] = (0, import_react11.useState)(null);
+    const [elapsedDays, setElapsedDays] = (0, import_react11.useState)(null);
+    const [doseRate, setDoseRate] = (0, import_react11.useState)(null);
+    const selectedNuclide = (0, import_react11.useMemo)(() => {
+      const [type, indexStr] = selectedNuclideKey.split("-");
+      const index = parseInt(indexStr, 10);
+      if (radionuclides[type] && radionuclides[type][index]) {
+        return radionuclides[type][index];
+      }
+      return null;
+    }, [selectedNuclideKey]);
+    const shieldMaterial = (0, import_react11.useMemo)(() => {
+      return shieldingMaterials.find((m) => m.id === shieldMaterialId) || null;
+    }, [shieldMaterialId]);
+    (0, import_react11.useEffect)(() => {
+      setRefActivity(initialActivity);
+      setRefUncertainty(initialUncertainty);
+      setSourceBox([]);
+    }, [initialActivity, initialUncertainty, isOpen]);
+    const interpolate = (points, energy) => {
+      if (points.length === 0)
+        return null;
+      if (points.length === 1 || energy <= points[0].energy_MeV)
+        return points[0].value;
+      if (energy >= points[points.length - 1].energy_MeV)
+        return points[points.length - 1].value;
+      const upperIndex = points.findIndex((p) => p.energy_MeV > energy);
+      if (upperIndex === -1 || upperIndex === 0)
+        return points[0].value;
+      const lower = points[upperIndex - 1];
+      const upper = points[upperIndex];
+      const fraction = (energy - lower.energy_MeV) / (upper.energy_MeV - lower.energy_MeV);
+      if (typeof lower.value === "number") {
+        return lower.value + fraction * (upper.value - lower.value);
+      }
+      const interpolated = {};
+      for (const key in lower.value) {
+        interpolated[key] = lower.value[key] + fraction * (upper.value[key] - lower.value[key]);
+      }
+      return interpolated;
+    };
+    (0, import_react11.useEffect)(() => {
+      const calculate = () => {
+        if (!selectedNuclide || !refDate || !measDate || refActivity <= 0) {
+          setCorrectedActivity(null);
+          setElapsedDays(null);
+          setDoseRate(null);
+          return;
+        }
+        const refTime = new Date(refDate).getTime();
+        const measTime = new Date(measDate).getTime();
+        if (isNaN(refTime) || isNaN(measTime)) {
+          setCorrectedActivity(null);
+          setElapsedDays(null);
+          setDoseRate(null);
+          return;
+        }
+        const elapsedTimeSeconds = (measTime - refTime) / 1e3;
+        setElapsedDays(elapsedTimeSeconds / (24 * 3600));
+        const lambda = Math.log(2) / selectedNuclide.halfLifeSeconds;
+        const newActivity = refActivity * Math.exp(-lambda * elapsedTimeSeconds);
+        setCorrectedActivity(newActivity);
+        const gammaConstant = selectedNuclide.gammaConstant;
+        if (!gammaConstant || gammaConstant <= 0 || newActivity <= 0) {
+          setDoseRate(null);
+          return;
+        }
+        const activityMBq = newActivity / 1e6;
+        let doseRateAt1m = gammaConstant * activityMBq;
+        let doseRateAt1cm = doseRateAt1m * 1e4;
+        setDoseRate({ contact: doseRateAt1cm, oneMeter: doseRateAt1m });
+      };
+      calculate();
+    }, [refActivity, refDate, measDate, selectedNuclide]);
+    const totalDoseRate = (0, import_react11.useMemo)(() => {
+      if (sourceBox.length === 0)
+        return null;
+      let totalContact = 0;
+      let totalOneMeter = 0;
+      sourceBox.forEach((source) => {
+        const { nuclide, activity } = source;
+        const gammaConstant = nuclide.gammaConstant;
+        if (!gammaConstant || gammaConstant <= 0 || activity <= 0) {
+          return;
+        }
+        const activityMBq = activity / 1e6;
+        let doseRateAt1m = gammaConstant * activityMBq;
+        let doseRateAt1cm = doseRateAt1m * 1e4;
+        if (shieldMaterial && shieldThickness > 0 && nuclide.effectiveEnergy_MeV) {
+          const mu = interpolate(shieldMaterial.mu.map((p) => ({ energy_MeV: p.energy_MeV, value: p.value })), nuclide.effectiveEnergy_MeV);
+          const buildupCoeffs = interpolate(shieldMaterial.buildup.map((p) => ({ energy_MeV: p.energy_MeV, value: { A: p.A, alpha1: p.alpha1, alpha2: p.alpha2 } })), nuclide.effectiveEnergy_MeV);
+          if (mu && buildupCoeffs) {
+            const mu_x = mu * shieldThickness;
+            const buildupFactor = buildupCoeffs.A * Math.exp(buildupCoeffs.alpha1 * mu_x) + (1 - buildupCoeffs.A) * Math.exp(buildupCoeffs.alpha2 * mu_x);
+            const attenuationFactor = Math.exp(-mu_x);
+            doseRateAt1m *= buildupFactor * attenuationFactor;
+            doseRateAt1cm *= buildupFactor * attenuationFactor;
+          }
+        }
+        totalContact += doseRateAt1cm;
+        totalOneMeter += doseRateAt1m;
+      });
+      return { contact: totalContact, oneMeter: totalOneMeter };
+    }, [sourceBox, shieldMaterial, shieldThickness]);
+    if (!isOpen)
+      return null;
+    const handleApply = () => {
+      if (correctedActivity !== null) {
+        onApply(correctedActivity, refUncertainty);
+      }
+    };
+    const handleAddSourceToBox = () => {
+      if (selectedNuclide && correctedActivity !== null && correctedActivity > 0) {
+        const newSource = {
+          id: crypto.randomUUID(),
+          nuclide: selectedNuclide,
+          activity: correctedActivity
+        };
+        setSourceBox((prev) => [...prev, newSource]);
+      }
+    };
+    const handleRemoveSource = (id) => {
+      setSourceBox((prev) => prev.filter((s) => s.id !== id));
+    };
+    const formatNumber4 = (num) => {
+      if (num === null)
+        return "N/A";
+      if (Math.abs(num) < 1e-3 && num !== 0)
+        return num.toExponential(3);
+      const fixed = num.toFixed(3);
+      return fixed.endsWith(".000") ? parseInt(fixed).toString() : fixed;
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-800/70 rounded-lg shadow-xl backdrop-blur-md border border-gray-700 flex flex-col max-h-[90vh]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h2", { className: "text-lg font-semibold text-cyan-400 bg-gray-900/50 px-6 py-3 rounded-t-lg border-b border-gray-700 flex-shrink-0", children: t("decayCalculatorTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "p-6 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
+              t("decayCalc_referenceActivity"),
+              " (",
+              unit,
+              ")"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: refActivity, onChange: (e) => setRefActivity(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceUncertainty") }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: refUncertainty, onChange: (e) => setRefUncertainty(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceDate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "date", value: refDate, onChange: (e) => setRefDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("measurementDate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "date", value: measDate, onChange: (e) => setMeasDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("selectNuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("select", { value: selectedNuclideKey, onChange: (e) => setSelectedNuclideKey(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type, nuclides]) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("optgroup", { label: type.charAt(0).toUpperCase() + type.slice(1), children: nuclides.map((nuclide, index) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: `${type}-${index}`, children: nuclide.name }, `${type}-${index}`)) }, type)) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "border-t border-gray-700 pt-4 mt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayResults") }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "text-gray-400", children: [
+                t("halfLife"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "font-mono", children: selectedNuclide ? `${(selectedNuclide.halfLifeSeconds / (365.25 * 24 * 3600)).toFixed(4)} years` : "N/A" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "text-gray-400", children: [
+                t("elapsedTime"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "font-mono", children: elapsedDays !== null ? `${formatNumber4(elapsedDays)} ${t("days")}` : "N/A" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between text-lg font-bold text-cyan-300 pt-2 border-t border-gray-600 mt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { children: [
+                t("correctedActivity"),
+                ":"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "font-mono", children: [
+                formatNumber4(correctedActivity),
+                " ",
+                unit
+              ] })
+            ] })
+          ] }),
+          doseRate && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: [
+              t("estimatedDoseRate"),
+              " (Unshielded)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(CollapsibleSection_default, { title: t("decayCalc_cumulativeTitle"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "p-2 space-y-4", children: [
+          sourceBox.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "max-h-40 overflow-y-auto border border-gray-700 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { className: "p-2", children: t("sourceMgmt_nuclide") }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("th", { className: "p-2 text-right", children: [
+                t("activity"),
+                " (",
+                unit,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { className: "p-2" })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("tbody", { className: "text-gray-200", children: sourceBox.map((s) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { className: "border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2", children: s.nuclide.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2 font-mono text-right", children: s.activity.toExponential(2) }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: () => handleRemoveSource(s.id), title: t("decayCalc_removeSource"), className: "text-red-400 hover:text-red-300", children: "\xD7" }) })
+            ] }, s.id)) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("shieldingOptional") }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("shieldingMaterial") }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("select", { value: shieldMaterialId, onChange: (e) => setShieldMaterialId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: "none", children: t("shielding_none") }),
+                  shieldingMaterials.map((m) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: m.id, children: t(`shielding_${m.id}`) }, m.id))
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
+                  t("shieldingThickness"),
+                  " (cm)"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: shieldThickness, onChange: (e) => setShieldThickness(parseFloat(e.target.value) || 0), min: "0", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white", disabled: shieldMaterialId === "none" })
+              ] })
+            ] })
+          ] }),
+          totalDoseRate && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayCalc_totalDoseRate") }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-xs text-gray-500 mt-2", children: t("doseRateDisclaimer") })
+          ] })
+        ] }) })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-end items-center space-x-2 p-6 border-t border-gray-700 flex-shrink-0 bg-gray-800/70 rounded-b-lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: handleAddSourceToBox, disabled: correctedActivity === null || correctedActivity <= 0, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("decayCalc_addToBox") }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: handleApply, disabled: correctedActivity === null, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("calculateAndApply") })
+      ] })
+    ] }) }) });
+  };
+  var DecayCalculatorModal_default = DecayCalculatorModal;
+
+  // components/ProAccessModal.tsx
+  var import_react12 = __toESM(require_react());
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+  var PRO_PASSCODE = "UNITECH-PRO-2024";
+  var ProAccessModal = ({ isOpen, onClose, onSuccess, t }) => {
+    const [passcode, setPasscode] = (0, import_react12.useState)("");
+    const [error, setError] = (0, import_react12.useState)("");
+    if (!isOpen)
+      return null;
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (passcode === PRO_PASSCODE) {
+        setError("");
+        onSuccess();
+      } else {
+        setError(t("incorrectPasscode"));
+      }
+    };
+    const handleClose = () => {
+      setError("");
+      setPasscode("");
+      onClose();
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: handleClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "w-full max-w-md p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Card_default, { title: t("proAccessTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm text-gray-300", children: t("proAccessDescription") }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("label", { htmlFor: "passcode", className: "text-sm text-gray-400 mb-1 block", children: t("passcode") }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          "input",
+          {
+            id: "passcode",
+            type: "password",
+            value: passcode,
+            onChange: (e) => {
+              setPasscode(e.target.value);
+              setError("");
+            },
+            className: "w-full bg-gray-700 p-2 rounded-md font-mono text-white",
+            autoFocus: true
+          }
+        )
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm text-red-400 text-center", children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", onClick: handleClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("submit") })
+      ] })
+    ] }) }) }) });
+  };
+  var ProAccessModal_default = ProAccessModal;
+
+  // components/UnitConverterModal.tsx
+  var import_react13 = __toESM(require_react());
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+  var units = [
+    // Activity (Base: Bq)
+    { id: "bq", label: "Becquerel (Bq)", category: "activity", to_base: 1, description_key: "unit_desc_bq" },
+    { id: "ci", label: "Curie (Ci)", category: "activity", to_base: 37e9, description_key: "unit_desc_ci" },
+    { id: "dpm", label: "dpm", category: "activity", to_base: 1 / 60, description_key: "unit_desc_dpm" },
+    { id: "dps", label: "dps", category: "activity", to_base: 1, description_key: "unit_desc_dps" },
+    // Exposure (Base: C/kg)
+    { id: "c_kg", label: "C/kg", category: "exposure", to_base: 1, description_key: "unit_desc_c_kg" },
+    { id: "r", label: "R\xF6ntgen (R)", category: "exposure", to_base: 258e-6, description_key: "unit_desc_r" },
+    // Absorbed Dose (Base: Gy)
+    { id: "gy", label: "Gray (Gy)", category: "absorbed_dose", to_base: 1, description_key: "unit_desc_gy" },
+    { id: "rad", label: "rad", category: "absorbed_dose", to_base: 0.01, description_key: "unit_desc_rad" },
+    // Equivalent Dose (Base: Sv)
+    { id: "sv", label: "Sievert (Sv)", category: "equivalent_dose", to_base: 1, description_key: "unit_desc_sv" },
+    { id: "rem", label: "rem", category: "equivalent_dose", to_base: 0.01, description_key: "unit_desc_rem" }
+  ];
+  var UnitConverterModal = ({ isOpen, onClose, t }) => {
+    const [category, setCategory] = (0, import_react13.useState)("activity");
+    const [fromUnitId, setFromUnitId] = (0, import_react13.useState)("ci");
+    const [toUnitId, setToUnitId] = (0, import_react13.useState)("bq");
+    const [inputValue, setInputValue] = (0, import_react13.useState)("1");
+    (0, import_react13.useEffect)(() => {
+      if (isOpen) {
+        setCategory("activity");
+        setFromUnitId("ci");
+        setToUnitId("bq");
+        setInputValue("1");
+      }
+    }, [isOpen]);
+    const handleCategoryChange = (newCategory) => {
+      setCategory(newCategory);
+      const categoryUnits2 = units.filter((u) => u.category === newCategory);
+      if (categoryUnits2.length > 1) {
+        setFromUnitId(categoryUnits2[1].id);
+        setToUnitId(categoryUnits2[0].id);
+      }
+      setInputValue("1");
+    };
+    const handleSwap = () => {
+      setFromUnitId(toUnitId);
+      setToUnitId(fromUnitId);
+    };
+    const categoryUnits = (0, import_react13.useMemo)(() => units.filter((u) => u.category === category), [category]);
+    const result = (0, import_react13.useMemo)(() => {
+      const fromUnit = units.find((u) => u.id === fromUnitId);
+      const toUnit = units.find((u) => u.id === toUnitId);
+      const value = parseFloat(inputValue);
+      if (!fromUnit || !toUnit || isNaN(value)) {
+        return "";
+      }
+      const valueInBase = value * fromUnit.to_base;
+      const convertedValue = valueInBase / toUnit.to_base;
+      if (Math.abs(convertedValue) > 0 && Math.abs(convertedValue) < 1e-6) {
+        return convertedValue.toExponential(4);
+      }
+      return convertedValue.toLocaleString(void 0, { maximumFractionDigits: 6 });
+    }, [inputValue, fromUnitId, toUnitId]);
+    const fromUnitDesc = (0, import_react13.useMemo)(() => t(units.find((u) => u.id === fromUnitId)?.description_key || ""), [fromUnitId, t]);
+    const toUnitDesc = (0, import_react13.useMemo)(() => t(units.find((u) => u.id === toUnitId)?.description_key || ""), [toUnitId, t]);
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Card_default, { title: t("unitConverterTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_category") }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("activity"), className: `flex-1 p-1 text-sm rounded ${category === "activity" ? "bg-cyan-600" : ""}`, children: t("unit_cat_activity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("exposure"), className: `flex-1 p-1 text-sm rounded ${category === "exposure" ? "bg-cyan-600" : ""}`, children: t("unit_cat_exposure") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("absorbed_dose"), className: `flex-1 p-1 text-sm rounded ${category === "absorbed_dose" ? "bg-cyan-600" : ""}`, children: t("unit_cat_absorbed_dose") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("equivalent_dose"), className: `flex-1 p-1 text-sm rounded ${category === "equivalent_dose" ? "bg-cyan-600" : ""}`, children: t("unit_cat_equivalent_dose") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-4 items-end", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_value") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { type: "number", value: inputValue, onChange: (e) => setInputValue(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_from") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("select", { value: fromUnitId, onChange: (e) => setFromUnitId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md", children: categoryUnits.map((u) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value: u.id, children: u.label }, u.id)) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: handleSwap, title: t("unit_swap"), className: "p-2 rounded-md bg-gray-600 hover:bg-gray-500", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-4 items-end", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_result") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { type: "text", value: result, readOnly: true, className: "w-full bg-gray-800 p-2 rounded-md font-mono text-right border border-cyan-500" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_to") }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("select", { value: toUnitId, onChange: (e) => setToUnitId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md", children: categoryUnits.map((u) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value: u.id, children: u.label }, u.id)) })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "pt-4 border-t border-gray-700 space-y-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: "text-md font-semibold text-gray-400", children: t("unit_description") }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-300", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("strong", { children: [
+            units.find((u) => u.id === fromUnitId)?.label,
+            ":"
+          ] }),
+          " ",
+          fromUnitDesc
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-300", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("strong", { children: [
+            units.find((u) => u.id === toUnitId)?.label,
+            ":"
+          ] }),
+          " ",
+          toUnitDesc
+        ] }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex justify-end pt-4", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }) })
+    ] }) }) }) });
+  };
+  var UnitConverterModal_default = UnitConverterModal;
+
+  // pages/SpectroPage.tsx
+  var import_react27 = __toESM(require_react());
+
+  // pages/SpectrumAnalyzerPage.tsx
+  var import_react20 = __toESM(require_react());
+
+  // components/spectrum-analyzer/ImageUploader.tsx
+  var import_react14 = __toESM(require_react());
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
+  var ImageUploader = ({ onImageLoaded, t }) => {
+    const [isDragging, setIsDragging] = (0, import_react14.useState)(false);
+    const handleFile = (file) => {
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          onImageLoaded(e.target?.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    const handleDragOver = (0, import_react14.useCallback)((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(true);
+    }, []);
+    const handleDragLeave = (0, import_react14.useCallback)((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+    }, []);
+    const handleDrop = (0, import_react14.useCallback)((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+        e.dataTransfer.clearData();
+      }
+    }, []);
+    const onFileSelect = (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+      "div",
+      {
+        onDragOver: handleDragOver,
+        onDragLeave: handleDragLeave,
+        onDrop: handleDrop,
+        onClick: () => document.getElementById("file-upload-input")?.click(),
+        className: `p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg
+        ${isDragging ? "border-indigo-400 bg-indigo-900/30" : "border-gray-600 hover:border-indigo-500 hover:bg-gray-800"}`,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+            "input",
+            {
+              id: "file-upload-input",
+              type: "file",
+              accept: "image/png, image/jpeg",
+              onChange: onFileSelect,
+              className: "hidden"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex flex-col items-center text-gray-400", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-12 w-12 mb-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "font-semibold", children: t("uploadInstruction") })
+          ] })
+        ]
+      }
+    );
+  };
+  var ImageUploader_default = ImageUploader;
+
+  // components/spectrum-analyzer/CameraCapture.tsx
+  var import_react15 = __toESM(require_react());
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
+  var CameraCapture = ({ onImageCaptured, onClose, t }) => {
+    const videoRef = (0, import_react15.useRef)(null);
+    const canvasRef = (0, import_react15.useRef)(null);
+    const [stream, setStream] = (0, import_react15.useState)(null);
+    const [error, setError] = (0, import_react15.useState)(null);
+    (0, import_react15.useEffect)(() => {
+      const startCamera = async () => {
+        try {
+          const mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" }
+          });
+          setStream(mediaStream);
+          if (videoRef.current) {
+            videoRef.current.srcObject = mediaStream;
+          }
+        } catch (err) {
+          console.error("Error accessing camera:", err);
+          setError("Could not access the camera. Please check permissions.");
+        }
+      };
+      startCamera();
+      return () => {
+        if (stream) {
+          stream.getTracks().forEach((track) => track.stop());
+        }
+      };
+    }, []);
+    const handleTakePhoto = () => {
+      if (videoRef.current && canvasRef.current) {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext("2d");
+        if (context) {
+          context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+          const dataUrl = canvas.toDataURL("image/png");
+          onImageCaptured(dataUrl);
+        }
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "w-full max-w-2xl mx-auto flex flex-col items-center bg-gray-800 p-4 rounded-lg border border-gray-700", onClick: (e) => e.stopPropagation(), children: error ? /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "text-red-400 text-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onClose, className: "mt-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("close") })
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("video", { ref: videoRef, autoPlay: true, playsInline: true, className: "w-full rounded-md mb-4 border border-gray-600" }),
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "flex space-x-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+          "button",
+          {
+            onClick: handleTakePhoto,
+            className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 flex items-center space-x-2",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
+                /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { children: t("takePhoto") })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("canvas", { ref: canvasRef, className: "hidden" })
+    ] }) }) });
+  };
+  var CameraCapture_default = CameraCapture;
+
+  // components/spectrum-analyzer/CalibrationSidebar.tsx
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+  var linearRegression = (points) => {
+    const n = points.length;
+    if (n < 2)
+      return null;
+    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+    for (const p of points) {
+      sumX += p.x;
+      sumY += p.y;
+      sumXY += p.x * p.y;
+      sumX2 += p.x * p.x;
+      sumY2 += p.y * p.y;
+    }
+    const denominator = n * sumX2 - sumX * sumX;
+    if (denominator === 0)
+      return null;
+    const slope = (n * sumXY - sumX * sumY) / denominator;
+    const intercept = (sumY - slope * sumX) / n;
+    let rSquared = void 0;
+    const r_denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+    if (r_denominator !== 0) {
+      const r = (n * sumXY - sumX * sumY) / r_denominator;
+      rSquared = r * r;
+    }
+    return { slope, intercept, rSquared };
+  };
+  var CalibrationSidebar = ({
+    imageLoaded,
+    step,
+    onStepChange,
+    calibrationPoints,
+    setCalibrationPoints,
+    calibrationFunction,
+    onCalibrationChange,
+    onLaunchAnalysis,
+    analysisStatus,
+    errorMessage,
+    identificationTolerance,
+    onIdentificationToleranceChange,
+    onReset,
+    t
+  }) => {
+    const handleCalculateAndProceed = () => {
+      const func = linearRegression(calibrationPoints.map((p) => ({ x: p.x, y: p.energy })));
+      onCalibrationChange(func);
+      onStepChange("validate");
+    };
+    const removePoint = (index) => {
+      setCalibrationPoints(calibrationPoints.filter((_, i) => i !== index));
+    };
+    const undoLastPoint = () => {
+      setCalibrationPoints(calibrationPoints.slice(0, -1));
+    };
+    const clearPoints = () => {
+      setCalibrationPoints([]);
+    };
+    const getStatus = () => {
+      if (!calibrationFunction?.rSquared)
+        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-gray-400", children: t("statusNotCalculated") });
+      if (calibrationFunction.rSquared > 0.9999)
+        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-cyan-400", children: t("statusExcellent") });
+      if (calibrationFunction.rSquared > 0.999)
+        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-green-400", children: t("statusGood") });
+      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-red-400", children: t("statusCheckPoints") });
+    };
+    const getRSquaredColor = () => {
+      if (!calibrationFunction?.rSquared)
+        return "text-gray-400";
+      if (calibrationFunction.rSquared > 0.9999)
+        return "text-cyan-300";
+      if (calibrationFunction.rSquared > 0.999)
+        return "text-green-300";
+      return "text-red-400";
+    };
+    const getAnalysisButtonText = () => {
+      switch (analysisStatus) {
+        case "extracting":
+          return t("extractingCurve");
+        case "detecting":
+          return t("detectingPeaks");
+        default:
+          return t("runAnalysisAgain");
+      }
+    };
+    const renderStep1_AddPoints = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "text-sm text-gray-400 mb-4", children: t("calibrationStep1") }),
+      calibrationPoints.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "space-y-2 mb-4 max-h-40 overflow-y-auto", children: calibrationPoints.map((p, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between items-center bg-gray-700 p-2 rounded-md text-sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+          "Ch: ",
+          Math.round(p.x),
+          ", E: ",
+          p.energy,
+          " keV"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => removePoint(i), className: "text-red-400 hover:text-red-300", children: "\xD7" })
+      ] }, i)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex space-x-2 mb-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: undoLastPoint, disabled: calibrationPoints.length === 0, className: "text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 flex-1", children: t("undoLast") }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: clearPoints, disabled: calibrationPoints.length === 0, className: "text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 flex-1", children: t("clearAll") })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+        "button",
+        {
+          onClick: handleCalculateAndProceed,
+          disabled: calibrationPoints.length < 2,
+          className: "w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500",
+          children: [
+            t("calculateCalibration"),
+            " (",
+            calibrationPoints.length,
+            "/2 min)"
+          ]
+        }
+      )
+    ] });
+    const renderStep2_Validate = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "text-sm text-gray-400 mb-4", children: t("calibrationStep2") }),
+      calibrationFunction && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm mb-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
+            t("calibrationStatus"),
+            ":"
+          ] }),
+          getStatus()
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-gray-400", children: "R\xB2:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `font-mono ${getRSquaredColor()}`, children: calibrationFunction.rSquared?.toFixed(6) ?? "N/A" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
+            t("slope"),
+            ":"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: calibrationFunction.slope.toPrecision(4) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
+            t("intercept"),
+            ":"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: calibrationFunction.intercept.toPrecision(4) })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onStepChange("add"), className: "flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("backToPoints") }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => {
+          onLaunchAnalysis();
+          onStepChange("analyze");
+        }, disabled: !calibrationFunction, className: "flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("runAnalysis") })
+      ] })
+    ] });
+    const renderStep3_Analyze = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+      analysisStatus === "error" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "text-red-400 bg-red-900/30 p-2 rounded-md mb-4 text-sm", children: t(errorMessage) || errorMessage }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "mb-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+            t("identificationTolerance"),
+            " (keV)"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+          "input",
+          {
+            type: "number",
+            value: identificationTolerance,
+            onChange: (e) => onIdentificationToleranceChange(parseFloat(e.target.value)),
+            step: "0.1",
+            min: "0.1",
+            className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onLaunchAnalysis(true), disabled: analysisStatus === "extracting" || analysisStatus === "detecting", className: "w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: getAnalysisButtonText() }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "mt-4 flex space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onStepChange("validate"), className: "flex-1 text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg", children: t("backToCalibration") }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: onReset, className: "flex-1 text-sm bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-lg", children: t("resetAll") })
+      ] })
+    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(Card_default, { title: t("calibrationAndAnalysis"), children: [
+      step === "add" && renderStep1_AddPoints(),
+      step === "validate" && renderStep2_Validate(),
+      step === "analyze" && renderStep3_Analyze()
+    ] });
+  };
+  var CalibrationSidebar_default = CalibrationSidebar;
+
+  // components/spectrum-analyzer/AnalysisResults.tsx
+  var import_react16 = __toESM(require_react());
+  var import_react_dom2 = __toESM(require_react_dom());
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+  var Marker = ({ position, text, type, group }) => {
+    let color, textColor;
+    if (group === "A") {
+      color = "border-orange-400";
+      textColor = "text-orange-400";
+    } else if (group === "B") {
+      color = "border-purple-400";
+      textColor = "text-purple-400";
+    } else {
+      color = type === "auto" ? "border-red-500" : "border-green-400";
+      textColor = type === "auto" ? "text-red-400" : "text-green-400";
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute", style: { transform: "translate(-50%, -100%)" }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: `relative px-2 py-1 text-xs font-bold ${textColor} bg-gray-900/70 rounded-md cursor-pointer`, children: [
+      text,
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: `absolute left-1/2 w-px h-4 bg-gray-400 -bottom-4` })
+    ] }) });
+  };
+  var Cursor = ({ position }) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    "div",
+    {
+      className: "absolute w-4 h-4 border border-cyan-400 rounded-full pointer-events-none",
+      style: { left: position.x, top: position.y, transform: "translate(-50%, -50%)" }
+    }
+  );
+  var Tooltip = ({ eventCoords, text }) => {
+    const el = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      "div",
+      {
+        className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50 whitespace-pre-wrap",
+        style: { top: eventCoords.y + 15, left: eventCoords.x + 15 },
+        children: text
+      }
+    );
+    return (0, import_react_dom2.createPortal)(el, document.body);
+  };
+  var Magnifier = ({ src, x, y, clientX, clientY, imgWidth, imgHeight }) => {
+    const zoom = 2.5;
+    const size = 120;
+    const bgX = size / 2 - x * zoom;
+    const bgY = size / 2 - y * zoom;
+    const style = {
+      top: clientY - size - 15,
+      // Position above the cursor
+      left: clientX - size / 2,
+      width: size,
+      height: size,
+      backgroundImage: `url('${src}')`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: `${imgWidth * zoom}px ${imgHeight * zoom}px`,
+      backgroundPosition: `${bgX}px ${bgY}px`
+    };
+    return (0, import_react_dom2.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+        "div",
+        {
+          className: "fixed pointer-events-none border-2 border-cyan-400 bg-gray-900 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.5)] z-[100]",
+          style,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute top-1/2 left-0 w-full h-px bg-cyan-400/60 transform -translate-y-1/2" }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute left-1/2 top-0 h-full w-px bg-cyan-400/60 transform -translate-x-1/2" })
+          ]
+        }
+      ),
+      document.body
+    );
+  };
+  var AnalysisResults = ({
+    imageSrc,
+    imageRef,
+    analysisResult,
+    spectrumPoints,
+    calibrationFunction,
+    interactivePoint,
+    sidebar,
+    t,
+    analysisStatus,
+    step,
+    onMouseMove,
+    onMouseLeave,
+    onImageClick,
+    onTogglePeakGroup,
+    onExportCsv,
+    onSaveAnalysis
+  }) => {
+    const [imageSize, setImageSize] = (0, import_react16.useState)(null);
+    const [magnifier, setMagnifier] = (0, import_react16.useState)(null);
+    (0, import_react16.useLayoutEffect)(() => {
+      if (imageRef.current) {
+        const updateSize = () => {
+          if (imageRef.current) {
+            setImageSize({
+              width: imageRef.current.offsetWidth,
+              height: imageRef.current.offsetHeight,
+              naturalWidth: imageRef.current.naturalWidth,
+              naturalHeight: imageRef.current.naturalHeight
+            });
+          }
+        };
+        const img = imageRef.current;
+        img.onload = updateSize;
+        if (img.complete) {
+          updateSize();
+        }
+        const resizeObserver = new ResizeObserver(updateSize);
+        resizeObserver.observe(img);
+        return () => {
+          img.onload = null;
+          resizeObserver.disconnect();
+        };
+      }
+    }, [imageRef, imageSrc]);
+    const handleMouseMoveLocal = (e) => {
+      if (imageRef.current) {
+        const rect = imageRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+          setMagnifier({ x, y, clientX: e.clientX, clientY: e.clientY });
+        } else {
+          setMagnifier(null);
+        }
+      }
+      onMouseMove(e);
+    };
+    const handleMouseLeaveLocal = () => {
+      setMagnifier(null);
+      onMouseLeave();
+    };
+    const groupCounts = (0, import_react16.useMemo)(() => {
+      if (!analysisResult || !imageSize || !imageSize.naturalHeight) {
+        return { A: 0, B: 0 };
+      }
+      const { naturalHeight } = imageSize;
+      const counts = { A: 0, B: 0 };
+      analysisResult.detectedPeaks.forEach((peak) => {
+        const count = naturalHeight - peak.y;
+        if (peak.group === "A") {
+          counts.A += count;
+        } else if (peak.group === "B") {
+          counts.B += count;
+        }
+      });
+      return counts;
+    }, [analysisResult, imageSize]);
+    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
+    const getScreenCoords = (point) => {
+      if (!imageSize || imageSize.naturalWidth === 0 || imageSize.naturalHeight === 0)
+        return null;
+      const x = point.x / imageSize.naturalWidth * imageSize.width;
+      const y = point.y / imageSize.naturalHeight * imageSize.height;
+      return { x, y };
+    };
+    const renderPeakRow = (peak, index) => {
+      const matches = analysisResult?.nuclideMatches.get(peak.energy) || [];
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_react16.default.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { className: "border-t border-gray-700 print:border-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 font-mono print:text-black", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: `font-semibold text-sm ${peak.manual ? "text-green-300" : "text-cyan-300"} print:text-black print:font-bold`, children: peak.energy.toFixed(2) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 font-mono text-gray-400 print:text-black", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          "td",
+          {
+            className: "py-2 px-3 text-center font-semibold cursor-pointer no-print",
+            style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" },
+            onClick: (e) => {
+              e.stopPropagation();
+              onTogglePeakGroup(index);
+            },
+            title: "Click to cycle group (A, B, None)",
+            children: peak.group || "-"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 text-center font-semibold hidden print:table-cell", style: { color: "black" }, children: peak.group || "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { colSpan: 3, className: "py-2 px-3", children: matches.length > 0 ? matches.slice(0, 3).map((match, matchIndex) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: `grid grid-cols-3 gap-2 ${matchIndex > 0 ? "mt-1 pt-1 border-t border-gray-800 print:border-gray-400" : ""}`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-bold text-gray-100 col-span-1 print:text-black", children: match.nuclide.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono text-gray-200 text-right print:text-black", children: match.line.energy_keV.toFixed(2) }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { className: "font-mono text-gray-300 text-right print:text-black", children: [
+            match.line.intensity_percent.toFixed(2),
+            "%"
+          ] })
+        ] }, matchIndex)) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "text-gray-500 print:text-black", children: t("noNuclidesFound") }) })
+      ] }) }, `${peak.energy}-${index}`);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      Card_default,
+      {
+        title: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between items-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("analysisResultsTitle") }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex items-center space-x-2 no-print", children: [
+            analysisStatus === "complete" && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: onSaveAnalysis, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { d: "M5 4a2 2 0 012-2h6a2 2 0 012 2v10l-5-4-5 4V4z" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("saveAnalysis") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: onExportCsv, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("exportCsv") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { disabled: true, title: `${t("exportHdf5")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "HDF5" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { disabled: true, title: `${t("exportNetCdf")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "NetCDF" }) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: () => window.print(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("printReport") })
+            ] })
+          ] })
+        ] }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 print-container", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "lg:col-span-2 relative", onClick: onImageClick, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+              "img",
+              {
+                ref: imageRef,
+                src: imageSrc,
+                alt: "Spectrum",
+                className: `w-full h-auto rounded-lg print-img ${step === "add" || analysisStatus === "complete" && spectrumPoints ? "cursor-crosshair" : ""}`
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+              "div",
+              {
+                className: "absolute inset-0 cursor-crosshair no-print",
+                onMouseMove: handleMouseMoveLocal,
+                onMouseLeave: handleMouseLeaveLocal,
+                children: step === "analyze" && (analysisStatus === "complete" && spectrumPoints && spectrumPoints.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+                  analysisResult?.detectedPeaks.map((peak, index) => {
+                    const screenCoords = getScreenCoords(peak);
+                    if (!screenCoords)
+                      return null;
+                    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+                      "div",
+                      {
+                        className: "absolute cursor-pointer",
+                        style: { left: screenCoords.x, top: screenCoords.y },
+                        onClick: (e) => {
+                          e.stopPropagation();
+                          onTogglePeakGroup(index);
+                        },
+                        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+                          Marker,
+                          {
+                            position: { x: 0, y: 0 },
+                            text: peak.energy.toFixed(1),
+                            type: peak.manual ? "manual" : "auto",
+                            group: peak.group
+                          }
+                        )
+                      },
+                      `peak-wrapper-${index}`
+                    );
+                  }),
+                  interactivePoint && (() => {
+                    const screenCoords = getScreenCoords(interactivePoint.point);
+                    if (!screenCoords || !calibrationFunction)
+                      return null;
+                    const energy = calibrationFunction.slope * interactivePoint.point.x + calibrationFunction.intercept;
+                    let tooltipText = `${energy.toFixed(1)} keV`;
+                    if (interactivePoint.topMatch) {
+                      tooltipText += `
+~ ${interactivePoint.topMatch.nuclide.name}`;
+                    }
+                    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Cursor, { position: screenCoords }),
+                      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Tooltip, { eventCoords: { x: interactivePoint.eventCoords.x + (imageRef.current?.getBoundingClientRect().left ?? 0), y: interactivePoint.eventCoords.y + (imageRef.current?.getBoundingClientRect().top ?? 0) }, text: tooltipText })
+                    ] });
+                  })()
+                ] })
+              }
+            ),
+            magnifier && imageSize && (step === "add" || step === "analyze") && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+              Magnifier,
+              {
+                src: imageSrc,
+                x: magnifier.x,
+                y: magnifier.y,
+                clientX: magnifier.clientX,
+                clientY: magnifier.clientY,
+                imgWidth: imageSize.width,
+                imgHeight: imageSize.height
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "lg:col-span-1 print-table-container", children: analysisStatus === "complete" ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "print-text-black", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md mb-4 no-print text-sm text-gray-400 flex items-start space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(InfoTooltip_default, { text: t("interactiveModeTooltip") }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("analysisComplete") })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h3", { className: "text-md font-semibold text-gray-300 mb-2 print-text-black", children: t("detectedPeaksTitle") }),
+            analysisResult && analysisResult.detectedPeaks.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("table", { className: "w-full text-xs text-left", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("thead", { className: "text-gray-400 print:text-black", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("energy_keV") }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("fwhm_keV") }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("group") }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { colSpan: 3, className: "py-2 px-3", children: t("nuclide") })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("tbody", { children: analysisResult.detectedPeaks.map((peak, originalIndex) => ({ peak, originalIndex })).sort((a, b) => a.peak.energy - b.peak.energy).map(({ peak, originalIndex }) => renderPeakRow(peak, originalIndex)) })
+            ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { className: "text-gray-500 print:text-black", children: t("noPeaksDetected") }),
+            analysisResult && analysisResult.detectedPeaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm no-print", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { children: [
+                      t("group_a_total"),
+                      ":"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono", children: groupCounts.A.toFixed(0) })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { children: [
+                      t("group_b_total"),
+                      ":"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono", children: groupCounts.B.toFixed(0) })
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("strong", { children: [
+                    t("ratio_a_b"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
+                ] }) })
+              ] })
+            ] })
+          ] }) : sidebar })
+        ] })
+      }
+    ) });
+  };
+  var AnalysisResults_default = AnalysisResults;
+
+  // components/spectrum-analyzer/CalibrationPointModal.tsx
+  var import_react17 = __toESM(require_react());
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+  var CalibrationPointModal = ({ isOpen, onClose, onSubmit, t }) => {
+    const [energy, setEnergy] = (0, import_react17.useState)("");
+    const [uncertainty, setUncertainty] = (0, import_react17.useState)("");
+    (0, import_react17.useEffect)(() => {
+      if (isOpen) {
+        setEnergy("");
+        setUncertainty("");
+      }
+    }, [isOpen]);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const energyValue = parseFloat(energy);
+      if (!isNaN(energyValue) && energyValue > 0) {
+        const uncertaintyValue = parseFloat(uncertainty);
+        onSubmit(energyValue, isNaN(uncertaintyValue) ? void 0 : uncertaintyValue);
+      }
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm border border-gray-700", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h2", { className: "text-xl font-bold text-cyan-400 mb-4", children: t("enterPeakEnergy") }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleSubmit, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { htmlFor: "peak-energy", className: "block text-sm font-medium text-gray-300 mb-1", children: t("peakEnergyLabel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            "input",
+            {
+              id: "peak-energy",
+              type: "number",
+              value: energy,
+              onChange: (e) => setEnergy(e.target.value),
+              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white",
+              step: "0.1",
+              min: "0",
+              autoFocus: true,
+              required: true
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { htmlFor: "peak-uncertainty", className: "block text-sm font-medium text-gray-300 mb-1", children: t("peakEnergyUncertaintyLabel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            "input",
+            {
+              id: "peak-uncertainty",
+              type: "number",
+              value: uncertainty,
+              onChange: (e) => setUncertainty(e.target.value),
+              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white",
+              step: "0.01",
+              min: "0"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex justify-end space-x-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("ok") })
+        ] })
+      ] })
+    ] }) });
+  };
+  var CalibrationPointModal_default = CalibrationPointModal;
+
+  // components/PeakPositionAdjusterModal.tsx
+  var import_react18 = __toESM(require_react());
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+  var PeakPositionAdjusterModal = ({
+    isOpen,
+    onClose,
+    onConfirm,
+    spectrumData,
+    initialX,
+    xRange,
+    energyFromX,
+    identificationTolerance,
+    t,
+    title,
+    confirmText,
+    analysisType
+  }) => {
+    const [currentX, setCurrentX] = (0, import_react18.useState)(initialX);
+    (0, import_react18.useEffect)(() => {
+      if (isOpen) {
+        setCurrentX(initialX);
+      }
+    }, [isOpen, initialX]);
+    const dataSlice = (0, import_react18.useMemo)(() => {
+      if (!spectrumData || spectrumData.length === 0)
+        return [];
+      const min = initialX - xRange;
+      const max = initialX + xRange;
+      return spectrumData.filter((p) => p.x >= min && p.x <= max);
+    }, [spectrumData, initialX, xRange]);
+    const { currentY, currentEnergy } = (0, import_react18.useMemo)(() => {
+      const point = spectrumData.find((p) => Math.round(p.x) === Math.round(currentX));
+      const y = point ? point.y : 0;
+      const energy = energyFromX(currentX);
+      return { currentY: y, currentEnergy: energy };
+    }, [currentX, spectrumData, energyFromX]);
+    const topMatch = (0, import_react18.useMemo)(() => {
+      if (currentEnergy <= 0)
+        return null;
+      const results = identifyPeaks([currentEnergy], identificationTolerance, analysisType);
+      return results[0]?.matches[0] || null;
+    }, [currentEnergy, identificationTolerance, analysisType]);
+    const width = 500;
+    const height = 250;
+    const padding = { top: 20, right: 20, bottom: 40, left: 40 };
+    const { xMin, xMax, yMin, yMax } = (0, import_react18.useMemo)(() => {
+      if (dataSlice.length === 0)
+        return { xMin: 0, xMax: 1, yMin: 0, yMax: 1 };
+      let yMin2 = Infinity, yMax2 = -Infinity;
+      dataSlice.forEach((p) => {
+        yMin2 = Math.min(yMin2, p.y);
+        yMax2 = Math.max(yMax2, p.y);
+      });
+      return {
+        xMin: initialX - xRange,
+        xMax: initialX + xRange,
+        yMin: yMin2 > 0 ? yMin2 * 0.9 : 0,
+        // Give a little space at the bottom
+        yMax: yMax2 * 1.1
+      };
+    }, [dataSlice, initialX, xRange]);
+    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
+    const toSvgY = (y) => height - padding.bottom - (y - yMin) / (yMax - yMin) * (height - padding.top - padding.bottom);
+    const path = (0, import_react18.useMemo)(() => {
+      if (dataSlice.length === 0)
+        return "";
+      let p = `M ${toSvgX(dataSlice[0].x)} ${toSvgY(dataSlice[0].y)}`;
+      dataSlice.forEach((point) => {
+        p += ` L ${toSvgX(point.x)} ${toSvgY(point.y)}`;
+      });
+      return p;
+    }, [dataSlice, xMin, xMax, yMin, yMax]);
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "w-full max-w-xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Card_default, { title, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "relative bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("text", { x: width / 2, y: height - 10, textAnchor: "middle", fill: "#9ca3af", fontSize: "12", children: t("channel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { d: path, stroke: "#60a5fa", fill: "none", strokeWidth: "2" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+          "line",
+          {
+            x1: toSvgX(currentX),
+            y1: padding.top,
+            x2: toSvgX(currentX),
+            y2: height - padding.bottom,
+            stroke: "#f87171",
+            strokeWidth: "1.5",
+            strokeDasharray: "4 2"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("circle", { cx: toSvgX(currentX), cy: toSvgY(currentY), r: "5", fill: "none", stroke: "#f87171", strokeWidth: "2" })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("adjustChannel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+          "input",
+          {
+            type: "range",
+            min: initialX - xRange,
+            max: initialX + xRange,
+            value: currentX,
+            onChange: (e) => setCurrentX(parseFloat(e.target.value)),
+            className: "w-full"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "bg-gray-700/50 p-3 rounded-md grid grid-cols-2 md:grid-cols-4 gap-2 text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("channel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300", children: Math.round(currentX) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("counts") }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300", children: Math.round(currentY).toLocaleString() })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("energy") }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "font-mono text-cyan-300", children: [
+            currentEnergy.toFixed(1),
+            " keV"
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("suggestedNuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300 truncate", title: topMatch ? topMatch.nuclide.name : "-", children: topMatch ? topMatch.nuclide.name : "-" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { onClick: () => onConfirm(currentX), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: confirmText })
+      ] })
+    ] }) }) }) });
+  };
+  var PeakPositionAdjusterModal_default = PeakPositionAdjusterModal;
+
+  // components/SaveAnalysisModal.tsx
+  var import_react19 = __toESM(require_react());
+
+  // services/dbService.ts
+  var DB_NAME = "ISOAssistantDB";
+  var DB_VERSION = 2;
+  var SOURCES_STORE_NAME = "sources";
+  var ANALYSES_STORE_NAME = "analyses";
+  var DBService = class {
+    constructor() {
+      this.db = null;
+      this.init();
+    }
+    init() {
+      return new Promise((resolve, reject) => {
+        if (this.db) {
+          return resolve();
+        }
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => {
+          console.error("IndexedDB error:", request.error);
+          reject(request.error);
+        };
+        request.onsuccess = () => {
+          this.db = request.result;
+          resolve();
+        };
+        request.onupgradeneeded = (event) => {
+          const db2 = event.target.result;
+          if (!db2.objectStoreNames.contains(SOURCES_STORE_NAME)) {
+            db2.createObjectStore(SOURCES_STORE_NAME, { keyPath: "id" });
+          }
+          if (!db2.objectStoreNames.contains(ANALYSES_STORE_NAME)) {
+            db2.createObjectStore(ANALYSES_STORE_NAME, { keyPath: "id" });
+          }
+        };
+      });
+    }
+    async getDb() {
+      if (!this.db) {
+        await this.init();
+      }
+      return this.db;
+    }
+    // --- Source Management ---
+    async addSource(sourceData) {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        const newSource = {
+          id: crypto.randomUUID(),
+          ...sourceData
+        };
+        const request = store.add(newSource);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    async updateSource(source) {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        const request = store.put(source);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    async getAllSources() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readonly");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+    async deleteSource(id) {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        const request = store.delete(id);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    // --- Analysis History Management ---
+    async addAnalysis(record) {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(ANALYSES_STORE_NAME);
+        const newRecord = {
+          id: crypto.randomUUID(),
+          date: (/* @__PURE__ */ new Date()).toISOString(),
+          ...record
+        };
+        const request = store.add(newRecord);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    async getAllAnalyses() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readonly");
+        const store = transaction.objectStore(ANALYSES_STORE_NAME);
+        const request = store.getAll();
+        request.onsuccess = () => {
+          const sorted = request.result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          resolve(sorted);
+        };
+        request.onerror = () => reject(request.error);
+      });
+    }
+    async deleteAnalysis(id) {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(ANALYSES_STORE_NAME);
+        const request = store.delete(id);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    // --- Data Clearing ---
+    async clearSources() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(SOURCES_STORE_NAME);
+        store.clear();
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+    async clearAnalyses() {
+      const db2 = await this.getDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
+        const store = transaction.objectStore(ANALYSES_STORE_NAME);
+        store.clear();
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+  };
+  var db = new DBService();
+
+  // components/SaveAnalysisModal.tsx
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+  var SaveAnalysisModal = ({ isOpen, onClose, onSave, t }) => {
+    const [name, setName] = (0, import_react19.useState)("");
+    const [sourceId, setSourceId] = (0, import_react19.useState)("");
+    const [sources, setSources] = (0, import_react19.useState)([]);
+    (0, import_react19.useEffect)(() => {
+      if (isOpen) {
+        db.getAllSources().then(setSources);
+        setName("");
+        setSourceId("");
+      }
+    }, [isOpen]);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (name.trim()) {
+        onSave(name.trim(), sourceId || void 0);
+      }
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Card_default, { title: t("saveAnalysisModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("analysisName") }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+          "input",
+          {
+            type: "text",
+            value: name,
+            onChange: (e) => setName(e.target.value),
+            required: true,
+            autoFocus: true,
+            className: "w-full bg-gray-700 p-2 rounded-md text-white"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("linkToSource") }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+          "select",
+          {
+            value: sourceId,
+            onChange: (e) => setSourceId(e.target.value),
+            className: "w-full bg-gray-700 p-2 rounded-md text-white",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("option", { value: "", children: t("noSource") }),
+              sources.map((source) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("option", { value: source.id, children: [
+                source.name,
+                " (",
+                source.nuclide,
+                ")"
+              ] }, source.id))
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
+      ] })
+    ] }) }) }) });
+  };
+  var SaveAnalysisModal_default = SaveAnalysisModal;
+
+  // services/spectrumAnalyzerService.ts
+  async function getImageData(imageDataUrl) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          return reject(new Error("Could not get canvas context"));
+        }
+        ctx.drawImage(image, 0, 0);
+        resolve(ctx.getImageData(0, 0, image.width, image.height));
+      };
+      image.onerror = () => reject(new Error("invalidImageFormat"));
+      image.src = imageDataUrl;
+    });
+  }
+  function findTraceColor(imageData) {
+    const colorCounts = {};
+    const { data } = imageData;
+    const ignoredColors = /* @__PURE__ */ new Set(["0,0,0", "255,255,255"]);
+    const step = 4 * 5;
+    for (let i = 0; i < data.length; i += step) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const brightness = (r + g + b) / 3;
+      if (brightness > 20 && brightness < 235) {
+        const key = `${r},${g},${b}`;
+        if (!ignoredColors.has(key)) {
+          colorCounts[key] = (colorCounts[key] || 0) + 1;
+        }
+      }
+    }
+    if (Object.keys(colorCounts).length === 0) {
+      for (let i = 0; i < data.length; i += step) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const key = `${r},${g},${b}`;
+        if (!ignoredColors.has(key)) {
+          colorCounts[key] = (colorCounts[key] || 0) + 1;
+        }
+      }
+      if (Object.keys(colorCounts).length === 0) {
+        throw new Error("noTraceFound");
+      }
+    }
+    const dominantColor = Object.entries(colorCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+    return dominantColor.split(",").map(Number);
+  }
+  function extractCurveFromImage(imageData, traceColor) {
+    const { data, width, height } = imageData;
+    const curve = [];
+    const colorThreshold = 60;
+    for (let x = 0; x < width; x++) {
+      let y_coords = [];
+      for (let y = 0; y < height; y++) {
+        const index = (y * width + x) * 4;
+        const r = data[index];
+        const g = data[index + 1];
+        const b = data[index + 2];
+        const distance = Math.sqrt(
+          Math.pow(r - traceColor[0], 2) + Math.pow(g - traceColor[1], 2) + Math.pow(b - traceColor[2], 2)
+        );
+        if (distance < colorThreshold) {
+          y_coords.push(y);
+        }
+      }
+      if (y_coords.length > 0) {
+        const avgY = y_coords.reduce((sum, val) => sum + val, 0) / y_coords.length;
+        curve.push({ x, y: avgY });
+      }
+    }
+    if (curve.length < 10) {
+      throw new Error("curveExtractionFailed");
+    }
+    return curve;
+  }
+  function findPeaks(curveData) {
+    const peaks = [];
+    if (curveData.length < 5)
+      return peaks;
+    const naturalHeight = Math.max(...curveData.map((p) => p.y));
+    const data = curveData.map((p) => ({ x: p.x, y: naturalHeight - p.y }));
+    const yValues = data.map((p) => p.y);
+    const mean = yValues.reduce((a, b) => a + b) / yValues.length;
+    const stdDev = Math.sqrt(yValues.map((y) => Math.pow(y - mean, 2)).reduce((a, b) => a + b) / yValues.length);
+    const prominence = stdDev * 1.5;
+    const threshold = Math.max(mean, stdDev * 2);
+    for (let i = 2; i < data.length - 2; i++) {
+      const p = data[i];
+      if (p.y > threshold && p.y > data[i - 1].y && p.y >= data[i + 1].y && p.y > data[i - 2].y && p.y >= data[i + 2].y) {
+        let leftMin = p.y;
+        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
+          leftMin = Math.min(leftMin, data[j].y);
+          if (data[j].y > p.y)
+            break;
+        }
+        let rightMin = p.y;
+        for (let j = i + 1; j < data.length && j - i < 50; j++) {
+          rightMin = Math.min(rightMin, data[j].y);
+          if (data[j].y > p.y)
+            break;
+        }
+        if (p.y - leftMin > prominence && p.y - rightMin > prominence) {
+          const originalPoint = curveData.find((op) => op.x === p.x);
+          if (originalPoint) {
+            peaks.push({ ...originalPoint, energy: 0 });
+          }
+        }
+      }
+    }
+    return peaks;
+  }
+  async function analyzeSpectrum(imageDataUrl, setStatus) {
+    setStatus("extracting");
+    const imageData = await getImageData(imageDataUrl);
+    const traceColor = findTraceColor(imageData);
+    const curveData = extractCurveFromImage(imageData, traceColor);
+    setStatus("detecting");
+    const detectedPeaks = findPeaks(curveData);
+    return {
+      curveData,
+      analysisResult: {
+        detectedPeaks,
+        nuclideMatches: /* @__PURE__ */ new Map()
+      }
+    };
+  }
+
+  // services/analysisHelpers.ts
+  function calculateFWHM(peakChannel, spectrumData, slope) {
+    if (spectrumData.length === 0 || !isFinite(slope) || Math.abs(slope) < 1e-9) {
+      return null;
+    }
+    const peakIndex = spectrumData.findIndex((p) => p.x >= peakChannel);
+    if (peakIndex === -1)
+      return null;
+    let peakPoint = spectrumData[peakIndex];
+    const searchWindow = 5;
+    let localMaxY = -Infinity;
+    let localMaxIndex = -1;
+    for (let i = Math.max(0, peakIndex - searchWindow); i < Math.min(spectrumData.length, peakIndex + searchWindow); i++) {
+      if (spectrumData[i] && spectrumData[i].y > localMaxY) {
+        localMaxY = spectrumData[i].y;
+        localMaxIndex = i;
+      }
+    }
+    if (localMaxIndex !== -1) {
+      peakPoint = spectrumData[localMaxIndex];
+    } else {
+      return null;
+    }
+    const peakY = peakPoint.y;
+    const baselineWindow = Math.min(Math.round(peakPoint.x), spectrumData.length - Math.round(peakPoint.x) - 1, 50);
+    const leftSlice = spectrumData.slice(Math.max(0, Math.round(peakPoint.x) - baselineWindow), Math.round(peakPoint.x));
+    const rightSlice = spectrumData.slice(Math.round(peakPoint.x) + 1, Math.min(spectrumData.length, Math.round(peakPoint.x) + baselineWindow + 1));
+    const leftMin = leftSlice.length > 0 ? Math.min(...leftSlice.map((p) => p.y)) : peakY;
+    const rightMin = rightSlice.length > 0 ? Math.min(...rightSlice.map((p) => p.y)) : peakY;
+    const baseline = (leftMin + rightMin) / 2;
+    const halfMax = baseline + (peakY - baseline) / 2;
+    let leftX = null;
+    let rightX = null;
+    for (let i = Math.round(peakPoint.x); i > 0; i--) {
+      const currentPoint = spectrumData[i];
+      const prevPoint = spectrumData[i - 1];
+      if (currentPoint && prevPoint && currentPoint.y >= halfMax && prevPoint.y < halfMax) {
+        leftX = prevPoint.x + (halfMax - prevPoint.y) * (currentPoint.x - prevPoint.x) / (currentPoint.y - prevPoint.y);
+        break;
+      }
+    }
+    for (let i = Math.round(peakPoint.x); i < spectrumData.length - 1; i++) {
+      const currentPoint = spectrumData[i];
+      const nextPoint = spectrumData[i + 1];
+      if (currentPoint && nextPoint && currentPoint.y >= halfMax && nextPoint.y < halfMax) {
+        rightX = currentPoint.x + (halfMax - currentPoint.y) * (nextPoint.x - currentPoint.x) / (nextPoint.y - currentPoint.y);
+        break;
+      }
+    }
+    if (leftX !== null && rightX !== null) {
+      const fwhmInChannels = rightX - leftX;
+      return Math.abs(fwhmInChannels * slope);
+    }
+    return null;
+  }
+
+  // pages/SpectrumAnalyzerPage.tsx
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  var SpectrumAnalyzerPage = ({ t, onBack, onOpenPeakIdentifier, analysisType, dataToLoad }) => {
+    const [imageDataUrl, setImageDataUrl] = (0, import_react20.useState)(null);
+    const [calibrationPoints, setCalibrationPoints] = (0, import_react20.useState)([]);
+    const [calibrationFunction, setCalibrationFunction] = (0, import_react20.useState)(null);
+    const [spectrumPoints, setSpectrumPoints] = (0, import_react20.useState)(null);
+    const [analysisResult, setAnalysisResult] = (0, import_react20.useState)(null);
+    const [initialAnalysisResult, setInitialAnalysisResult] = (0, import_react20.useState)(null);
+    const [analysisStatus, setAnalysisStatus] = (0, import_react20.useState)("idle");
+    const [errorMessage, setErrorMessage] = (0, import_react20.useState)("");
+    const [identificationTolerance, setIdentificationTolerance] = (0, import_react20.useState)(2);
+    const [step, setStep] = (0, import_react20.useState)("add");
+    const [isCameraOpen, setIsCameraOpen] = (0, import_react20.useState)(false);
+    const [isCalibrationModalOpen, setIsCalibrationModalOpen] = (0, import_react20.useState)(false);
+    const [modalPosition, setModalPosition] = (0, import_react20.useState)({ x: 0, y: 0 });
+    const [interactivePoint, setInteractivePoint] = (0, import_react20.useState)(null);
+    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react20.useState)(false);
+    const [adjusterInitialX, setAdjusterInitialX] = (0, import_react20.useState)(0);
+    const adjusterCallback = (0, import_react20.useRef)(null);
+    const [isSaveModalOpen, setIsSaveModalOpen] = (0, import_react20.useState)(false);
+    const imageRef = (0, import_react20.useRef)(null);
+    (0, import_react20.useEffect)(() => {
+      if (dataToLoad) {
+        setImageDataUrl(dataToLoad.imageDataUrl);
+        setSpectrumPoints(dataToLoad.spectrumPoints);
+        setCalibrationPoints(dataToLoad.calibrationPoints);
+        setCalibrationFunction(dataToLoad.calibrationFunction);
+        setAnalysisResult(dataToLoad.analysisResult);
+        setStep("analyze");
+        setAnalysisStatus("complete");
+      }
+    }, [dataToLoad]);
+    const resetState = (0, import_react20.useCallback)(() => {
+      setImageDataUrl(null);
+      setCalibrationPoints([]);
+      setCalibrationFunction(null);
+      setSpectrumPoints(null);
+      setAnalysisResult(null);
+      setInitialAnalysisResult(null);
+      setAnalysisStatus("idle");
+      setErrorMessage("");
+      setStep("add");
+      setInteractivePoint(null);
+    }, []);
+    const handleImageLoaded = (0, import_react20.useCallback)(async (dataUrl) => {
+      resetState();
+      setImageDataUrl(dataUrl);
+      setIsCameraOpen(false);
+      try {
+        const { curveData, analysisResult: analysisResult2 } = await analyzeSpectrum(dataUrl, setAnalysisStatus);
+        setSpectrumPoints(curveData);
+        setInitialAnalysisResult(analysisResult2);
+        setAnalysisStatus("idle");
+      } catch (e) {
+        console.error(e);
+        setAnalysisStatus("error");
+        setErrorMessage(e.message || "analysisError_generic");
+      }
+    }, [resetState]);
+    const togglePeakGroup = (peakIndex) => {
+      setAnalysisResult((prev) => {
+        if (!prev)
+          return null;
+        const newPeaks = [...prev.detectedPeaks];
+        const peak = newPeaks[peakIndex];
+        if (!peak)
+          return prev;
+        if (peak.group === "A") {
+          peak.group = "B";
+        } else if (peak.group === "B") {
+          peak.group = void 0;
+        } else {
+          peak.group = "A";
+        }
+        return { ...prev, detectedPeaks: newPeaks };
+      });
+    };
+    const handleImageClick = (e) => {
+      if (step !== "add" && step !== "analyze" || !imageRef.current || step === "analyze" && !calibrationFunction)
+        return;
+      if (step === "analyze" && analysisStatus !== "complete")
+        return;
+      const rect = imageRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const naturalX = Math.round(x / imageRef.current.offsetWidth * imageRef.current.naturalWidth);
+      setAdjusterInitialX(naturalX);
+      if (step === "add") {
+        adjusterCallback.current = (preciseX) => {
+          const pointOnCurve = spectrumPoints?.find((p) => Math.round(p.x) === Math.round(preciseX));
+          const preciseY = pointOnCurve ? pointOnCurve.y : y / imageRef.current.offsetHeight * imageRef.current.naturalHeight;
+          setModalPosition({ x: preciseX, y: preciseY });
+          setIsCalibrationModalOpen(true);
+        };
+      } else {
+        adjusterCallback.current = (preciseX) => {
+          if (!calibrationFunction)
+            return;
+          const pointOnCurve = spectrumPoints?.find((p) => Math.round(p.x) === Math.round(preciseX));
+          const preciseY = pointOnCurve ? pointOnCurve.y : y / imageRef.current.offsetHeight * imageRef.current.naturalHeight;
+          const energy = calibrationFunction.slope * preciseX + calibrationFunction.intercept;
+          const newPeak = { x: preciseX, y: preciseY, energy, manual: true };
+          const identified = identifyPeaks([energy], identificationTolerance, analysisType);
+          const newMatches = identified.length > 0 ? identified[0].matches : [];
+          setAnalysisResult((prev) => {
+            if (!prev)
+              return null;
+            const updatedPeaks = [...prev.detectedPeaks, newPeak];
+            const updatedMatches = new Map(prev.nuclideMatches);
+            updatedMatches.set(energy, newMatches);
+            return { ...prev, detectedPeaks: updatedPeaks, nuclideMatches: updatedMatches };
+          });
+        };
+      }
+      setIsAdjusterOpen(true);
+    };
+    const handleCalibrationSubmit = (energy, uncertainty) => {
+      setCalibrationPoints((prev) => [...prev, { ...modalPosition, energy, uncertainty }]);
+      setIsCalibrationModalOpen(false);
+    };
+    const normalizedSpectrumData = (0, import_react20.useMemo)(() => {
+      if (!spectrumPoints)
+        return [];
+      const naturalHeight = imageRef.current?.naturalHeight || 1;
+      return spectrumPoints.map((p) => ({ x: p.x, y: naturalHeight - p.y }));
+    }, [spectrumPoints, imageRef.current?.naturalHeight]);
+    const runFullAnalysis = (0, import_react20.useCallback)((isRerun) => {
+      if (!initialAnalysisResult || !calibrationFunction)
+        return;
+      setAnalysisStatus("detecting");
+      setAnalysisResult((prev) => {
+        const autoPeaks = initialAnalysisResult.detectedPeaks;
+        const manualPeaks = prev?.detectedPeaks.filter((p) => p.manual) || [];
+        const allPeaks = [...autoPeaks, ...manualPeaks];
+        const peaksWithEnergy = allPeaks.map((p) => {
+          const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
+          const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
+          return {
+            ...p,
+            energy,
+            fwhm_keV
+          };
+        });
+        const peakEnergies = peaksWithEnergy.map((p) => p.energy);
+        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+        const nuclideMatches = /* @__PURE__ */ new Map();
+        identificationResults.forEach((res) => {
+          nuclideMatches.set(res.inputEnergy_keV, res.matches);
+        });
+        return { detectedPeaks: peaksWithEnergy, nuclideMatches };
+      });
+      setAnalysisStatus("complete");
+    }, [initialAnalysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
+    (0, import_react20.useEffect)(() => {
+      if (analysisStatus === "complete" && calibrationFunction) {
+        setAnalysisResult((prev) => {
+          if (!prev)
+            return null;
+          const currentPeaks = prev.detectedPeaks;
+          const peakEnergies = currentPeaks.map((p) => p.energy);
+          const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+          const nuclideMatches = /* @__PURE__ */ new Map();
+          identificationResults.forEach((res) => {
+            nuclideMatches.set(res.inputEnergy_keV, res.matches);
+          });
+          return { ...prev, nuclideMatches };
+        });
+      }
+    }, [identificationTolerance, analysisStatus, calibrationFunction, analysisType]);
+    const handleMouseMove = (e) => {
+      if (step !== "analyze" || !imageRef.current || !spectrumPoints || spectrumPoints.length === 0 || !calibrationFunction) {
+        setInteractivePoint(null);
+        return;
+      }
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const naturalX = x / imageRef.current.offsetWidth * imageRef.current.naturalWidth;
+      const closestPoint = spectrumPoints.reduce(
+        (prev, curr) => Math.abs(curr.x - naturalX) < Math.abs(prev.x - naturalX) ? curr : prev
+      );
+      const energy = calibrationFunction.slope * closestPoint.x + calibrationFunction.intercept;
+      const identificationResults = identifyPeaks([energy], identificationTolerance, analysisType);
+      const topMatch = identificationResults[0]?.matches[0];
+      setInteractivePoint({
+        point: closestPoint,
+        eventCoords: { x, y },
+        topMatch
+      });
+    };
+    const handleExportCsv = () => {
+      if (!spectrumPoints || !calibrationFunction || !imageRef.current || !imageRef.current.complete || imageRef.current.naturalHeight === 0) {
+        alert("Cannot export: analysis data is not complete.");
+        return;
+      }
+      const naturalHeight = imageRef.current.naturalHeight;
+      const header = "Channel,Energy_keV,Counts\n";
+      const csvContent = spectrumPoints.map((point) => {
+        const channel = point.x;
+        const counts = naturalHeight - point.y;
+        const energy = calibrationFunction.slope * channel + calibrationFunction.intercept;
+        return `${Math.round(channel)},${energy.toFixed(3)},${counts.toFixed(0)}`;
+      }).join("\n");
+      const blob = new Blob([header + csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `spectrum_image_export.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+    const handleSaveAnalysis = async (name, sourceId) => {
+      if (!analysisResult || !imageDataUrl || !spectrumPoints || !calibrationFunction) {
+        alert("Cannot save: analysis data is not complete.");
+        return;
+      }
+      try {
+        await db.addAnalysis({
+          name,
+          sourceId,
+          analysisType: "image",
+          data: {
+            imageDataUrl,
+            spectrumPoints,
+            calibrationPoints,
+            calibrationFunction,
+            analysisResult
+          }
+        });
+        alert("Analysis saved successfully!");
+      } catch (error) {
+        console.error("Failed to save analysis:", error);
+        alert("Failed to save analysis.");
+      } finally {
+        setIsSaveModalOpen(false);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumAnalyzerTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => onOpenPeakIdentifier(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { fillRule: "evenodd", d: "M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "hidden sm:inline", children: t("identifyPeaks") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => onBack(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { children: t("backButton") })
+          ] })
+        ] })
+      ] }),
+      !imageDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col items-center justify-center space-y-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ImageUploader_default, { onImageLoaded: handleImageLoaded, t }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "text-gray-400 font-semibold", children: t("or") }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => setIsCameraOpen(true), className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { children: t("useCamera") })
+        ] })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        AnalysisResults_default,
+        {
+          imageSrc: imageDataUrl,
+          imageRef,
+          analysisResult,
+          spectrumPoints,
+          calibrationFunction,
+          interactivePoint,
+          t,
+          analysisStatus,
+          step,
+          onMouseMove: handleMouseMove,
+          onMouseLeave: () => setInteractivePoint(null),
+          onImageClick: handleImageClick,
+          onTogglePeakGroup: togglePeakGroup,
+          onExportCsv: handleExportCsv,
+          onSaveAnalysis: () => setIsSaveModalOpen(true),
+          sidebar: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+            CalibrationSidebar_default,
+            {
+              imageLoaded: !!imageDataUrl,
+              step,
+              onStepChange: setStep,
+              calibrationPoints,
+              setCalibrationPoints,
+              calibrationFunction,
+              onCalibrationChange: setCalibrationFunction,
+              onLaunchAnalysis: runFullAnalysis,
+              analysisStatus,
+              errorMessage,
+              identificationTolerance,
+              onIdentificationToleranceChange: setIdentificationTolerance,
+              onReset: resetState,
+              t
+            }
+          )
+        }
+      ),
+      isCameraOpen && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CameraCapture_default, { onImageCaptured: handleImageLoaded, onClose: () => setIsCameraOpen(false), t }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CalibrationPointModal_default, { isOpen: isCalibrationModalOpen, onClose: () => setIsCalibrationModalOpen(false), onSubmit: handleCalibrationSubmit, t }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        PeakPositionAdjusterModal_default,
+        {
+          isOpen: isAdjusterOpen,
+          onClose: () => setIsAdjusterOpen(false),
+          onConfirm: (preciseX) => {
+            if (adjusterCallback.current) {
+              adjusterCallback.current(preciseX);
+            }
+            setIsAdjusterOpen(false);
+          },
+          spectrumData: normalizedSpectrumData,
+          initialX: adjusterInitialX,
+          xRange: 20,
+          energyFromX: (x) => calibrationFunction ? calibrationFunction.slope * x + calibrationFunction.intercept : 0,
+          identificationTolerance,
+          t,
+          title: step === "add" ? t("peakPositionAdjusterTitle") : t("addPeakManually"),
+          confirmText: step === "add" ? t("confirmPosition") : t("addPeak"),
+          analysisType
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        SaveAnalysisModal_default,
+        {
+          isOpen: isSaveModalOpen,
+          onClose: () => setIsSaveModalOpen(false),
+          onSave: handleSaveAnalysis,
+          t
+        }
+      )
+    ] });
+  };
+  var SpectrumAnalyzerPage_default = SpectrumAnalyzerPage;
+
+  // pages/N42AnalyzerPage.tsx
+  var import_react23 = __toESM(require_react());
+
+  // services/n42ParserService.ts
+  function parseDuration(isoDuration) {
+    if (!isoDuration)
+      return "N/A";
+    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
+    const matches = isoDuration.match(regex);
+    if (!matches)
+      return isoDuration;
+    const hours = parseFloat(matches[1] || "0");
+    const minutes = parseFloat(matches[2] || "0");
+    const seconds = parseFloat(matches[3] || "0");
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    return `${totalSeconds.toFixed(2)} s`;
+  }
+  function parseDurationToSeconds(isoDuration) {
+    if (!isoDuration)
+      return void 0;
+    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
+    const matches = isoDuration.match(regex);
+    if (!matches)
+      return void 0;
+    const hours = parseFloat(matches[1] || "0");
+    const minutes = parseFloat(matches[2] || "0");
+    const seconds = parseFloat(matches[3] || "0");
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+  async function parseN42File(file, t) {
+    const text = await file.text();
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(text, "application/xml");
+    const parserError = xmlDoc.querySelector("parsererror");
+    if (parserError) {
+      throw new Error(`XML Parsing Error: ${parserError.textContent}`);
+    }
+    const instrument = xmlDoc.querySelector("RadInstrumentInformation RadInstrumentModelName, InstrumentInformation InstrumentModelName");
+    const measurement = xmlDoc.querySelector("RadMeasurement, Measurement");
+    const timestamp = measurement?.querySelector("StartDateTime");
+    const realTime = measurement?.querySelector("RealTimeDuration");
+    const realTimeContent = realTime?.textContent || null;
+    const metadata = {
+      instrument: instrument?.textContent || "Unknown",
+      timestamp: timestamp?.textContent ? new Date(timestamp.textContent).toLocaleString() : "N/A",
+      realTime: parseDuration(realTimeContent),
+      realTimeSeconds: parseDurationToSeconds(realTimeContent)
+    };
+    const spectrumElements = xmlDoc.querySelectorAll("RadMeasurement Spectrum, Measurement Spectrum");
+    const spectra = [];
+    if (spectrumElements.length === 0) {
+      throw new Error("No <Spectrum> tags found inside <RadMeasurement> or <Measurement>.");
+    }
+    spectrumElements.forEach((specEl, index) => {
+      try {
+        const channelDataEl = specEl.querySelector("ChannelData");
+        if (!channelDataEl)
+          return;
+        const channelData = channelDataEl.textContent?.trim().split(/\s+/).map(Number);
+        if (!channelData || channelData.some(isNaN))
+          return;
+        let calibration = specEl.querySelector("EnergyCalibration");
+        if (!calibration) {
+          const calibRef = specEl.getAttribute("energyCalibrationReference");
+          if (calibRef) {
+            calibration = xmlDoc.querySelector(`EnergyCalibration[id="${calibRef}"]`);
+          }
+        }
+        if (!calibration)
+          return;
+        const coeffs = calibration.querySelector("Coefficients, CoefficientValues")?.textContent?.trim().split(/\s+/).map(Number);
+        if (!coeffs || coeffs.length < 2)
+          return;
+        const remark = calibration.querySelector("Remark")?.textContent;
+        const description = specEl.querySelector("SpectrumDescription")?.textContent;
+        const idAttr = specEl.getAttribute("id");
+        const specId = remark || description || idAttr || `${t("spectrum")} ${index + 1}`;
+        const liveTimeEl = specEl.querySelector("LiveTimeDuration");
+        const liveTimeSeconds = parseDurationToSeconds(liveTimeEl?.textContent || null);
+        spectra.push({
+          id: specId,
+          channelData,
+          calibration: {
+            a: coeffs[0] || 0,
+            // Intercept
+            b: coeffs[1] || 0,
+            // Slope
+            c: coeffs[2] || 0
+            // Quadratic
+          },
+          liveTimeSeconds
+        });
+      } catch (e) {
+        console.warn("Could not parse a spectrum block:", e);
+      }
+    });
+    if (spectra.length === 0) {
+      throw new Error("Could not parse any valid spectra from the file.");
+    }
+    return { metadata, spectra };
+  }
+
+  // components/n42-analyzer/SpectrumPlot.tsx
+  var import_react21 = __toESM(require_react());
+  var import_react_dom3 = __toESM(require_react_dom());
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  var SpectrumPlot = ({
+    spectrum,
+    analysisResult,
+    onTogglePeakGroup,
+    onPlotClick,
+    onRoiSelected,
+    t,
+    clippingLevel,
+    yZoom,
+    identificationTolerance,
+    analysisType
+  }) => {
+    const [logScale, setLogScale] = (0, import_react21.useState)(true);
+    const [hoverInfo, setHoverInfo] = (0, import_react21.useState)(null);
+    const [selectionBox, setSelectionBox] = (0, import_react21.useState)(null);
+    const isDragging = (0, import_react21.useRef)(false);
+    const { channelData, calibration } = spectrum;
+    const energyFromChannel = (ch) => calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
+    const processedChannelData = (0, import_react21.useMemo)(() => {
+      if (channelData.length === 0)
+        return [];
+      const maxCounts = channelData.reduce((max, v) => Math.max(max, v), -Infinity);
+      const clipThreshold = maxCounts * clippingLevel;
+      return clippingLevel < 1 ? channelData.map((c) => Math.min(c, clipThreshold)) : channelData;
+    }, [channelData, clippingLevel]);
+    const width = 800;
+    const height = 450;
+    const padding = { top: 50, right: 30, bottom: 50, left: 60 };
+    const xMax = processedChannelData.length - 1;
+    let yDataMax = processedChannelData.reduce((max, v) => isFinite(v) ? Math.max(max, v) : max, -Infinity);
+    if (!isFinite(yDataMax)) {
+      yDataMax = 1;
+    }
+    let yDisplayMax = yDataMax / yZoom;
+    const toSvgX = (x) => padding.left + x / xMax * (width - padding.left - padding.right);
+    const svgToChannel = (svgX) => {
+      return Math.round((svgX - padding.left) / (width - padding.left - padding.right) * xMax);
+    };
+    const toSvgY = (y) => {
+      const plotHeight = height - padding.top - padding.bottom;
+      if (logScale) {
+        if (y <= 0) {
+          return height - padding.bottom;
+        }
+        const logMax = Math.log10(yDisplayMax > 1 ? yDisplayMax : 1);
+        if (logMax <= 0) {
+          return height - padding.bottom;
+        }
+        const logY = Math.log10(y);
+        return height - padding.bottom - logY / logMax * plotHeight;
+      }
+      return height - padding.bottom - y / (yDisplayMax > 0 ? yDisplayMax : 1) * plotHeight;
+    };
+    const path = (0, import_react21.useMemo)(() => {
+      if (processedChannelData.length === 0)
+        return "";
+      let p = `M ${toSvgX(0)} ${toSvgY(processedChannelData[0])}`;
+      for (let i = 1; i < processedChannelData.length; i++) {
+        p += ` L ${toSvgX(i)} ${toSvgY(processedChannelData[i])}`;
+      }
+      return p;
+    }, [processedChannelData, logScale, yZoom]);
+    const handleMouseDown = (e) => {
+      if (e.target.closest(".peak-marker"))
+        return;
+      isDragging.current = true;
+      const svg = e.currentTarget;
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const ctm = svg.getScreenCTM();
+      if (ctm) {
+        const svgP = pt.matrixTransform(ctm.inverse());
+        setSelectionBox({ startX: svgP.x, endX: svgP.x });
+      }
+    };
+    const handleMouseMove = (e) => {
+      const svg = e.currentTarget;
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const ctm = svg.getScreenCTM();
+      if (ctm) {
+        const svgP = pt.matrixTransform(ctm.inverse());
+        if (isDragging.current && selectionBox) {
+          setSelectionBox({ ...selectionBox, endX: svgP.x });
+        }
+        const channel = svgToChannel(svgP.x);
+        if (channel >= 0 && channel < processedChannelData.length) {
+          const counts = processedChannelData[channel];
+          const energy = energyFromChannel(channel);
+          setHoverInfo({ x: e.clientX, y: e.clientY, channel, counts, energy });
+        }
+      }
+    };
+    const handleMouseUp = (e) => {
+      if (!isDragging.current)
+        return;
+      isDragging.current = false;
+      const dragThreshold = 5;
+      if (selectionBox && Math.abs(selectionBox.endX - selectionBox.startX) > dragThreshold) {
+        const startChannel = svgToChannel(Math.min(selectionBox.startX, selectionBox.endX));
+        const endChannel = svgToChannel(Math.max(selectionBox.startX, selectionBox.endX));
+        if (startChannel < endChannel) {
+          onRoiSelected({ startChannel, endChannel });
+        }
+      } else {
+        const channel = svgToChannel(selectionBox?.startX || 0);
+        if (channel >= 0 && channel < channelData.length) {
+          onPlotClick(channel);
+        }
+      }
+      setSelectionBox(null);
+    };
+    const handleMouseLeave = () => {
+      setHoverInfo(null);
+      if (isDragging.current) {
+        isDragging.current = false;
+        setSelectionBox(null);
+      }
+    };
+    const suggestedNuclide = (0, import_react21.useMemo)(() => {
+      if (!hoverInfo)
+        return null;
+      const matches = identifyPeaks([hoverInfo.energy], identificationTolerance, analysisType);
+      return matches[0]?.matches[0]?.nuclide.name;
+    }, [hoverInfo, identificationTolerance, analysisType]);
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("plotTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center space-x-4 text-sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("roiSelectionTooltip") }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "flex items-center space-x-2 cursor-pointer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "checkbox", checked: logScale, onChange: () => setLogScale(!logScale), className: "form-checkbox h-4 w-4 text-cyan-500" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("plotLogScale") })
+        ] })
+      ] })
+    ] }), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "relative", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto cursor-crosshair", onMouseDown: handleMouseDown, onMouseMove: handleMouseMove, onMouseUp: handleMouseUp, onMouseLeave: handleMouseLeave, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#9ca3af", fontSize: "14", children: `${t("channel")}` }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: padding.left, y1: padding.top, x2: padding.left, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: padding.left - 40, y: height / 2, textAnchor: "middle", transform: `rotate(-90 ${padding.left - 40} ${height / 2})`, fill: "#9ca3af", fontSize: "14", children: t("counts") }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: path, stroke: "#60a5fa", fill: "none", strokeWidth: "1.5" }),
+          selectionBox && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+            "rect",
+            {
+              x: Math.min(selectionBox.startX, selectionBox.endX),
+              y: padding.top,
+              width: Math.abs(selectionBox.endX - selectionBox.startX),
+              height: height - padding.top - padding.bottom,
+              fill: "rgba(0, 191, 255, 0.2)",
+              stroke: "rgba(0, 191, 255, 0.6)",
+              strokeWidth: "1"
+            }
+          ),
+          analysisResult?.peaks.map((peak, idx) => {
+            const sx = toSvgX(peak.x);
+            const sy = toSvgY(peak.y);
+            const group = peak.group;
+            const color = group === "A" ? "#fb923c" : group === "B" ? "#c084fc" : peak.manual ? "#34d399" : "#f87171";
+            const peakLabel = peak.energy.toFixed(1);
+            const yOffset = idx % 2 === 0 ? -15 : -30;
+            return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("g", { className: "peak-marker cursor-pointer", onClick: (e) => {
+              e.stopPropagation();
+              onTogglePeakGroup(idx);
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: sx, y1: height - padding.bottom, x2: sx, y2: sy, stroke: color, strokeWidth: "1", strokeDasharray: "3 2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("circle", { cx: sx, cy: sy, r: "4", fill: color }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: sx, y: sy + yOffset, textAnchor: "middle", fill: color, fontSize: "10", fontWeight: "bold", children: peakLabel }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("rect", { x: sx - 15, y: sy - 40, width: "30", height: "35", fill: "transparent" })
+            ] }, idx);
+          }),
+          clippingLevel < 1 && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: padding.left + 10, y: padding.top - 10, fill: "#facc15", fontSize: "12", fontWeight: "bold", children: t("clippingWarning") })
+        ] }),
+        hoverInfo && (0, import_react_dom3.createPortal)(
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
+            "div",
+            {
+              className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50",
+              style: { top: hoverInfo.y + 15, left: hoverInfo.x + 15 },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+                  t("channel"),
+                  ": ",
+                  hoverInfo.channel
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+                  t("energy"),
+                  ": ",
+                  hoverInfo.energy.toFixed(1),
+                  " keV"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+                  t("counts"),
+                  ": ",
+                  hoverInfo.counts.toLocaleString()
+                ] }),
+                suggestedNuclide && /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "mt-1 pt-1 border-t border-gray-700", children: [
+                  t("suggestedNuclide"),
+                  ": ",
+                  suggestedNuclide
+                ] })
+              ]
+            }
+          ),
+          document.body
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-xs text-center text-gray-500 mt-2", children: t("n42PeakAddInstruction") })
+    ] });
+  };
+  var SpectrumPlot_default = SpectrumPlot;
+
+  // components/n42-analyzer/DeconvolutionModal.tsx
+  var import_react22 = __toESM(require_react());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  function findPeaksInROI(channelData, roi) {
+    const peaks = [];
+    if (channelData.length < 5 || !roi)
+      return peaks;
+    const data = channelData.slice(roi.startChannel, roi.endChannel + 1);
+    const mean = data.reduce((a, b) => a + b) / data.length;
+    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
+    const prominence = stdDev * 0.5;
+    const threshold = mean;
+    for (let i = 2; i < data.length - 2; i++) {
+      const y = data[i];
+      if (y > threshold && y > data[i - 1] && y >= data[i + 1]) {
+        let leftMin = y;
+        for (let j = i - 1; j >= 0; j--) {
+          leftMin = Math.min(leftMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        let rightMin = y;
+        for (let j = i + 1; j < data.length; j++) {
+          rightMin = Math.min(rightMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        if (y - leftMin > prominence && y - rightMin > prominence) {
+          const originalChannel = roi.startChannel + i;
+          peaks.push({ x: originalChannel, y: channelData[originalChannel], energy: 0 });
+        }
+      }
+    }
+    return peaks;
+  }
+  var DeconvolutionModal = ({
+    isOpen,
+    onClose,
+    onConfirm,
+    roi,
+    spectrum,
+    t,
+    identificationTolerance,
+    analysisType
+  }) => {
+    const deconvolutedPeaks = (0, import_react22.useMemo)(() => {
+      if (!roi || !spectrum)
+        return [];
+      const rawPeaks = findPeaksInROI(spectrum.channelData, roi);
+      const { calibration } = spectrum;
+      const fullSpectrumData = spectrum.channelData.map((y, x) => ({ x, y }));
+      return rawPeaks.map((p) => {
+        const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
+        const fwhm_keV = calculateFWHM(p.x, fullSpectrumData, calibration.b);
+        return { ...p, energy, fwhm_keV };
+      });
+    }, [roi, spectrum]);
+    if (!isOpen || !roi || !spectrum)
+      return null;
+    const handleConfirm = () => {
+      onConfirm(deconvolutedPeaks);
+    };
+    const dataSlice = spectrum.channelData.slice(roi.startChannel, roi.endChannel + 1);
+    const width = 600, height = 300, padding = { top: 20, right: 20, bottom: 40, left: 50 };
+    const xMin = roi.startChannel, xMax = roi.endChannel;
+    const yMax = Math.max(...dataSlice) * 1.1;
+    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
+    const toSvgY = (y) => height - padding.bottom - y / yMax * (height - padding.top - padding.bottom);
+    const path = dataSlice.map((y, i) => `${i === 0 ? "M" : "L"} ${toSvgX(roi.startChannel + i)} ${toSvgY(y)}`).join(" ");
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Card_default, { title: t("deconvolutionModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("h3", { className: "text-md font-semibold text-gray-300", children: [
+        t("roiAnalysis"),
+        " [",
+        roi.startChannel,
+        " - ",
+        roi.endChannel,
+        "]"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: path, stroke: "#60a5fa", fill: "rgba(96, 165, 250, 0.2)", strokeWidth: "1.5" }),
+        deconvolutedPeaks.map((peak, idx) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: toSvgX(peak.x), y1: toSvgY(peak.y), x2: toSvgX(peak.x), y2: height - padding.bottom, stroke: "#f87171", strokeWidth: "1", strokeDasharray: "2 2" }, idx))
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("h4", { className: "text-md font-semibold text-gray-300 mb-2", children: t("peaksInRoi") }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "max-h-40 overflow-y-auto bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("table", { className: "w-full text-xs text-left", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { className: "p-1", children: t("energy_keV") }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { className: "p-1", children: t("counts") })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("tbody", { children: deconvolutedPeaks.map((peak, idx) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { className: "border-t border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { className: "p-1 font-mono", children: peak.energy.toFixed(1) }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { className: "p-1 font-mono", children: peak.y.toLocaleString() })
+          ] }, idx)) })
+        ] }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: handleConfirm, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmDeconvolution") })
+      ] })
+    ] }) }) }) });
+  };
+  var DeconvolutionModal_default = DeconvolutionModal;
+
+  // pages/N42AnalyzerPage.tsx
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  function findPeaksFromN42(channelData) {
+    const peaks = [];
+    if (channelData.length < 5)
+      return peaks;
+    const data = channelData;
+    const mean = data.reduce((a, b) => a + b) / data.length;
+    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
+    const prominence = stdDev * 1.5;
+    const threshold = Math.max(mean, stdDev * 2);
+    for (let i = 2; i < data.length - 2; i++) {
+      const y = data[i];
+      if (y > threshold && y > data[i - 1] && y >= data[i + 1] && y > data[i - 2] && y >= data[i + 2]) {
+        let leftMin = y;
+        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
+          leftMin = Math.min(leftMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        let rightMin = y;
+        for (let j = i + 1; j < data.length && j - i < 50; j++) {
+          rightMin = Math.min(rightMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        if (y - leftMin > prominence && y - rightMin > prominence) {
+          peaks.push({ x: i, y, energy: 0 });
+        }
+      }
+    }
+    return peaks;
+  }
+  var N42FileUploader = ({ onFileLoaded, label, file }) => {
+    const handleFile = async (f) => {
+      if (!f)
+        return;
+      try {
+        const parsed = await parseN42File(f, (key) => key);
+        onFileLoaded(f, parsed);
+      } catch (e) {
+        alert(`Error parsing file: ${e.message}`);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { htmlFor: `upload-${label}`, className: "p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "file", id: `upload-${label}`, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("p", { className: "text-sm text-gray-500", children: file ? file.name : "Select a file" })
+    ] }) });
+  };
+  var N42AnalyzerPage = ({ t, onBack, analysisType, onOpenPeakIdentifier, dataToLoad }) => {
+    const [file, setFile] = (0, import_react23.useState)(null);
+    const [parsedData, setParsedData] = (0, import_react23.useState)(null);
+    const [selectedSpectrumId, setSelectedSpectrumId] = (0, import_react23.useState)(null);
+    const [analysisResult, setAnalysisResult] = (0, import_react23.useState)(null);
+    const [identificationTolerance, setIdentificationTolerance] = (0, import_react23.useState)(2);
+    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react23.useState)(false);
+    const [adjusterInitialChannel, setAdjusterInitialChannel] = (0, import_react23.useState)(0);
+    const [isDeconvolutionModalOpen, setIsDeconvolutionModalOpen] = (0, import_react23.useState)(false);
+    const [selectedRoi, setSelectedRoi] = (0, import_react23.useState)(null);
+    const [yZoom, setYZoom] = (0, import_react23.useState)(1);
+    const [clippingLevel, setClippingLevel] = (0, import_react23.useState)(1);
+    (0, import_react23.useEffect)(() => {
+      if (dataToLoad) {
+        setParsedData(dataToLoad.parsedData);
+        setSelectedSpectrumId(dataToLoad.selectedSpectrumId);
+        setAnalysisResult(dataToLoad.analysisResult);
+      }
+    }, [dataToLoad]);
+    const selectedSpectrum = (0, import_react23.useMemo)(() => {
+      return parsedData?.spectra.find((s) => s.id === selectedSpectrumId) || null;
+    }, [parsedData, selectedSpectrumId]);
+    const groupCounts = (0, import_react23.useMemo)(() => {
+      if (!analysisResult) {
+        return { A: 0, B: 0 };
+      }
+      const counts = { A: 0, B: 0 };
+      analysisResult.peaks.forEach((peak) => {
+        const count = peak.y;
+        if (peak.group === "A") {
+          counts.A += count;
+        } else if (peak.group === "B") {
+          counts.B += count;
+        }
+      });
+      return counts;
+    }, [analysisResult]);
+    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
+    const handleFileLoaded = (file2, data) => {
+      setFile(file2);
+      setParsedData(data);
+      if (data.spectra.length > 0) {
+        setSelectedSpectrumId(data.spectra[0].id);
+      }
+    };
+    const runAnalysis = (0, import_react23.useCallback)((existingPeaks = []) => {
+      if (!selectedSpectrum)
+        return;
+      const { channelData, calibration } = selectedSpectrum;
+      const spectrumDataForFwhm = channelData.map((y, x) => ({ x, y }));
+      let peaksToIdentify = existingPeaks;
+      if (peaksToIdentify.length === 0) {
+        const detectedPeaksRaw = findPeaksFromN42(channelData);
+        peaksToIdentify = detectedPeaksRaw.map((p) => {
+          const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
+          const fwhm_keV = calculateFWHM(p.x, spectrumDataForFwhm, calibration.b);
+          return { ...p, energy, fwhm_keV };
+        });
+      }
+      const peakEnergies = peaksToIdentify.map((p) => p.energy);
+      const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+      const nuclideMatches = /* @__PURE__ */ new Map();
+      identificationResults.forEach((res) => {
+        nuclideMatches.set(res.inputEnergy_keV, res.matches);
+      });
+      setAnalysisResult({ peaks: peaksToIdentify, nuclideMatches });
+    }, [selectedSpectrum, identificationTolerance, analysisType]);
+    (0, import_react23.useEffect)(() => {
+      if (selectedSpectrum) {
+        runAnalysis();
+      } else {
+        setAnalysisResult(null);
+      }
+    }, [selectedSpectrum, runAnalysis]);
+    const handleAddPeakAtChannel = (channel) => {
+      if (!selectedSpectrum)
+        return;
+      const { calibration, channelData } = selectedSpectrum;
+      const energy = calibration.c * channel ** 2 + calibration.b * channel + calibration.a;
+      const fwhm_keV = calculateFWHM(channel, channelData.map((y, x) => ({ x, y })), calibration.b);
+      const newPeak = { x: channel, y: channelData[channel], energy, manual: true, fwhm_keV };
+      setAnalysisResult((prev) => {
+        const peaks = prev ? [...prev.peaks, newPeak] : [newPeak];
+        const nuclideMatches = prev ? new Map(prev.nuclideMatches) : /* @__PURE__ */ new Map();
+        const newIdentification = identifyPeaks([energy], identificationTolerance, analysisType);
+        if (newIdentification[0])
+          nuclideMatches.set(energy, newIdentification[0].matches);
+        return { peaks, nuclideMatches };
+      });
+    };
+    const togglePeakGroup = (peakIndex) => {
+      setAnalysisResult((prev) => {
+        if (!prev)
+          return null;
+        const newPeaks = [...prev.peaks];
+        const peak = newPeaks[peakIndex];
+        if (peak.group === "A")
+          peak.group = "B";
+        else if (peak.group === "B")
+          peak.group = void 0;
+        else
+          peak.group = "A";
+        return { ...prev, peaks: newPeaks };
+      });
+    };
+    const handlePlotClick = (channel) => {
+      setAdjusterInitialChannel(channel);
+      setIsAdjusterOpen(true);
+    };
+    const handleRoiSelected = (roi) => {
+      setSelectedRoi(roi);
+      setIsDeconvolutionModalOpen(true);
+    };
+    const handleDeconvolutionConfirm = (newPeaks) => {
+      setAnalysisResult((prev) => {
+        if (!prev || !selectedRoi)
+          return prev;
+        const existingPeaksOutsideRoi = prev.peaks.filter((p) => p.x < selectedRoi.startChannel || p.x > selectedRoi.endChannel);
+        const finalPeaks = [...existingPeaksOutsideRoi, ...newPeaks];
+        runAnalysis(finalPeaks);
+        return prev;
+      });
+      setIsDeconvolutionModalOpen(false);
+      setSelectedRoi(null);
+    };
+    const normalizedSpectrumData = (0, import_react23.useMemo)(() => {
+      return selectedSpectrum?.channelData.map((counts, ch) => ({ x: ch, y: counts })) || [];
+    }, [selectedSpectrum]);
+    const energyFromChannel = (0, import_react23.useCallback)((ch) => {
+      if (!selectedSpectrum)
+        return 0;
+      const { calibration } = selectedSpectrum;
+      return calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
+    }, [selectedSpectrum]);
+    const resetAll = () => {
+      setFile(null);
+      setParsedData(null);
+      setSelectedSpectrumId(null);
+      setAnalysisResult(null);
+    };
+    const handleExportCsv = () => {
+      if (!selectedSpectrum || !file)
+        return;
+      const { channelData, calibration } = selectedSpectrum;
+      const energyFromChannel2 = (ch) => calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
+      const header = "Channel,Energy_keV,Counts\n";
+      const csvContent = channelData.map((counts, channel) => {
+        const energy = energyFromChannel2(channel);
+        return `${channel},${energy.toFixed(3)},${counts}`;
+      }).join("\n");
+      const blob = new Blob([header + csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      const fileName = file.name.replace(/\.n42$/i, "_spectrum.csv");
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+    if (!parsedData) {
+      return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("n42AnalyzerTitle") }),
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("backButton") })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "flex justify-center mt-10", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(N42FileUploader, { onFileLoaded: handleFileLoaded, label: t("uploadN42File"), file }) })
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("n42AnalyzerTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex items-center space-x-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: onOpenPeakIdentifier, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { fillRule: "evenodd", d: "M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "hidden sm:inline", children: t("identifyPeaks") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: resetAll, className: "text-sm text-yellow-400 hover:text-yellow-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { fillRule: "evenodd", d: "M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 110 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("startOver") })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-3", children: selectedSpectrum && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          SpectrumPlot_default,
+          {
+            spectrum: selectedSpectrum,
+            analysisResult,
+            onTogglePeakGroup: togglePeakGroup,
+            onPlotClick: handlePlotClick,
+            onRoiSelected: handleRoiSelected,
+            t,
+            clippingLevel,
+            yZoom,
+            identificationTolerance,
+            analysisType
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Card_default, { title: t("fileInfoAndSettings"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "space-y-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
+                t("instrument"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.instrument
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
+                t("timestamp"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.timestamp
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
+                t("liveTime"),
+                ":"
+              ] }),
+              " ",
+              selectedSpectrum?.liveTimeSeconds ? `${selectedSpectrum.liveTimeSeconds.toFixed(2)} s` : "N/A"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
+                t("realTime"),
+                ":"
+              ] }),
+              " ",
+              parsedData.metadata.realTime
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("label", { className: "text-sm text-gray-300 block mb-1", children: t("selectSpectrum") }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("select", { value: selectedSpectrumId || "", onChange: (e) => setSelectedSpectrumId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: parsedData.spectra.map((s) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("option", { value: s.id, children: s.id }, s.id)) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
+                  t("identificationTolerance"),
+                  " (keV)"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("yAxisZoom") }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("yAxisZoomTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "range", min: "1", max: "100", step: "1", value: yZoom, onChange: (e) => setYZoom(parseFloat(e.target.value)), className: "w-full" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "pt-2 border-t border-gray-700", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("yAxisClipping") }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("yAxisClippingTooltip") })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "range", min: "0.1", max: "1", step: "0.01", value: clippingLevel, onChange: (e) => setClippingLevel(parseFloat(e.target.value)), className: "w-full" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "mt-4 pt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+              "button",
+              {
+                onClick: handleExportCsv,
+                className: "flex-1 text-sm text-cyan-400 hover:text-cyan-300 flex items-center justify-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("exportCsv") })
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("button", { disabled: true, title: `${t("exportHdf5")} (coming soon)`, className: "flex-1 text-sm text-gray-500 flex items-center justify-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: "HDF5" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("button", { disabled: true, title: `${t("exportNetCdf")} (coming soon)`, className: "flex-1 text-sm text-gray-500 flex items-center justify-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: "NetCDF" }) })
+          ] }) })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Card_default, { title: t("detectedPeaksTitle"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("group") })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("tbody", { className: "text-gray-200", children: analysisResult?.peaks?.map((peak, originalIndex) => ({ peak, originalIndex })).sort((a, b) => a.peak.energy - b.peak.energy).map(({ peak, originalIndex }) => {
+              const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
+              return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("tr", { className: "border-t border-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.energy.toFixed(1) }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2", children: match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+                  "td",
+                  {
+                    className: "py-2 px-2 text-center font-semibold cursor-pointer",
+                    style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" },
+                    onClick: () => togglePeakGroup(originalIndex),
+                    children: peak.group || "-"
+                  }
+                )
+              ] }, originalIndex);
+            }) })
+          ] }) }),
+          analysisResult && analysisResult.peaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
+            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
+                    t("group_a_total"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "font-mono", children: groupCounts.A.toFixed(0) })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
+                    t("group_b_total"),
+                    ":"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "font-mono", children: groupCounts.B.toFixed(0) })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
+                  t("ratio_a_b"),
+                  ":"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
+              ] }) })
+            ] })
+          ] })
+        ] }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+        PeakPositionAdjusterModal_default,
+        {
+          isOpen: isAdjusterOpen,
+          onClose: () => setIsAdjusterOpen(false),
+          onConfirm: (preciseChannel) => {
+            handleAddPeakAtChannel(Math.round(preciseChannel));
+            setIsAdjusterOpen(false);
+          },
+          spectrumData: normalizedSpectrumData,
+          initialX: adjusterInitialChannel,
+          xRange: 20,
+          energyFromX: energyFromChannel,
+          identificationTolerance,
+          t,
+          title: t("addPeakManually"),
+          confirmText: t("addPeak"),
+          analysisType
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+        DeconvolutionModal_default,
+        {
+          isOpen: isDeconvolutionModalOpen,
+          onClose: () => setIsDeconvolutionModalOpen(false),
+          onConfirm: handleDeconvolutionConfirm,
+          roi: selectedRoi,
+          spectrum: selectedSpectrum,
+          t,
+          identificationTolerance,
+          analysisType
+        }
+      )
+    ] });
+  };
+  var N42AnalyzerPage_default = N42AnalyzerPage;
+
+  // pages/BackgroundSubtractionPage.tsx
+  var import_react24 = __toESM(require_react());
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  function findPeaksFromN422(channelData) {
+    const peaks = [];
+    if (channelData.length < 5)
+      return peaks;
+    const data = channelData;
+    const mean = data.reduce((a, b) => a + b) / data.length;
+    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
+    const prominence = stdDev * 1.5;
+    const threshold = Math.max(mean, stdDev * 2);
+    for (let i = 2; i < data.length - 2; i++) {
+      const y = data[i];
+      if (y > threshold && y > data[i - 1] && y >= data[i + 1] && y > data[i - 2] && y >= data[i + 2]) {
+        let leftMin = y;
+        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
+          leftMin = Math.min(leftMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        let rightMin = y;
+        for (let j = i + 1; j < data.length && j - i < 50; j++) {
+          rightMin = Math.min(rightMin, data[j]);
+          if (data[j] > y)
+            break;
+        }
+        if (y - leftMin > prominence && y - rightMin > prominence) {
+          peaks.push({ x: i, y, energy: 0 });
+        }
+      }
+    }
+    return peaks;
+  }
+  var N42FileUploader2 = ({ onFileLoaded, label, file }) => {
+    const handleFile = async (f) => {
+      if (!f)
+        return;
+      try {
+        const parsed = await parseN42File(f, (key) => key);
+        onFileLoaded(f, parsed);
+      } catch (e) {
+        alert(`Error parsing file: ${e}`);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: `upload-${label}`, className: "p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "file", id: `upload-${label}`, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "text-xs text-gray-500", children: file ? file.name : "Select a file" })
+    ] }) });
+  };
+  var BackgroundSubtractionPage = ({ t, onBack, analysisType, onOpenPeakIdentifier }) => {
+    const [sampleFile, setSampleFile] = (0, import_react24.useState)(null);
+    const [sampleData, setSampleData] = (0, import_react24.useState)(null);
+    const [backgroundFile, setBackgroundFile] = (0, import_react24.useState)(null);
+    const [backgroundData, setBackgroundData] = (0, import_react24.useState)(null);
+    const [sampleTime, setSampleTime] = (0, import_react24.useState)(60);
+    const [backgroundTime, setBackgroundTime] = (0, import_react24.useState)(600);
+    const [error, setError] = (0, import_react24.useState)(null);
+    const [netSpectrum, setNetSpectrum] = (0, import_react24.useState)(null);
+    const [analysisResult, setAnalysisResult] = (0, import_react24.useState)(null);
+    const [identificationTolerance, setIdentificationTolerance] = (0, import_react24.useState)(2);
+    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react24.useState)(false);
+    const [adjusterInitialChannel, setAdjusterInitialChannel] = (0, import_react24.useState)(0);
+    const [isDeconvolutionModalOpen, setIsDeconvolutionModalOpen] = (0, import_react24.useState)(false);
+    const [selectedRoi, setSelectedRoi] = (0, import_react24.useState)(null);
+    const handleCalculate = () => {
+      setError(null);
+      if (!sampleData || !backgroundData || sampleTime <= 0 || backgroundTime <= 0) {
+        setError("Please load both files and set positive measurement times.");
+        return;
+      }
+      const sampleSpec = sampleData.spectra[0];
+      const bgSpec = backgroundData.spectra[0];
+      if (sampleSpec.channelData.length !== bgSpec.channelData.length) {
+        setError(t("error_channelMismatch"));
+        return;
+      }
+      const timeRatio = sampleTime / backgroundTime;
+      const netChannelData = sampleSpec.channelData.map((sampleCounts, i) => {
+        return sampleCounts - bgSpec.channelData[i] * timeRatio;
+      });
+      const newNetSpectrum = {
+        id: "Net Spectrum",
+        channelData: netChannelData,
+        calibration: sampleSpec.calibration
+      };
+      setNetSpectrum(newNetSpectrum);
+    };
+    const runAnalysis = (0, import_react24.useCallback)((existingPeaks = []) => {
+      if (!netSpectrum)
+        return;
+      const { channelData, calibration } = netSpectrum;
+      const spectrumDataForFwhm = channelData.map((y, x) => ({ x, y }));
+      let peaksToIdentify = existingPeaks;
+      if (peaksToIdentify.length === 0) {
+        const detectedPeaksRaw = findPeaksFromN422(channelData);
+        peaksToIdentify = detectedPeaksRaw.map((p) => {
+          const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
+          const fwhm_keV = calculateFWHM(p.x, spectrumDataForFwhm, calibration.b);
+          return { ...p, energy, fwhm_keV };
+        });
+      }
+      const peakEnergies = peaksToIdentify.map((p) => p.energy);
+      const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+      const nuclideMatches = /* @__PURE__ */ new Map();
+      identificationResults.forEach((res) => {
+        nuclideMatches.set(res.inputEnergy_keV, res.matches);
+      });
+      setAnalysisResult({ peaks: peaksToIdentify, nuclideMatches });
+    }, [netSpectrum, identificationTolerance, analysisType]);
+    (0, import_react24.useEffect)(() => {
+      if (netSpectrum) {
+        runAnalysis();
+      }
+    }, [netSpectrum, runAnalysis]);
+    const togglePeakGroup = (peakIndex) => {
+      setAnalysisResult((prev) => {
+        if (!prev)
+          return null;
+        const newPeaks = [...prev.peaks];
+        const peak = newPeaks[peakIndex];
+        if (peak.group === "A")
+          peak.group = "B";
+        else if (peak.group === "B")
+          peak.group = void 0;
+        else
+          peak.group = "A";
+        return { ...prev, peaks: newPeaks };
+      });
+    };
+    const handleAddPeakAtChannel = (channel) => {
+      if (!netSpectrum)
+        return;
+      const { calibration, channelData } = netSpectrum;
+      const energy = calibration.c * channel ** 2 + calibration.b * channel + calibration.a;
+      const fwhm_keV = calculateFWHM(channel, channelData.map((y, x) => ({ x, y })), calibration.b);
+      const newPeak = { x: channel, y: channelData[channel], energy, manual: true, fwhm_keV };
+      setAnalysisResult((prev) => {
+        const peaks = prev ? [...prev.peaks, newPeak] : [newPeak];
+        const nuclideMatches = prev ? new Map(prev.nuclideMatches) : /* @__PURE__ */ new Map();
+        const newIdentification = identifyPeaks([energy], identificationTolerance, analysisType);
+        if (newIdentification[0])
+          nuclideMatches.set(energy, newIdentification[0].matches);
+        return { peaks, nuclideMatches };
+      });
+    };
+    const handlePlotClick = (channel) => {
+      setAdjusterInitialChannel(channel);
+      setIsAdjusterOpen(true);
+    };
+    const handleRoiSelected = (roi) => {
+      setSelectedRoi(roi);
+      setIsDeconvolutionModalOpen(true);
+    };
+    const handleDeconvolutionConfirm = (newPeaks) => {
+      setAnalysisResult((prev) => {
+        if (!prev || !selectedRoi)
+          return prev;
+        const existingPeaksOutsideRoi = prev.peaks.filter((p) => p.x < selectedRoi.startChannel || p.x > selectedRoi.endChannel);
+        const finalPeaks = [...existingPeaksOutsideRoi, ...newPeaks];
+        const peakEnergies = finalPeaks.map((p) => p.energy);
+        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
+        const nuclideMatches = /* @__PURE__ */ new Map();
+        identificationResults.forEach((res) => nuclideMatches.set(res.inputEnergy_keV, res.matches));
+        return { peaks: finalPeaks, nuclideMatches };
+      });
+      setIsDeconvolutionModalOpen(false);
+      setSelectedRoi(null);
+    };
+    const normalizedSpectrumData = (0, import_react24.useMemo)(() => {
+      return netSpectrum?.channelData.map((counts, ch) => ({ x: ch, y: counts })) || [];
+    }, [netSpectrum]);
+    const energyFromChannel = (0, import_react24.useCallback)((ch) => {
+      if (!netSpectrum)
+        return 0;
+      const { calibration } = netSpectrum;
+      return calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
+    }, [netSpectrum]);
+    const resetAll = () => {
+      setSampleFile(null);
+      setSampleData(null);
+      setBackgroundFile(null);
+      setBackgroundData(null);
+      setSampleTime(60);
+      setBackgroundTime(600);
+      setError(null);
+      setNetSpectrum(null);
+      setAnalysisResult(null);
+    };
+    if (netSpectrum) {
+      return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("netSpectrumAnalysis") }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("button", { onClick: resetAll, className: "text-sm text-yellow-400 hover:text-yellow-300 flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("startOver") })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-3", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+            SpectrumPlot_default,
+            {
+              spectrum: netSpectrum,
+              analysisResult,
+              onTogglePeakGroup: togglePeakGroup,
+              onPlotClick: handlePlotClick,
+              onRoiSelected: handleRoiSelected,
+              t,
+              clippingLevel: 1,
+              yZoom: 1,
+              identificationTolerance,
+              analysisType
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Card_default, { title: t("analysisResultsTitle"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("span", { children: [
+                t("identificationTolerance"),
+                " (keV)"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Card_default, { title: t("detectedPeaksTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("table", { className: "w-full text-xs text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("group") })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("tbody", { className: "text-gray-200", children: analysisResult?.peaks?.sort((a, b) => a.energy - b.energy).map((peak, idx) => {
+              const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
+              return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("tr", { className: "border-t border-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.energy.toFixed(1) }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2", children: match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : "-" }),
+                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 text-center", children: peak.group })
+              ] }, idx);
+            }) })
+          ] }) }) }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+          PeakPositionAdjusterModal_default,
+          {
+            isOpen: isAdjusterOpen,
+            onClose: () => setIsAdjusterOpen(false),
+            onConfirm: (preciseChannel) => {
+              handleAddPeakAtChannel(Math.round(preciseChannel));
+              setIsAdjusterOpen(false);
+            },
+            spectrumData: normalizedSpectrumData,
+            initialX: adjusterInitialChannel,
+            xRange: 20,
+            energyFromX: energyFromChannel,
+            identificationTolerance,
+            t,
+            title: t("addPeakManually"),
+            confirmText: t("addPeak"),
+            analysisType
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+          DeconvolutionModal_default,
+          {
+            isOpen: isDeconvolutionModalOpen,
+            onClose: () => setIsDeconvolutionModalOpen(false),
+            onConfirm: handleDeconvolutionConfirm,
+            roi: selectedRoi,
+            spectrum: netSpectrum,
+            t,
+            identificationTolerance,
+            analysisType
+          }
+        )
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("bkgSubtractionTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("backButton") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Card_default, { title: t("inputs"), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8 items-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("sampleSpectrum") }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(N42FileUploader2, { onFileLoaded: (file, data) => {
+              setSampleFile(file);
+              setSampleData(data);
+            }, label: t("uploadSample"), file: sampleFile }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: t("sampleTime") }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: sampleTime, onChange: (e) => setSampleTime(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("backgroundSpectrum") }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(N42FileUploader2, { onFileLoaded: (file, data) => {
+              setBackgroundFile(file);
+              setBackgroundData(data);
+            }, label: t("uploadBackground"), file: backgroundFile }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: t("bkg_sub_backgroundTime") }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: backgroundTime, onChange: (e) => setBackgroundTime(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] })
+        ] }),
+        error && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "mt-4 text-red-400 text-center bg-red-900/30 p-3 rounded-md", children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "mt-6 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("button", { onClick: handleCalculate, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg text-lg", children: t("calculateNetSpectrum") }) })
+      ] })
+    ] });
+  };
+  var BackgroundSubtractionPage_default = BackgroundSubtractionPage;
+
+  // pages/SpectrumComparisonPage.tsx
+  var import_react26 = __toESM(require_react());
+
+  // components/n42-analyzer/ComparisonPlot.tsx
+  var import_react25 = __toESM(require_react());
+  var import_react_dom4 = __toESM(require_react_dom());
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var ComparisonPlot = ({
+    spectrumA,
+    spectrumB,
+    timeA,
+    timeB,
+    normalization,
+    t
+  }) => {
+    const [logScale, setLogScale] = (0, import_react25.useState)(true);
+    const [hoverInfo, setHoverInfo] = (0, import_react25.useState)(null);
+    const energyFromChannelA = (ch) => spectrumA.calibration.c * ch ** 2 + spectrumA.calibration.b * ch + spectrumA.calibration.a;
+    const energyFromChannelB = (ch) => spectrumB.calibration.c * ch ** 2 + spectrumB.calibration.b * ch + spectrumB.calibration.a;
+    const getData = (spectrum, time) => {
+      return normalization === "time" && time > 0 ? spectrum.channelData.map((c) => c / time) : spectrum.channelData;
+    };
+    const dataA = (0, import_react25.useMemo)(() => getData(spectrumA, timeA), [spectrumA, timeA, normalization]);
+    const dataB = (0, import_react25.useMemo)(() => getData(spectrumB, timeB), [spectrumB, timeB, normalization]);
+    const width = 800;
+    const height = 450;
+    const padding = { top: 50, right: 30, bottom: 50, left: 60 };
+    const xMax = Math.max(dataA.length - 1, dataB.length - 1);
+    const yMax = (0, import_react25.useMemo)(() => {
+      const maxA = dataA.reduce((max, v) => Math.max(max, v), -Infinity);
+      const maxB = dataB.reduce((max, v) => Math.max(max, v), -Infinity);
+      return Math.max(maxA, maxB);
+    }, [dataA, dataB]);
+    const toSvgX = (x) => padding.left + x / xMax * (width - padding.left - padding.right);
+    const svgToChannel = (svgX) => {
+      return Math.round((svgX - padding.left) / (width - padding.left - padding.right) * xMax);
+    };
+    const toSvgY = (y) => {
+      const plotHeight = height - padding.top - padding.bottom;
+      if (yMax <= 0)
+        return height - padding.bottom;
+      if (logScale) {
+        if (y <= 0)
+          return height - padding.bottom;
+        const logMax = Math.log10(yMax);
+        if (logMax <= 0)
+          return height - padding.bottom;
+        const logY = Math.log10(y);
+        return height - padding.bottom - logY / logMax * plotHeight;
+      }
+      return height - padding.bottom - y / yMax * plotHeight;
+    };
+    const createPath = (data) => {
+      if (data.length === 0)
+        return "";
+      let p = `M ${toSvgX(0)} ${toSvgY(data[0])}`;
+      for (let i = 1; i < data.length; i++) {
+        if (isFinite(data[i])) {
+          p += ` L ${toSvgX(i)} ${toSvgY(data[i])}`;
+        }
+      }
+      return p;
+    };
+    const pathA = (0, import_react25.useMemo)(() => createPath(dataA), [dataA, logScale, yMax]);
+    const pathB = (0, import_react25.useMemo)(() => createPath(dataB), [dataB, logScale, yMax]);
+    const handleMouseMove = (e) => {
+      const svg = e.currentTarget;
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const ctm = svg.getScreenCTM();
+      if (ctm) {
+        const svgP = pt.matrixTransform(ctm.inverse());
+        const channel = svgToChannel(svgP.x);
+        if (channel >= 0 && channel < xMax) {
+          const countsA = dataA[channel];
+          const countsB = dataB[channel];
+          const energy = energyFromChannelA(channel);
+          setHoverInfo({ x: e.clientX, y: e.clientY, channel, energy, countsA, countsB });
+        }
+      }
+    };
+    const handleMouseLeave = () => {
+      setHoverInfo(null);
+    };
+    const yAxisLabel = normalization === "time" ? t("countsPerSecond") : t("counts");
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-between items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: t("plotTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "flex items-center space-x-4 text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("label", { className: "flex items-center space-x-2 cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "checkbox", checked: logScale, onChange: () => setLogScale(!logScale), className: "form-checkbox h-4 w-4 text-cyan-500" }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: t("plotLogScale") })
+      ] }) })
+    ] }), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "relative", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#9ca3af", fontSize: "14", children: t("channel") }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("line", { x1: padding.left, y1: padding.top, x2: padding.left, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("text", { x: padding.left - 40, y: height / 2, textAnchor: "middle", transform: `rotate(-90 ${padding.left - 40} ${height / 2})`, fill: "#9ca3af", fontSize: "14", children: yAxisLabel }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("path", { d: pathB, stroke: "#f97316", fill: "none", strokeWidth: "1.5", opacity: "0.8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("path", { d: pathA, stroke: "#38bdf8", fill: "none", strokeWidth: "1.5" })
+        ] }),
+        hoverInfo && (0, import_react_dom4.createPortal)(
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+            "div",
+            {
+              className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50",
+              style: { top: hoverInfo.y + 15, left: hoverInfo.x + 15 },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+                  t("channel"),
+                  ": ",
+                  hoverInfo.channel
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+                  t("energy_keV"),
+                  ": ",
+                  hoverInfo.energy.toFixed(1)
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "mt-1 pt-1 border-t border-gray-700", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "text-sky-400", children: [
+                    t("spectrumA"),
+                    ": ",
+                    hoverInfo.countsA?.toPrecision(3)
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "text-orange-400", children: [
+                    t("spectrumB"),
+                    ": ",
+                    hoverInfo.countsB?.toPrecision(3)
+                  ] })
+                ] })
+              ]
+            }
+          ),
+          document.body
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-center flex-wrap gap-x-6 gap-y-2 text-sm mt-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex items-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "w-4 h-4 rounded-full bg-sky-400 mr-2" }),
+          t("spectrumA")
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex items-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "w-4 h-4 rounded-full bg-orange-500 mr-2" }),
+          t("spectrumB")
+        ] })
+      ] })
+    ] });
+  };
+  var ComparisonPlot_default = ComparisonPlot;
+
+  // pages/SpectrumComparisonPage.tsx
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  var N42FileUploader3 = ({ id, onFileLoaded, label, file }) => {
+    const handleFile = async (f) => {
+      if (!f)
+        return;
+      try {
+        const parsed = await parseN42File(f, (key) => key);
+        onFileLoaded(f, parsed);
+      } catch (e) {
+        alert(`Error parsing file: ${e.message}`);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { htmlFor: id, className: "p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "file", id, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-xs text-gray-500", children: file ? file.name : "Select a file" })
+    ] }) });
+  };
+  var SpectrumComparisonPage = ({ t, onBack, analysisType }) => {
+    const [spectrumA, setSpectrumA] = (0, import_react26.useState)({ file: null, data: null });
+    const [spectrumB, setSpectrumB] = (0, import_react26.useState)({ file: null, data: null });
+    const [timeA, setTimeA] = (0, import_react26.useState)(60);
+    const [timeB, setTimeB] = (0, import_react26.useState)(60);
+    const [normalization, setNormalization] = (0, import_react26.useState)("none");
+    (0, import_react26.useEffect)(() => {
+      if (spectrumA.data?.spectra[0]?.liveTimeSeconds) {
+        setTimeA(spectrumA.data.spectra[0].liveTimeSeconds);
+      }
+    }, [spectrumA.data]);
+    (0, import_react26.useEffect)(() => {
+      if (spectrumB.data?.spectra[0]?.liveTimeSeconds) {
+        setTimeB(spectrumB.data.spectra[0].liveTimeSeconds);
+      }
+    }, [spectrumB.data]);
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumComparisonTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { children: t("backButton") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(Card_default, { title: t("inputs"), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumA") }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(N42FileUploader3, { id: "upload-a", onFileLoaded: (file, data) => setSpectrumA({ file, data }), label: t("loadSpectrum"), file: spectrumA.file }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
+              t("measurementTime"),
+              " (s)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "number", value: timeA, onChange: (e) => setTimeA(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumB") }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(N42FileUploader3, { id: "upload-b", onFileLoaded: (file, data) => setSpectrumB({ file, data }), label: t("loadSpectrum"), file: spectrumB.file }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
+              t("measurementTime"),
+              " (s)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "number", value: timeB, onChange: (e) => setTimeB(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "border-t border-gray-700 pt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("label", { className: "text-sm text-gray-300 mb-2 block", children: t("normalization") }),
+          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1 max-w-xs", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setNormalization("none"), className: `flex-1 p-1 text-sm rounded ${normalization === "none" ? "bg-cyan-600" : ""}`, children: t("normNone") }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setNormalization("time"), className: `flex-1 p-1 text-sm rounded ${normalization === "time" ? "bg-cyan-600" : ""}`, children: t("timeScale") })
+          ] })
+        ] })
+      ] }),
+      spectrumA.data && spectrumB.data && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+        ComparisonPlot_default,
+        {
+          spectrumA: spectrumA.data.spectra[0],
+          spectrumB: spectrumB.data.spectra[0],
+          timeA,
+          timeB,
+          normalization,
+          t
+        }
+      ) })
+    ] });
+  };
+  var SpectrumComparisonPage_default = SpectrumComparisonPage;
+
+  // pages/SpectroPage.tsx
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  var SpectroPage = ({ t, onOpenPeakIdentifier, analysisToLoad, clearAnalysisToLoad }) => {
+    const [mode, setMode] = (0, import_react27.useState)("selection");
+    const [analysisType, setAnalysisType] = (0, import_react27.useState)("gamma");
+    (0, import_react27.useEffect)(() => {
+      if (analysisToLoad) {
+        setMode(analysisToLoad.analysisType);
+      }
+    }, [analysisToLoad]);
+    const handleBack = () => {
+      setMode("selection");
+      if (analysisToLoad) {
+        clearAnalysisToLoad();
+      }
+    };
+    if (mode === "image") {
+      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "image" ? analysisToLoad.data : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SpectrumAnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
+    }
+    if (mode === "n42") {
+      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "n42" ? analysisToLoad.data : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(N42AnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
+    }
+    if (mode === "bkg") {
+      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(BackgroundSubtractionPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType });
+    }
+    if (mode === "compare") {
+      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SpectrumComparisonPage_default, { t, onBack: handleBack, analysisType });
+    }
+    const handleKeyDown = (e, newMode) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setMode(newMode);
+      }
+    };
+    const tools = [
+      {
+        key: "image",
+        title: "spectroMenuImageTitle",
+        desc: "spectroMenuImageDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) }),
+        disabled: false
+      },
+      {
+        key: "n42",
+        title: "spectroMenuN42Title",
+        desc: "spectroMenuN42Desc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: false
+      },
+      {
+        key: "spc",
+        title: "spectroMenuSPCTitle",
+        desc: "spectroMenuSPCDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: true
+      },
+      {
+        key: "chn",
+        title: "spectroMenuCHNTitle",
+        desc: "spectroMenuCHNDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
+        disabled: true
+      },
+      {
+        key: "bkg",
+        title: "spectroMenuBkgSubTitle",
+        desc: "spectroMenuBkgSubDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) }),
+        disabled: false
+      },
+      {
+        key: "compare",
+        title: "spectroMenuCompareTitle",
+        desc: "spectroMenuCompareDesc",
+        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18", opacity: "0.6" })
+        ] }),
+        disabled: false
+      }
+    ];
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "p-4 sm:p-6 md:p-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h2", { className: "text-2xl sm:text-3xl font-bold text-center text-gray-300 mb-6", children: t("spectroMenuTitle") }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "max-w-md mx-auto mb-8", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex items-center justify-center space-x-2 mb-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-md sm:text-lg font-semibold text-gray-300", children: t("analysisType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(InfoTooltip_default, { text: t("analysisTypeTooltip") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex bg-gray-800 border border-gray-700 rounded-lg p-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "gamma" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("gammaAnalysis") }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "alpha" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("alphaAnalysis") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+        "div",
+        {
+          onClick: () => !tool.disabled && setMode(tool.key),
+          onKeyDown: (e) => !tool.disabled && handleKeyDown(e, tool.key),
+          role: "button",
+          tabIndex: tool.disabled ? -1 : 0,
+          "aria-label": t(tool.title),
+          className: `bg-gray-800 rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 ${tool.disabled ? "opacity-50 cursor-not-allowed" : "hover:shadow-2xl hover:border-cyan-400 transform hover:-translate-y-2 cursor-pointer"}`,
+          children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "p-6 flex flex-col items-center justify-center text-center flex-grow", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: `p-4 rounded-full mb-4 bg-gray-700`, children: import_react27.default.cloneElement(tool.icon, { className: `h-16 w-16 ${tool.disabled ? "text-gray-500" : "text-cyan-400"}` }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h3", { className: "text-lg font-bold text-gray-100", children: t(tool.title) }),
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("p", { className: "text-sm text-gray-400 mt-2", children: t(tool.desc) })
+          ] })
+        },
+        tool.key
+      )) })
+    ] });
+  };
+  var SpectroPage_default = SpectroPage;
+
+  // pages/SourceManagementPage.tsx
+  var import_react32 = __toESM(require_react());
+
+  // components/source-management/AddSourceModal.tsx
+  var import_react28 = __toESM(require_react());
+
+  // services/sourceTypes.ts
+  var sourceTypes = [
+    {
+      key: "S1",
+      description: "S1 - \xC9talonnage d\xE9tecteurs gamma (50-150 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 5e4,
+      maxActivityBq: 15e4
+    },
+    {
+      key: "S2",
+      description: "S2 - \xC9talonnage d\xE9tecteurs gamma (10-30 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 1e4,
+      maxActivityBq: 3e4
+    },
+    {
+      key: "S3",
+      description: "S3 - \xC9talonnage contaminam\xE8tres beta (1-4 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 1e3,
+      maxActivityBq: 4e3
+    },
+    {
+      key: "S4",
+      description: "S4 - \xC9talonnage contaminam\xE8tres beta (2-8 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 2e3,
+      maxActivityBq: 8e3
+    },
+    {
+      key: "S5",
+      description: "S5 - \xC9talonnage C3 pi\xE9tons (3-6 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 3e3,
+      maxActivityBq: 6e3
+    },
+    {
+      key: "S6",
+      description: "S6 - Test alarmes portiques v\xE9hicules C3 (0.5-1.5 MBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 5e5,
+      maxActivityBq: 15e5
+    },
+    {
+      key: "S7",
+      description: "S7 - Test d\xE9clenchement contaminam\xE8tres (1-4 kBq)",
+      nuclide: "Cobalt-60 (Co-60)",
+      minActivityBq: 1e3,
+      maxActivityBq: 4e3
+    },
+    {
+      key: "S14",
+      description: "S14 - Contr\xF4le r\xE9jection beta contaminam\xE8tres alpha (2-8 kBq)",
+      nuclide: "Strontium-90 (Sr-90)",
+      minActivityBq: 2e3,
+      maxActivityBq: 8e3
+    },
+    {
+      key: "S15",
+      description: "S15 - \xC9talonnage d\xE9tecteurs scintillation (10-100 kBq)",
+      nuclide: "Barium-133 (Ba-133)",
+      minActivityBq: 1e4,
+      maxActivityBq: 1e5
+    },
+    {
+      key: "S16",
+      description: "S16 - \xC9talonnage d\xE9tecteurs scintillation (10-40 kBq)",
+      nuclide: "Cesium-137 (Cs-137)",
+      minActivityBq: 1e4,
+      maxActivityBq: 4e4
+    }
+  ];
+
+  // components/source-management/AddSourceModal.tsx
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  var formatDateForInput2 = (date) => {
+    if (typeof date === "string")
+      return date;
+    return date.toISOString().split("T")[0];
+  };
+  var AddSourceModal = ({ isOpen, onClose, onSave, t, sourceToEdit }) => {
+    const [name, setName] = (0, import_react28.useState)("");
+    const [location, setLocation] = (0, import_react28.useState)("");
+    const [casier, setCasier] = (0, import_react28.useState)("");
+    const [nuclide, setNuclide] = (0, import_react28.useState)("");
+    const [referenceActivity, setReferenceActivity] = (0, import_react28.useState)(1e4);
+    const [referenceActivityUncertainty, setReferenceActivityUncertainty] = (0, import_react28.useState)(5);
+    const [referenceDate, setReferenceDate] = (0, import_react28.useState)(formatDateForInput2(/* @__PURE__ */ new Date()));
+    const [certificateNumber, setCertificateNumber] = (0, import_react28.useState)("");
+    const [type, setType] = (0, import_react28.useState)("");
+    const allNuclides = Object.entries(radionuclides).flatMap(
+      ([type2, nuclides]) => nuclides.map((n) => ({
+        name: n.name,
+        type: type2.charAt(0).toUpperCase() + type2.slice(1)
+      }))
+    );
+    (0, import_react28.useEffect)(() => {
+      if (sourceToEdit) {
+        setName(sourceToEdit.name);
+        setLocation(sourceToEdit.location || "");
+        setCasier(sourceToEdit.casier || "");
+        setNuclide(sourceToEdit.nuclide);
+        setReferenceActivity(sourceToEdit.referenceActivity);
+        setReferenceActivityUncertainty(sourceToEdit.referenceActivityUncertainty);
+        setReferenceDate(formatDateForInput2(new Date(sourceToEdit.referenceDate)));
+        setCertificateNumber(sourceToEdit.certificateNumber || "");
+        setType(sourceToEdit.type || "");
+      } else {
+        setName("");
+        setLocation("");
+        setCasier("");
+        setNuclide(allNuclides.length > 0 ? allNuclides.find((n) => n.name.includes("Co-60"))?.name || allNuclides[0].name : "");
+        setReferenceActivity(1e4);
+        setReferenceActivityUncertainty(5);
+        setReferenceDate(formatDateForInput2(/* @__PURE__ */ new Date()));
+        setCertificateNumber("");
+        setType("");
+      }
+    }, [sourceToEdit, isOpen]);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (name && nuclide && referenceActivity > 0 && referenceDate) {
+        const sourceData = {
+          id: sourceToEdit ? sourceToEdit.id : crypto.randomUUID(),
+          name,
+          location,
+          casier,
+          nuclide,
+          referenceActivity,
+          referenceActivityUncertainty,
+          referenceDate,
+          certificateNumber,
+          type
+        };
+        onSave(sourceData);
+      }
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Card_default, { title: sourceToEdit ? t("editSourceTitle") : t("addSourceTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("casier") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: casier, onChange: (e) => setCasier(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("select", { value: nuclide, onChange: (e) => setNuclide(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type2, nuclidesOfType]) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("optgroup", { label: type2.charAt(0).toUpperCase() + type2.slice(1), children: nuclidesOfType.map((n) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: n.name, children: n.name }, n.name)) }, type2)) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("select", { value: type, onChange: (e) => setType(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: "", children: t("selectType") }),
+            sourceTypes.map((st) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: st.key, children: st.description }, st.key))
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "number", value: referenceActivity, onChange: (e) => setReferenceActivity(parseFloat(e.target.value)), min: "0", step: "any", required: true, className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivityUncertainty") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "number", value: referenceActivityUncertainty, onChange: (e) => setReferenceActivityUncertainty(parseFloat(e.target.value)), min: "0", step: "any", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceDate") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "date", value: referenceDate, onChange: (e) => setReferenceDate(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("certificateNumber") }),
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: certificateNumber, onChange: (e) => setCertificateNumber(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
+      ] })
+    ] }) }) }) });
+  };
+  var AddSourceModal_default = AddSourceModal;
+
+  // components/source-management/SourceTooltip.tsx
+  var import_react_dom5 = __toESM(require_react_dom());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var SourceTooltip = ({ source, position, t }) => {
+    const nuclideData = Object.entries(radionuclides).flatMap(
+      ([type, nuclides]) => nuclides.map((n) => ({ ...n, type }))
+    ).find((n) => n.name === source.nuclide);
+    const gammaData = nuclideLibrary.find((n) => n.name === source.nuclide);
+    const halfLifeYears = nuclideData ? nuclideData.halfLifeSeconds / (365.25 * 24 * 3600) : 0;
+    const formatHalfLife = (years) => {
+      if (years > 1e3)
+        return `${(years / 1e6).toPrecision(3)} M years`;
+      if (years > 0.1)
+        return `${years.toPrecision(3)} years`;
+      return `${(years * 365.25).toPrecision(3)} days`;
+    };
+    const mainGammaLines = gammaData?.lines.filter((line) => line.type === "gamma").sort((a, b) => b.intensity_percent - a.intensity_percent).slice(0, 4);
+    const tooltipStyle = {
+      position: "fixed",
+      top: position.y + 15,
+      left: position.x + 15,
+      transform: "translate(0, 0)",
+      pointerEvents: "none",
+      zIndex: 100
+    };
+    return (0, import_react_dom5.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+        "div",
+        {
+          style: tooltipStyle,
+          className: "w-72 bg-gray-900 text-white text-xs rounded py-2 px-3 border border-cyan-500 shadow-lg",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h4", { className: "font-bold text-sm text-cyan-400 mb-2 border-b border-gray-700 pb-1", children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "space-y-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
+                  t("halfLife"),
+                  ":"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: "font-mono", children: nuclideData ? formatHalfLife(halfLifeYears) : "N/A" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
+                  t("radiationType"),
+                  ":"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: "font-mono capitalize", children: nuclideData?.type || "N/A" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "pt-1 mt-1 border-t border-gray-700", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("h5", { className: "text-gray-400 mb-1", children: [
+                  t("mainEnergyLines"),
+                  ":"
+                ] }),
+                mainGammaLines && mainGammaLines.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("ul", { className: "space-y-0.5", children: mainGammaLines.map((line) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("li", { className: "flex justify-between font-mono", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { children: [
+                    line.energy_keV.toFixed(1),
+                    " keV"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
+                    "(",
+                    line.intensity_percent.toFixed(2),
+                    "%)"
+                  ] })
+                ] }, line.energy_keV)) }) : /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { className: "text-gray-500", children: t("noSignificantGamma") })
+              ] })
+            ] })
+          ]
+        }
+      ),
+      document.body
+    );
+  };
+  var SourceTooltip_default = SourceTooltip;
+
+  // components/source-management/ImportReviewModal.tsx
+  var import_react29 = __toESM(require_react());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var ImportReviewModal = ({
+    isOpen,
+    onClose,
+    sourcesFromFile,
+    existingSources,
+    onConfirm,
+    t
+  }) => {
+    const [decisions, setDecisions] = (0, import_react29.useState)(/* @__PURE__ */ new Map());
+    (0, import_react29.useEffect)(() => {
+      if (isOpen) {
+        const newDecisions = /* @__PURE__ */ new Map();
+        const existingIds2 = new Set(existingSources.map((s) => s.id));
+        sourcesFromFile.forEach((source) => {
+          if (existingIds2.has(source.id)) {
+            newDecisions.set(source.id, "skip");
+          } else {
+            newDecisions.set(source.id, "add");
+          }
+        });
+        setDecisions(newDecisions);
+      }
+    }, [isOpen, sourcesFromFile, existingSources]);
+    const handleDecisionChange = (id, decision) => {
+      setDecisions((prev) => new Map(prev).set(id, decision));
+    };
+    const handleSelectAllNew = (e) => {
+      const isChecked = e.target.checked;
+      const newDecisions = new Map(decisions);
+      const existingIds2 = new Set(existingSources.map((s) => s.id));
+      sourcesFromFile.forEach((source) => {
+        if (!existingIds2.has(source.id)) {
+          newDecisions.set(source.id, isChecked ? "add" : "skip");
+        }
+      });
+      setDecisions(newDecisions);
+    };
+    if (!isOpen)
+      return null;
+    const existingIds = new Set(existingSources.map((s) => s.id));
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Card_default, { title: t("importReviewTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-sm text-gray-400", children: t("importInstructions") }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "max-h-[60vh] overflow-y-auto border border-gray-700 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3 w-8", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("input", { type: "checkbox", title: t("selectAll"), onChange: handleSelectAllNew }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("importStatus") }),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("decision") })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("tbody", { className: "text-gray-200", children: sourcesFromFile.map((source) => {
+          const isConflict = existingIds.has(source.id);
+          const currentDecision = decisions.get(source.id);
+          return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { className: "border-t border-gray-700", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: !isConflict && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+              "input",
+              {
+                type: "checkbox",
+                checked: currentDecision === "add",
+                onChange: (e) => handleDecisionChange(source.id, e.target.checked ? "add" : "skip"),
+                className: "form-checkbox h-4 w-4 text-cyan-600 bg-gray-700 border-gray-600 rounded"
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3 font-semibold", children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${isConflict ? "bg-yellow-900 text-yellow-300" : "bg-green-900 text-green-300"}`, children: isConflict ? t("conflict") : t("new") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: isConflict && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-0.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDecisionChange(source.id, "skip"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "skip" ? "bg-gray-500 text-white" : "hover:bg-gray-600"}`, children: t("skip") }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDecisionChange(source.id, "overwrite"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "overwrite" ? "bg-red-600 text-white" : "hover:bg-gray-600"}`, children: t("overwrite") })
+            ] }) })
+          ] }, source.id);
+        }) })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { type: "button", onClick: () => onConfirm(decisions), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmImport") })
+      ] })
+    ] }) }) }) });
+  };
+  var ImportReviewModal_default = ImportReviewModal;
+
+  // components/source-management/CsvImportModal.tsx
+  var import_react30 = __toESM(require_react());
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var CsvImportModal = ({ isOpen, onClose, onImport, t }) => {
+    const [file, setFile] = (0, import_react30.useState)(null);
+    const [error, setError] = (0, import_react30.useState)(null);
+    const handleFileChange = (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        setFile(e.target.files[0]);
+        setError(null);
+      }
+    };
+    const handleDrop = (0, import_react30.useCallback)((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        setFile(e.dataTransfer.files[0]);
+        setError(null);
+        e.dataTransfer.clearData();
+      }
+    }, []);
+    const processImport = () => {
+      if (!file) {
+        setError("Please select a file.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const csvText = event.target?.result;
+          const lines = csvText.split(/\r?\n/).filter((line) => line.trim() !== "");
+          if (lines.length < 2)
+            throw new Error("CSV must have a header and at least one data row.");
+          const header = lines[0].split(",").map((h) => h.trim());
+          const requiredHeaders = ["id", "name", "nuclide", "referenceActivity", "referenceDate", "referenceActivityUncertainty"];
+          if (!requiredHeaders.every((h) => header.includes(h))) {
+            throw new Error(`CSV header is missing required columns. Required: ${requiredHeaders.join(", ")}`);
+          }
+          const sources = lines.slice(1).map((line, index) => {
+            const values = line.split(",");
+            const sourceObj = {};
+            header.forEach((h, i) => sourceObj[h] = values[i]?.trim());
+            return {
+              id: sourceObj.id,
+              name: sourceObj.name,
+              nuclide: sourceObj.nuclide,
+              referenceActivity: parseFloat(sourceObj.referenceActivity),
+              referenceDate: sourceObj.referenceDate,
+              referenceActivityUncertainty: parseFloat(sourceObj.referenceActivityUncertainty),
+              location: sourceObj.location || "",
+              casier: sourceObj.casier || "",
+              certificateNumber: sourceObj.certificateNumber || "",
+              type: sourceObj.type || ""
+            };
+          });
+          onImport(sources);
+        } catch (err) {
+          setError(err.message || "Failed to parse CSV file.");
+        }
+      };
+      reader.onerror = () => setError("Failed to read file.");
+      reader.readAsText(file);
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Card_default, { title: t("importCsvTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-sm text-gray-400", children: t("importCsvIntro") }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
+        "div",
+        {
+          onDragOver: (e) => e.preventDefault(),
+          onDrop: handleDrop,
+          className: "p-6 border-2 border-dashed rounded-lg text-center border-gray-600 hover:border-cyan-500",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("input", { type: "file", id: "csv-upload", className: "hidden", accept: ".csv", onChange: handleFileChange }),
+            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("label", { htmlFor: "csv-upload", className: "cursor-pointer text-cyan-400 font-semibold", children: file ? file.name : t("selectCsvFile") })
+          ]
+        }
+      ),
+      error && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-red-400 text-sm text-center", children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: processImport, disabled: !file, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("confirmImport") })
+      ] })
+    ] }) }) }) });
+  };
+  var CsvImportModal_default = CsvImportModal;
+
+  // components/source-management/SourceTypesMemoModal.tsx
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var SourceTypesMemoModal = ({ isOpen, onClose, t }) => {
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("description") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { className: "border-t border-gray-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3", children: type.description }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
+          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
+        ] }, type.key)) })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
+    ] }) }) });
+  };
+  var SourceTypesMemoModal_default = SourceTypesMemoModal;
+
+  // components/ExportModal.tsx
+  var import_react31 = __toESM(require_react());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var ExportModal = ({ isOpen, onClose, jsonData, t }) => {
+    const [copied, setCopied] = (0, import_react31.useState)(false);
+    const canShare = typeof navigator.share === "function";
+    (0, import_react31.useEffect)(() => {
+      if (!isOpen) {
+        setCopied(false);
+      }
+    }, [isOpen]);
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(jsonData);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2e3);
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+        alert("Failed to copy text.");
+      }
+    };
+    const handleDownload = () => {
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sources-backup.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+    const handleShare = async () => {
+      if (!canShare)
+        return;
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const file = new File([blob], "sources-backup.json", { type: "application/json" });
+      try {
+        await navigator.share({
+          files: [file],
+          title: t("sourceInventory")
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    };
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: t("exportModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-sm text-gray-300", children: t("exportModalIntro") }),
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        "textarea",
+        {
+          readOnly: true,
+          value: jsonData,
+          className: "w-full h-48 bg-gray-900/50 p-2 rounded-md font-mono text-xs text-gray-300 border border-gray-600"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex flex-wrap justify-end gap-3 pt-4 border-t border-gray-700", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleCopy, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors", children: copied ? t("copied") : t("copyJson") }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleDownload, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("downloadFile") }),
+        canShare && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleShare, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg", children: t("shareFile") })
+      ] })
+    ] }) }) }) });
+  };
+  var ExportModal_default = ExportModal;
+
+  // pages/SourceManagementPage.tsx
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var SourceManagementPage = ({ t }) => {
+    const [sources, setSources] = (0, import_react32.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react32.useState)(true);
+    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react32.useState)(false);
+    const [sourceToEdit, setSourceToEdit] = (0, import_react32.useState)(null);
+    const [searchTerm, setSearchTerm] = (0, import_react32.useState)("");
+    const [hoveredSource, setHoveredSource] = (0, import_react32.useState)(null);
+    const [sortConfig, setSortConfig] = (0, import_react32.useState)({ key: "name", direction: "ascending" });
+    const [isMemoOpen, setIsMemoOpen] = (0, import_react32.useState)(false);
+    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react32.useState)(false);
+    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react32.useState)(false);
+    const [sourcesToImport, setSourcesToImport] = (0, import_react32.useState)([]);
+    const [isExportModalOpen, setIsExportModalOpen] = (0, import_react32.useState)(false);
+    const [jsonDataToExport, setJsonDataToExport] = (0, import_react32.useState)("");
+    const fetchSources = (0, import_react32.useCallback)(async () => {
+      setIsLoading(true);
+      try {
+        const allSources = await db.getAllSources();
+        setSources(allSources);
+      } catch (error) {
+        console.error("Failed to fetch sources:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, []);
+    (0, import_react32.useEffect)(() => {
+      fetchSources();
+    }, [fetchSources]);
+    const handleSaveSource = async (source) => {
+      try {
+        if (sourceToEdit) {
+          await db.updateSource(source);
+        } else {
+          await db.addSource(source);
+        }
+        fetchSources();
+      } catch (error) {
+        console.error("Failed to save source:", error);
+      } finally {
+        setIsAddModalOpen(false);
+        setSourceToEdit(null);
+      }
+    };
+    const handleDeleteSource = async (id) => {
+      if (window.confirm(t("confirmDeleteSource"))) {
+        try {
+          await db.deleteSource(id);
+          fetchSources();
+        } catch (error) {
+          console.error("Failed to delete source:", error);
+        }
+      }
+    };
+    const handleEditSource = (source) => {
+      setSourceToEdit(source);
+      setIsAddModalOpen(true);
+    };
+    const handleExport = () => {
+      if (sources.length === 0)
+        return;
+      const headers = [
+        "id",
+        "name",
+        "location",
+        "casier",
+        "nuclide",
+        "referenceActivity",
+        "referenceActivityUncertainty",
+        "referenceDate",
+        "certificateNumber",
+        "type"
+      ];
+      const headerString = headers.join(",");
+      const csvRows = sources.map((source) => {
+        return headers.map((header) => {
+          const value = source[header];
+          let formattedValue = value === void 0 || value === null ? "" : String(value);
+          if (formattedValue.includes(",")) {
+            formattedValue = `"${formattedValue}"`;
+          }
+          return formattedValue;
+        }).join(",");
+      });
+      const csv = [headerString, ...csvRows].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "iso-assistant-sources.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+    const handleImportFromFile = (importedSources) => {
+      setSourcesToImport(importedSources);
+      setIsCsvImportOpen(false);
+      setIsImportReviewOpen(true);
+    };
+    const handleConfirmImport = async (decisions) => {
+      setIsLoading(true);
+      try {
+        for (const [id, decision] of decisions.entries()) {
+          const source = sourcesToImport.find((s) => s.id === id);
+          if (!source)
+            continue;
+          if (decision === "add") {
+            const { id: id2, ...sourceData } = source;
+            await db.addSource(sourceData);
+          } else if (decision === "overwrite") {
+            await db.updateSource(source);
+          }
+        }
+        await fetchSources();
+      } catch (error) {
+        console.error("Failed to process import:", error);
+      } finally {
+        setIsImportReviewOpen(false);
+        setSourcesToImport([]);
+        setIsLoading(false);
+      }
+    };
+    const handleOfflineExport = async () => {
+      try {
+        const allSources = await db.getAllSources();
+        const jsonString = JSON.stringify(allSources, null, 2);
+        setJsonDataToExport(jsonString);
+        setIsExportModalOpen(true);
+      } catch (error) {
+        console.error("Failed to get sources for export:", error);
+        alert("Error preparing data for export.");
+      }
+    };
+    const calculateCurrentActivity = (0, import_react32.useCallback)((source) => {
+      const nuclideData = Object.values(radionuclides).flat().find((n) => n.name === source.nuclide);
+      if (!nuclideData)
+        return source.referenceActivity;
+      const refTime = new Date(source.referenceDate).getTime();
+      const nowTime = (/* @__PURE__ */ new Date()).getTime();
+      const elapsedTimeSeconds = (nowTime - refTime) / 1e3;
+      const lambda = Math.log(2) / nuclideData.halfLifeSeconds;
+      return source.referenceActivity * Math.exp(-lambda * elapsedTimeSeconds);
+    }, []);
+    const filteredSources = (0, import_react32.useMemo)(() => {
+      return sources.filter(
+        (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase()) || source.casier?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }, [sources, searchTerm]);
+    const sortedSources = (0, import_react32.useMemo)(() => {
+      let sortableItems = [...filteredSources];
+      if (sortConfig.key) {
+        sortableItems.sort((a, b) => {
+          let aValue;
+          let bValue;
+          if (sortConfig.key === "currentActivity") {
+            aValue = calculateCurrentActivity(a);
+            bValue = calculateCurrentActivity(b);
+          } else {
+            aValue = a[sortConfig.key];
+            bValue = b[sortConfig.key];
+          }
+          if (typeof aValue === "number" && typeof bValue === "number") {
+            return sortConfig.direction === "ascending" ? aValue - bValue : bValue - aValue;
+          }
+          if (typeof aValue === "string" && typeof bValue === "string") {
+            return sortConfig.direction === "ascending" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+          }
+          if (aValue === void 0)
+            return 1;
+          if (bValue === void 0)
+            return -1;
+          return 0;
+        });
+      }
+      return sortableItems;
+    }, [filteredSources, sortConfig, calculateCurrentActivity]);
+    const requestSort = (key) => {
+      let direction = "ascending";
+      if (sortConfig.key === key && sortConfig.direction === "ascending") {
+        direction = "descending";
+      }
+      setSortConfig({ key, direction });
+    };
+    const checkConformity = (source, currentActivity) => {
+      if (!source.type)
+        return "unknown";
+      const typeData = sourceTypes.find((st) => st.key === source.type);
+      if (!typeData)
+        return "unknown";
+      if (currentActivity >= typeData.minActivityBq && currentActivity <= typeData.maxActivityBq) {
+        return "ok";
+      }
+      if (currentActivity < typeData.minActivityBq) {
+        return "warning";
+      }
+      return "error";
+    };
+    const conformityColors = {
+      ok: "bg-green-500",
+      warning: "bg-yellow-500",
+      error: "bg-red-500",
+      unknown: "bg-gray-500"
+    };
+    const handleMouseEnter = (e, source) => {
+      setHoveredSource({ source, position: { x: e.clientX, y: e.clientY } });
+    };
+    const handleMouseLeave = () => {
+      setHoveredSource(null);
+    };
+    const SortableHeader = ({ sortKey, label }) => {
+      const isSorted = sortConfig.key === sortKey;
+      return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("th", { className: "p-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1 no-print", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: label }),
+          isSorted && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden print:inline", children: label })
+      ] });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "print-section", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex items-center gap-2 no-print", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+            "input",
+            {
+              type: "text",
+              placeholder: t("searchSource"),
+              value: searchTerm,
+              onChange: (e) => setSearchTerm(e.target.value),
+              className: "bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: handleOfflineExport, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center space-x-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: t("exportBackup") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => window.print(), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => {
+            setSourceToEdit(null);
+            setIsAddModalOpen(true);
+          }, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm", children: t("addSource") })
+        ] })
+      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("p", { children: [
+        t("loading"),
+        "..."
+      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("table", { className: "w-full text-sm text-left", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("th", { className: "p-3 text-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right no-print", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: t("currentActivity") }),
+              sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden print:inline float-right", children: t("currentActivity") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
+          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3 text-center no-print", children: t("actions") })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tbody", { children: sortedSources.map((source) => {
+          const currentActivity = calculateCurrentActivity(source);
+          const conformity = checkConformity(source, currentActivity);
+          return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.location }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.casier }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.nuclide }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.type }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
+                /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
+            ] }) })
+          ] }, source.id);
+        }) })
+      ] }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        AddSourceModal_default,
+        {
+          isOpen: isAddModalOpen,
+          onClose: () => {
+            setIsAddModalOpen(false);
+            setSourceToEdit(null);
+          },
+          onSave: handleSaveSource,
+          t,
+          sourceToEdit
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        CsvImportModal_default,
+        {
+          isOpen: isCsvImportOpen,
+          onClose: () => setIsCsvImportOpen(false),
+          onImport: handleImportFromFile,
+          t
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        ImportReviewModal_default,
+        {
+          isOpen: isImportReviewOpen,
+          onClose: () => setIsImportReviewOpen(false),
+          sourcesFromFile: sourcesToImport,
+          existingSources: sources,
+          onConfirm: handleConfirmImport,
+          t
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        SourceTypesMemoModal_default,
+        {
+          isOpen: isMemoOpen,
+          onClose: () => setIsMemoOpen(false),
+          t
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        ExportModal_default,
+        {
+          isOpen: isExportModalOpen,
+          onClose: () => setIsExportModalOpen(false),
+          jsonData: jsonDataToExport,
+          t
+        }
+      ),
+      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
+    ] });
+  };
+  var SourceManagementPage_default = SourceManagementPage;
+
+  // pages/AnalysisHistoryPage.tsx
+  var import_react33 = __toESM(require_react());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var AnalysisHistoryPage = ({ t, onLoadAnalysis }) => {
+    const [analyses, setAnalyses] = (0, import_react33.useState)([]);
+    const [sources, setSources] = (0, import_react33.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react33.useState)(true);
+    const fetchAllData = async () => {
+      setIsLoading(true);
+      try {
+        const [fetchedAnalyses, fetchedSources] = await Promise.all([
+          db.getAllAnalyses(),
+          db.getAllSources()
+        ]);
+        setAnalyses(fetchedAnalyses);
+        setSources(fetchedSources);
+      } catch (error) {
+        console.error("Failed to load history:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    (0, import_react33.useEffect)(() => {
+      fetchAllData();
+    }, []);
+    const sourceMap = (0, import_react33.useMemo)(() => {
+      return new Map(sources.map((s) => [s.id, s.name]));
+    }, [sources]);
+    const handleDelete = async (id) => {
+      if (window.confirm(t("confirmDeleteAnalysis"))) {
+        await db.deleteAnalysis(id);
+        fetchAllData();
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("p", { children: [
+      t("loading"),
+      "..."
+    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("table", { className: "w-full text-sm text-left", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisDate") }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("linkedSource") }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3 text-center", children: t("actions") })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("load") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
+          ] })
+        ] }) })
+      ] }, record.id)) })
+    ] }) }) });
+  };
+  var AnalysisHistoryPage_default = AnalysisHistoryPage;
+
+  // pages/AdminPage.tsx
+  var import_react34 = __toESM(require_react());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var projectStructure = [
+    {
+      name: "components",
+      type: "folder",
+      descKey: "folderDesc_components",
+      children: [
+        { name: "n42-analyzer", type: "folder", descKey: "folderDesc_n42_analyzer", children: [
+          { name: "AddPeakModal.tsx", type: "file", descKey: "fileDesc_AddPeakModal" },
+          { name: "ComparisonPlot.tsx", type: "file", descKey: "fileDesc_ComparisonPlot" },
+          { name: "DeconvolutionModal.tsx", type: "file", descKey: "fileDesc_DeconvolutionModal" },
+          { name: "EfficiencyCalibrationModal.tsx", type: "file", descKey: "fileDesc_EfficiencyCalibrationModal" },
+          { name: "SpectrumPlot.tsx", type: "file", descKey: "fileDesc_SpectrumPlot" }
+        ] },
+        { name: "source-management", type: "folder", descKey: "folderDesc_source_management", children: [
+          { name: "AddSourceModal.tsx", type: "file", descKey: "fileDesc_AddSourceModal" },
+          { name: "CsvImportModal.tsx", type: "file", descKey: "fileDesc_CsvImportModal" },
+          { name: "ImportReviewModal.tsx", type: "file", descKey: "fileDesc_ImportReviewModal" },
+          { name: "SourceTooltip.tsx", type: "file", descKey: "fileDesc_SourceTooltip" },
+          { name: "SourceTypesMemoModal.tsx", type: "file", descKey: "fileDesc_SourceTypesMemoModal" }
+        ] },
+        { name: "spectrum-analyzer", type: "folder", descKey: "folderDesc_spectrum_analyzer", children: [
+          { name: "AnalysisResults.tsx", type: "file", descKey: "fileDesc_AnalysisResults" },
+          { name: "CalibrationPointModal.tsx", type: "file", descKey: "fileDesc_CalibrationPointModal" },
+          { name: "CalibrationSidebar.tsx", type: "file", descKey: "fileDesc_CalibrationSidebar" },
+          { name: "CameraCapture.tsx", type: "file", descKey: "fileDesc_CameraCapture" },
+          { name: "ImageUploader.tsx", type: "file", descKey: "fileDesc_ImageUploader" }
+        ] },
+        { name: "Card.tsx", type: "file", descKey: "fileDesc_Card" },
+        { name: "ChartModal.tsx", type: "file", descKey: "fileDesc_ChartModal" },
+        { name: "ChartPanel.tsx", type: "file", descKey: "fileDesc_ChartPanel" },
+        { name: "CollapsibleSection.tsx", type: "file", descKey: "fileDesc_CollapsibleSection" },
+        { name: "DecayCalculatorModal.tsx", type: "file", descKey: "fileDesc_DecayCalculatorModal" },
+        { name: "ExportModal.tsx", type: "file", descKey: "fileDesc_ExportModal" },
+        { name: "GeminiBackupModal.tsx", type: "file", descKey: "fileDesc_GeminiBackupModal" },
+        { name: "GeminiHelper.tsx", type: "file", descKey: "fileDesc_GeminiHelper" },
+        { name: "InfoTooltip.tsx", type: "file", descKey: "fileDesc_InfoTooltip" },
+        { name: "InputPanel.tsx", type: "file", descKey: "fileDesc_InputPanel" },
+        { name: "LanguageSelector.tsx", type: "file", descKey: "fileDesc_LanguageSelector" },
+        { name: "ModeSelector.tsx", type: "file", descKey: "fileDesc_ModeSelector" },
+        { name: "MonteCarloStatsModal.tsx", type: "file", descKey: "fileDesc_MonteCarloStatsModal" },
+        { name: "PeakIdentifierModal.tsx", type: "file", descKey: "fileDesc_PeakIdentifierModal" },
+        { name: "PeakPositionAdjusterModal.tsx", type: "file", descKey: "fileDesc_PeakPositionAdjusterModal" },
+        { name: "ProAccessModal.tsx", type: "file", descKey: "fileDesc_ProAccessModal" },
+        { name: "ReportGeneratorModal.tsx", type: "file", descKey: "fileDesc_ReportGeneratorModal" },
+        { name: "ResultsPanel.tsx", type: "file", descKey: "fileDesc_ResultsPanel" },
+        { name: "SaveAnalysisModal.tsx", type: "file", descKey: "fileDesc_SaveAnalysisModal" },
+        { name: "ThemeSelector.tsx", type: "file", descKey: "fileDesc_ThemeSelector" },
+        { name: "UnitConverterModal.tsx", type: "file", descKey: "fileDesc_UnitConverterModal" },
+        { name: "UpdateNotification.tsx", type: "file", descKey: "fileDesc_UpdateNotification" },
+        { name: "UserGuideModal.tsx", type: "file", descKey: "fileDesc_UserGuideModal" },
+        { name: "WelcomeModal.tsx", type: "file", descKey: "fileDesc_WelcomeModal" }
+      ]
+    },
+    {
+      name: "pages",
+      type: "folder",
+      descKey: "folderDesc_pages",
+      children: [
+        { name: "AdminPage.tsx", type: "file", descKey: "fileDesc_AdminPage" },
+        { name: "AnalysisHistoryPage.tsx", type: "file", descKey: "fileDesc_AnalysisHistoryPage" },
+        { name: "BackgroundSubtractionPage.tsx", type: "file", descKey: "fileDesc_BackgroundSubtractionPage" },
+        { name: "N42AnalyzerPage.tsx", type: "file", descKey: "fileDesc_N42AnalyzerPage" },
+        { name: "SourceManagementPage.tsx", type: "file", descKey: "fileDesc_SourceManagementPage" },
+        { name: "SpectroPage.tsx", type: "file", descKey: "fileDesc_SpectroPage" },
+        { name: "SpectrumAnalyzerPage.tsx", type: "file", descKey: "fileDesc_SpectrumAnalyzerPage" },
+        { name: "SpectrumComparisonPage.tsx", type: "file", descKey: "fileDesc_SpectrumComparisonPage" }
+      ]
+    },
+    {
+      name: "services",
+      type: "folder",
+      descKey: "folderDesc_services",
+      children: [
+        { name: "analysisHelpers.ts", type: "file", descKey: "fileDesc_analysisHelpers" },
+        { name: "dbService.ts", type: "file", descKey: "fileDesc_dbService" },
+        { name: "gammaLibrary.ts", type: "file", descKey: "fileDesc_gammaLibrary" },
+        { name: "geminiService.ts", type: "file", descKey: "fileDesc_geminiService" },
+        { name: "isoCalculations.ts", type: "file", descKey: "fileDesc_isoCalculations" },
+        { name: "monteCarloService.ts", type: "file", descKey: "fileDesc_monteCarloService" },
+        { name: "n42ParserService.ts", type: "file", descKey: "fileDesc_n42ParserService" },
+        { name: "peakIdentifierService.ts", type: "file", descKey: "fileDesc_peakIdentifierService" },
+        { name: "radionuclides.ts", type: "file", descKey: "fileDesc_radionuclides" },
+        { name: "sourceTypes.ts", type: "file", descKey: "fileDesc_sourceTypes" },
+        { name: "spectrumAnalyzerService.ts", type: "file", descKey: "fileDesc_spectrumAnalyzerService" }
+      ]
+    },
+    {
+      name: "electron",
+      type: "folder",
+      descKey: "folderDesc_electron",
+      children: [
+        { name: "main.js", type: "file", descKey: "fileDesc_electron_main" },
+        { name: "preload.js", type: "file", descKey: "fileDesc_electron_preload" }
+      ]
+    },
+    { name: "App.tsx", type: "file", descKey: "fileDesc_App" },
+    { name: "index.tsx", type: "file", descKey: "fileDesc_index_tsx" },
+    { name: "index.html", type: "file", descKey: "fileDesc_index_html" },
+    { name: "index.css", type: "file", descKey: "fileDesc_index_css" },
+    { name: "types.ts", type: "file", descKey: "fileDesc_types" },
+    { name: "translations.ts", type: "file", descKey: "fileDesc_translations" },
+    { name: "manifest.json", type: "file", descKey: "fileDesc_manifest" },
+    { name: "metadata.json", type: "file", descKey: "fileDesc_metadata" },
+    { name: "package.json", type: "file", descKey: "fileDesc_package" },
+    { name: "README.md", type: "file", descKey: "fileDesc_readme" },
+    { name: "service-worker.js", type: "file", descKey: "fileDesc_sw" },
+    { name: "tailwind.config.js", type: "file", descKey: "fileDesc_tailwind" }
+  ];
+  var FileTree = ({ nodes, t, onInfoClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("ul", { className: "text-sm", children: nodes.map((node) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("li", { className: "ml-4 my-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: node.type === "folder" ? "\u{1F4C1}" : "\u{1F4C4}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono", children: node.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => onInfoClick(node), className: "text-cyan-400 hover:text-cyan-300 text-xs", children: "(i)" })
+      ] }),
+      node.children && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: node.children, t, onInfoClick })
+    ] }, node.name)) });
+  };
+  var AdminPage = ({ t, onBack, inputs, results, isProUser, setProUser }) => {
+    const [infoFile, setInfoFile] = (0, import_react34.useState)(null);
+    const handleClearLocalStorage = () => {
+      if (window.confirm("This will reset all application settings, including PRO mode. Are you sure?")) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    };
+    const handleClearDB = async () => {
+      if (window.confirm("This will DELETE all saved sources and analyses. This action is irreversible. Are you sure?")) {
+        try {
+          await db.clearAnalyses();
+          await db.clearSources();
+          alert("Database has been cleared.");
+        } catch (error) {
+          console.error("Failed to clear IndexedDB:", error);
+          alert("Failed to clear database.");
+        }
+      }
+    };
+    const handleGodMode = () => {
+      if (!isProUser) {
+        localStorage.setItem("isProUser", "true");
+        setProUser(true);
+      } else {
+        localStorage.removeItem("isProUser");
+        setProUser(false);
+      }
+    };
+    const inputVars = [
+      "grossCount",
+      "grossCountUnit",
+      "grossTime",
+      "backgroundCount",
+      "backgroundCountUnit",
+      "backgroundTime",
+      "roiGrossCount",
+      "roiChannels",
+      "backgroundTotalCount",
+      "backgroundChannels",
+      "probeEfficiency",
+      "probeArea",
+      "estimatedBackgroundRate",
+      "targetValue",
+      "targetUnit",
+      "conveyorSpeed",
+      "conveyorSpeedUnit",
+      "chamberLength",
+      "chamberWidth",
+      "chamberHeight",
+      "detectors",
+      "chambreLingeTime",
+      "chambreLingeTarget",
+      "chambreLingeTargetUnit",
+      "calibrationFactor",
+      "calibrationFactorUnit",
+      "calibrationFactorUncertainty",
+      "k1alpha",
+      "k1beta",
+      "correlationCoefficient",
+      "monteCarloMode",
+      "useBayesianMode",
+      "numSimulations"
+    ];
+    const resultVars = [
+      "calculationMethod",
+      "currentMode",
+      "primaryResult",
+      "primaryUncertainty",
+      "decisionThreshold",
+      "detectionLimit",
+      "isEffectPresent",
+      "bestEstimate",
+      "bestEstimateUncertainty",
+      "confidenceIntervalLower",
+      "confidenceIntervalUpper",
+      "k1alpha",
+      "k1beta",
+      "alphaProbability",
+      "betaProbability",
+      "meanTimeBetweenFalseAlarms",
+      "uncertaintyAtZero",
+      "uncertaintyAtDetectionLimit",
+      "varianceComponents",
+      "sensitivityCoefficients",
+      "probabilityEffectPresent",
+      "histogramData",
+      "numSimulations",
+      "monteCarloStats"
+    ];
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("adminPageTitle") }),
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: t("backButton") })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-gray-400 mb-6", children: t("adminWelcome") }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 items-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("projectExplorer"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-500 mb-4", children: t("projectExplorerDesc") }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "max-h-[60vh] overflow-y-auto pr-2", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: projectStructure, t, onInfoClick: setInfoFile }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-600 mt-4", children: t("adminStaticStructureWarning") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminVariablesTitle"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: inputVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+            ] }, v)) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: resultVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
+              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
+            ] }, v)) }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-1 sticky top-6 space-y-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminLiveStateTitle"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(inputs, null, 2) }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(results, null, 2) }) }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Card_default, { title: t("fileInfo"), children: infoFile ? /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "p-3 min-h-[120px]", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h4", { className: "font-bold text-cyan-400 mb-2", children: infoFile.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-300", children: t(infoFile.descKey) || "No description available." })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center", children: t("adminInfoPlaceholder") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("godMode"), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-400 mb-4", children: t("godModeDesc") }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleGodMode, className: `w-full py-2 px-4 rounded-lg font-bold ${isProUser ? "bg-yellow-600 hover:bg-yellow-700" : "bg-cyan-600 hover:bg-cyan-700"}`, children: isProUser ? t("disableGodMode") : t("enableGodMode") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Card_default, { title: t("dataManagement"), children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearLocalStorage, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearLocalStorage") }),
+            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearDB, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearIndexedDB") })
+          ] }) })
+        ] })
+      ] })
+    ] });
+  };
+  var AdminPage_default = AdminPage;
+
+  // components/UpdateNotification.tsx
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var UpdateNotification = ({ isOpen, onUpdate, t }) => {
+    if (!isOpen)
+      return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        "button",
+        {
+          onClick: onUpdate,
+          className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-4 rounded-md transition duration-300 text-sm",
+          children: t("refresh")
+        }
+      )
+    ] });
+  };
+  var UpdateNotification_default = UpdateNotification;
+
+  // components/ReportGeneratorModal.tsx
+  var import_react35 = __toESM(require_react());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var generateGaussianPoints3 = (mean, stdDev, range) => {
+    if (stdDev <= 0)
+      return [];
+    const points = [];
+    const steps = 100;
+    const stepSize = (range.max - range.min) / steps;
+    for (let i = 0; i <= steps; i++) {
+      const x = range.min + i * stepSize;
+      const y = 1 / (stdDev * Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2));
+      points.push({ x, y });
+    }
+    return points;
+  };
+  var formatNumber3 = (num) => {
+    if (num === null || num === void 0)
+      return "N/A";
+    if (typeof num === "string")
+      return num;
+    if (Math.abs(num) < 1e-3 && num !== 0)
+      return num.toExponential(3);
+    const fixed = num.toFixed(3);
+    return fixed.endsWith(".000") ? parseInt(fixed).toString() : fixed;
+  };
+  var ReportChart = ({ results, t }) => {
+    if (typeof results.detectionLimit !== "number" || typeof results.decisionThreshold !== "number")
+      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { children: t("chartNotAvailable") });
+    const { primaryResult, primaryUncertainty, decisionThreshold, detectionLimit, uncertaintyAtZero, uncertaintyAtDetectionLimit } = results;
+    const width = 800;
+    const height = 450;
+    const padding = { top: 30, right: 30, bottom: 50, left: 50 };
+    const xMin = Math.min(0, decisionThreshold - 4 * uncertaintyAtZero, primaryResult - 4 * primaryUncertainty);
+    const xMax = Math.max(detectionLimit + 4 * uncertaintyAtDetectionLimit, primaryResult + 4 * primaryUncertainty, decisionThreshold + 4 * uncertaintyAtZero);
+    const h0Points = generateGaussianPoints3(0, uncertaintyAtZero, { min: xMin, max: xMax });
+    const h1Points = generateGaussianPoints3(detectionLimit, uncertaintyAtDetectionLimit, { min: xMin, max: xMax });
+    const yPoints = generateGaussianPoints3(primaryResult, primaryUncertainty, { min: xMin, max: xMax });
+    const yValues = [...h0Points.map((p) => p.y), ...h1Points.map((p) => p.y), ...yPoints.map((p) => p.y)];
+    const yMax = yValues.length > 0 ? Math.max(...yValues) * 1.1 : 1;
+    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
+    const toSvgY = (y) => height - padding.bottom - y / yMax * (height - padding.top - padding.bottom);
+    const createPath = (points) => {
+      if (!points.length)
+        return "";
+      let path = `M ${toSvgX(points[0].x)} ${toSvgY(points[0].y)}`;
+      points.forEach((p) => path += ` L ${toSvgX(p.x)} ${toSvgY(p.y)}`);
+      return path;
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "bg-white p-2 border border-gray-300 chart-container", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "#333" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#000", fontSize: "14", children: t("activity") }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(h0Points), stroke: "#007bff", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(h1Points), stroke: "#6f42c1", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(yPoints), stroke: "#28a745", fill: "none", strokeWidth: "2.5" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: toSvgX(decisionThreshold), y1: padding.top, x2: toSvgX(decisionThreshold), y2: height - padding.bottom, stroke: "#dc3545", strokeWidth: "2", strokeDasharray: "5 3" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: toSvgX(decisionThreshold), y: padding.top - 8, textAnchor: "middle", fill: "#dc3545", fontSize: "12", fontWeight: "bold", children: "y*" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: toSvgX(detectionLimit), y1: padding.top, x2: toSvgX(detectionLimit), y2: height - padding.bottom, stroke: "#ffc107", strokeWidth: "2", strokeDasharray: "5 3" }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: toSvgX(detectionLimit), y: padding.top - 8, textAnchor: "middle", fill: "#ffc107", fontSize: "12", fontWeight: "bold", children: "y#" })
+    ] }) });
+  };
+  var ReportGeneratorModal = ({ isOpen, onClose, inputs, results, t }) => {
+    const [operatorName, setOperatorName] = (0, import_react35.useState)("");
+    const [sampleId, setSampleId] = (0, import_react35.useState)("");
+    const [comments, setComments] = (0, import_react35.useState)("");
+    const handlePrint = () => {
+      const body = document.body;
+      body.classList.add("print-report-active");
+      const handleAfterPrint = () => {
+        body.classList.remove("print-report-active");
+        window.removeEventListener("afterprint", handleAfterPrint);
+      };
+      window.addEventListener("afterprint", handleAfterPrint);
+      window.print();
+    };
+    if (!isOpen)
+      return null;
+    const renderInputTable = () => {
+      const rows = [
+        { label: t("grossCount"), value: `${inputs.grossCount} ${inputs.grossCountUnit}`, mode: ["standard"] },
+        { label: t("measurementTime"), value: `${inputs.grossTime} s`, mode: ["standard", "spectrometry", "surface"] },
+        { label: t("backgroundCount"), value: `${inputs.backgroundCount} ${inputs.backgroundCountUnit}`, mode: ["standard"] },
+        { label: t("measurementTime"), value: `${inputs.backgroundTime} s`, mode: ["standard", "spectrometry"] },
+        { label: t("roiGrossCount"), value: inputs.roiGrossCount, mode: ["spectrometry"] },
+        { label: t("roiChannels"), value: inputs.roiChannels, mode: ["spectrometry"] },
+        { label: t("backgroundTotalCount"), value: inputs.backgroundTotalCount, mode: ["spectrometry"] },
+        { label: t("backgroundChannels"), value: inputs.backgroundChannels, mode: ["spectrometry"] },
+        { label: t("calibrationFactor"), value: `${inputs.calibrationFactor.toPrecision(4)} ${inputs.calibrationFactorUnit}`, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
+        { label: t("relativeUncertainty"), value: `${inputs.calibrationFactorUncertainty} %`, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
+        { label: "k(1-\u03B1)", value: inputs.k1alpha, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
+        { label: "k(1-\u03B2)", value: inputs.k1beta, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] }
+      ];
+      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("tbody", { children: rows.filter((r) => r.mode.includes(results && typeof results !== "string" ? results.currentMode : "standard")).map((row) => /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: row.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: row.value })
+      ] }, row.label)) }) });
+    };
+    const renderResultsTable = (res) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: t("primaryResult") }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: `${formatNumber3(res.primaryResult)} \xB1 ${formatNumber3(res.primaryUncertainty)}` })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("td", { className: "font-semibold p-2", children: [
+          t("decisionThreshold"),
+          " (y*)"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: formatNumber3(res.decisionThreshold) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("td", { className: "font-semibold p-2", children: [
+          t("detectionLimit"),
+          " (y#)"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: formatNumber3(res.detectionLimit) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: t("conclusion") }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") })
+      ] })
+    ] }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "p-6 border-b border-gray-700 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-2xl font-bold text-cyan-400", children: t("reportGeneratorTitle") }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh] report-modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "text-black mb-8 pb-4 border-b border-gray-300", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-3xl font-bold mb-2", children: "ISO 11929 Calculation Report" }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "grid grid-cols-2 gap-4 text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
+                t("operatorName"),
+                ":"
+              ] }),
+              " ",
+              operatorName || "-"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
+                t("sampleId"),
+                ":"
+              ] }),
+              " ",
+              sampleId || "-"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
+                t("reportDate"),
+                ":"
+              ] }),
+              " ",
+              (/* @__PURE__ */ new Date()).toLocaleString()
+            ] })
+          ] })
+        ] }),
+        typeof results !== "string" && results ? /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "space-y-8 text-black", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportInputs") }),
+            renderInputTable()
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportResults") }),
+            renderResultsTable(results)
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "page-break-before", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("chartTitle") }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ReportChart, { results, t })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("comments") }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-sm whitespace-pre-wrap min-h-[50px]", children: comments || " - " })
+          ] })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-black", children: t("noResultsToDisplay") })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-gray-900/50 p-6 rounded-b-lg border-t border-gray-700 no-print", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "text", placeholder: t("operatorName"), value: operatorName, onChange: (e) => setOperatorName(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "text", placeholder: t("sampleId"), value: sampleId, onChange: (e) => setSampleId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("textarea", { placeholder: t("comments"), value: comments, onChange: (e) => setComments(e.target.value), rows: 3, className: "w-full bg-gray-700 p-2 rounded-md text-white mb-4" }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex justify-end space-x-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }),
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: handlePrint, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
+        ] })
+      ] })
+    ] }) });
+  };
+  var ReportGeneratorModal_default = ReportGeneratorModal;
+
   // translations.ts
   var fr = {
     // General
@@ -29350,5435 +34720,12 @@
     changeLanguage: "Cambiar Idioma"
   };
   var translations = { fr, en, de, es };
-  var chemicalElements = {
-    "Am": { fr: "Am\xE9ricium", en: "Americium", de: "Americium", es: "Americio" },
-    "Sb": { fr: "Antimoine", en: "Antimony", de: "Antimon", es: "Antimonio" },
-    "Ba": { fr: "Baryum", en: "Barium", de: "Barium", es: "Bario" },
-    "Be": { fr: "B\xE9ryllium", en: "Beryllium", de: "Beryllium", es: "Berilio" },
-    "Bi": { fr: "Bismuth", en: "Bismuth", de: "Wismut", es: "Bismuto" },
-    "Cd": { fr: "Cadmium", en: "Cadmium", de: "Cadmium", es: "Cadmio" },
-    "Ca": { fr: "Calcium", en: "Calcium", de: "Calcium", es: "Calcio" },
-    "Cf": { fr: "Californium", en: "Californium", de: "Californium", es: "Californio" },
-    "C": { fr: "Carbone", en: "Carbon", de: "Kohlenstoff", es: "Carbono" },
-    "Ce": { fr: "C\xE9rium", en: "Cerium", de: "Cer", es: "Cerio" },
-    "Cs": { fr: "C\xE9sium", en: "Cesium", de: "C\xE4sium", es: "Cesio" },
-    "Cl": { fr: "Chlore", en: "Chlorine", de: "Chlor", es: "Cloro" },
-    "Cr": { fr: "Chrome", en: "Chromium", de: "Chrom", es: "Cromo" },
-    "Co": { fr: "Cobalt", en: "Cobalt", de: "Kobalt", es: "Cobalto" },
-    "Cu": { fr: "Cuivre", en: "Copper", de: "Kupfer", es: "Cobre" },
-    "Cm": { fr: "Curium", en: "Curium", de: "Curium", es: "Curio" },
-    "Es": { fr: "Einsteinium", en: "Einsteinium", de: "Einsteinium", es: "Einstenio" },
-    "Eu": { fr: "Europium", en: "Europium", de: "Europium", es: "Europio" },
-    "Fm": { fr: "Fermium", en: "Fermium", de: "Fermium", es: "Fermio" },
-    "F": { fr: "Fluor", en: "Fluorine", de: "Fluor", es: "Fl\xFAor" },
-    "Ga": { fr: "Gallium", en: "Gallium", de: "Gallium", es: "Galio" },
-    "H": { fr: "Hydrog\xE8ne", en: "Hydrogen", de: "Wasserstoff", es: "Hidr\xF3geno" },
-    "In": { fr: "Indium", en: "Indium", de: "Indium", es: "Indio" },
-    "I": { fr: "Iode", en: "Iodine", de: "Jod", es: "Yodo" },
-    "Fe": { fr: "Fer", en: "Iron", de: "Eisen", es: "Hierro" },
-    "Kr": { fr: "Krypton", en: "Krypton", de: "Krypton", es: "Cript\xF3n" },
-    "La": { fr: "Lanthane", en: "Lanthanum", de: "Lanthan", es: "Lantano" },
-    "Pb": { fr: "Plomb", en: "Lead", de: "Blei", es: "Plomo" },
-    "Lu": { fr: "Lut\xE9cium", en: "Lutetium", de: "Lutetium", es: "Lutecio" },
-    "Mn": { fr: "Mangan\xE8se", en: "Manganese", de: "Mangan", es: "Manganeso" },
-    "Mo": { fr: "Molybd\xE8ne", en: "Molybdenum", de: "Molybd\xE4n", es: "Molibdeno" },
-    "Np": { fr: "Neptunium", en: "Neptunium", de: "Neptunium", es: "Neptunio" },
-    "Ni": { fr: "Nickel", en: "Nickel", de: "Nickel", es: "N\xEDquel" },
-    "Nb": { fr: "Niobium", en: "Niobium", de: "Niob", es: "Niobio" },
-    "P": { fr: "Phosphore", en: "Phosphorus", de: "Phosphor", es: "F\xF3sforo" },
-    "Pu": { fr: "Plutonium", en: "Plutonium", de: "Plutonium", es: "Plutonio" },
-    "Po": { fr: "Polonium", en: "Polonium", de: "Polonium", es: "Polonio" },
-    "K": { fr: "Potassium", en: "Potassium", de: "Kalium", es: "Potasio" },
-    "Pm": { fr: "Prom\xE9thium", en: "Promethium", de: "Promethium", es: "Prometio" },
-    "Pa": { fr: "Protactinium", en: "Protactinium", de: "Protactinium", es: "Protactinio" },
-    "Ra": { fr: "Radium", en: "Radium", de: "Radium", es: "Radio" },
-    "Ru": { fr: "Ruth\xE9nium", en: "Ruthenium", de: "Ruthenium", es: "Rutenio" },
-    "Sm": { fr: "Samarium", en: "Samarium", de: "Samarium", es: "Samario" },
-    "Sc": { fr: "Scandium", en: "Scandium", de: "Scandium", es: "Escandio" },
-    "Se": { fr: "S\xE9l\xE9nium", en: "Selenium", de: "Selen", es: "Selenio" },
-    "Ag": { fr: "Argent", en: "Silver", de: "Silber", es: "Plata" },
-    "Na": { fr: "Sodium", en: "Sodium", de: "Natrium", es: "Sodio" },
-    "Sr": { fr: "Strontium", en: "Strontium", de: "Strontium", es: "Estroncio" },
-    "S": { fr: "Soufre", en: "Sulfur", de: "Schwefel", es: "Azufre" },
-    "Tc": { fr: "Techn\xE9tium", en: "Technetium", de: "Technetium", es: "Tecnecio" },
-    "Tl": { fr: "Thallium", en: "Thallium", de: "Thallium", es: "Talio" },
-    "Th": { fr: "Thorium", en: "Thorium", de: "Thorium", es: "Torio" },
-    "U": { fr: "Uranium", en: "Uranium", de: "Uran", es: "Uranio" },
-    "Xe": { fr: "X\xE9non", en: "Xenon", de: "Xenon", es: "Xen\xF3n" },
-    "Y": { fr: "Yttrium", en: "Yttrium", de: "Yttrium", es: "Itrio" },
-    "Zn": { fr: "Zinc", en: "Zinc", de: "Zink", es: "Zinc" },
-    "Zr": { fr: "Zirconium", en: "Zirconium", de: "Zirkonium", es: "Circonio" }
-  };
   var getTranslator = (lang) => {
     const langTranslations = translations[lang] || translations["fr" /* FR */];
     return (key) => {
       return langTranslations[key] || key;
     };
   };
-  var getLocalizedNuclideName = (nuclideName, lang) => {
-    const match = nuclideName.match(/^([a-zA-Z]+)-(\d+)(?:\s+\(([a-zA-Z]+)-(\d+m?)\))?$/);
-    if (match) {
-      const [, englishName, mass, symbol] = match;
-      let elementKey = symbol;
-      if (!elementKey) {
-        const foundKey = Object.keys(chemicalElements).find((key) => chemicalElements[key].en.toLowerCase() === englishName.toLowerCase());
-        if (foundKey)
-          elementKey = foundKey;
-      }
-      if (elementKey && chemicalElements[elementKey]) {
-        const localizedName = chemicalElements[elementKey][lang];
-        if (symbol) {
-          return `${localizedName}-${mass} (${symbol}-${mass})`;
-        } else {
-          return `${localizedName}-${mass}`;
-        }
-      }
-    }
-    return nuclideName;
-  };
-
-  // components/PeakIdentifierModal.tsx
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-  var PeakIdentifierModal = ({ isOpen, onClose, t }) => {
-    const [mode, setMode] = (0, import_react10.useState)("energy");
-    const [peakEnergiesText, setPeakEnergiesText] = (0, import_react10.useState)("");
-    const [tolerance, setTolerance] = (0, import_react10.useState)(2);
-    const [energyResults, setEnergyResults] = (0, import_react10.useState)(null);
-    const [selectedNuclideName, setSelectedNuclideName] = (0, import_react10.useState)("");
-    const [analysisType, setAnalysisType] = (0, import_react10.useState)("gamma");
-    const allNuclides = (0, import_react10.useMemo)(() => nuclideLibrary.sort((a, b) => a.name.localeCompare(b.name)), []);
-    const selectedNuclideData = (0, import_react10.useMemo)(() => {
-      return allNuclides.find((n) => n.name === selectedNuclideName) || null;
-    }, [selectedNuclideName, allNuclides]);
-    (0, import_react10.useEffect)(() => {
-      if (isOpen) {
-        setPeakEnergiesText("");
-        setEnergyResults(null);
-        setSelectedNuclideName(allNuclides.length > 0 ? allNuclides[0].name : "");
-      }
-      const handleEsc = (event) => {
-        if (event.key === "Escape") {
-          onClose();
-        }
-      };
-      window.addEventListener("keydown", handleEsc);
-      return () => window.removeEventListener("keydown", handleEsc);
-    }, [isOpen, onClose, allNuclides]);
-    if (!isOpen)
-      return null;
-    const handleIdentifyByEnergy = () => {
-      const energies = peakEnergiesText.split("\n").map((line) => parseFloat(line.trim())).filter((num) => !isNaN(num) && num > 0);
-      const identificationResults = identifyPeaks(energies, tolerance, analysisType);
-      setEnergyResults(identificationResults);
-    };
-    const renderByEnergyMode = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "text-sm text-gray-400", children: t("peakIdentifierIntro") }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("peakEnergiesLabel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-            "textarea",
-            {
-              value: peakEnergiesText,
-              onChange: (e) => setPeakEnergiesText(e.target.value),
-              rows: 6,
-              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-sm text-white",
-              placeholder: "661.7\n1173.2\n1332.5"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("toleranceLabel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-            "input",
-            {
-              type: "number",
-              value: tolerance,
-              onChange: (e) => setTolerance(parseFloat(e.target.value) || 0),
-              step: "0.1",
-              min: "0.1",
-              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-            "button",
-            {
-              onClick: handleIdentifyByEnergy,
-              className: "w-full mt-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300",
-              children: t("identify")
-            }
-          )
-        ] })
-      ] }),
-      energyResults && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4 border-t border-gray-700 pt-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("identificationResults") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "space-y-4 max-h-64 overflow-y-auto pr-2", children: energyResults.map((result, index) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("resultsForPeak").replace("{energy}", result.inputEnergy_keV.toFixed(2)).replace("{tolerance}", tolerance.toFixed(2)) }),
-          result.matches.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "w-full text-xs text-left", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("peakId_nuclide") }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("lineEnergy") }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("intensity") }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("delta") })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: result.matches.map((match, i) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { className: "border-t border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-semibold text-cyan-300", children: getLocalizedNuclideName(match.nuclide.name, t) }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: match.line.energy_keV.toFixed(2) }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: match.line.intensity_percent.toFixed(2) }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: `py-1 px-2 font-mono text-right ${match.delta_keV >= 0 ? "text-green-400" : "text-red-400"}`, children: match.delta_keV.toFixed(2) })
-            ] }, i)) })
-          ] }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "text-gray-500 text-sm", children: t("noNuclidesFound") })
-        ] }, index)) })
-      ] })
-    ] });
-    const renderByNuclideMode = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("searchNuclide") }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-        "select",
-        {
-          value: selectedNuclideName,
-          onChange: (e) => setSelectedNuclideName(e.target.value),
-          className: "w-full bg-gray-700 p-2 rounded-md text-white",
-          children: allNuclides.map((n) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: n.name, children: getLocalizedNuclideName(n.name, t) }, n.name))
-        }
-      ),
-      selectedNuclideData && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-4 border-t border-gray-700 pt-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("emissionLines") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "max-h-80 overflow-y-auto pr-2", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "w-full text-xs text-left", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("lineEnergy") }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2 text-right", children: t("intensity") }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { className: "py-1 px-2", children: t("radiationType") })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: selectedNuclideData.lines.filter((line) => line.type === analysisType).sort((a, b) => b.intensity_percent - a.intensity_percent).map((line, i) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { className: "border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-cyan-300", children: line.energy_keV.toFixed(2) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 font-mono text-right text-gray-300", children: line.intensity_percent.toFixed(3) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "py-1 px-2 capitalize", children: line.type })
-          ] }, i)) })
-        ] }) })
-      ] })
-    ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Card_default, { title: t("peakIdentifierTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex bg-gray-800 rounded-md p-1 my-2 border border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setMode("energy"), className: `flex-1 p-1 text-sm rounded ${mode === "energy" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("modeByEnergy") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setMode("nuclide"), className: `flex-1 p-1 text-sm rounded ${mode === "nuclide" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("modeByNuclide") })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1 my-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-1 text-sm rounded ${analysisType === "gamma" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("gammaAnalysis") }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-1 text-sm rounded ${analysisType === "alpha" ? "bg-cyan-600 text-white" : "hover:bg-gray-600"}`, children: t("alphaAnalysis") })
-      ] }),
-      mode === "energy" ? renderByEnergyMode() : renderByNuclideMode(),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex justify-end pt-4 border-t border-gray-700 mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("close") }) })
-    ] }) }) }) });
-  };
-  var PeakIdentifierModal_default = PeakIdentifierModal;
-
-  // components/DecayCalculatorModal.tsx
-  var import_react11 = __toESM(require_react());
-
-  // services/radionuclides.ts
-  var year2 = 31556926;
-  var day2 = 86400;
-  var hour2 = 3600;
-  var radionuclides = {
-    gamma: [
-      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
-      { name: "Antimony-124 (Sb-124)", halfLifeSeconds: 60.2 * day2, gammaConstant: 260, effectiveEnergy_MeV: 1.691 },
-      { name: "Antimony-125 (Sb-125)", halfLifeSeconds: 2.75855 * year2, effectiveEnergy_MeV: 0.428 },
-      { name: "Barium-133 (Ba-133)", halfLifeSeconds: 10.54 * year2, gammaConstant: 56.4, effectiveEnergy_MeV: 0.356 },
-      { name: "Barium-140 (Ba-140)", halfLifeSeconds: 12.753 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.537 },
-      { name: "Beryllium-7 (Be-7)", halfLifeSeconds: 53.22 * day2, gammaConstant: 4.8, effectiveEnergy_MeV: 0.477 },
-      { name: "Bismuth-207 (Bi-207)", halfLifeSeconds: 31.55 * year2, gammaConstant: 200, effectiveEnergy_MeV: 0.57 },
-      { name: "Cadmium-109 (Cd-109)", halfLifeSeconds: 461.4 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.088 },
-      { name: "Cerium-141 (Ce-141)", halfLifeSeconds: 32.5 * day2, gammaConstant: 12.1, effectiveEnergy_MeV: 0.145 },
-      { name: "Cerium-144 (Ce-144)", halfLifeSeconds: 284.9 * day2, gammaConstant: 5.9, effectiveEnergy_MeV: 0.133 },
-      { name: "Cesium-134 (Cs-134)", halfLifeSeconds: 2.0652 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.795 },
-      { name: "Cesium-137 (Cs-137)", halfLifeSeconds: 30.08 * year2, gammaConstant: 89, effectiveEnergy_MeV: 0.662 },
-      { name: "Chromium-51 (Cr-51)", halfLifeSeconds: 27.703 * day2, gammaConstant: 4.6, effectiveEnergy_MeV: 0.32 },
-      { name: "Cobalt-56 (Co-56)", halfLifeSeconds: 77.236 * day2, gammaConstant: 490, effectiveEnergy_MeV: 0.847 },
-      { name: "Cobalt-57 (Co-57)", halfLifeSeconds: 271.8 * day2, gammaConstant: 2.5, effectiveEnergy_MeV: 0.122 },
-      { name: "Cobalt-58 (Co-58)", halfLifeSeconds: 70.86 * day2, gammaConstant: 150, effectiveEnergy_MeV: 0.811 },
-      { name: "Cobalt-60 (Co-60)", halfLifeSeconds: 5.271 * year2, gammaConstant: 353, effectiveEnergy_MeV: 1.25 },
-      { name: "Copper-64 (Cu-64)", halfLifeSeconds: 12.701 * hour2, gammaConstant: 31.5, effectiveEnergy_MeV: 0.511 },
-      { name: "Europium-152 (Eu-152)", halfLifeSeconds: 13.537 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.408 },
-      { name: "Europium-154 (Eu-154)", halfLifeSeconds: 8.6 * year2, gammaConstant: 160, effectiveEnergy_MeV: 1.274 },
-      { name: "Europium-155 (Eu-155)", halfLifeSeconds: 4.76 * year2, effectiveEnergy_MeV: 0.105 },
-      { name: "Fluorine-18 (F-18)", halfLifeSeconds: 1.8288 * hour2, gammaConstant: 150, effectiveEnergy_MeV: 0.511 },
-      { name: "Gallium-66 (Ga-66)", halfLifeSeconds: 9.49 * hour2, effectiveEnergy_MeV: 1.039 },
-      { name: "Gallium-67 (Ga-67)", halfLifeSeconds: 3.2613 * day2, gammaConstant: 22.1, effectiveEnergy_MeV: 0.093 },
-      { name: "Indium-111 (In-111)", halfLifeSeconds: 2.8049 * day2, gammaConstant: 43.1, effectiveEnergy_MeV: 0.245 },
-      { name: "Iodine-123 (I-123)", halfLifeSeconds: 13.2234 * hour2, gammaConstant: 42.1, effectiveEnergy_MeV: 0.159 },
-      { name: "Iodine-125 (I-125)", halfLifeSeconds: 59.4 * day2, gammaConstant: 40.1, effectiveEnergy_MeV: 0.035 },
-      { name: "Iodine-129 (I-129)", halfLifeSeconds: 157e5 * year2, gammaConstant: 16.3, effectiveEnergy_MeV: 0.04 },
-      { name: "Iodine-131 (I-131)", halfLifeSeconds: 8.0233 * day2, gammaConstant: 59.3, effectiveEnergy_MeV: 0.364 },
-      { name: "Iron-55 (Fe-55)", halfLifeSeconds: 2.737 * year2 },
-      { name: "Iron-59 (Fe-59)", halfLifeSeconds: 44.495 * day2, gammaConstant: 171, effectiveEnergy_MeV: 1.099 },
-      { name: "Krypton-85 (Kr-85)", halfLifeSeconds: 10.752 * year2, effectiveEnergy_MeV: 0.514 },
-      { name: "Lanthanum-140 (La-140)", halfLifeSeconds: 1.6785 * day2, gammaConstant: 280, effectiveEnergy_MeV: 1.596 },
-      { name: "Lead-210 (Pb-210)", halfLifeSeconds: 22.23 * year2, gammaConstant: 4e-3, effectiveEnergy_MeV: 0.0465 },
-      { name: "Lutetium-177 (Lu-177)", halfLifeSeconds: 6.647 * day2, effectiveEnergy_MeV: 0.208 },
-      { name: "Manganese-54 (Mn-54)", halfLifeSeconds: 312.13 * day2, gammaConstant: 128.8, effectiveEnergy_MeV: 0.835 },
-      { name: "Manganese-56 (Mn-56)", halfLifeSeconds: 2.57878 * hour2, effectiveEnergy_MeV: 0.847 },
-      { name: "Molybdenum-99 (Mo-99)", halfLifeSeconds: 2.7479 * day2, gammaConstant: 39.5, effectiveEnergy_MeV: 0.74 },
-      { name: "Niobium-94 (Nb-94)", halfLifeSeconds: 20300 * year2, gammaConstant: 230, effectiveEnergy_MeV: 0.871 },
-      { name: "Niobium-95 (Nb-95)", halfLifeSeconds: 34.991 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.766 },
-      { name: "Potassium-40 (K-40)", halfLifeSeconds: 1248e6 * year2, gammaConstant: 22.4, effectiveEnergy_MeV: 1.461 },
-      { name: "Ruthenium-103 (Ru-103)", halfLifeSeconds: 39.26 * day2, gammaConstant: 79.5, effectiveEnergy_MeV: 0.497 },
-      { name: "Ruthenium-106 (Ru-106)", halfLifeSeconds: 371.8 * day2, gammaConstant: 34.9, effectiveEnergy_MeV: 0.512 },
-      { name: "Samarium-153 (Sm-153)", halfLifeSeconds: 1.928 * day2, effectiveEnergy_MeV: 0.103 },
-      { name: "Scandium-46 (Sc-46)", halfLifeSeconds: 83.788 * day2, gammaConstant: 290, effectiveEnergy_MeV: 0.889 },
-      { name: "Selenium-75 (Se-75)", halfLifeSeconds: 119.78 * day2, gammaConstant: 52.1, effectiveEnergy_MeV: 0.265 },
-      { name: "Silver-110m (Ag-110m)", halfLifeSeconds: 249.78 * day2, gammaConstant: 390, effectiveEnergy_MeV: 0.658 },
-      { name: "Sodium-22 (Na-22)", halfLifeSeconds: 2.6027 * year2, gammaConstant: 326.6, effectiveEnergy_MeV: 1.275 },
-      { name: "Sodium-24 (Na-24)", halfLifeSeconds: 14.9574 * hour2, gammaConstant: 490, effectiveEnergy_MeV: 1.369 },
-      { name: "Strontium-85 (Sr-85)", halfLifeSeconds: 64.85 * day2, gammaConstant: 80.8, effectiveEnergy_MeV: 0.514 },
-      { name: "Technetium-99m (Tc-99m)", halfLifeSeconds: 6.0067 * hour2, gammaConstant: 20.9, effectiveEnergy_MeV: 0.14 },
-      { name: "Thallium-201 (Tl-201)", halfLifeSeconds: 3.04 * day2, effectiveEnergy_MeV: 0.167 },
-      { name: "Xenon-133 (Xe-133)", halfLifeSeconds: 5.243 * day2, gammaConstant: 12.3, effectiveEnergy_MeV: 0.081 },
-      { name: "Yttrium-88 (Y-88)", halfLifeSeconds: 106.626 * day2, gammaConstant: 410, effectiveEnergy_MeV: 1.836 },
-      { name: "Zinc-65 (Zn-65)", halfLifeSeconds: 244.01 * day2, gammaConstant: 75.3, effectiveEnergy_MeV: 1.116 },
-      { name: "Zirconium-95 (Zr-95)", halfLifeSeconds: 64.032 * day2, gammaConstant: 110, effectiveEnergy_MeV: 0.757 }
-    ].sort((a, b) => a.name.localeCompare(b.name)),
-    beta: [
-      { name: "Calcium-45 (Ca-45)", halfLifeSeconds: 162.61 * day2 },
-      { name: "Carbon-14 (C-14)", halfLifeSeconds: 5700 * year2 },
-      { name: "Chlorine-36 (Cl-36)", halfLifeSeconds: 301e3 * year2 },
-      { name: "Hydrogen-3 (H-3 Tritium)", halfLifeSeconds: 12.32 * year2 },
-      { name: "Nickel-63 (Ni-63)", halfLifeSeconds: 100.1 * year2 },
-      { name: "Phosphorus-32 (P-32)", halfLifeSeconds: 14.284 * day2 },
-      // BIPM-5
-      { name: "Phosphorus-33 (P-33)", halfLifeSeconds: 25.383 * day2 },
-      // BIPM-5
-      { name: "Promethium-147 (Pm-147)", halfLifeSeconds: 2.6234 * year2 },
-      { name: "Strontium-89 (Sr-89)", halfLifeSeconds: 50.57 * day2 },
-      // BIPM-5
-      { name: "Strontium-90 (Sr-90)", halfLifeSeconds: 28.79 * year2 },
-      { name: "Sulfur-35 (S-35)", halfLifeSeconds: 87.51 * day2 },
-      { name: "Technetium-99 (Tc-99)", halfLifeSeconds: 211e3 * year2 },
-      { name: "Thallium-204 (Tl-204)", halfLifeSeconds: 3.78 * year2 },
-      { name: "Yttrium-90 (Y-90)", halfLifeSeconds: 64.1 * hour2 }
-    ].sort((a, b) => a.name.localeCompare(b.name)),
-    alpha: [
-      { name: "Americium-241 (Am-241)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 0.06 },
-      { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
-      { name: "Curium-242 (Cm-242)", halfLifeSeconds: 162.8 * day2 },
-      { name: "Curium-243 (Cm-243)", halfLifeSeconds: 29.1 * year2 },
-      { name: "Curium-244 (Cm-244)", halfLifeSeconds: 18.1 * year2 },
-      { name: "Curium-248 (Cm-248)", halfLifeSeconds: 348e3 * year2 },
-      { name: "Einsteinium-253 (Es-253)", halfLifeSeconds: 20.5 * day2 },
-      { name: "Fermium-257 (Fm-257)", halfLifeSeconds: 100.5 * day2 },
-      { name: "Neptunium-237 (Np-237)", halfLifeSeconds: 2144e3 * year2 },
-      { name: "Plutonium-238 (Pu-238)", halfLifeSeconds: 87.7 * year2 },
-      { name: "Plutonium-239 (Pu-239)", halfLifeSeconds: 24110 * year2 },
-      { name: "Plutonium-240 (Pu-240)", halfLifeSeconds: 6561 * year2 },
-      { name: "Plutonium-241 (Pu-241)", halfLifeSeconds: 14.35 * year2 },
-      { name: "Plutonium-242 (Pu-242)", halfLifeSeconds: 373e3 * year2 },
-      { name: "Polonium-210 (Po-210)", halfLifeSeconds: 138.376 * day2 },
-      { name: "Protactinium-231 (Pa-231)", halfLifeSeconds: 32800 * year2 },
-      { name: "Radium-226 (Ra-226)", halfLifeSeconds: 1600 * year2 },
-      { name: "Thorium-228 (Th-228)", halfLifeSeconds: 1.91 * year2 },
-      { name: "Thorium-229 (Th-229)", halfLifeSeconds: 7880 * year2 },
-      { name: "Thorium-232 (Th-232)", halfLifeSeconds: 1405e7 * year2 },
-      { name: "Thorium-234 (Th-234)", halfLifeSeconds: 24.1 * day2 },
-      { name: "Uranium-233 (U-233)", halfLifeSeconds: 159200 * year2 },
-      { name: "Uranium-234 (U-234)", halfLifeSeconds: 245500 * year2 },
-      { name: "Uranium-235 (U-235)", halfLifeSeconds: 704e6 * year2 },
-      { name: "Uranium-238 (U-238)", halfLifeSeconds: 4468e6 * year2 }
-    ].sort((a, b) => a.name.localeCompare(b.name)),
-    neutron: [
-      { name: "Californium-252 (Cf-252)", halfLifeSeconds: 2.645 * year2 },
-      { name: "Americium-241/Be (Am-Be)", halfLifeSeconds: 432.2 * year2, gammaConstant: 3.2, effectiveEnergy_MeV: 4.4 }
-      // Driven by Am-241 for half-life, effective energy from neutron emission
-    ]
-  };
-
-  // services/shieldingData.ts
-  var shieldingMaterials = [
-    {
-      name: "Lead (Pb)",
-      density_g_cm3: 11.34,
-      mu: [
-        { energy_MeV: 0.1, value: 57.6 },
-        { energy_MeV: 0.3, value: 3.59 },
-        { energy_MeV: 0.5, value: 1.46 },
-        { energy_MeV: 0.8, value: 0.89 },
-        { energy_MeV: 1, value: 0.77 },
-        { energy_MeV: 1.5, value: 0.6 },
-        { energy_MeV: 2, value: 0.52 },
-        { energy_MeV: 3, value: 0.49 }
-      ],
-      buildup: [
-        { energy_MeV: 0.5, A: 2.2, alpha1: -0.07, alpha2: 0.05 },
-        { energy_MeV: 1, A: 2.15, alpha1: -0.06, alpha2: 0.046 },
-        { energy_MeV: 2, A: 1.95, alpha1: -0.05, alpha2: 0.038 },
-        { energy_MeV: 3, A: 1.8, alpha1: -0.04, alpha2: 0.032 }
-      ]
-    },
-    {
-      name: "Steel (Fe)",
-      density_g_cm3: 7.87,
-      mu: [
-        { energy_MeV: 0.1, value: 2.76 },
-        { energy_MeV: 0.3, value: 0.69 },
-        { energy_MeV: 0.5, value: 0.52 },
-        { energy_MeV: 0.8, value: 0.42 },
-        { energy_MeV: 1, value: 0.37 },
-        { energy_MeV: 1.5, value: 0.3 },
-        { energy_MeV: 2, value: 0.26 },
-        { energy_MeV: 3, value: 0.22 }
-      ],
-      buildup: [
-        { energy_MeV: 0.5, A: 10.9, alpha1: -0.09, alpha2: 0.06 },
-        { energy_MeV: 1, A: 8.4, alpha1: -0.1, alpha2: 0.03 },
-        { energy_MeV: 2, A: 6.2, alpha1: -0.09, alpha2: 0.02 },
-        { energy_MeV: 3, A: 5.1, alpha1: -0.08, alpha2: 0.015 }
-      ]
-    },
-    {
-      name: "Concrete",
-      density_g_cm3: 2.35,
-      mu: [
-        { energy_MeV: 0.1, value: 0.39 },
-        { energy_MeV: 0.3, value: 0.22 },
-        { energy_MeV: 0.5, value: 0.18 },
-        { energy_MeV: 0.8, value: 0.14 },
-        { energy_MeV: 1, value: 0.13 },
-        { energy_MeV: 1.5, value: 0.1 },
-        { energy_MeV: 2, value: 0.09 },
-        { energy_MeV: 3, value: 0.07 }
-      ],
-      buildup: [
-        { energy_MeV: 0.5, A: 12.5, alpha1: -0.06, alpha2: 0.03 },
-        { energy_MeV: 1, A: 9.9, alpha1: -0.07, alpha2: 0.01 },
-        { energy_MeV: 2, A: 7, alpha1: -0.06, alpha2: 5e-3 },
-        { energy_MeV: 3, A: 5.8, alpha1: -0.05, alpha2: 3e-3 }
-      ]
-    }
-  ];
-
-  // components/DecayCalculatorModal.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-  var formatDateForInput = (date) => {
-    const year3 = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day3 = date.getDate().toString().padStart(2, "0");
-    return `${year3}-${month}-${day3}`;
-  };
-  var DoseRateDisplay = ({ dose_uSv_h, label, colorClass }) => {
-    const format = (val) => {
-      if (typeof val === "string")
-        return val;
-      return val.toPrecision(3);
-    };
-    let si_num = dose_uSv_h;
-    let si_unit = "\xB5Sv/h";
-    if (si_num >= 1e3) {
-      si_num /= 1e3;
-      si_unit = "mSv/h";
-    }
-    if (si_num >= 1e3) {
-      si_num /= 1e3;
-      si_unit = "Sv/h";
-    }
-    let si_val = si_num;
-    const dose_mrem_h = dose_uSv_h * 0.1;
-    let rem_num = dose_mrem_h;
-    let rem_unit = "mrem/h";
-    if (rem_num >= 1e3) {
-      rem_num /= 1e3;
-      rem_unit = "rem/h";
-    }
-    let rem_val = rem_num;
-    let r_num = dose_mrem_h;
-    let r_unit = "mR/h";
-    if (r_num >= 1e3) {
-      r_num /= 1e3;
-      r_unit = "R/h";
-    }
-    let r_val = r_num;
-    if (dose_uSv_h === 0 || !isFinite(dose_uSv_h)) {
-      si_val = "0.00";
-      rem_val = "0.00";
-      r_val = "0.00";
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-gray-400 font-semibold", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: `grid grid-cols-3 text-center mt-1 font-mono text-md ${colorClass}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(si_val) }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: si_unit })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(rem_val) }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: rem_unit })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "font-bold", children: format(r_val) }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "text-xs text-gray-500", children: r_unit })
-        ] })
-      ] })
-    ] });
-  };
-  var DecayCalculatorModal = ({ isOpen, onClose, onApply, t, initialActivity, initialUncertainty, unit }) => {
-    const [refActivity, setRefActivity] = (0, import_react11.useState)(initialActivity);
-    const [refUncertainty, setRefUncertainty] = (0, import_react11.useState)(initialUncertainty);
-    const [refDate, setRefDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
-    const [measDate, setMeasDate] = (0, import_react11.useState)(formatDateForInput(/* @__PURE__ */ new Date()));
-    const [selectedNuclideKey, setSelectedNuclideKey] = (0, import_react11.useState)("gamma-0");
-    const [shieldMaterialId, setShieldMaterialId] = (0, import_react11.useState)("none");
-    const [shieldThickness, setShieldThickness] = (0, import_react11.useState)(0);
-    const [sourceBox, setSourceBox] = (0, import_react11.useState)([]);
-    const [correctedActivity, setCorrectedActivity] = (0, import_react11.useState)(null);
-    const [elapsedDays, setElapsedDays] = (0, import_react11.useState)(null);
-    const [doseRate, setDoseRate] = (0, import_react11.useState)(null);
-    const selectedNuclide = (0, import_react11.useMemo)(() => {
-      const [type, indexStr] = selectedNuclideKey.split("-");
-      const index = parseInt(indexStr, 10);
-      if (radionuclides[type] && radionuclides[type][index]) {
-        return radionuclides[type][index];
-      }
-      return null;
-    }, [selectedNuclideKey]);
-    const shieldMaterial = (0, import_react11.useMemo)(() => {
-      return shieldingMaterials.find((m) => m.id === shieldMaterialId) || null;
-    }, [shieldMaterialId]);
-    (0, import_react11.useEffect)(() => {
-      setRefActivity(initialActivity);
-      setRefUncertainty(initialUncertainty);
-      setSourceBox([]);
-    }, [initialActivity, initialUncertainty, isOpen]);
-    const interpolate = (points, energy) => {
-      if (points.length === 0)
-        return null;
-      if (points.length === 1 || energy <= points[0].energy_MeV)
-        return points[0].value;
-      if (energy >= points[points.length - 1].energy_MeV)
-        return points[points.length - 1].value;
-      const upperIndex = points.findIndex((p) => p.energy_MeV > energy);
-      if (upperIndex === -1 || upperIndex === 0)
-        return points[0].value;
-      const lower = points[upperIndex - 1];
-      const upper = points[upperIndex];
-      const fraction = (energy - lower.energy_MeV) / (upper.energy_MeV - lower.energy_MeV);
-      if (typeof lower.value === "number") {
-        return lower.value + fraction * (upper.value - lower.value);
-      }
-      const interpolated = {};
-      for (const key in lower.value) {
-        interpolated[key] = lower.value[key] + fraction * (upper.value[key] - lower.value[key]);
-      }
-      return interpolated;
-    };
-    (0, import_react11.useEffect)(() => {
-      const calculate = () => {
-        if (!selectedNuclide || !refDate || !measDate || refActivity <= 0) {
-          setCorrectedActivity(null);
-          setElapsedDays(null);
-          setDoseRate(null);
-          return;
-        }
-        const refTime = new Date(refDate).getTime();
-        const measTime = new Date(measDate).getTime();
-        if (isNaN(refTime) || isNaN(measTime)) {
-          setCorrectedActivity(null);
-          setElapsedDays(null);
-          setDoseRate(null);
-          return;
-        }
-        const elapsedTimeSeconds = (measTime - refTime) / 1e3;
-        setElapsedDays(elapsedTimeSeconds / (24 * 3600));
-        const lambda = Math.log(2) / selectedNuclide.halfLifeSeconds;
-        const newActivity = refActivity * Math.exp(-lambda * elapsedTimeSeconds);
-        setCorrectedActivity(newActivity);
-        const gammaConstant = selectedNuclide.gammaConstant;
-        if (!gammaConstant || gammaConstant <= 0 || newActivity <= 0) {
-          setDoseRate(null);
-          return;
-        }
-        const activityMBq = newActivity / 1e6;
-        let doseRateAt1m = gammaConstant * activityMBq;
-        let doseRateAt1cm = doseRateAt1m * 1e4;
-        setDoseRate({ contact: doseRateAt1cm, oneMeter: doseRateAt1m });
-      };
-      calculate();
-    }, [refActivity, refDate, measDate, selectedNuclide]);
-    const totalDoseRate = (0, import_react11.useMemo)(() => {
-      if (sourceBox.length === 0)
-        return null;
-      let totalContact = 0;
-      let totalOneMeter = 0;
-      sourceBox.forEach((source) => {
-        const { nuclide, activity } = source;
-        const gammaConstant = nuclide.gammaConstant;
-        if (!gammaConstant || gammaConstant <= 0 || activity <= 0) {
-          return;
-        }
-        const activityMBq = activity / 1e6;
-        let doseRateAt1m = gammaConstant * activityMBq;
-        let doseRateAt1cm = doseRateAt1m * 1e4;
-        if (shieldMaterial && shieldThickness > 0 && nuclide.effectiveEnergy_MeV) {
-          const mu = interpolate(shieldMaterial.mu.map((p) => ({ energy_MeV: p.energy_MeV, value: p.value })), nuclide.effectiveEnergy_MeV);
-          const buildupCoeffs = interpolate(shieldMaterial.buildup.map((p) => ({ energy_MeV: p.energy_MeV, value: { A: p.A, alpha1: p.alpha1, alpha2: p.alpha2 } })), nuclide.effectiveEnergy_MeV);
-          if (mu && buildupCoeffs) {
-            const mu_x = mu * shieldThickness;
-            const buildupFactor = buildupCoeffs.A * Math.exp(buildupCoeffs.alpha1 * mu_x) + (1 - buildupCoeffs.A) * Math.exp(buildupCoeffs.alpha2 * mu_x);
-            const attenuationFactor = Math.exp(-mu_x);
-            doseRateAt1m *= buildupFactor * attenuationFactor;
-            doseRateAt1cm *= buildupFactor * attenuationFactor;
-          }
-        }
-        totalContact += doseRateAt1cm;
-        totalOneMeter += doseRateAt1m;
-      });
-      return { contact: totalContact, oneMeter: totalOneMeter };
-    }, [sourceBox, shieldMaterial, shieldThickness]);
-    if (!isOpen)
-      return null;
-    const handleApply = () => {
-      if (correctedActivity !== null) {
-        onApply(correctedActivity, refUncertainty);
-      }
-    };
-    const handleAddSourceToBox = () => {
-      if (selectedNuclide && correctedActivity !== null && correctedActivity > 0) {
-        const newSource = {
-          id: crypto.randomUUID(),
-          nuclide: selectedNuclide,
-          activity: correctedActivity
-        };
-        setSourceBox((prev) => [...prev, newSource]);
-      }
-    };
-    const handleRemoveSource = (id) => {
-      setSourceBox((prev) => prev.filter((s) => s.id !== id));
-    };
-    const formatNumber4 = (num) => {
-      if (num === null)
-        return "N/A";
-      if (Math.abs(num) < 1e-3 && num !== 0)
-        return num.toExponential(3);
-      const fixed = num.toFixed(3);
-      return fixed.endsWith(".000") ? parseInt(fixed).toString() : fixed;
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-800/70 rounded-lg shadow-xl backdrop-blur-md border border-gray-700 flex flex-col max-h-[90vh]", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h2", { className: "text-lg font-semibold text-cyan-400 bg-gray-900/50 px-6 py-3 rounded-t-lg border-b border-gray-700 flex-shrink-0", children: t("decayCalculatorTitle") }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "p-6 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
-              t("decayCalc_referenceActivity"),
-              " (",
-              unit,
-              ")"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: refActivity, onChange: (e) => setRefActivity(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceUncertainty") }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: refUncertainty, onChange: (e) => setRefUncertainty(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("decayCalc_referenceDate") }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "date", value: refDate, onChange: (e) => setRefDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("measurementDate") }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "date", value: measDate, onChange: (e) => setMeasDate(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("selectNuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("select", { value: selectedNuclideKey, onChange: (e) => setSelectedNuclideKey(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type, nuclides]) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("optgroup", { label: type.charAt(0).toUpperCase() + type.slice(1), children: nuclides.map((nuclide, index) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: `${type}-${index}`, children: getLocalizedNuclideName(nuclide.name, t) }, `${type}-${index}`)) }, type)) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "border-t border-gray-700 pt-4 mt-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayResults") }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "text-gray-400", children: [
-                t("halfLife"),
-                ":"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "font-mono", children: selectedNuclide ? `${(selectedNuclide.halfLifeSeconds / (365.25 * 24 * 3600)).toFixed(4)} years` : "N/A" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "text-gray-400", children: [
-                t("elapsedTime"),
-                ":"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "font-mono", children: elapsedDays !== null ? `${formatNumber4(elapsedDays)} ${t("days")}` : "N/A" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between text-lg font-bold text-cyan-300 pt-2 border-t border-gray-600 mt-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { children: [
-                t("correctedActivity"),
-                ":"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "font-mono", children: [
-                formatNumber4(correctedActivity),
-                " ",
-                unit
-              ] })
-            ] })
-          ] }),
-          doseRate && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: [
-              t("estimatedDoseRate"),
-              " (Unshielded)"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: doseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(CollapsibleSection_default, { title: t("decayCalc_cumulativeTitle"), defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "p-2 space-y-4", children: [
-          sourceBox.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "max-h-40 overflow-y-auto border border-gray-700 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("table", { className: "w-full text-xs text-left", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { className: "p-2", children: t("sourceMgmt_nuclide") }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("th", { className: "p-2 text-right", children: [
-                t("activity"),
-                " (",
-                unit,
-                ")"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { className: "p-2" })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("tbody", { className: "text-gray-200", children: sourceBox.map((s) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { className: "border-t border-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2", children: getLocalizedNuclideName(s.nuclide.name, t) }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2 font-mono text-right", children: s.activity.toExponential(2) }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { className: "p-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: () => handleRemoveSource(s.id), title: t("decayCalc_removeSource"), className: "text-red-400 hover:text-red-300", children: "\xD7" }) })
-            ] }, s.id)) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("shieldingOptional") }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("shieldingMaterial") }),
-                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("select", { value: shieldMaterialId, onChange: (e) => setShieldMaterialId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: "none", children: t("shielding_none") }),
-                  shieldingMaterials.map((m) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: m.id, children: t(`shielding_${m.id}`) }, m.id))
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { className: "text-sm text-gray-300 mb-1 block", children: [
-                  t("shieldingThickness"),
-                  " (cm)"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("input", { type: "number", value: shieldThickness, onChange: (e) => setShieldThickness(parseFloat(e.target.value) || 0), min: "0", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white", disabled: shieldMaterialId === "none" })
-              ] })
-            ] })
-          ] }),
-          totalDoseRate && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-md font-semibold text-cyan-400 mb-2", children: t("decayCalc_totalDoseRate") }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-4 text-sm", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.contact, label: t("doseRateAt1cm"), colorClass: "text-amber-400" }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DoseRateDisplay, { dose_uSv_h: totalDoseRate.oneMeter, label: t("doseRateAt1m"), colorClass: "text-sky-400" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-xs text-gray-500 mt-2", children: t("doseRateDisclaimer") })
-          ] })
-        ] }) })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-end items-center space-x-2 p-6 border-t border-gray-700 flex-shrink-0 bg-gray-800/70 rounded-b-lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: handleAddSourceToBox, disabled: correctedActivity === null || correctedActivity <= 0, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("decayCalc_addToBox") }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: handleApply, disabled: correctedActivity === null, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed", children: t("calculateAndApply") })
-      ] })
-    ] }) }) });
-  };
-  var DecayCalculatorModal_default = DecayCalculatorModal;
-
-  // components/ProAccessModal.tsx
-  var import_react12 = __toESM(require_react());
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-  var PRO_PASSCODE = "UNITECH-PRO-2024";
-  var ProAccessModal = ({ isOpen, onClose, onSuccess, t }) => {
-    const [passcode, setPasscode] = (0, import_react12.useState)("");
-    const [error, setError] = (0, import_react12.useState)("");
-    if (!isOpen)
-      return null;
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (passcode === PRO_PASSCODE) {
-        setError("");
-        onSuccess();
-      } else {
-        setError(t("incorrectPasscode"));
-      }
-    };
-    const handleClose = () => {
-      setError("");
-      setPasscode("");
-      onClose();
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: handleClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "w-full max-w-md p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Card_default, { title: t("proAccessTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm text-gray-300", children: t("proAccessDescription") }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("label", { htmlFor: "passcode", className: "text-sm text-gray-400 mb-1 block", children: t("passcode") }),
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-          "input",
-          {
-            id: "passcode",
-            type: "password",
-            value: passcode,
-            onChange: (e) => {
-              setPasscode(e.target.value);
-              setError("");
-            },
-            className: "w-full bg-gray-700 p-2 rounded-md font-mono text-white",
-            autoFocus: true
-          }
-        )
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm text-red-400 text-center", children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", onClick: handleClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("submit") })
-      ] })
-    ] }) }) }) });
-  };
-  var ProAccessModal_default = ProAccessModal;
-
-  // components/UnitConverterModal.tsx
-  var import_react13 = __toESM(require_react());
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime());
-  var units = [
-    // Activity (Base: Bq)
-    { id: "bq", label: "Becquerel (Bq)", category: "activity", to_base: 1, description_key: "unit_desc_bq" },
-    { id: "ci", label: "Curie (Ci)", category: "activity", to_base: 37e9, description_key: "unit_desc_ci" },
-    { id: "dpm", label: "dpm", category: "activity", to_base: 1 / 60, description_key: "unit_desc_dpm" },
-    { id: "dps", label: "dps", category: "activity", to_base: 1, description_key: "unit_desc_dps" },
-    // Exposure (Base: C/kg)
-    { id: "c_kg", label: "C/kg", category: "exposure", to_base: 1, description_key: "unit_desc_c_kg" },
-    { id: "r", label: "R\xF6ntgen (R)", category: "exposure", to_base: 258e-6, description_key: "unit_desc_r" },
-    // Absorbed Dose (Base: Gy)
-    { id: "gy", label: "Gray (Gy)", category: "absorbed_dose", to_base: 1, description_key: "unit_desc_gy" },
-    { id: "rad", label: "rad", category: "absorbed_dose", to_base: 0.01, description_key: "unit_desc_rad" },
-    // Equivalent Dose (Base: Sv)
-    { id: "sv", label: "Sievert (Sv)", category: "equivalent_dose", to_base: 1, description_key: "unit_desc_sv" },
-    { id: "rem", label: "rem", category: "equivalent_dose", to_base: 0.01, description_key: "unit_desc_rem" }
-  ];
-  var UnitConverterModal = ({ isOpen, onClose, t }) => {
-    const [category, setCategory] = (0, import_react13.useState)("activity");
-    const [fromUnitId, setFromUnitId] = (0, import_react13.useState)("ci");
-    const [toUnitId, setToUnitId] = (0, import_react13.useState)("bq");
-    const [inputValue, setInputValue] = (0, import_react13.useState)("1");
-    (0, import_react13.useEffect)(() => {
-      if (isOpen) {
-        setCategory("activity");
-        setFromUnitId("ci");
-        setToUnitId("bq");
-        setInputValue("1");
-      }
-    }, [isOpen]);
-    const handleCategoryChange = (newCategory) => {
-      setCategory(newCategory);
-      const categoryUnits2 = units.filter((u) => u.category === newCategory);
-      if (categoryUnits2.length > 1) {
-        setFromUnitId(categoryUnits2[1].id);
-        setToUnitId(categoryUnits2[0].id);
-      }
-      setInputValue("1");
-    };
-    const handleSwap = () => {
-      setFromUnitId(toUnitId);
-      setToUnitId(fromUnitId);
-    };
-    const categoryUnits = (0, import_react13.useMemo)(() => units.filter((u) => u.category === category), [category]);
-    const result = (0, import_react13.useMemo)(() => {
-      const fromUnit = units.find((u) => u.id === fromUnitId);
-      const toUnit = units.find((u) => u.id === toUnitId);
-      const value = parseFloat(inputValue);
-      if (!fromUnit || !toUnit || isNaN(value)) {
-        return "";
-      }
-      const valueInBase = value * fromUnit.to_base;
-      const convertedValue = valueInBase / toUnit.to_base;
-      if (Math.abs(convertedValue) > 0 && Math.abs(convertedValue) < 1e-6) {
-        return convertedValue.toExponential(4);
-      }
-      return convertedValue.toLocaleString(void 0, { maximumFractionDigits: 6 });
-    }, [inputValue, fromUnitId, toUnitId]);
-    const fromUnitDesc = (0, import_react13.useMemo)(() => t(units.find((u) => u.id === fromUnitId)?.description_key || ""), [fromUnitId, t]);
-    const toUnitDesc = (0, import_react13.useMemo)(() => t(units.find((u) => u.id === toUnitId)?.description_key || ""), [toUnitId, t]);
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Card_default, { title: t("unitConverterTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_category") }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("activity"), className: `flex-1 p-1 text-sm rounded ${category === "activity" ? "bg-cyan-600" : ""}`, children: t("unit_cat_activity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("exposure"), className: `flex-1 p-1 text-sm rounded ${category === "exposure" ? "bg-cyan-600" : ""}`, children: t("unit_cat_exposure") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("absorbed_dose"), className: `flex-1 p-1 text-sm rounded ${category === "absorbed_dose" ? "bg-cyan-600" : ""}`, children: t("unit_cat_absorbed_dose") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: () => handleCategoryChange("equivalent_dose"), className: `flex-1 p-1 text-sm rounded ${category === "equivalent_dose" ? "bg-cyan-600" : ""}`, children: t("unit_cat_equivalent_dose") })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-4 items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_value") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { type: "number", value: inputValue, onChange: (e) => setInputValue(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_from") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("select", { value: fromUnitId, onChange: (e) => setFromUnitId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md", children: categoryUnits.map((u) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value: u.id, children: u.label }, u.id)) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: handleSwap, title: t("unit_swap"), className: "p-2 rounded-md bg-gray-600 hover:bg-gray-500", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" }) }) }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-4 items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_result") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { type: "text", value: result, readOnly: true, className: "w-full bg-gray-800 p-2 rounded-md font-mono text-right border border-cyan-500" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("unit_to") }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("select", { value: toUnitId, onChange: (e) => setToUnitId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md", children: categoryUnits.map((u) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("option", { value: u.id, children: u.label }, u.id)) })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "pt-4 border-t border-gray-700 space-y-3", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: "text-md font-semibold text-gray-400", children: t("unit_description") }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-300", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("strong", { children: [
-            units.find((u) => u.id === fromUnitId)?.label,
-            ":"
-          ] }),
-          " ",
-          fromUnitDesc
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "bg-gray-900/50 p-3 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-300", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("strong", { children: [
-            units.find((u) => u.id === toUnitId)?.label,
-            ":"
-          ] }),
-          " ",
-          toUnitDesc
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex justify-end pt-4", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }) })
-    ] }) }) }) });
-  };
-  var UnitConverterModal_default = UnitConverterModal;
-
-  // pages/SpectroPage.tsx
-  var import_react27 = __toESM(require_react());
-
-  // pages/SpectrumAnalyzerPage.tsx
-  var import_react20 = __toESM(require_react());
-
-  // components/spectrum-analyzer/ImageUploader.tsx
-  var import_react14 = __toESM(require_react());
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-  var ImageUploader = ({ onImageLoaded, t }) => {
-    const [isDragging, setIsDragging] = (0, import_react14.useState)(false);
-    const handleFile = (file) => {
-      if (file && file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          onImageLoaded(e.target?.result);
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-    const handleDragOver = (0, import_react14.useCallback)((e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(true);
-    }, []);
-    const handleDragLeave = (0, import_react14.useCallback)((e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-    }, []);
-    const handleDrop = (0, import_react14.useCallback)((e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleFile(e.dataTransfer.files[0]);
-        e.dataTransfer.clearData();
-      }
-    }, []);
-    const onFileSelect = (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        handleFile(e.target.files[0]);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
-      "div",
-      {
-        onDragOver: handleDragOver,
-        onDragLeave: handleDragLeave,
-        onDrop: handleDrop,
-        onClick: () => document.getElementById("file-upload-input")?.click(),
-        className: `p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg
-        ${isDragging ? "border-indigo-400 bg-indigo-900/30" : "border-gray-600 hover:border-indigo-500 hover:bg-gray-800"}`,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-            "input",
-            {
-              id: "file-upload-input",
-              type: "file",
-              accept: "image/png, image/jpeg",
-              onChange: onFileSelect,
-              className: "hidden"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex flex-col items-center text-gray-400", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-12 w-12 mb-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "font-semibold", children: t("uploadInstruction") })
-          ] })
-        ]
-      }
-    );
-  };
-  var ImageUploader_default = ImageUploader;
-
-  // components/spectrum-analyzer/CameraCapture.tsx
-  var import_react15 = __toESM(require_react());
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-  var CameraCapture = ({ onImageCaptured, onClose, t }) => {
-    const videoRef = (0, import_react15.useRef)(null);
-    const canvasRef = (0, import_react15.useRef)(null);
-    const [stream, setStream] = (0, import_react15.useState)(null);
-    const [error, setError] = (0, import_react15.useState)(null);
-    (0, import_react15.useEffect)(() => {
-      const startCamera = async () => {
-        try {
-          const mediaStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "environment" }
-          });
-          setStream(mediaStream);
-          if (videoRef.current) {
-            videoRef.current.srcObject = mediaStream;
-          }
-        } catch (err) {
-          console.error("Error accessing camera:", err);
-          setError("Could not access the camera. Please check permissions.");
-        }
-      };
-      startCamera();
-      return () => {
-        if (stream) {
-          stream.getTracks().forEach((track) => track.stop());
-        }
-      };
-    }, []);
-    const handleTakePhoto = () => {
-      if (videoRef.current && canvasRef.current) {
-        const video = videoRef.current;
-        const canvas = canvasRef.current;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const context = canvas.getContext("2d");
-        if (context) {
-          context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-          const dataUrl = canvas.toDataURL("image/png");
-          onImageCaptured(dataUrl);
-        }
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "w-full max-w-2xl mx-auto flex flex-col items-center bg-gray-800 p-4 rounded-lg border border-gray-700", onClick: (e) => e.stopPropagation(), children: error ? /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "text-red-400 text-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onClose, className: "mt-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("close") })
-    ] }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("video", { ref: videoRef, autoPlay: true, playsInline: true, className: "w-full rounded-md mb-4 border border-gray-600" }),
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "flex space-x-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
-          "button",
-          {
-            onClick: handleTakePhoto,
-            className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 flex items-center space-x-2",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
-                /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { children: t("takePhoto") })
-            ]
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("canvas", { ref: canvasRef, className: "hidden" })
-    ] }) }) });
-  };
-  var CameraCapture_default = CameraCapture;
-
-  // components/spectrum-analyzer/CalibrationSidebar.tsx
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var linearRegression = (points) => {
-    const n = points.length;
-    if (n < 2)
-      return null;
-    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
-    for (const p of points) {
-      sumX += p.x;
-      sumY += p.y;
-      sumXY += p.x * p.y;
-      sumX2 += p.x * p.x;
-      sumY2 += p.y * p.y;
-    }
-    const denominator = n * sumX2 - sumX * sumX;
-    if (denominator === 0)
-      return null;
-    const slope = (n * sumXY - sumX * sumY) / denominator;
-    const intercept = (sumY - slope * sumX) / n;
-    let rSquared = void 0;
-    const r_denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
-    if (r_denominator !== 0) {
-      const r = (n * sumXY - sumX * sumY) / r_denominator;
-      rSquared = r * r;
-    }
-    return { slope, intercept, rSquared };
-  };
-  var CalibrationSidebar = ({
-    imageLoaded,
-    step,
-    onStepChange,
-    calibrationPoints,
-    setCalibrationPoints,
-    calibrationFunction,
-    onCalibrationChange,
-    onLaunchAnalysis,
-    analysisStatus,
-    errorMessage,
-    identificationTolerance,
-    onIdentificationToleranceChange,
-    onReset,
-    t
-  }) => {
-    const handleCalculateAndProceed = () => {
-      const func = linearRegression(calibrationPoints.map((p) => ({ x: p.x, y: p.energy })));
-      onCalibrationChange(func);
-      onStepChange("validate");
-    };
-    const removePoint = (index) => {
-      setCalibrationPoints(calibrationPoints.filter((_, i) => i !== index));
-    };
-    const undoLastPoint = () => {
-      setCalibrationPoints(calibrationPoints.slice(0, -1));
-    };
-    const clearPoints = () => {
-      setCalibrationPoints([]);
-    };
-    const getStatus = () => {
-      if (!calibrationFunction?.rSquared)
-        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-gray-400", children: t("statusNotCalculated") });
-      if (calibrationFunction.rSquared > 0.9999)
-        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-cyan-400", children: t("statusExcellent") });
-      if (calibrationFunction.rSquared > 0.999)
-        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-green-400", children: t("statusGood") });
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-red-400", children: t("statusCheckPoints") });
-    };
-    const getRSquaredColor = () => {
-      if (!calibrationFunction?.rSquared)
-        return "text-gray-400";
-      if (calibrationFunction.rSquared > 0.9999)
-        return "text-cyan-300";
-      if (calibrationFunction.rSquared > 0.999)
-        return "text-green-300";
-      return "text-red-400";
-    };
-    const getAnalysisButtonText = () => {
-      switch (analysisStatus) {
-        case "extracting":
-          return t("extractingCurve");
-        case "detecting":
-          return t("detectingPeaks");
-        default:
-          return t("runAnalysisAgain");
-      }
-    };
-    const renderStep1_AddPoints = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "text-sm text-gray-400 mb-4", children: t("calibrationStep1") }),
-      calibrationPoints.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "space-y-2 mb-4 max-h-40 overflow-y-auto", children: calibrationPoints.map((p, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between items-center bg-gray-700 p-2 rounded-md text-sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-          "Ch: ",
-          Math.round(p.x),
-          ", E: ",
-          p.energy,
-          " keV"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => removePoint(i), className: "text-red-400 hover:text-red-300", children: "\xD7" })
-      ] }, i)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex space-x-2 mb-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: undoLastPoint, disabled: calibrationPoints.length === 0, className: "text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 flex-1", children: t("undoLast") }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: clearPoints, disabled: calibrationPoints.length === 0, className: "text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 flex-1", children: t("clearAll") })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
-        "button",
-        {
-          onClick: handleCalculateAndProceed,
-          disabled: calibrationPoints.length < 2,
-          className: "w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 disabled:bg-gray-500",
-          children: [
-            t("calculateCalibration"),
-            " (",
-            calibrationPoints.length,
-            "/2 min)"
-          ]
-        }
-      )
-    ] });
-    const renderStep2_Validate = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "text-sm text-gray-400 mb-4", children: t("calibrationStep2") }),
-      calibrationFunction && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md space-y-2 text-sm mb-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
-            t("calibrationStatus"),
-            ":"
-          ] }),
-          getStatus()
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "text-gray-400", children: "R\xB2:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `font-mono ${getRSquaredColor()}`, children: calibrationFunction.rSquared?.toFixed(6) ?? "N/A" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
-            t("slope"),
-            ":"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: calibrationFunction.slope.toPrecision(4) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "text-gray-400", children: [
-            t("intercept"),
-            ":"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "font-mono", children: calibrationFunction.intercept.toPrecision(4) })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onStepChange("add"), className: "flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("backToPoints") }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => {
-          onLaunchAnalysis();
-          onStepChange("analyze");
-        }, disabled: !calibrationFunction, className: "flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("runAnalysis") })
-      ] })
-    ] });
-    const renderStep3_Analyze = () => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-      analysisStatus === "error" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "text-red-400 bg-red-900/30 p-2 rounded-md mb-4 text-sm", children: t(errorMessage) || errorMessage }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "mb-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-            t("identificationTolerance"),
-            " (keV)"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
-          "input",
-          {
-            type: "number",
-            value: identificationTolerance,
-            onChange: (e) => onIdentificationToleranceChange(parseFloat(e.target.value)),
-            step: "0.1",
-            min: "0.1",
-            className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onLaunchAnalysis(true), disabled: analysisStatus === "extracting" || analysisStatus === "detecting", className: "w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: getAnalysisButtonText() }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "mt-4 flex space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onStepChange("validate"), className: "flex-1 text-sm bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg", children: t("backToCalibration") }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: onReset, className: "flex-1 text-sm bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-lg", children: t("resetAll") })
-      ] })
-    ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(Card_default, { title: t("calibrationAndAnalysis"), children: [
-      step === "add" && renderStep1_AddPoints(),
-      step === "validate" && renderStep2_Validate(),
-      step === "analyze" && renderStep3_Analyze()
-    ] });
-  };
-  var CalibrationSidebar_default = CalibrationSidebar;
-
-  // components/spectrum-analyzer/AnalysisResults.tsx
-  var import_react16 = __toESM(require_react());
-  var import_react_dom2 = __toESM(require_react_dom());
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime());
-  var Marker = ({ position, text, type, group }) => {
-    let color, textColor;
-    if (group === "A") {
-      color = "border-orange-400";
-      textColor = "text-orange-400";
-    } else if (group === "B") {
-      color = "border-purple-400";
-      textColor = "text-purple-400";
-    } else {
-      color = type === "auto" ? "border-red-500" : "border-green-400";
-      textColor = type === "auto" ? "text-red-400" : "text-green-400";
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute", style: { transform: "translate(-50%, -100%)" }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: `relative px-2 py-1 text-xs font-bold ${textColor} bg-gray-900/70 rounded-md cursor-pointer`, children: [
-      text,
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: `absolute left-1/2 w-px h-4 bg-gray-400 -bottom-4` })
-    ] }) });
-  };
-  var Cursor = ({ position }) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-    "div",
-    {
-      className: "absolute w-4 h-4 border border-cyan-400 rounded-full pointer-events-none",
-      style: { left: position.x, top: position.y, transform: "translate(-50%, -50%)" }
-    }
-  );
-  var Tooltip = ({ eventCoords, text }) => {
-    const el = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      "div",
-      {
-        className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50 whitespace-pre-wrap",
-        style: { top: eventCoords.y + 15, left: eventCoords.x + 15 },
-        children: text
-      }
-    );
-    return (0, import_react_dom2.createPortal)(el, document.body);
-  };
-  var Magnifier = ({ src, x, y, clientX, clientY, imgWidth, imgHeight }) => {
-    const zoom = 2.5;
-    const size = 120;
-    const bgX = size / 2 - x * zoom;
-    const bgY = size / 2 - y * zoom;
-    const style = {
-      top: clientY - size - 15,
-      // Position above the cursor
-      left: clientX - size / 2,
-      width: size,
-      height: size,
-      backgroundImage: `url('${src}')`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: `${imgWidth * zoom}px ${imgHeight * zoom}px`,
-      backgroundPosition: `${bgX}px ${bgY}px`
-    };
-    return (0, import_react_dom2.createPortal)(
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
-        "div",
-        {
-          className: "fixed pointer-events-none border-2 border-cyan-400 bg-gray-900 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.5)] z-[100]",
-          style,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute top-1/2 left-0 w-full h-px bg-cyan-400/60 transform -translate-y-1/2" }),
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "absolute left-1/2 top-0 h-full w-px bg-cyan-400/60 transform -translate-x-1/2" })
-          ]
-        }
-      ),
-      document.body
-    );
-  };
-  var AnalysisResults = ({
-    imageSrc,
-    imageRef,
-    analysisResult,
-    spectrumPoints,
-    calibrationFunction,
-    interactivePoint,
-    sidebar,
-    t,
-    analysisStatus,
-    step,
-    onMouseMove,
-    onMouseLeave,
-    onImageClick,
-    onTogglePeakGroup,
-    onExportCsv,
-    onSaveAnalysis
-  }) => {
-    const [imageSize, setImageSize] = (0, import_react16.useState)(null);
-    const [magnifier, setMagnifier] = (0, import_react16.useState)(null);
-    (0, import_react16.useLayoutEffect)(() => {
-      if (imageRef.current) {
-        const updateSize = () => {
-          if (imageRef.current) {
-            setImageSize({
-              width: imageRef.current.offsetWidth,
-              height: imageRef.current.offsetHeight,
-              naturalWidth: imageRef.current.naturalWidth,
-              naturalHeight: imageRef.current.naturalHeight
-            });
-          }
-        };
-        const img = imageRef.current;
-        img.onload = updateSize;
-        if (img.complete) {
-          updateSize();
-        }
-        const resizeObserver = new ResizeObserver(updateSize);
-        resizeObserver.observe(img);
-        return () => {
-          img.onload = null;
-          resizeObserver.disconnect();
-        };
-      }
-    }, [imageRef, imageSrc]);
-    const handleMouseMoveLocal = (e) => {
-      if (imageRef.current) {
-        const rect = imageRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
-          setMagnifier({ x, y, clientX: e.clientX, clientY: e.clientY });
-        } else {
-          setMagnifier(null);
-        }
-      }
-      onMouseMove(e);
-    };
-    const handleMouseLeaveLocal = () => {
-      setMagnifier(null);
-      onMouseLeave();
-    };
-    const groupCounts = (0, import_react16.useMemo)(() => {
-      if (!analysisResult || !imageSize || !imageSize.naturalHeight) {
-        return { A: 0, B: 0 };
-      }
-      const { naturalHeight } = imageSize;
-      const counts = { A: 0, B: 0 };
-      analysisResult.detectedPeaks.forEach((peak) => {
-        const count = naturalHeight - peak.y;
-        if (peak.group === "A") {
-          counts.A += count;
-        } else if (peak.group === "B") {
-          counts.B += count;
-        }
-      });
-      return counts;
-    }, [analysisResult, imageSize]);
-    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
-    const getScreenCoords = (point) => {
-      if (!imageSize || imageSize.naturalWidth === 0 || imageSize.naturalHeight === 0)
-        return null;
-      const x = point.x / imageSize.naturalWidth * imageSize.width;
-      const y = point.y / imageSize.naturalHeight * imageSize.height;
-      return { x, y };
-    };
-    const renderPeakRow = (peak, index) => {
-      const matches = analysisResult?.nuclideMatches.get(peak.energy) || [];
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_react16.default.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { className: "border-t border-gray-700 print:border-gray-300", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 font-mono print:text-black", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: `font-semibold text-sm ${peak.manual ? "text-green-300" : "text-cyan-300"} print:text-black print:font-bold`, children: peak.energy.toFixed(2) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 font-mono text-gray-400 print:text-black", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-          "td",
-          {
-            className: "py-2 px-3 text-center font-semibold cursor-pointer no-print",
-            style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" },
-            onClick: (e) => {
-              e.stopPropagation();
-              onTogglePeakGroup(index);
-            },
-            title: "Click to cycle group (A, B, None)",
-            children: peak.group || "-"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { className: "py-2 px-3 text-center font-semibold hidden print:table-cell", style: { color: "black" }, children: peak.group || "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { colSpan: 3, className: "py-2 px-3", children: matches.length > 0 ? matches.slice(0, 3).map((match, matchIndex) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: `grid grid-cols-3 gap-2 ${matchIndex > 0 ? "mt-1 pt-1 border-t border-gray-800 print:border-gray-400" : ""}`, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-bold text-gray-100 col-span-1 print:text-black", children: getLocalizedNuclideName(match.nuclide.name, t) }),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono text-gray-200 text-right print:text-black", children: match.line.energy_keV.toFixed(2) }),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { className: "font-mono text-gray-300 text-right print:text-black", children: [
-            match.line.intensity_percent.toFixed(2),
-            "%"
-          ] })
-        ] }, matchIndex)) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "text-gray-500 print:text-black", children: t("noNuclidesFound") }) })
-      ] }) }, `${peak.energy}-${index}`);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-      Card_default,
-      {
-        title: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between items-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("analysisResultsTitle") }),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex items-center space-x-2 no-print", children: [
-            analysisStatus === "complete" && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex items-center space-x-2 p-1 bg-gray-900/50 rounded-lg", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: onSaveAnalysis, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { d: "M5 4a2 2 0 012-2h6a2 2 0 012 2v10l-5-4-5 4V4z" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("saveAnalysis") })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: onExportCsv, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 px-3 py-1 rounded-md hover:bg-gray-700", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("exportCsv") })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { disabled: true, title: `${t("exportHdf5")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "HDF5" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { disabled: true, title: `${t("exportNetCdf")} (coming soon)`, className: "text-sm text-gray-500 flex items-center space-x-2 px-3 py-1 rounded-md cursor-not-allowed", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: "NetCDF" }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("button", { onClick: () => window.print(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("printReport") })
-            ] })
-          ] })
-        ] }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 print-container", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "lg:col-span-2 relative", onClick: onImageClick, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-              "img",
-              {
-                ref: imageRef,
-                src: imageSrc,
-                alt: "Spectrum",
-                className: `w-full h-auto rounded-lg print-img ${step === "add" || analysisStatus === "complete" && spectrumPoints ? "cursor-crosshair" : ""}`
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-              "div",
-              {
-                className: "absolute inset-0 cursor-crosshair no-print",
-                onMouseMove: handleMouseMoveLocal,
-                onMouseLeave: handleMouseLeaveLocal,
-                children: step === "analyze" && (analysisStatus === "complete" && spectrumPoints && spectrumPoints.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-                  analysisResult?.detectedPeaks.map((peak, index) => {
-                    const screenCoords = getScreenCoords(peak);
-                    if (!screenCoords)
-                      return null;
-                    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-                      "div",
-                      {
-                        className: "absolute cursor-pointer",
-                        style: { left: screenCoords.x, top: screenCoords.y },
-                        onClick: (e) => {
-                          e.stopPropagation();
-                          onTogglePeakGroup(index);
-                        },
-                        children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-                          Marker,
-                          {
-                            position: { x: 0, y: 0 },
-                            text: peak.energy.toFixed(1),
-                            type: peak.manual ? "manual" : "auto",
-                            group: peak.group
-                          }
-                        )
-                      },
-                      `peak-wrapper-${index}`
-                    );
-                  }),
-                  interactivePoint && (() => {
-                    const screenCoords = getScreenCoords(interactivePoint.point);
-                    if (!screenCoords || !calibrationFunction)
-                      return null;
-                    const energy = calibrationFunction.slope * interactivePoint.point.x + calibrationFunction.intercept;
-                    let tooltipText = `${energy.toFixed(1)} keV`;
-                    if (interactivePoint.topMatch) {
-                      tooltipText += `
-~ ${getLocalizedNuclideName(interactivePoint.topMatch.nuclide.name, t)}`;
-                    }
-                    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Cursor, { position: screenCoords }),
-                      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Tooltip, { eventCoords: { x: interactivePoint.eventCoords.x + (imageRef.current?.getBoundingClientRect().left ?? 0), y: interactivePoint.eventCoords.y + (imageRef.current?.getBoundingClientRect().top ?? 0) }, text: tooltipText })
-                    ] });
-                  })()
-                ] })
-              }
-            ),
-            magnifier && imageSize && (step === "add" || step === "analyze") && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-              Magnifier,
-              {
-                src: imageSrc,
-                x: magnifier.x,
-                y: magnifier.y,
-                clientX: magnifier.clientX,
-                clientY: magnifier.clientY,
-                imgWidth: imageSize.width,
-                imgHeight: imageSize.height
-              }
-            )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "lg:col-span-1 print-table-container", children: analysisStatus === "complete" ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "print-text-black", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "bg-gray-900/50 p-3 rounded-md mb-4 no-print text-sm text-gray-400 flex items-start space-x-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(InfoTooltip_default, { text: t("interactiveModeTooltip") }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: t("analysisComplete") })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h3", { className: "text-md font-semibold text-gray-300 mb-2 print-text-black", children: t("detectedPeaksTitle") }),
-            analysisResult && analysisResult.detectedPeaks.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("table", { className: "w-full text-xs text-left", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("thead", { className: "text-gray-400 print:text-black", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("energy_keV") }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("fwhm_keV") }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { className: "py-2 px-3", children: t("group") }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { colSpan: 3, className: "py-2 px-3", children: t("nuclide") })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("tbody", { children: analysisResult.detectedPeaks.map((peak, originalIndex) => ({ peak, originalIndex })).sort((a, b) => a.peak.energy - b.peak.energy).map(({ peak, originalIndex }) => renderPeakRow(peak, originalIndex)) })
-            ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { className: "text-gray-500 print:text-black", children: t("noPeaksDetected") }),
-            analysisResult && analysisResult.detectedPeaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm no-print", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "grid grid-cols-2 gap-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { children: [
-                      t("group_a_total"),
-                      ":"
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono", children: groupCounts.A.toFixed(0) })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { children: [
-                      t("group_b_total"),
-                      ":"
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "font-mono", children: groupCounts.B.toFixed(0) })
-                  ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("strong", { children: [
-                    t("ratio_a_b"),
-                    ":"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
-                ] }) })
-              ] })
-            ] })
-          ] }) : sidebar })
-        ] })
-      }
-    ) });
-  };
-  var AnalysisResults_default = AnalysisResults;
-
-  // components/spectrum-analyzer/CalibrationPointModal.tsx
-  var import_react17 = __toESM(require_react());
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime());
-  var CalibrationPointModal = ({ isOpen, onClose, onSubmit, t }) => {
-    const [energy, setEnergy] = (0, import_react17.useState)("");
-    const [uncertainty, setUncertainty] = (0, import_react17.useState)("");
-    (0, import_react17.useEffect)(() => {
-      if (isOpen) {
-        setEnergy("");
-        setUncertainty("");
-      }
-    }, [isOpen]);
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const energyValue = parseFloat(energy);
-      if (!isNaN(energyValue) && energyValue > 0) {
-        const uncertaintyValue = parseFloat(uncertainty);
-        onSubmit(energyValue, isNaN(uncertaintyValue) ? void 0 : uncertaintyValue);
-      }
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl p-6 w-full max-w-sm border border-gray-700", onClick: (e) => e.stopPropagation(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h2", { className: "text-xl font-bold text-cyan-400 mb-4", children: t("enterPeakEnergy") }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleSubmit, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { htmlFor: "peak-energy", className: "block text-sm font-medium text-gray-300 mb-1", children: t("peakEnergyLabel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              id: "peak-energy",
-              type: "number",
-              value: energy,
-              onChange: (e) => setEnergy(e.target.value),
-              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white",
-              step: "0.1",
-              min: "0",
-              autoFocus: true,
-              required: true
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { htmlFor: "peak-uncertainty", className: "block text-sm font-medium text-gray-300 mb-1", children: t("peakEnergyUncertaintyLabel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              id: "peak-uncertainty",
-              type: "number",
-              value: uncertainty,
-              onChange: (e) => setUncertainty(e.target.value),
-              className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white",
-              step: "0.01",
-              min: "0"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex justify-end space-x-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("cancel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300", children: t("ok") })
-        ] })
-      ] })
-    ] }) });
-  };
-  var CalibrationPointModal_default = CalibrationPointModal;
-
-  // components/PeakPositionAdjusterModal.tsx
-  var import_react18 = __toESM(require_react());
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
-  var PeakPositionAdjusterModal = ({
-    isOpen,
-    onClose,
-    onConfirm,
-    spectrumData,
-    initialX,
-    xRange,
-    energyFromX,
-    identificationTolerance,
-    t,
-    title,
-    confirmText,
-    analysisType
-  }) => {
-    const [currentX, setCurrentX] = (0, import_react18.useState)(initialX);
-    (0, import_react18.useEffect)(() => {
-      if (isOpen) {
-        setCurrentX(initialX);
-      }
-    }, [isOpen, initialX]);
-    const dataSlice = (0, import_react18.useMemo)(() => {
-      if (!spectrumData || spectrumData.length === 0)
-        return [];
-      const min = initialX - xRange;
-      const max = initialX + xRange;
-      return spectrumData.filter((p) => p.x >= min && p.x <= max);
-    }, [spectrumData, initialX, xRange]);
-    const { currentY, currentEnergy } = (0, import_react18.useMemo)(() => {
-      const point = spectrumData.find((p) => Math.round(p.x) === Math.round(currentX));
-      const y = point ? point.y : 0;
-      const energy = energyFromX(currentX);
-      return { currentY: y, currentEnergy: energy };
-    }, [currentX, spectrumData, energyFromX]);
-    const topMatch = (0, import_react18.useMemo)(() => {
-      if (currentEnergy <= 0)
-        return null;
-      const results = identifyPeaks([currentEnergy], identificationTolerance, analysisType);
-      return results[0]?.matches[0] || null;
-    }, [currentEnergy, identificationTolerance, analysisType]);
-    const width = 500;
-    const height = 250;
-    const padding = { top: 20, right: 20, bottom: 40, left: 40 };
-    const { xMin, xMax, yMin, yMax } = (0, import_react18.useMemo)(() => {
-      if (dataSlice.length === 0)
-        return { xMin: 0, xMax: 1, yMin: 0, yMax: 1 };
-      let yMin2 = Infinity, yMax2 = -Infinity;
-      dataSlice.forEach((p) => {
-        yMin2 = Math.min(yMin2, p.y);
-        yMax2 = Math.max(yMax2, p.y);
-      });
-      return {
-        xMin: initialX - xRange,
-        xMax: initialX + xRange,
-        yMin: yMin2 > 0 ? yMin2 * 0.9 : 0,
-        // Give a little space at the bottom
-        yMax: yMax2 * 1.1
-      };
-    }, [dataSlice, initialX, xRange]);
-    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
-    const toSvgY = (y) => height - padding.bottom - (y - yMin) / (yMax - yMin) * (height - padding.top - padding.bottom);
-    const path = (0, import_react18.useMemo)(() => {
-      if (dataSlice.length === 0)
-        return "";
-      let p = `M ${toSvgX(dataSlice[0].x)} ${toSvgY(dataSlice[0].y)}`;
-      dataSlice.forEach((point) => {
-        p += ` L ${toSvgX(point.x)} ${toSvgY(point.y)}`;
-      });
-      return p;
-    }, [dataSlice, xMin, xMax, yMin, yMax]);
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "w-full max-w-xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Card_default, { title, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "relative bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("text", { x: width / 2, y: height - 10, textAnchor: "middle", fill: "#9ca3af", fontSize: "12", children: t("channel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { d: path, stroke: "#60a5fa", fill: "none", strokeWidth: "2" }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-          "line",
-          {
-            x1: toSvgX(currentX),
-            y1: padding.top,
-            x2: toSvgX(currentX),
-            y2: height - padding.bottom,
-            stroke: "#f87171",
-            strokeWidth: "1.5",
-            strokeDasharray: "4 2"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("circle", { cx: toSvgX(currentX), cy: toSvgY(currentY), r: "5", fill: "none", stroke: "#f87171", strokeWidth: "2" })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("adjustChannel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-          "input",
-          {
-            type: "range",
-            min: initialX - xRange,
-            max: initialX + xRange,
-            value: currentX,
-            onChange: (e) => setCurrentX(parseFloat(e.target.value)),
-            className: "w-full"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "bg-gray-700/50 p-3 rounded-md grid grid-cols-2 md:grid-cols-4 gap-2 text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("channel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300", children: Math.round(currentX) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("counts") }),
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300", children: Math.round(currentY).toLocaleString() })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("energy") }),
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "font-mono text-cyan-300", children: [
-            currentEnergy.toFixed(1),
-            " keV"
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-xs text-gray-400", children: t("suggestedNuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "font-mono text-cyan-300 truncate", title: topMatch ? topMatch.nuclide.name : "-", children: topMatch ? topMatch.nuclide.name : "-" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { onClick: () => onConfirm(currentX), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: confirmText })
-      ] })
-    ] }) }) }) });
-  };
-  var PeakPositionAdjusterModal_default = PeakPositionAdjusterModal;
-
-  // components/SaveAnalysisModal.tsx
-  var import_react19 = __toESM(require_react());
-
-  // services/dbService.ts
-  var DB_NAME = "ISOAssistantDB";
-  var DB_VERSION = 2;
-  var SOURCES_STORE_NAME = "sources";
-  var ANALYSES_STORE_NAME = "analyses";
-  var DBService = class {
-    constructor() {
-      this.db = null;
-      this.init();
-    }
-    init() {
-      return new Promise((resolve, reject) => {
-        if (this.db) {
-          return resolve();
-        }
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onerror = () => {
-          console.error("IndexedDB error:", request.error);
-          reject(request.error);
-        };
-        request.onsuccess = () => {
-          this.db = request.result;
-          resolve();
-        };
-        request.onupgradeneeded = (event) => {
-          const db2 = event.target.result;
-          if (!db2.objectStoreNames.contains(SOURCES_STORE_NAME)) {
-            db2.createObjectStore(SOURCES_STORE_NAME, { keyPath: "id" });
-          }
-          if (!db2.objectStoreNames.contains(ANALYSES_STORE_NAME)) {
-            db2.createObjectStore(ANALYSES_STORE_NAME, { keyPath: "id" });
-          }
-        };
-      });
-    }
-    async getDb() {
-      if (!this.db) {
-        await this.init();
-      }
-      return this.db;
-    }
-    // --- Source Management ---
-    async addSource(sourceData) {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(SOURCES_STORE_NAME);
-        const newSource = {
-          id: crypto.randomUUID(),
-          ...sourceData
-        };
-        const request = store.add(newSource);
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    async updateSource(source) {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(SOURCES_STORE_NAME);
-        const request = store.put(source);
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    async getAllSources() {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(SOURCES_STORE_NAME, "readonly");
-        const store = transaction.objectStore(SOURCES_STORE_NAME);
-        const request = store.getAll();
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-    async deleteSource(id) {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(SOURCES_STORE_NAME);
-        const request = store.delete(id);
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    // --- Analysis History Management ---
-    async addAnalysis(record) {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(ANALYSES_STORE_NAME);
-        const newRecord = {
-          id: crypto.randomUUID(),
-          date: (/* @__PURE__ */ new Date()).toISOString(),
-          ...record
-        };
-        const request = store.add(newRecord);
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    async getAllAnalyses() {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readonly");
-        const store = transaction.objectStore(ANALYSES_STORE_NAME);
-        const request = store.getAll();
-        request.onsuccess = () => {
-          const sorted = request.result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-          resolve(sorted);
-        };
-        request.onerror = () => reject(request.error);
-      });
-    }
-    async deleteAnalysis(id) {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(ANALYSES_STORE_NAME);
-        const request = store.delete(id);
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    // --- Data Clearing ---
-    async clearSources() {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(SOURCES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(SOURCES_STORE_NAME);
-        store.clear();
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-    async clearAnalyses() {
-      const db2 = await this.getDb();
-      return new Promise((resolve, reject) => {
-        const transaction = db2.transaction(ANALYSES_STORE_NAME, "readwrite");
-        const store = transaction.objectStore(ANALYSES_STORE_NAME);
-        store.clear();
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-      });
-    }
-  };
-  var db = new DBService();
-
-  // components/SaveAnalysisModal.tsx
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
-  var SaveAnalysisModal = ({ isOpen, onClose, onSave, t }) => {
-    const [name, setName] = (0, import_react19.useState)("");
-    const [sourceId, setSourceId] = (0, import_react19.useState)("");
-    const [sources, setSources] = (0, import_react19.useState)([]);
-    (0, import_react19.useEffect)(() => {
-      if (isOpen) {
-        db.getAllSources().then(setSources);
-        setName("");
-        setSourceId("");
-      }
-    }, [isOpen]);
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (name.trim()) {
-        onSave(name.trim(), sourceId || void 0);
-      }
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Card_default, { title: t("saveAnalysisModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("analysisName") }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-          "input",
-          {
-            type: "text",
-            value: name,
-            onChange: (e) => setName(e.target.value),
-            required: true,
-            autoFocus: true,
-            className: "w-full bg-gray-700 p-2 rounded-md text-white"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("linkToSource") }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
-          "select",
-          {
-            value: sourceId,
-            onChange: (e) => setSourceId(e.target.value),
-            className: "w-full bg-gray-700 p-2 rounded-md text-white",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("option", { value: "", children: t("noSource") }),
-              sources.map((source) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("option", { value: source.id, children: [
-                source.name,
-                " (",
-                source.nuclide,
-                ")"
-              ] }, source.id))
-            ]
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
-      ] })
-    ] }) }) }) });
-  };
-  var SaveAnalysisModal_default = SaveAnalysisModal;
-
-  // services/spectrumAnalyzerService.ts
-  async function getImageData(imageDataUrl) {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-          return reject(new Error("Could not get canvas context"));
-        }
-        ctx.drawImage(image, 0, 0);
-        resolve(ctx.getImageData(0, 0, image.width, image.height));
-      };
-      image.onerror = () => reject(new Error("invalidImageFormat"));
-      image.src = imageDataUrl;
-    });
-  }
-  function findTraceColor(imageData) {
-    const colorCounts = {};
-    const { data } = imageData;
-    const ignoredColors = /* @__PURE__ */ new Set(["0,0,0", "255,255,255"]);
-    const step = 4 * 5;
-    for (let i = 0; i < data.length; i += step) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      const brightness = (r + g + b) / 3;
-      if (brightness > 20 && brightness < 235) {
-        const key = `${r},${g},${b}`;
-        if (!ignoredColors.has(key)) {
-          colorCounts[key] = (colorCounts[key] || 0) + 1;
-        }
-      }
-    }
-    if (Object.keys(colorCounts).length === 0) {
-      for (let i = 0; i < data.length; i += step) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        const key = `${r},${g},${b}`;
-        if (!ignoredColors.has(key)) {
-          colorCounts[key] = (colorCounts[key] || 0) + 1;
-        }
-      }
-      if (Object.keys(colorCounts).length === 0) {
-        throw new Error("noTraceFound");
-      }
-    }
-    const dominantColor = Object.entries(colorCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-    return dominantColor.split(",").map(Number);
-  }
-  function extractCurveFromImage(imageData, traceColor) {
-    const { data, width, height } = imageData;
-    const curve = [];
-    const colorThreshold = 60;
-    for (let x = 0; x < width; x++) {
-      let y_coords = [];
-      for (let y = 0; y < height; y++) {
-        const index = (y * width + x) * 4;
-        const r = data[index];
-        const g = data[index + 1];
-        const b = data[index + 2];
-        const distance = Math.sqrt(
-          Math.pow(r - traceColor[0], 2) + Math.pow(g - traceColor[1], 2) + Math.pow(b - traceColor[2], 2)
-        );
-        if (distance < colorThreshold) {
-          y_coords.push(y);
-        }
-      }
-      if (y_coords.length > 0) {
-        const avgY = y_coords.reduce((sum, val) => sum + val, 0) / y_coords.length;
-        curve.push({ x, y: avgY });
-      }
-    }
-    if (curve.length < 10) {
-      throw new Error("curveExtractionFailed");
-    }
-    return curve;
-  }
-  function findPeaks(curveData) {
-    const peaks = [];
-    if (curveData.length < 5)
-      return peaks;
-    const naturalHeight = Math.max(...curveData.map((p) => p.y));
-    const data = curveData.map((p) => ({ x: p.x, y: naturalHeight - p.y }));
-    const yValues = data.map((p) => p.y);
-    const mean = yValues.reduce((a, b) => a + b) / yValues.length;
-    const stdDev = Math.sqrt(yValues.map((y) => Math.pow(y - mean, 2)).reduce((a, b) => a + b) / yValues.length);
-    const prominence = stdDev * 1.5;
-    const threshold = Math.max(mean, stdDev * 2);
-    for (let i = 2; i < data.length - 2; i++) {
-      const p = data[i];
-      if (p.y > threshold && p.y > data[i - 1].y && p.y >= data[i + 1].y && p.y > data[i - 2].y && p.y >= data[i + 2].y) {
-        let leftMin = p.y;
-        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
-          leftMin = Math.min(leftMin, data[j].y);
-          if (data[j].y > p.y)
-            break;
-        }
-        let rightMin = p.y;
-        for (let j = i + 1; j < data.length && j - i < 50; j++) {
-          rightMin = Math.min(rightMin, data[j].y);
-          if (data[j].y > p.y)
-            break;
-        }
-        if (p.y - leftMin > prominence && p.y - rightMin > prominence) {
-          const originalPoint = curveData.find((op) => op.x === p.x);
-          if (originalPoint) {
-            peaks.push({ ...originalPoint, energy: 0 });
-          }
-        }
-      }
-    }
-    return peaks;
-  }
-  async function analyzeSpectrum(imageDataUrl, setStatus) {
-    setStatus("extracting");
-    const imageData = await getImageData(imageDataUrl);
-    const traceColor = findTraceColor(imageData);
-    const curveData = extractCurveFromImage(imageData, traceColor);
-    setStatus("detecting");
-    const detectedPeaks = findPeaks(curveData);
-    return {
-      curveData,
-      analysisResult: {
-        detectedPeaks,
-        nuclideMatches: /* @__PURE__ */ new Map()
-      }
-    };
-  }
-
-  // services/analysisHelpers.ts
-  function calculateFWHM(peakChannel, spectrumData, slope) {
-    if (spectrumData.length === 0 || !isFinite(slope) || Math.abs(slope) < 1e-9) {
-      return null;
-    }
-    const peakIndex = spectrumData.findIndex((p) => p.x >= peakChannel);
-    if (peakIndex === -1)
-      return null;
-    let peakPoint = spectrumData[peakIndex];
-    const searchWindow = 5;
-    let localMaxY = -Infinity;
-    let localMaxIndex = -1;
-    for (let i = Math.max(0, peakIndex - searchWindow); i < Math.min(spectrumData.length, peakIndex + searchWindow); i++) {
-      if (spectrumData[i] && spectrumData[i].y > localMaxY) {
-        localMaxY = spectrumData[i].y;
-        localMaxIndex = i;
-      }
-    }
-    if (localMaxIndex !== -1) {
-      peakPoint = spectrumData[localMaxIndex];
-    } else {
-      return null;
-    }
-    const peakY = peakPoint.y;
-    const baselineWindow = Math.min(Math.round(peakPoint.x), spectrumData.length - Math.round(peakPoint.x) - 1, 50);
-    const leftSlice = spectrumData.slice(Math.max(0, Math.round(peakPoint.x) - baselineWindow), Math.round(peakPoint.x));
-    const rightSlice = spectrumData.slice(Math.round(peakPoint.x) + 1, Math.min(spectrumData.length, Math.round(peakPoint.x) + baselineWindow + 1));
-    const leftMin = leftSlice.length > 0 ? Math.min(...leftSlice.map((p) => p.y)) : peakY;
-    const rightMin = rightSlice.length > 0 ? Math.min(...rightSlice.map((p) => p.y)) : peakY;
-    const baseline = (leftMin + rightMin) / 2;
-    const halfMax = baseline + (peakY - baseline) / 2;
-    let leftX = null;
-    let rightX = null;
-    for (let i = Math.round(peakPoint.x); i > 0; i--) {
-      const currentPoint = spectrumData[i];
-      const prevPoint = spectrumData[i - 1];
-      if (currentPoint && prevPoint && currentPoint.y >= halfMax && prevPoint.y < halfMax) {
-        leftX = prevPoint.x + (halfMax - prevPoint.y) * (currentPoint.x - prevPoint.x) / (currentPoint.y - prevPoint.y);
-        break;
-      }
-    }
-    for (let i = Math.round(peakPoint.x); i < spectrumData.length - 1; i++) {
-      const currentPoint = spectrumData[i];
-      const nextPoint = spectrumData[i + 1];
-      if (currentPoint && nextPoint && currentPoint.y >= halfMax && nextPoint.y < halfMax) {
-        rightX = currentPoint.x + (halfMax - currentPoint.y) * (nextPoint.x - currentPoint.x) / (nextPoint.y - currentPoint.y);
-        break;
-      }
-    }
-    if (leftX !== null && rightX !== null) {
-      const fwhmInChannels = rightX - leftX;
-      return Math.abs(fwhmInChannels * slope);
-    }
-    return null;
-  }
-
-  // pages/SpectrumAnalyzerPage.tsx
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
-  var SpectrumAnalyzerPage = ({ t, onBack, onOpenPeakIdentifier, analysisType, dataToLoad }) => {
-    const [imageDataUrl, setImageDataUrl] = (0, import_react20.useState)(null);
-    const [calibrationPoints, setCalibrationPoints] = (0, import_react20.useState)([]);
-    const [calibrationFunction, setCalibrationFunction] = (0, import_react20.useState)(null);
-    const [spectrumPoints, setSpectrumPoints] = (0, import_react20.useState)(null);
-    const [analysisResult, setAnalysisResult] = (0, import_react20.useState)(null);
-    const [initialAnalysisResult, setInitialAnalysisResult] = (0, import_react20.useState)(null);
-    const [analysisStatus, setAnalysisStatus] = (0, import_react20.useState)("idle");
-    const [errorMessage, setErrorMessage] = (0, import_react20.useState)("");
-    const [identificationTolerance, setIdentificationTolerance] = (0, import_react20.useState)(2);
-    const [step, setStep] = (0, import_react20.useState)("add");
-    const [isCameraOpen, setIsCameraOpen] = (0, import_react20.useState)(false);
-    const [isCalibrationModalOpen, setIsCalibrationModalOpen] = (0, import_react20.useState)(false);
-    const [modalPosition, setModalPosition] = (0, import_react20.useState)({ x: 0, y: 0 });
-    const [interactivePoint, setInteractivePoint] = (0, import_react20.useState)(null);
-    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react20.useState)(false);
-    const [adjusterInitialX, setAdjusterInitialX] = (0, import_react20.useState)(0);
-    const adjusterCallback = (0, import_react20.useRef)(null);
-    const [isSaveModalOpen, setIsSaveModalOpen] = (0, import_react20.useState)(false);
-    const imageRef = (0, import_react20.useRef)(null);
-    (0, import_react20.useEffect)(() => {
-      if (dataToLoad) {
-        setImageDataUrl(dataToLoad.imageDataUrl);
-        setSpectrumPoints(dataToLoad.spectrumPoints);
-        setCalibrationPoints(dataToLoad.calibrationPoints);
-        setCalibrationFunction(dataToLoad.calibrationFunction);
-        setAnalysisResult(dataToLoad.analysisResult);
-        setStep("analyze");
-        setAnalysisStatus("complete");
-      }
-    }, [dataToLoad]);
-    const resetState = (0, import_react20.useCallback)(() => {
-      setImageDataUrl(null);
-      setCalibrationPoints([]);
-      setCalibrationFunction(null);
-      setSpectrumPoints(null);
-      setAnalysisResult(null);
-      setInitialAnalysisResult(null);
-      setAnalysisStatus("idle");
-      setErrorMessage("");
-      setStep("add");
-      setInteractivePoint(null);
-    }, []);
-    const handleImageLoaded = (0, import_react20.useCallback)(async (dataUrl) => {
-      resetState();
-      setImageDataUrl(dataUrl);
-      setIsCameraOpen(false);
-      try {
-        const { curveData, analysisResult: analysisResult2 } = await analyzeSpectrum(dataUrl, setAnalysisStatus);
-        setSpectrumPoints(curveData);
-        setInitialAnalysisResult(analysisResult2);
-        setAnalysisStatus("idle");
-      } catch (e) {
-        console.error(e);
-        setAnalysisStatus("error");
-        setErrorMessage(e.message || "analysisError_generic");
-      }
-    }, [resetState]);
-    const togglePeakGroup = (peakIndex) => {
-      setAnalysisResult((prev) => {
-        if (!prev)
-          return null;
-        const newPeaks = [...prev.detectedPeaks];
-        const peak = newPeaks[peakIndex];
-        if (!peak)
-          return prev;
-        if (peak.group === "A") {
-          peak.group = "B";
-        } else if (peak.group === "B") {
-          peak.group = void 0;
-        } else {
-          peak.group = "A";
-        }
-        return { ...prev, detectedPeaks: newPeaks };
-      });
-    };
-    const handleImageClick = (e) => {
-      if (step !== "add" && step !== "analyze" || !imageRef.current || step === "analyze" && !calibrationFunction)
-        return;
-      if (step === "analyze" && analysisStatus !== "complete")
-        return;
-      const rect = imageRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const naturalX = Math.round(x / imageRef.current.offsetWidth * imageRef.current.naturalWidth);
-      setAdjusterInitialX(naturalX);
-      if (step === "add") {
-        adjusterCallback.current = (preciseX) => {
-          const pointOnCurve = spectrumPoints?.find((p) => Math.round(p.x) === Math.round(preciseX));
-          const preciseY = pointOnCurve ? pointOnCurve.y : y / imageRef.current.offsetHeight * imageRef.current.naturalHeight;
-          setModalPosition({ x: preciseX, y: preciseY });
-          setIsCalibrationModalOpen(true);
-        };
-      } else {
-        adjusterCallback.current = (preciseX) => {
-          if (!calibrationFunction)
-            return;
-          const pointOnCurve = spectrumPoints?.find((p) => Math.round(p.x) === Math.round(preciseX));
-          const preciseY = pointOnCurve ? pointOnCurve.y : y / imageRef.current.offsetHeight * imageRef.current.naturalHeight;
-          const energy = calibrationFunction.slope * preciseX + calibrationFunction.intercept;
-          const newPeak = { x: preciseX, y: preciseY, energy, manual: true };
-          const identified = identifyPeaks([energy], identificationTolerance, analysisType);
-          const newMatches = identified.length > 0 ? identified[0].matches : [];
-          setAnalysisResult((prev) => {
-            if (!prev)
-              return null;
-            const updatedPeaks = [...prev.detectedPeaks, newPeak];
-            const updatedMatches = new Map(prev.nuclideMatches);
-            updatedMatches.set(energy, newMatches);
-            return { ...prev, detectedPeaks: updatedPeaks, nuclideMatches: updatedMatches };
-          });
-        };
-      }
-      setIsAdjusterOpen(true);
-    };
-    const handleCalibrationSubmit = (energy, uncertainty) => {
-      setCalibrationPoints((prev) => [...prev, { ...modalPosition, energy, uncertainty }]);
-      setIsCalibrationModalOpen(false);
-    };
-    const normalizedSpectrumData = (0, import_react20.useMemo)(() => {
-      if (!spectrumPoints)
-        return [];
-      const naturalHeight = imageRef.current?.naturalHeight || 1;
-      return spectrumPoints.map((p) => ({ x: p.x, y: naturalHeight - p.y }));
-    }, [spectrumPoints, imageRef.current?.naturalHeight]);
-    const runFullAnalysis = (0, import_react20.useCallback)((isRerun) => {
-      if (!initialAnalysisResult || !calibrationFunction)
-        return;
-      setAnalysisStatus("detecting");
-      setAnalysisResult((prev) => {
-        const autoPeaks = initialAnalysisResult.detectedPeaks;
-        const manualPeaks = prev?.detectedPeaks.filter((p) => p.manual) || [];
-        const allPeaks = [...autoPeaks, ...manualPeaks];
-        const peaksWithEnergy = allPeaks.map((p) => {
-          const energy = calibrationFunction.slope * p.x + calibrationFunction.intercept;
-          const fwhm_keV = calculateFWHM(p.x, normalizedSpectrumData, calibrationFunction.slope);
-          return {
-            ...p,
-            energy,
-            fwhm_keV
-          };
-        });
-        const peakEnergies = peaksWithEnergy.map((p) => p.energy);
-        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-        const nuclideMatches = /* @__PURE__ */ new Map();
-        identificationResults.forEach((res) => {
-          nuclideMatches.set(res.inputEnergy_keV, res.matches);
-        });
-        return { detectedPeaks: peaksWithEnergy, nuclideMatches };
-      });
-      setAnalysisStatus("complete");
-    }, [initialAnalysisResult, calibrationFunction, identificationTolerance, analysisType, normalizedSpectrumData]);
-    (0, import_react20.useEffect)(() => {
-      if (analysisStatus === "complete" && calibrationFunction) {
-        setAnalysisResult((prev) => {
-          if (!prev)
-            return null;
-          const currentPeaks = prev.detectedPeaks;
-          const peakEnergies = currentPeaks.map((p) => p.energy);
-          const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-          const nuclideMatches = /* @__PURE__ */ new Map();
-          identificationResults.forEach((res) => {
-            nuclideMatches.set(res.inputEnergy_keV, res.matches);
-          });
-          return { ...prev, nuclideMatches };
-        });
-      }
-    }, [identificationTolerance, analysisStatus, calibrationFunction, analysisType]);
-    const handleMouseMove = (e) => {
-      if (step !== "analyze" || !imageRef.current || !spectrumPoints || spectrumPoints.length === 0 || !calibrationFunction) {
-        setInteractivePoint(null);
-        return;
-      }
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const naturalX = x / imageRef.current.offsetWidth * imageRef.current.naturalWidth;
-      const closestPoint = spectrumPoints.reduce(
-        (prev, curr) => Math.abs(curr.x - naturalX) < Math.abs(prev.x - naturalX) ? curr : prev
-      );
-      const energy = calibrationFunction.slope * closestPoint.x + calibrationFunction.intercept;
-      const identificationResults = identifyPeaks([energy], identificationTolerance, analysisType);
-      const topMatch = identificationResults[0]?.matches[0];
-      setInteractivePoint({
-        point: closestPoint,
-        eventCoords: { x, y },
-        topMatch
-      });
-    };
-    const handleExportCsv = () => {
-      if (!spectrumPoints || !calibrationFunction || !imageRef.current || !imageRef.current.complete || imageRef.current.naturalHeight === 0) {
-        alert("Cannot export: analysis data is not complete.");
-        return;
-      }
-      const naturalHeight = imageRef.current.naturalHeight;
-      const header = "Channel,Energy_keV,Counts\n";
-      const csvContent = spectrumPoints.map((point) => {
-        const channel = point.x;
-        const counts = naturalHeight - point.y;
-        const energy = calibrationFunction.slope * channel + calibrationFunction.intercept;
-        return `${Math.round(channel)},${energy.toFixed(3)},${counts.toFixed(0)}`;
-      }).join("\n");
-      const blob = new Blob([header + csvContent], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", `spectrum_image_export.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
-    const handleSaveAnalysis = async (name, sourceId) => {
-      if (!analysisResult || !imageDataUrl || !spectrumPoints || !calibrationFunction) {
-        alert("Cannot save: analysis data is not complete.");
-        return;
-      }
-      try {
-        await db.addAnalysis({
-          name,
-          sourceId,
-          analysisType: "image",
-          data: {
-            imageDataUrl,
-            spectrumPoints,
-            calibrationPoints,
-            calibrationFunction,
-            analysisResult
-          }
-        });
-        alert("Analysis saved successfully!");
-      } catch (error) {
-        console.error("Failed to save analysis:", error);
-        alert("Failed to save analysis.");
-      } finally {
-        setIsSaveModalOpen(false);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumAnalyzerTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => onOpenPeakIdentifier(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { fillRule: "evenodd", d: "M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "hidden sm:inline", children: t("identifyPeaks") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => onBack(), className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { children: t("backButton") })
-          ] })
-        ] })
-      ] }),
-      !imageDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col items-center justify-center space-y-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ImageUploader_default, { onImageLoaded: handleImageLoaded, t }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "text-gray-400 font-semibold", children: t("or") }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { onClick: () => setIsCameraOpen(true), className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" }),
-            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { children: t("useCamera") })
-        ] })
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-        AnalysisResults_default,
-        {
-          imageSrc: imageDataUrl,
-          imageRef,
-          analysisResult,
-          spectrumPoints,
-          calibrationFunction,
-          interactivePoint,
-          t,
-          analysisStatus,
-          step,
-          onMouseMove: handleMouseMove,
-          onMouseLeave: () => setInteractivePoint(null),
-          onImageClick: handleImageClick,
-          onTogglePeakGroup: togglePeakGroup,
-          onExportCsv: handleExportCsv,
-          onSaveAnalysis: () => setIsSaveModalOpen(true),
-          sidebar: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-            CalibrationSidebar_default,
-            {
-              imageLoaded: !!imageDataUrl,
-              step,
-              onStepChange: setStep,
-              calibrationPoints,
-              setCalibrationPoints,
-              calibrationFunction,
-              onCalibrationChange: setCalibrationFunction,
-              onLaunchAnalysis: runFullAnalysis,
-              analysisStatus,
-              errorMessage,
-              identificationTolerance,
-              onIdentificationToleranceChange: setIdentificationTolerance,
-              onReset: resetState,
-              t
-            }
-          )
-        }
-      ),
-      isCameraOpen && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CameraCapture_default, { onImageCaptured: handleImageLoaded, onClose: () => setIsCameraOpen(false), t }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CalibrationPointModal_default, { isOpen: isCalibrationModalOpen, onClose: () => setIsCalibrationModalOpen(false), onSubmit: handleCalibrationSubmit, t }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-        PeakPositionAdjusterModal_default,
-        {
-          isOpen: isAdjusterOpen,
-          onClose: () => setIsAdjusterOpen(false),
-          onConfirm: (preciseX) => {
-            if (adjusterCallback.current) {
-              adjusterCallback.current(preciseX);
-            }
-            setIsAdjusterOpen(false);
-          },
-          spectrumData: normalizedSpectrumData,
-          initialX: adjusterInitialX,
-          xRange: 20,
-          energyFromX: (x) => calibrationFunction ? calibrationFunction.slope * x + calibrationFunction.intercept : 0,
-          identificationTolerance,
-          t,
-          title: step === "add" ? t("peakPositionAdjusterTitle") : t("addPeakManually"),
-          confirmText: step === "add" ? t("confirmPosition") : t("addPeak"),
-          analysisType
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-        SaveAnalysisModal_default,
-        {
-          isOpen: isSaveModalOpen,
-          onClose: () => setIsSaveModalOpen(false),
-          onSave: handleSaveAnalysis,
-          t
-        }
-      )
-    ] });
-  };
-  var SpectrumAnalyzerPage_default = SpectrumAnalyzerPage;
-
-  // pages/N42AnalyzerPage.tsx
-  var import_react23 = __toESM(require_react());
-
-  // services/n42ParserService.ts
-  function parseDuration(isoDuration) {
-    if (!isoDuration)
-      return "N/A";
-    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
-    const matches = isoDuration.match(regex);
-    if (!matches)
-      return isoDuration;
-    const hours = parseFloat(matches[1] || "0");
-    const minutes = parseFloat(matches[2] || "0");
-    const seconds = parseFloat(matches[3] || "0");
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    return `${totalSeconds.toFixed(2)} s`;
-  }
-  function parseDurationToSeconds(isoDuration) {
-    if (!isoDuration)
-      return void 0;
-    const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d{1,9})?)S)?/;
-    const matches = isoDuration.match(regex);
-    if (!matches)
-      return void 0;
-    const hours = parseFloat(matches[1] || "0");
-    const minutes = parseFloat(matches[2] || "0");
-    const seconds = parseFloat(matches[3] || "0");
-    return hours * 3600 + minutes * 60 + seconds;
-  }
-  async function parseN42File(file, t) {
-    const text = await file.text();
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(text, "application/xml");
-    const parserError = xmlDoc.querySelector("parsererror");
-    if (parserError) {
-      throw new Error(`XML Parsing Error: ${parserError.textContent}`);
-    }
-    const instrument = xmlDoc.querySelector("RadInstrumentInformation RadInstrumentModelName, InstrumentInformation InstrumentModelName");
-    const measurement = xmlDoc.querySelector("RadMeasurement, Measurement");
-    const timestamp = measurement?.querySelector("StartDateTime");
-    const realTime = measurement?.querySelector("RealTimeDuration");
-    const realTimeContent = realTime?.textContent || null;
-    const metadata = {
-      instrument: instrument?.textContent || "Unknown",
-      timestamp: timestamp?.textContent ? new Date(timestamp.textContent).toLocaleString() : "N/A",
-      realTime: parseDuration(realTimeContent),
-      realTimeSeconds: parseDurationToSeconds(realTimeContent)
-    };
-    const spectrumElements = xmlDoc.querySelectorAll("RadMeasurement Spectrum, Measurement Spectrum");
-    const spectra = [];
-    if (spectrumElements.length === 0) {
-      throw new Error("No <Spectrum> tags found inside <RadMeasurement> or <Measurement>.");
-    }
-    spectrumElements.forEach((specEl, index) => {
-      try {
-        const channelDataEl = specEl.querySelector("ChannelData");
-        if (!channelDataEl)
-          return;
-        const channelData = channelDataEl.textContent?.trim().split(/\s+/).map(Number);
-        if (!channelData || channelData.some(isNaN))
-          return;
-        let calibration = specEl.querySelector("EnergyCalibration");
-        if (!calibration) {
-          const calibRef = specEl.getAttribute("energyCalibrationReference");
-          if (calibRef) {
-            calibration = xmlDoc.querySelector(`EnergyCalibration[id="${calibRef}"]`);
-          }
-        }
-        if (!calibration)
-          return;
-        const coeffs = calibration.querySelector("Coefficients, CoefficientValues")?.textContent?.trim().split(/\s+/).map(Number);
-        if (!coeffs || coeffs.length < 2)
-          return;
-        const remark = calibration.querySelector("Remark")?.textContent;
-        const description = specEl.querySelector("SpectrumDescription")?.textContent;
-        const idAttr = specEl.getAttribute("id");
-        const specId = remark || description || idAttr || `${t("spectrum")} ${index + 1}`;
-        const liveTimeEl = specEl.querySelector("LiveTimeDuration");
-        const liveTimeSeconds = parseDurationToSeconds(liveTimeEl?.textContent || null);
-        spectra.push({
-          id: specId,
-          channelData,
-          calibration: {
-            a: coeffs[0] || 0,
-            // Intercept
-            b: coeffs[1] || 0,
-            // Slope
-            c: coeffs[2] || 0
-            // Quadratic
-          },
-          liveTimeSeconds
-        });
-      } catch (e) {
-        console.warn("Could not parse a spectrum block:", e);
-      }
-    });
-    if (spectra.length === 0) {
-      throw new Error("Could not parse any valid spectra from the file.");
-    }
-    return { metadata, spectra };
-  }
-
-  // components/n42-analyzer/SpectrumPlot.tsx
-  var import_react21 = __toESM(require_react());
-  var import_react_dom3 = __toESM(require_react_dom());
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
-  var SpectrumPlot = ({
-    spectrum,
-    analysisResult,
-    onTogglePeakGroup,
-    onPlotClick,
-    onRoiSelected,
-    t,
-    clippingLevel,
-    yZoom,
-    identificationTolerance,
-    analysisType
-  }) => {
-    const [logScale, setLogScale] = (0, import_react21.useState)(true);
-    const [hoverInfo, setHoverInfo] = (0, import_react21.useState)(null);
-    const [selectionBox, setSelectionBox] = (0, import_react21.useState)(null);
-    const isDragging = (0, import_react21.useRef)(false);
-    const { channelData, calibration } = spectrum;
-    const energyFromChannel = (ch) => calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
-    const processedChannelData = (0, import_react21.useMemo)(() => {
-      if (channelData.length === 0)
-        return [];
-      const maxCounts = channelData.reduce((max, v) => Math.max(max, v), -Infinity);
-      const clipThreshold = maxCounts * clippingLevel;
-      return clippingLevel < 1 ? channelData.map((c) => Math.min(c, clipThreshold)) : channelData;
-    }, [channelData, clippingLevel]);
-    const width = 800;
-    const height = 450;
-    const padding = { top: 50, right: 30, bottom: 50, left: 60 };
-    const xMax = processedChannelData.length - 1;
-    let yDataMax = processedChannelData.reduce((max, v) => isFinite(v) ? Math.max(max, v) : max, -Infinity);
-    if (!isFinite(yDataMax)) {
-      yDataMax = 1;
-    }
-    let yDisplayMax = yDataMax / yZoom;
-    const toSvgX = (x) => padding.left + x / xMax * (width - padding.left - padding.right);
-    const svgToChannel = (svgX) => {
-      return Math.round((svgX - padding.left) / (width - padding.left - padding.right) * xMax);
-    };
-    const toSvgY = (y) => {
-      const plotHeight = height - padding.top - padding.bottom;
-      if (logScale) {
-        if (y <= 0) {
-          return height - padding.bottom;
-        }
-        const logMax = Math.log10(yDisplayMax > 1 ? yDisplayMax : 1);
-        if (logMax <= 0) {
-          return height - padding.bottom;
-        }
-        const logY = Math.log10(y);
-        return height - padding.bottom - logY / logMax * plotHeight;
-      }
-      return height - padding.bottom - y / (yDisplayMax > 0 ? yDisplayMax : 1) * plotHeight;
-    };
-    const path = (0, import_react21.useMemo)(() => {
-      if (processedChannelData.length === 0)
-        return "";
-      let p = `M ${toSvgX(0)} ${toSvgY(processedChannelData[0])}`;
-      for (let i = 1; i < processedChannelData.length; i++) {
-        p += ` L ${toSvgX(i)} ${toSvgY(processedChannelData[i])}`;
-      }
-      return p;
-    }, [processedChannelData, logScale, yZoom]);
-    const handleMouseDown = (e) => {
-      if (e.target.closest(".peak-marker"))
-        return;
-      isDragging.current = true;
-      const svg = e.currentTarget;
-      const pt = svg.createSVGPoint();
-      pt.x = e.clientX;
-      pt.y = e.clientY;
-      const ctm = svg.getScreenCTM();
-      if (ctm) {
-        const svgP = pt.matrixTransform(ctm.inverse());
-        setSelectionBox({ startX: svgP.x, endX: svgP.x });
-      }
-    };
-    const handleMouseMove = (e) => {
-      const svg = e.currentTarget;
-      const pt = svg.createSVGPoint();
-      pt.x = e.clientX;
-      pt.y = e.clientY;
-      const ctm = svg.getScreenCTM();
-      if (ctm) {
-        const svgP = pt.matrixTransform(ctm.inverse());
-        if (isDragging.current && selectionBox) {
-          setSelectionBox({ ...selectionBox, endX: svgP.x });
-        }
-        const channel = svgToChannel(svgP.x);
-        if (channel >= 0 && channel < processedChannelData.length) {
-          const counts = processedChannelData[channel];
-          const energy = energyFromChannel(channel);
-          setHoverInfo({ x: e.clientX, y: e.clientY, channel, counts, energy });
-        }
-      }
-    };
-    const handleMouseUp = (e) => {
-      if (!isDragging.current)
-        return;
-      isDragging.current = false;
-      const dragThreshold = 5;
-      if (selectionBox && Math.abs(selectionBox.endX - selectionBox.startX) > dragThreshold) {
-        const startChannel = svgToChannel(Math.min(selectionBox.startX, selectionBox.endX));
-        const endChannel = svgToChannel(Math.max(selectionBox.startX, selectionBox.endX));
-        if (startChannel < endChannel) {
-          onRoiSelected({ startChannel, endChannel });
-        }
-      } else {
-        const channel = svgToChannel(selectionBox?.startX || 0);
-        if (channel >= 0 && channel < channelData.length) {
-          onPlotClick(channel);
-        }
-      }
-      setSelectionBox(null);
-    };
-    const handleMouseLeave = () => {
-      setHoverInfo(null);
-      if (isDragging.current) {
-        isDragging.current = false;
-        setSelectionBox(null);
-      }
-    };
-    const suggestedNuclide = (0, import_react21.useMemo)(() => {
-      if (!hoverInfo)
-        return null;
-      const matches = identifyPeaks([hoverInfo.energy], identificationTolerance, analysisType);
-      return matches[0]?.matches[0]?.nuclide.name;
-    }, [hoverInfo, identificationTolerance, analysisType]);
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("plotTitle") }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center space-x-4 text-sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InfoTooltip_default, { text: t("roiSelectionTooltip") }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("label", { className: "flex items-center space-x-2 cursor-pointer", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("input", { type: "checkbox", checked: logScale, onChange: () => setLogScale(!logScale), className: "form-checkbox h-4 w-4 text-cyan-500" }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: t("plotLogScale") })
-        ] })
-      ] })
-    ] }), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "relative", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto cursor-crosshair", onMouseDown: handleMouseDown, onMouseMove: handleMouseMove, onMouseUp: handleMouseUp, onMouseLeave: handleMouseLeave, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#9ca3af", fontSize: "14", children: `${t("channel")}` }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: padding.left, y1: padding.top, x2: padding.left, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: padding.left - 40, y: height / 2, textAnchor: "middle", transform: `rotate(-90 ${padding.left - 40} ${height / 2})`, fill: "#9ca3af", fontSize: "14", children: t("counts") }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: path, stroke: "#60a5fa", fill: "none", strokeWidth: "1.5" }),
-          selectionBox && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-            "rect",
-            {
-              x: Math.min(selectionBox.startX, selectionBox.endX),
-              y: padding.top,
-              width: Math.abs(selectionBox.endX - selectionBox.startX),
-              height: height - padding.top - padding.bottom,
-              fill: "rgba(0, 191, 255, 0.2)",
-              stroke: "rgba(0, 191, 255, 0.6)",
-              strokeWidth: "1"
-            }
-          ),
-          analysisResult?.peaks.map((peak, idx) => {
-            const sx = toSvgX(peak.x);
-            const sy = toSvgY(peak.y);
-            const group = peak.group;
-            const color = group === "A" ? "#fb923c" : group === "B" ? "#c084fc" : peak.manual ? "#34d399" : "#f87171";
-            const peakLabel = peak.energy.toFixed(1);
-            const yOffset = idx % 2 === 0 ? -15 : -30;
-            return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("g", { className: "peak-marker cursor-pointer", onClick: (e) => {
-              e.stopPropagation();
-              onTogglePeakGroup(idx);
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: sx, y1: height - padding.bottom, x2: sx, y2: sy, stroke: color, strokeWidth: "1", strokeDasharray: "3 2" }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("circle", { cx: sx, cy: sy, r: "4", fill: color }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: sx, y: sy + yOffset, textAnchor: "middle", fill: color, fontSize: "10", fontWeight: "bold", children: peakLabel }),
-              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("rect", { x: sx - 15, y: sy - 40, width: "30", height: "35", fill: "transparent" })
-            ] }, idx);
-          }),
-          clippingLevel < 1 && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("text", { x: padding.left + 10, y: padding.top - 10, fill: "#facc15", fontSize: "12", fontWeight: "bold", children: t("clippingWarning") })
-        ] }),
-        hoverInfo && (0, import_react_dom3.createPortal)(
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
-            "div",
-            {
-              className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50",
-              style: { top: hoverInfo.y + 15, left: hoverInfo.x + 15 },
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-                  t("channel"),
-                  ": ",
-                  hoverInfo.channel
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-                  t("energy"),
-                  ": ",
-                  hoverInfo.energy.toFixed(1),
-                  " keV"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
-                  t("counts"),
-                  ": ",
-                  hoverInfo.counts.toLocaleString()
-                ] }),
-                suggestedNuclide && /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "mt-1 pt-1 border-t border-gray-700", children: [
-                  t("suggestedNuclide"),
-                  ": ",
-                  suggestedNuclide
-                ] })
-              ]
-            }
-          ),
-          document.body
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-xs text-center text-gray-500 mt-2", children: t("n42PeakAddInstruction") })
-    ] });
-  };
-  var SpectrumPlot_default = SpectrumPlot;
-
-  // components/n42-analyzer/DeconvolutionModal.tsx
-  var import_react22 = __toESM(require_react());
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
-  function findPeaksInROI(channelData, roi) {
-    const peaks = [];
-    if (channelData.length < 5 || !roi)
-      return peaks;
-    const data = channelData.slice(roi.startChannel, roi.endChannel + 1);
-    const mean = data.reduce((a, b) => a + b) / data.length;
-    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
-    const prominence = stdDev * 0.5;
-    const threshold = mean;
-    for (let i = 2; i < data.length - 2; i++) {
-      const y = data[i];
-      if (y > threshold && y > data[i - 1] && y >= data[i + 1]) {
-        let leftMin = y;
-        for (let j = i - 1; j >= 0; j--) {
-          leftMin = Math.min(leftMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        let rightMin = y;
-        for (let j = i + 1; j < data.length; j++) {
-          rightMin = Math.min(rightMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        if (y - leftMin > prominence && y - rightMin > prominence) {
-          const originalChannel = roi.startChannel + i;
-          peaks.push({ x: originalChannel, y: channelData[originalChannel], energy: 0 });
-        }
-      }
-    }
-    return peaks;
-  }
-  var DeconvolutionModal = ({
-    isOpen,
-    onClose,
-    onConfirm,
-    roi,
-    spectrum,
-    t,
-    identificationTolerance,
-    analysisType
-  }) => {
-    const deconvolutedPeaks = (0, import_react22.useMemo)(() => {
-      if (!roi || !spectrum)
-        return [];
-      const rawPeaks = findPeaksInROI(spectrum.channelData, roi);
-      const { calibration } = spectrum;
-      const fullSpectrumData = spectrum.channelData.map((y, x) => ({ x, y }));
-      return rawPeaks.map((p) => {
-        const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
-        const fwhm_keV = calculateFWHM(p.x, fullSpectrumData, calibration.b);
-        return { ...p, energy, fwhm_keV };
-      });
-    }, [roi, spectrum]);
-    if (!isOpen || !roi || !spectrum)
-      return null;
-    const handleConfirm = () => {
-      onConfirm(deconvolutedPeaks);
-    };
-    const dataSlice = spectrum.channelData.slice(roi.startChannel, roi.endChannel + 1);
-    const width = 600, height = 300, padding = { top: 20, right: 20, bottom: 40, left: 50 };
-    const xMin = roi.startChannel, xMax = roi.endChannel;
-    const yMax = Math.max(...dataSlice) * 1.1;
-    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
-    const toSvgY = (y) => height - padding.bottom - y / yMax * (height - padding.top - padding.bottom);
-    const path = dataSlice.map((y, i) => `${i === 0 ? "M" : "L"} ${toSvgX(roi.startChannel + i)} ${toSvgY(y)}`).join(" ");
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Card_default, { title: t("deconvolutionModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("h3", { className: "text-md font-semibold text-gray-300", children: [
-        t("roiAnalysis"),
-        " [",
-        roi.startChannel,
-        " - ",
-        roi.endChannel,
-        "]"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: path, stroke: "#60a5fa", fill: "rgba(96, 165, 250, 0.2)", strokeWidth: "1.5" }),
-        deconvolutedPeaks.map((peak, idx) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: toSvgX(peak.x), y1: toSvgY(peak.y), x2: toSvgX(peak.x), y2: height - padding.bottom, stroke: "#f87171", strokeWidth: "1", strokeDasharray: "2 2" }, idx))
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("h4", { className: "text-md font-semibold text-gray-300 mb-2", children: t("peaksInRoi") }),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "max-h-40 overflow-y-auto bg-gray-900/50 p-2 rounded-md", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("table", { className: "w-full text-xs text-left", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { className: "p-1", children: t("energy_keV") }),
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { className: "p-1", children: t("counts") })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("tbody", { children: deconvolutedPeaks.map((peak, idx) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { className: "border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { className: "p-1 font-mono", children: peak.energy.toFixed(1) }),
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { className: "p-1 font-mono", children: peak.y.toLocaleString() })
-          ] }, idx)) })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: handleConfirm, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmDeconvolution") })
-      ] })
-    ] }) }) }) });
-  };
-  var DeconvolutionModal_default = DeconvolutionModal;
-
-  // pages/N42AnalyzerPage.tsx
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
-  function findPeaksFromN42(channelData) {
-    const peaks = [];
-    if (channelData.length < 5)
-      return peaks;
-    const data = channelData;
-    const mean = data.reduce((a, b) => a + b) / data.length;
-    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
-    const prominence = stdDev * 1.5;
-    const threshold = Math.max(mean, stdDev * 2);
-    for (let i = 2; i < data.length - 2; i++) {
-      const y = data[i];
-      if (y > threshold && y > data[i - 1] && y >= data[i + 1] && y > data[i - 2] && y >= data[i + 2]) {
-        let leftMin = y;
-        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
-          leftMin = Math.min(leftMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        let rightMin = y;
-        for (let j = i + 1; j < data.length && j - i < 50; j++) {
-          rightMin = Math.min(rightMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        if (y - leftMin > prominence && y - rightMin > prominence) {
-          peaks.push({ x: i, y, energy: 0 });
-        }
-      }
-    }
-    return peaks;
-  }
-  var N42FileUploader = ({ onFileLoaded, label, file }) => {
-    const handleFile = async (f) => {
-      if (!f)
-        return;
-      try {
-        const parsed = await parseN42File(f, (key) => key);
-        onFileLoaded(f, parsed);
-      } catch (e) {
-        alert(`Error parsing file: ${e.message}`);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { htmlFor: `upload-${label}`, className: "p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "file", id: `upload-${label}`, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("p", { className: "text-sm text-gray-500", children: file ? file.name : "Select a file" })
-    ] }) });
-  };
-  var N42AnalyzerPage = ({ t, onBack, analysisType, onOpenPeakIdentifier, dataToLoad }) => {
-    const [file, setFile] = (0, import_react23.useState)(null);
-    const [parsedData, setParsedData] = (0, import_react23.useState)(null);
-    const [selectedSpectrumId, setSelectedSpectrumId] = (0, import_react23.useState)(null);
-    const [analysisResult, setAnalysisResult] = (0, import_react23.useState)(null);
-    const [identificationTolerance, setIdentificationTolerance] = (0, import_react23.useState)(2);
-    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react23.useState)(false);
-    const [adjusterInitialChannel, setAdjusterInitialChannel] = (0, import_react23.useState)(0);
-    const [isDeconvolutionModalOpen, setIsDeconvolutionModalOpen] = (0, import_react23.useState)(false);
-    const [selectedRoi, setSelectedRoi] = (0, import_react23.useState)(null);
-    const [yZoom, setYZoom] = (0, import_react23.useState)(1);
-    const [clippingLevel, setClippingLevel] = (0, import_react23.useState)(1);
-    (0, import_react23.useEffect)(() => {
-      if (dataToLoad) {
-        setParsedData(dataToLoad.parsedData);
-        setSelectedSpectrumId(dataToLoad.selectedSpectrumId);
-        setAnalysisResult(dataToLoad.analysisResult);
-      }
-    }, [dataToLoad]);
-    const selectedSpectrum = (0, import_react23.useMemo)(() => {
-      return parsedData?.spectra.find((s) => s.id === selectedSpectrumId) || null;
-    }, [parsedData, selectedSpectrumId]);
-    const groupCounts = (0, import_react23.useMemo)(() => {
-      if (!analysisResult) {
-        return { A: 0, B: 0 };
-      }
-      const counts = { A: 0, B: 0 };
-      analysisResult.peaks.forEach((peak) => {
-        const count = peak.y;
-        if (peak.group === "A") {
-          counts.A += count;
-        } else if (peak.group === "B") {
-          counts.B += count;
-        }
-      });
-      return counts;
-    }, [analysisResult]);
-    const ratio = groupCounts.B > 0 ? groupCounts.A / groupCounts.B : null;
-    const handleFileLoaded = (file2, data) => {
-      setFile(file2);
-      setParsedData(data);
-      if (data.spectra.length > 0) {
-        setSelectedSpectrumId(data.spectra[0].id);
-      }
-    };
-    const runAnalysis = (0, import_react23.useCallback)((existingPeaks = []) => {
-      if (!selectedSpectrum)
-        return;
-      const { channelData, calibration } = selectedSpectrum;
-      const spectrumDataForFwhm = channelData.map((y, x) => ({ x, y }));
-      let peaksToIdentify = existingPeaks;
-      if (peaksToIdentify.length === 0) {
-        const detectedPeaksRaw = findPeaksFromN42(channelData);
-        peaksToIdentify = detectedPeaksRaw.map((p) => {
-          const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
-          const fwhm_keV = calculateFWHM(p.x, spectrumDataForFwhm, calibration.b);
-          return { ...p, energy, fwhm_keV };
-        });
-      }
-      const peakEnergies = peaksToIdentify.map((p) => p.energy);
-      const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-      const nuclideMatches = /* @__PURE__ */ new Map();
-      identificationResults.forEach((res) => {
-        nuclideMatches.set(res.inputEnergy_keV, res.matches);
-      });
-      setAnalysisResult({ peaks: peaksToIdentify, nuclideMatches });
-    }, [selectedSpectrum, identificationTolerance, analysisType]);
-    (0, import_react23.useEffect)(() => {
-      if (selectedSpectrum) {
-        runAnalysis();
-      } else {
-        setAnalysisResult(null);
-      }
-    }, [selectedSpectrum, runAnalysis]);
-    const handleAddPeakAtChannel = (channel) => {
-      if (!selectedSpectrum)
-        return;
-      const { calibration, channelData } = selectedSpectrum;
-      const energy = calibration.c * channel ** 2 + calibration.b * channel + calibration.a;
-      const fwhm_keV = calculateFWHM(channel, channelData.map((y, x) => ({ x, y })), calibration.b);
-      const newPeak = { x: channel, y: channelData[channel], energy, manual: true, fwhm_keV };
-      setAnalysisResult((prev) => {
-        const peaks = prev ? [...prev.peaks, newPeak] : [newPeak];
-        const nuclideMatches = prev ? new Map(prev.nuclideMatches) : /* @__PURE__ */ new Map();
-        const newIdentification = identifyPeaks([energy], identificationTolerance, analysisType);
-        if (newIdentification[0])
-          nuclideMatches.set(energy, newIdentification[0].matches);
-        return { peaks, nuclideMatches };
-      });
-    };
-    const togglePeakGroup = (peakIndex) => {
-      setAnalysisResult((prev) => {
-        if (!prev)
-          return null;
-        const newPeaks = [...prev.peaks];
-        const peak = newPeaks[peakIndex];
-        if (peak.group === "A")
-          peak.group = "B";
-        else if (peak.group === "B")
-          peak.group = void 0;
-        else
-          peak.group = "A";
-        return { ...prev, peaks: newPeaks };
-      });
-    };
-    const handlePlotClick = (channel) => {
-      setAdjusterInitialChannel(channel);
-      setIsAdjusterOpen(true);
-    };
-    const handleRoiSelected = (roi) => {
-      setSelectedRoi(roi);
-      setIsDeconvolutionModalOpen(true);
-    };
-    const handleDeconvolutionConfirm = (newPeaks) => {
-      setAnalysisResult((prev) => {
-        if (!prev || !selectedRoi)
-          return prev;
-        const existingPeaksOutsideRoi = prev.peaks.filter((p) => p.x < selectedRoi.startChannel || p.x > selectedRoi.endChannel);
-        const finalPeaks = [...existingPeaksOutsideRoi, ...newPeaks];
-        const peakEnergies = finalPeaks.map((p) => p.energy);
-        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-        const nuclideMatches = /* @__PURE__ */ new Map();
-        identificationResults.forEach((res) => nuclideMatches.set(res.inputEnergy_keV, res.matches));
-        return { peaks: finalPeaks, nuclideMatches };
-      });
-      setIsDeconvolutionModalOpen(false);
-      setSelectedRoi(null);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("n42AnalyzerTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex space-x-2", children: [
-          parsedData && /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: () => {
-            setFile(null);
-            setParsedData(null);
-            setAnalysisResult(null);
-          }, className: "text-sm text-yellow-400 hover:text-yellow-300 flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("startOver") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: onOpenPeakIdentifier, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2 p-2 rounded-md bg-gray-800 border border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { fillRule: "evenodd", d: "M2 10a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-4.5h-.75a.75.75 0 01-.75-.75zM8.25 4.5a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v11a.75.75 0 01-1.5 0v-10h-.75a.75.75 0 01-.75-.75zM14.25 7a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-7.5h-.75a.75.75 0 01-.75-.75z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "hidden sm:inline", children: t("identifyPeaks") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: t("backButton") })
-          ] })
-        ] })
-      ] }),
-      !parsedData ? /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Card_default, { title: t("uploadN42File"), children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(N42FileUploader, { onFileLoaded: handleFileLoaded, label: t("uploadN42File"), file }) }) : /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-3", children: selectedSpectrum && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-          SpectrumPlot_default,
-          {
-            spectrum: selectedSpectrum,
-            analysisResult,
-            onTogglePeakGroup: togglePeakGroup,
-            onPlotClick: handlePlotClick,
-            onRoiSelected: handleRoiSelected,
-            t,
-            clippingLevel,
-            yZoom,
-            identificationTolerance,
-            analysisType
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-1 space-y-6", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Card_default, { title: t("fileInfoAndSettings"), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "space-y-2 text-sm mb-4 bg-gray-900/50 p-2 rounded", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { className: "text-gray-400", children: [
-                t("instrument"),
-                ":"
-              ] }),
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: parsedData.metadata.instrument })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { className: "text-gray-400", children: [
-                t("timestamp"),
-                ":"
-              ] }),
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: parsedData.metadata.timestamp })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { className: "text-gray-400", children: [
-                t("realTime"),
-                ":"
-              ] }),
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: parsedData.metadata.realTime })
-            ] }),
-            selectedSpectrum && /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { className: "text-gray-400", children: [
-                t("liveTime"),
-                ":"
-              ] }),
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                selectedSpectrum.liveTimeSeconds?.toFixed(2),
-                " s"
-              ] })
-            ] })
-          ] }),
-          parsedData.spectra.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "mb-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("selectSpectrum") }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("select", { value: selectedSpectrumId || "", onChange: (e) => setSelectedSpectrumId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: parsedData.spectra.map((s) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("option", { value: s.id, children: s.id }, s.id)) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "space-y-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                  t("yAxisZoom"),
-                  " (x",
-                  yZoom.toFixed(1),
-                  ")"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("yAxisZoomTooltip") })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "range", min: "1", max: "50", step: "0.1", value: yZoom, onChange: (e) => setYZoom(parseFloat(e.target.value)), className: "w-full" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                  t("yAxisClipping"),
-                  " (",
-                  (clippingLevel * 100).toFixed(0),
-                  "%)"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("yAxisClippingTooltip") })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "range", min: "0.01", max: "1", step: "0.01", value: clippingLevel, onChange: (e) => setClippingLevel(parseFloat(e.target.value)), className: "w-full" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-1", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                  t("identificationTolerance"),
-                  " (keV)"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-            ] })
-          ] })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Card_default, { title: t("detectedPeaksTitle"), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "max-h-80 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("table", { className: "w-full text-xs text-left", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("tr", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("th", { className: "py-2 px-2", children: t("group") })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("tbody", { className: "text-gray-200", children: [
-              analysisResult?.peaks.sort((a, b) => a.energy - b.energy).map((peak, idx) => {
-                const matches = analysisResult.nuclideMatches.get(peak.energy) || [];
-                return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800 cursor-pointer", onClick: () => togglePeakGroup(idx), children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono text-cyan-300", children: peak.energy.toFixed(2) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2", children: matches.length > 0 ? matches.slice(0, 2).map((m, i) => /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "truncate", title: `${m.nuclide.name} (${m.line.energy_keV.toFixed(1)})`, children: [
-                    getLocalizedNuclideName(m.nuclide.name, t),
-                    " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { className: "text-gray-500", children: [
-                      "(",
-                      m.line.energy_keV.toFixed(1),
-                      ")"
-                    ] })
-                  ] }, i)) : "-" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { className: "py-2 px-2 text-center", style: { color: peak.group === "A" ? "#fb923c" : peak.group === "B" ? "#c084fc" : "inherit" }, children: peak.group || "-" })
-                ] }, idx);
-              }),
-              (!analysisResult?.peaks || analysisResult.peaks.length === 0) && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("td", { colSpan: 5, className: "py-4 text-center text-gray-500", children: t("noPeaksDetected") }) })
-            ] })
-          ] }) }),
-          analysisResult && analysisResult.peaks.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "mt-4 pt-4 border-t border-gray-700 text-sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("h4", { className: "font-semibold text-gray-300 mb-2", children: t("analyse_groups") }),
-            /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "grid grid-cols-3 gap-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                  t("group_a_total"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "font-mono text-orange-400", children: groupCounts.A.toFixed(0) })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { children: [
-                  t("group_b_total"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "font-mono text-purple-400", children: groupCounts.B.toFixed(0) })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex justify-between text-cyan-300", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("strong", { children: [
-                  t("ratio_a_b"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("strong", { className: "font-mono", children: ratio !== null ? ratio.toFixed(3) : "N/A" })
-              ] }) })
-            ] })
-          ] })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-        PeakPositionAdjusterModal_default,
-        {
-          isOpen: isAdjusterOpen,
-          onClose: () => setIsAdjusterOpen(false),
-          onConfirm: (preciseChannel) => {
-            handleAddPeakAtChannel(Math.round(preciseChannel));
-            setIsAdjusterOpen(false);
-          },
-          spectrumData: selectedSpectrum?.channelData.map((y, x) => ({ x, y })) || [],
-          initialX: adjusterInitialChannel,
-          xRange: 30,
-          energyFromX: (x) => selectedSpectrum ? selectedSpectrum.calibration.c * x ** 2 + selectedSpectrum.calibration.b * x + selectedSpectrum.calibration.a : 0,
-          identificationTolerance,
-          t,
-          title: t("addPeakManually"),
-          confirmText: t("addPeak"),
-          analysisType
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-        DeconvolutionModal_default,
-        {
-          isOpen: isDeconvolutionModalOpen,
-          onClose: () => setIsDeconvolutionModalOpen(false),
-          onConfirm: handleDeconvolutionConfirm,
-          roi: selectedRoi,
-          spectrum: selectedSpectrum,
-          t,
-          identificationTolerance,
-          analysisType
-        }
-      )
-    ] });
-  };
-  var N42AnalyzerPage_default = N42AnalyzerPage;
-
-  // pages/BackgroundSubtractionPage.tsx
-  var import_react24 = __toESM(require_react());
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
-  function findPeaksFromN422(channelData) {
-    const peaks = [];
-    if (channelData.length < 5)
-      return peaks;
-    const data = channelData;
-    const mean = data.reduce((a, b) => a + b) / data.length;
-    const stdDev = Math.sqrt(data.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / data.length);
-    const prominence = stdDev * 1.5;
-    const threshold = Math.max(mean, stdDev * 2);
-    for (let i = 2; i < data.length - 2; i++) {
-      const y = data[i];
-      if (y > threshold && y > data[i - 1] && y >= data[i + 1] && y > data[i - 2] && y >= data[i + 2]) {
-        let leftMin = y;
-        for (let j = i - 1; j >= 0 && i - j < 50; j--) {
-          leftMin = Math.min(leftMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        let rightMin = y;
-        for (let j = i + 1; j < data.length && j - i < 50; j++) {
-          rightMin = Math.min(rightMin, data[j]);
-          if (data[j] > y)
-            break;
-        }
-        if (y - leftMin > prominence && y - rightMin > prominence) {
-          peaks.push({ x: i, y, energy: 0 });
-        }
-      }
-    }
-    return peaks;
-  }
-  var N42FileUploader2 = ({ onFileLoaded, label, file }) => {
-    const handleFile = async (f) => {
-      if (!f)
-        return;
-      try {
-        const parsed = await parseN42File(f, (key) => key);
-        onFileLoaded(f, parsed);
-      } catch (e) {
-        alert(`Error parsing file: ${e}`);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: `upload-${label}`, className: "p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-lg text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "file", id: `upload-${label}`, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "text-xs text-gray-500", children: file ? file.name : "Select a file" })
-    ] }) });
-  };
-  var BackgroundSubtractionPage = ({ t, onBack, analysisType, onOpenPeakIdentifier }) => {
-    const [sampleFile, setSampleFile] = (0, import_react24.useState)(null);
-    const [sampleData, setSampleData] = (0, import_react24.useState)(null);
-    const [backgroundFile, setBackgroundFile] = (0, import_react24.useState)(null);
-    const [backgroundData, setBackgroundData] = (0, import_react24.useState)(null);
-    const [sampleTime, setSampleTime] = (0, import_react24.useState)(60);
-    const [backgroundTime, setBackgroundTime] = (0, import_react24.useState)(600);
-    const [error, setError] = (0, import_react24.useState)(null);
-    const [netSpectrum, setNetSpectrum] = (0, import_react24.useState)(null);
-    const [analysisResult, setAnalysisResult] = (0, import_react24.useState)(null);
-    const [identificationTolerance, setIdentificationTolerance] = (0, import_react24.useState)(2);
-    const [isAdjusterOpen, setIsAdjusterOpen] = (0, import_react24.useState)(false);
-    const [adjusterInitialChannel, setAdjusterInitialChannel] = (0, import_react24.useState)(0);
-    const [isDeconvolutionModalOpen, setIsDeconvolutionModalOpen] = (0, import_react24.useState)(false);
-    const [selectedRoi, setSelectedRoi] = (0, import_react24.useState)(null);
-    const handleCalculate = () => {
-      setError(null);
-      if (!sampleData || !backgroundData || sampleTime <= 0 || backgroundTime <= 0) {
-        setError("Please load both files and set positive measurement times.");
-        return;
-      }
-      const sampleSpec = sampleData.spectra[0];
-      const bgSpec = backgroundData.spectra[0];
-      if (sampleSpec.channelData.length !== bgSpec.channelData.length) {
-        setError(t("error_channelMismatch"));
-        return;
-      }
-      const timeRatio = sampleTime / backgroundTime;
-      const netChannelData = sampleSpec.channelData.map((sampleCounts, i) => {
-        return sampleCounts - bgSpec.channelData[i] * timeRatio;
-      });
-      const newNetSpectrum = {
-        id: "Net Spectrum",
-        channelData: netChannelData,
-        calibration: sampleSpec.calibration
-      };
-      setNetSpectrum(newNetSpectrum);
-    };
-    const runAnalysis = (0, import_react24.useCallback)((existingPeaks = []) => {
-      if (!netSpectrum)
-        return;
-      const { channelData, calibration } = netSpectrum;
-      const spectrumDataForFwhm = channelData.map((y, x) => ({ x, y }));
-      let peaksToIdentify = existingPeaks;
-      if (peaksToIdentify.length === 0) {
-        const detectedPeaksRaw = findPeaksFromN422(channelData);
-        peaksToIdentify = detectedPeaksRaw.map((p) => {
-          const energy = calibration.c * p.x ** 2 + calibration.b * p.x + calibration.a;
-          const fwhm_keV = calculateFWHM(p.x, spectrumDataForFwhm, calibration.b);
-          return { ...p, energy, fwhm_keV };
-        });
-      }
-      const peakEnergies = peaksToIdentify.map((p) => p.energy);
-      const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-      const nuclideMatches = /* @__PURE__ */ new Map();
-      identificationResults.forEach((res) => {
-        nuclideMatches.set(res.inputEnergy_keV, res.matches);
-      });
-      setAnalysisResult({ peaks: peaksToIdentify, nuclideMatches });
-    }, [netSpectrum, identificationTolerance, analysisType]);
-    (0, import_react24.useEffect)(() => {
-      if (netSpectrum) {
-        runAnalysis();
-      }
-    }, [netSpectrum, runAnalysis]);
-    const togglePeakGroup = (peakIndex) => {
-      setAnalysisResult((prev) => {
-        if (!prev)
-          return null;
-        const newPeaks = [...prev.peaks];
-        const peak = newPeaks[peakIndex];
-        if (peak.group === "A")
-          peak.group = "B";
-        else if (peak.group === "B")
-          peak.group = void 0;
-        else
-          peak.group = "A";
-        return { ...prev, peaks: newPeaks };
-      });
-    };
-    const handleAddPeakAtChannel = (channel) => {
-      if (!netSpectrum)
-        return;
-      const { calibration, channelData } = netSpectrum;
-      const energy = calibration.c * channel ** 2 + calibration.b * channel + calibration.a;
-      const fwhm_keV = calculateFWHM(channel, channelData.map((y, x) => ({ x, y })), calibration.b);
-      const newPeak = { x: channel, y: channelData[channel], energy, manual: true, fwhm_keV };
-      setAnalysisResult((prev) => {
-        const peaks = prev ? [...prev.peaks, newPeak] : [newPeak];
-        const nuclideMatches = prev ? new Map(prev.nuclideMatches) : /* @__PURE__ */ new Map();
-        const newIdentification = identifyPeaks([energy], identificationTolerance, analysisType);
-        if (newIdentification[0])
-          nuclideMatches.set(energy, newIdentification[0].matches);
-        return { peaks, nuclideMatches };
-      });
-    };
-    const handlePlotClick = (channel) => {
-      setAdjusterInitialChannel(channel);
-      setIsAdjusterOpen(true);
-    };
-    const handleRoiSelected = (roi) => {
-      setSelectedRoi(roi);
-      setIsDeconvolutionModalOpen(true);
-    };
-    const handleDeconvolutionConfirm = (newPeaks) => {
-      setAnalysisResult((prev) => {
-        if (!prev || !selectedRoi)
-          return prev;
-        const existingPeaksOutsideRoi = prev.peaks.filter((p) => p.x < selectedRoi.startChannel || p.x > selectedRoi.endChannel);
-        const finalPeaks = [...existingPeaksOutsideRoi, ...newPeaks];
-        const peakEnergies = finalPeaks.map((p) => p.energy);
-        const identificationResults = identifyPeaks(peakEnergies, identificationTolerance, analysisType);
-        const nuclideMatches = /* @__PURE__ */ new Map();
-        identificationResults.forEach((res) => nuclideMatches.set(res.inputEnergy_keV, res.matches));
-        return { peaks: finalPeaks, nuclideMatches };
-      });
-      setIsDeconvolutionModalOpen(false);
-      setSelectedRoi(null);
-    };
-    const normalizedSpectrumData = (0, import_react24.useMemo)(() => {
-      return netSpectrum?.channelData.map((counts, ch) => ({ x: ch, y: counts })) || [];
-    }, [netSpectrum]);
-    const energyFromChannel = (0, import_react24.useCallback)((ch) => {
-      if (!netSpectrum)
-        return 0;
-      const { calibration } = netSpectrum;
-      return calibration.c * ch ** 2 + calibration.b * ch + calibration.a;
-    }, [netSpectrum]);
-    const resetAll = () => {
-      setSampleFile(null);
-      setSampleData(null);
-      setBackgroundFile(null);
-      setBackgroundData(null);
-      setSampleTime(60);
-      setBackgroundTime(600);
-      setError(null);
-      setNetSpectrum(null);
-      setAnalysisResult(null);
-    };
-    if (netSpectrum) {
-      return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("netSpectrumAnalysis") }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("button", { onClick: resetAll, className: "text-sm text-yellow-400 hover:text-yellow-300 flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("startOver") })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-3", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-            SpectrumPlot_default,
-            {
-              spectrum: netSpectrum,
-              analysisResult,
-              onTogglePeakGroup: togglePeakGroup,
-              onPlotClick: handlePlotClick,
-              onRoiSelected: handleRoiSelected,
-              t,
-              clippingLevel: 1,
-              yZoom: 1,
-              identificationTolerance,
-              analysisType
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-1", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Card_default, { title: t("analysisResultsTitle"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { className: "text-sm text-gray-300 flex items-center space-x-2 mb-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("span", { children: [
-                t("identificationTolerance"),
-                " (keV)"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(InfoTooltip_default, { text: t("identificationToleranceTooltip") })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: identificationTolerance, onChange: (e) => setIdentificationTolerance(parseFloat(e.target.value) || 0), step: "0.1", min: "0.1", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "lg:col-span-2", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Card_default, { title: t("detectedPeaksTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "max-h-[60vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("table", { className: "w-full text-xs text-left", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("tr", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("energy_keV") }),
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("fwhm_keV") }),
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("counts") }),
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("nuclidePossible") }),
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("th", { className: "py-2 px-2", children: t("group") })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("tbody", { className: "text-gray-200", children: analysisResult?.peaks?.sort((a, b) => a.energy - b.energy).map((peak, idx) => {
-              const match = analysisResult.nuclideMatches.get(peak.energy)?.[0];
-              return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("tr", { className: "border-t border-gray-700", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.energy.toFixed(1) }),
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono text-gray-400", children: peak.fwhm_keV?.toFixed(2) ?? "-" }),
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 font-mono", children: peak.y.toFixed(0) }),
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2", children: match ? `${match.nuclide.name} (${match.line.energy_keV.toFixed(1)})` : "-" }),
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("td", { className: "py-2 px-2 text-center", children: peak.group })
-              ] }, idx);
-            }) })
-          ] }) }) }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-          PeakPositionAdjusterModal_default,
-          {
-            isOpen: isAdjusterOpen,
-            onClose: () => setIsAdjusterOpen(false),
-            onConfirm: (preciseChannel) => {
-              handleAddPeakAtChannel(Math.round(preciseChannel));
-              setIsAdjusterOpen(false);
-            },
-            spectrumData: normalizedSpectrumData,
-            initialX: adjusterInitialChannel,
-            xRange: 20,
-            energyFromX: energyFromChannel,
-            identificationTolerance,
-            t,
-            title: t("addPeakManually"),
-            confirmText: t("addPeak"),
-            analysisType
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
-          DeconvolutionModal_default,
-          {
-            isOpen: isDeconvolutionModalOpen,
-            onClose: () => setIsDeconvolutionModalOpen(false),
-            onConfirm: handleDeconvolutionConfirm,
-            roi: selectedRoi,
-            spectrum: netSpectrum,
-            t,
-            identificationTolerance,
-            analysisType
-          }
-        )
-      ] });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("bkgSubtractionTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: t("backButton") })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(Card_default, { title: t("inputs"), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8 items-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("sampleSpectrum") }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(N42FileUploader2, { onFileLoaded: (file, data) => {
-              setSampleFile(file);
-              setSampleData(data);
-            }, label: t("uploadSample"), file: sampleFile }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: t("sampleTime") }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: sampleTime, onChange: (e) => setSampleTime(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("backgroundSpectrum") }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(N42FileUploader2, { onFileLoaded: (file, data) => {
-              setBackgroundFile(file);
-              setBackgroundData(data);
-            }, label: t("uploadBackground"), file: backgroundFile }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: t("bkg_sub_backgroundTime") }),
-            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", { type: "number", value: backgroundTime, onChange: (e) => setBackgroundTime(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
-          ] })
-        ] }),
-        error && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "mt-4 text-red-400 text-center bg-red-900/30 p-3 rounded-md", children: error }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "mt-6 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("button", { onClick: handleCalculate, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg text-lg", children: t("calculateNetSpectrum") }) })
-      ] })
-    ] });
-  };
-  var BackgroundSubtractionPage_default = BackgroundSubtractionPage;
-
-  // pages/SpectrumComparisonPage.tsx
-  var import_react26 = __toESM(require_react());
-
-  // components/n42-analyzer/ComparisonPlot.tsx
-  var import_react25 = __toESM(require_react());
-  var import_react_dom4 = __toESM(require_react_dom());
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
-  var ComparisonPlot = ({
-    spectrumA,
-    spectrumB,
-    timeA,
-    timeB,
-    normalization,
-    t
-  }) => {
-    const [logScale, setLogScale] = (0, import_react25.useState)(true);
-    const [hoverInfo, setHoverInfo] = (0, import_react25.useState)(null);
-    const energyFromChannelA = (ch) => spectrumA.calibration.c * ch ** 2 + spectrumA.calibration.b * ch + spectrumA.calibration.a;
-    const energyFromChannelB = (ch) => spectrumB.calibration.c * ch ** 2 + spectrumB.calibration.b * ch + spectrumB.calibration.a;
-    const getData = (spectrum, time) => {
-      return normalization === "time" && time > 0 ? spectrum.channelData.map((c) => c / time) : spectrum.channelData;
-    };
-    const dataA = (0, import_react25.useMemo)(() => getData(spectrumA, timeA), [spectrumA, timeA, normalization]);
-    const dataB = (0, import_react25.useMemo)(() => getData(spectrumB, timeB), [spectrumB, timeB, normalization]);
-    const width = 800;
-    const height = 450;
-    const padding = { top: 50, right: 30, bottom: 50, left: 60 };
-    const xMax = Math.max(dataA.length - 1, dataB.length - 1);
-    const yMax = (0, import_react25.useMemo)(() => {
-      const maxA = dataA.reduce((max, v) => Math.max(max, v), -Infinity);
-      const maxB = dataB.reduce((max, v) => Math.max(max, v), -Infinity);
-      return Math.max(maxA, maxB);
-    }, [dataA, dataB]);
-    const toSvgX = (x) => padding.left + x / xMax * (width - padding.left - padding.right);
-    const svgToChannel = (svgX) => {
-      return Math.round((svgX - padding.left) / (width - padding.left - padding.right) * xMax);
-    };
-    const toSvgY = (y) => {
-      const plotHeight = height - padding.top - padding.bottom;
-      if (yMax <= 0)
-        return height - padding.bottom;
-      if (logScale) {
-        if (y <= 0)
-          return height - padding.bottom;
-        const logMax = Math.log10(yMax);
-        if (logMax <= 0)
-          return height - padding.bottom;
-        const logY = Math.log10(y);
-        return height - padding.bottom - logY / logMax * plotHeight;
-      }
-      return height - padding.bottom - y / yMax * plotHeight;
-    };
-    const createPath = (data) => {
-      if (data.length === 0)
-        return "";
-      let p = `M ${toSvgX(0)} ${toSvgY(data[0])}`;
-      for (let i = 1; i < data.length; i++) {
-        if (isFinite(data[i])) {
-          p += ` L ${toSvgX(i)} ${toSvgY(data[i])}`;
-        }
-      }
-      return p;
-    };
-    const pathA = (0, import_react25.useMemo)(() => createPath(dataA), [dataA, logScale, yMax]);
-    const pathB = (0, import_react25.useMemo)(() => createPath(dataB), [dataB, logScale, yMax]);
-    const handleMouseMove = (e) => {
-      const svg = e.currentTarget;
-      const pt = svg.createSVGPoint();
-      pt.x = e.clientX;
-      pt.y = e.clientY;
-      const ctm = svg.getScreenCTM();
-      if (ctm) {
-        const svgP = pt.matrixTransform(ctm.inverse());
-        const channel = svgToChannel(svgP.x);
-        if (channel >= 0 && channel < xMax) {
-          const countsA = dataA[channel];
-          const countsB = dataB[channel];
-          const energy = energyFromChannelA(channel);
-          setHoverInfo({ x: e.clientX, y: e.clientY, channel, energy, countsA, countsB });
-        }
-      }
-    };
-    const handleMouseLeave = () => {
-      setHoverInfo(null);
-    };
-    const yAxisLabel = normalization === "time" ? t("countsPerSecond") : t("counts");
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-between items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: t("plotTitle") }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "flex items-center space-x-4 text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("label", { className: "flex items-center space-x-2 cursor-pointer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "checkbox", checked: logScale, onChange: () => setLogScale(!logScale), className: "form-checkbox h-4 w-4 text-cyan-500" }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: t("plotLogScale") })
-      ] }) })
-    ] }), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "relative", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#9ca3af", fontSize: "14", children: t("channel") }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("line", { x1: padding.left, y1: padding.top, x2: padding.left, y2: height - padding.bottom, stroke: "rgba(75, 85, 99, 0.8)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("text", { x: padding.left - 40, y: height / 2, textAnchor: "middle", transform: `rotate(-90 ${padding.left - 40} ${height / 2})`, fill: "#9ca3af", fontSize: "14", children: yAxisLabel }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("path", { d: pathB, stroke: "#f97316", fill: "none", strokeWidth: "1.5", opacity: "0.8" }),
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("path", { d: pathA, stroke: "#38bdf8", fill: "none", strokeWidth: "1.5" })
-        ] }),
-        hoverInfo && (0, import_react_dom4.createPortal)(
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
-            "div",
-            {
-              className: "fixed bg-gray-900/80 text-white text-xs rounded py-1 px-2 pointer-events-none border border-gray-600 shadow-lg z-50",
-              style: { top: hoverInfo.y + 15, left: hoverInfo.x + 15 },
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-                  t("channel"),
-                  ": ",
-                  hoverInfo.channel
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
-                  t("energy_keV"),
-                  ": ",
-                  hoverInfo.energy.toFixed(1)
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "mt-1 pt-1 border-t border-gray-700", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "text-sky-400", children: [
-                    t("spectrumA"),
-                    ": ",
-                    hoverInfo.countsA?.toPrecision(3)
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "text-orange-400", children: [
-                    t("spectrumB"),
-                    ": ",
-                    hoverInfo.countsB?.toPrecision(3)
-                  ] })
-                ] })
-              ]
-            }
-          ),
-          document.body
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex justify-center flex-wrap gap-x-6 gap-y-2 text-sm mt-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex items-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "w-4 h-4 rounded-full bg-sky-400 mr-2" }),
-          t("spectrumA")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "flex items-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "w-4 h-4 rounded-full bg-orange-500 mr-2" }),
-          t("spectrumB")
-        ] })
-      ] })
-    ] });
-  };
-  var ComparisonPlot_default = ComparisonPlot;
-
-  // pages/SpectrumComparisonPage.tsx
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-  var N42FileUploader3 = ({ id, onFileLoaded, label, file }) => {
-    const handleFile = async (f) => {
-      if (!f)
-        return;
-      try {
-        const parsed = await parseN42File(f, (key) => key);
-        onFileLoaded(f, parsed);
-      } catch (e) {
-        alert(`Error parsing file: ${e.message}`);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { htmlFor: id, className: "p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 w-full text-center border-gray-600 hover:border-indigo-500 hover:bg-gray-800 block", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "file", id, className: "hidden", accept: ".n42", onChange: (e) => e.target.files && handleFile(e.target.files[0]) }),
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "font-semibold text-gray-300", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-xs text-gray-500", children: file ? file.name : "Select a file" })
-    ] }) });
-  };
-  var SpectrumComparisonPage = ({ t, onBack, analysisType }) => {
-    const [spectrumA, setSpectrumA] = (0, import_react26.useState)({ file: null, data: null });
-    const [spectrumB, setSpectrumB] = (0, import_react26.useState)({ file: null, data: null });
-    const [timeA, setTimeA] = (0, import_react26.useState)(60);
-    const [timeB, setTimeB] = (0, import_react26.useState)(60);
-    const [normalization, setNormalization] = (0, import_react26.useState)("none");
-    (0, import_react26.useEffect)(() => {
-      if (spectrumA.data?.spectra[0]?.liveTimeSeconds) {
-        setTimeA(spectrumA.data.spectra[0].liveTimeSeconds);
-      }
-    }, [spectrumA.data]);
-    (0, import_react26.useEffect)(() => {
-      if (spectrumB.data?.spectra[0]?.liveTimeSeconds) {
-        setTimeB(spectrumB.data.spectra[0].liveTimeSeconds);
-      }
-    }, [spectrumB.data]);
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("spectrumComparisonTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { children: t("backButton") })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(Card_default, { title: t("inputs"), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumA") }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(N42FileUploader3, { id: "upload-a", onFileLoaded: (file, data) => setSpectrumA({ file, data }), label: t("loadSpectrum"), file: spectrumA.file }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
-              t("measurementTime"),
-              " (s)"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "number", value: timeA, onChange: (e) => setTimeA(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { className: "text-lg font-semibold text-gray-300 mb-4", children: t("spectrumB") }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(N42FileUploader3, { id: "upload-b", onFileLoaded: (file, data) => setSpectrumB({ file, data }), label: t("loadSpectrum"), file: spectrumB.file }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("label", { className: "text-sm text-gray-300 mt-4 block mb-1", children: [
-              t("measurementTime"),
-              " (s)"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("input", { type: "number", value: timeB, onChange: (e) => setTimeB(parseFloat(e.target.value) || 0), className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right" })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "border-t border-gray-700 pt-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("label", { className: "text-sm text-gray-300 mb-2 block", children: t("normalization") }),
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-1 max-w-xs", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setNormalization("none"), className: `flex-1 p-1 text-sm rounded ${normalization === "none" ? "bg-cyan-600" : ""}`, children: t("normNone") }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { onClick: () => setNormalization("time"), className: `flex-1 p-1 text-sm rounded ${normalization === "time" ? "bg-cyan-600" : ""}`, children: t("timeScale") })
-          ] })
-        ] })
-      ] }),
-      spectrumA.data && spectrumB.data && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-        ComparisonPlot_default,
-        {
-          spectrumA: spectrumA.data.spectra[0],
-          spectrumB: spectrumB.data.spectra[0],
-          timeA,
-          timeB,
-          normalization,
-          t
-        }
-      ) })
-    ] });
-  };
-  var SpectrumComparisonPage_default = SpectrumComparisonPage;
-
-  // pages/SpectroPage.tsx
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
-  var SpectroPage = ({ t, onOpenPeakIdentifier, analysisToLoad, clearAnalysisToLoad }) => {
-    const [mode, setMode] = (0, import_react27.useState)("selection");
-    const [analysisType, setAnalysisType] = (0, import_react27.useState)("gamma");
-    (0, import_react27.useEffect)(() => {
-      if (analysisToLoad) {
-        setMode(analysisToLoad.analysisType);
-      }
-    }, [analysisToLoad]);
-    const handleBack = () => {
-      setMode("selection");
-      if (analysisToLoad) {
-        clearAnalysisToLoad();
-      }
-    };
-    if (mode === "image") {
-      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "image" ? analysisToLoad.data : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SpectrumAnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
-    }
-    if (mode === "n42") {
-      const dataToLoad = analysisToLoad && analysisToLoad.analysisType === "n42" ? analysisToLoad.data : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(N42AnalyzerPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType, dataToLoad });
-    }
-    if (mode === "bkg") {
-      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(BackgroundSubtractionPage_default, { t, onBack: handleBack, onOpenPeakIdentifier, analysisType });
-    }
-    if (mode === "compare") {
-      return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SpectrumComparisonPage_default, { t, onBack: handleBack, analysisType });
-    }
-    const handleKeyDown = (e, newMode) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setMode(newMode);
-      }
-    };
-    const tools = [
-      {
-        key: "image",
-        title: "spectroMenuImageTitle",
-        desc: "spectroMenuImageDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z", clipRule: "evenodd" }) }),
-        disabled: false
-      },
-      {
-        key: "n42",
-        title: "spectroMenuN42Title",
-        desc: "spectroMenuN42Desc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
-        disabled: false
-      },
-      {
-        key: "spc",
-        title: "spectroMenuSPCTitle",
-        desc: "spectroMenuSPCDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
-        disabled: true
-      },
-      {
-        key: "chn",
-        title: "spectroMenuCHNTitle",
-        desc: "spectroMenuCHNDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { fillRule: "evenodd", d: "M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }) }),
-        disabled: true
-      },
-      {
-        key: "bkg",
-        title: "spectroMenuBkgSubTitle",
-        desc: "spectroMenuBkgSubDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { d: "M10 3a1 1 0 00-1 1v1.333a2 2 0 00-1.083.504l-.88-.88a1 1 0 00-1.414 1.414l.88.88A2 2 0 005.333 8H4a1 1 0 00-1 1v2a1 1 0 001 1h1.333a2 2 0 00.504 1.083l-.88.88a1 1 0 001.414 1.414l.88-.88a2 2 0 001.083.504V16a1 1 0 002 0v-1.333a2 2 0 001.083-.504l.88.88a1 1 0 001.414-1.414l-.88-.88a2 2 0 00.504-1.083H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.333a2 2 0 00-.504-1.083l.88-.88a1 1 0 00-1.414-1.414l-.88.88A2 2 0 0012.667 4V3a1 1 0 00-2 0zm-2 7a2 2 0 114 0 2 2 0 01-4 0z" }) }),
-        disabled: false
-      },
-      {
-        key: "compare",
-        title: "spectroMenuCompareTitle",
-        desc: "spectroMenuCompareDesc",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 1.5, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,18 C6,10 8,3 12,5 C16,7 18,14 21,17" }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M3,17 C5,12 7,8 11,9 C15,10 17,15 21,18", opacity: "0.6" })
-        ] }),
-        disabled: false
-      }
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "p-4 sm:p-6 md:p-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h2", { className: "text-2xl sm:text-3xl font-bold text-center text-gray-300 mb-6", children: t("spectroMenuTitle") }),
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "max-w-md mx-auto mb-8", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex items-center justify-center space-x-2 mb-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("label", { className: "text-md sm:text-lg font-semibold text-gray-300", children: t("analysisType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(InfoTooltip_default, { text: t("analysisTypeTooltip") })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex bg-gray-800 border border-gray-700 rounded-lg p-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => setAnalysisType("gamma"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "gamma" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("gammaAnalysis") }),
-          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { onClick: () => setAnalysisType("alpha"), className: `flex-1 p-2 text-sm sm:text-base font-semibold rounded-md transition-colors ${analysisType === "alpha" ? "bg-cyan-600 text-white shadow" : "text-gray-400 hover:bg-gray-700"}`, children: t("alphaAnalysis") })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-stretch gap-8", children: tools.map((tool) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
-        "div",
-        {
-          onClick: () => !tool.disabled && setMode(tool.key),
-          onKeyDown: (e) => !tool.disabled && handleKeyDown(e, tool.key),
-          role: "button",
-          tabIndex: tool.disabled ? -1 : 0,
-          "aria-label": t(tool.title),
-          className: `bg-gray-800 rounded-2xl shadow-lg border border-gray-700 transition-all duration-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 ${tool.disabled ? "opacity-50 cursor-not-allowed" : "hover:shadow-2xl hover:border-cyan-400 transform hover:-translate-y-2 cursor-pointer"}`,
-          children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "p-6 flex flex-col items-center justify-center text-center flex-grow", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: `p-4 rounded-full mb-4 bg-gray-700`, children: import_react27.default.cloneElement(tool.icon, { className: `h-16 w-16 ${tool.disabled ? "text-gray-500" : "text-cyan-400"}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h3", { className: "text-lg font-bold text-gray-100", children: t(tool.title) }),
-            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("p", { className: "text-sm text-gray-400 mt-2", children: t(tool.desc) })
-          ] })
-        },
-        tool.key
-      )) })
-    ] });
-  };
-  var SpectroPage_default = SpectroPage;
-
-  // pages/SourceManagementPage.tsx
-  var import_react32 = __toESM(require_react());
-
-  // components/source-management/AddSourceModal.tsx
-  var import_react28 = __toESM(require_react());
-
-  // services/sourceTypes.ts
-  var sourceTypes = [
-    {
-      key: "S1",
-      description: "S1 - \xC9talonnage d\xE9tecteurs gamma (50-150 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 5e4,
-      maxActivityBq: 15e4
-    },
-    {
-      key: "S2",
-      description: "S2 - \xC9talonnage d\xE9tecteurs gamma (10-30 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 1e4,
-      maxActivityBq: 3e4
-    },
-    {
-      key: "S3",
-      description: "S3 - \xC9talonnage contaminam\xE8tres beta (1-4 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 1e3,
-      maxActivityBq: 4e3
-    },
-    {
-      key: "S4",
-      description: "S4 - \xC9talonnage contaminam\xE8tres beta (2-8 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 2e3,
-      maxActivityBq: 8e3
-    },
-    {
-      key: "S5",
-      description: "S5 - \xC9talonnage C3 pi\xE9tons (3-6 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 3e3,
-      maxActivityBq: 6e3
-    },
-    {
-      key: "S6",
-      description: "S6 - Test alarmes portiques v\xE9hicules C3 (0.5-1.5 MBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 5e5,
-      maxActivityBq: 15e5
-    },
-    {
-      key: "S7",
-      description: "S7 - Test d\xE9clenchement contaminam\xE8tres (1-4 kBq)",
-      nuclide: "Cobalt-60 (Co-60)",
-      minActivityBq: 1e3,
-      maxActivityBq: 4e3
-    },
-    {
-      key: "S14",
-      description: "S14 - Contr\xF4le r\xE9jection beta contaminam\xE8tres alpha (2-8 kBq)",
-      nuclide: "Strontium-90 (Sr-90)",
-      minActivityBq: 2e3,
-      maxActivityBq: 8e3
-    },
-    {
-      key: "S15",
-      description: "S15 - \xC9talonnage d\xE9tecteurs scintillation (10-100 kBq)",
-      nuclide: "Barium-133 (Ba-133)",
-      minActivityBq: 1e4,
-      maxActivityBq: 1e5
-    },
-    {
-      key: "S16",
-      description: "S16 - \xC9talonnage d\xE9tecteurs scintillation (10-40 kBq)",
-      nuclide: "Cesium-137 (Cs-137)",
-      minActivityBq: 1e4,
-      maxActivityBq: 4e4
-    }
-  ];
-
-  // components/source-management/AddSourceModal.tsx
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-  var formatDateForInput2 = (date) => {
-    if (typeof date === "string")
-      return date;
-    return date.toISOString().split("T")[0];
-  };
-  var AddSourceModal = ({ isOpen, onClose, onSave, t, sourceToEdit }) => {
-    const [name, setName] = (0, import_react28.useState)("");
-    const [location, setLocation] = (0, import_react28.useState)("");
-    const [casier, setCasier] = (0, import_react28.useState)("");
-    const [nuclide, setNuclide] = (0, import_react28.useState)("");
-    const [referenceActivity, setReferenceActivity] = (0, import_react28.useState)(1e4);
-    const [referenceActivityUncertainty, setReferenceActivityUncertainty] = (0, import_react28.useState)(5);
-    const [referenceDate, setReferenceDate] = (0, import_react28.useState)(formatDateForInput2(/* @__PURE__ */ new Date()));
-    const [certificateNumber, setCertificateNumber] = (0, import_react28.useState)("");
-    const [type, setType] = (0, import_react28.useState)("");
-    const allNuclides = Object.entries(radionuclides).flatMap(
-      ([type2, nuclides]) => nuclides.map((n) => ({
-        name: n.name,
-        type: type2.charAt(0).toUpperCase() + type2.slice(1)
-      }))
-    );
-    (0, import_react28.useEffect)(() => {
-      if (sourceToEdit) {
-        setName(sourceToEdit.name);
-        setLocation(sourceToEdit.location || "");
-        setCasier(sourceToEdit.casier || "");
-        setNuclide(sourceToEdit.nuclide);
-        setReferenceActivity(sourceToEdit.referenceActivity);
-        setReferenceActivityUncertainty(sourceToEdit.referenceActivityUncertainty);
-        setReferenceDate(formatDateForInput2(new Date(sourceToEdit.referenceDate)));
-        setCertificateNumber(sourceToEdit.certificateNumber || "");
-        setType(sourceToEdit.type || "");
-      } else {
-        setName("");
-        setLocation("");
-        setCasier("");
-        setNuclide(allNuclides.length > 0 ? allNuclides.find((n) => n.name.includes("Co-60"))?.name || allNuclides[0].name : "");
-        setReferenceActivity(1e4);
-        setReferenceActivityUncertainty(5);
-        setReferenceDate(formatDateForInput2(/* @__PURE__ */ new Date()));
-        setCertificateNumber("");
-        setType("");
-      }
-    }, [sourceToEdit, isOpen]);
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (name && nuclide && referenceActivity > 0 && referenceDate) {
-        const sourceData = {
-          id: sourceToEdit ? sourceToEdit.id : crypto.randomUUID(),
-          name,
-          location,
-          casier,
-          nuclide,
-          referenceActivity,
-          referenceActivityUncertainty,
-          referenceDate,
-          certificateNumber,
-          type
-        };
-        onSave(sourceData);
-      }
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Card_default, { title: sourceToEdit ? t("editSourceTitle") : t("addSourceTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceName") }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: name, onChange: (e) => setName(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("casier") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: casier, onChange: (e) => setCasier(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("select", { value: nuclide, onChange: (e) => setNuclide(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: Object.entries(radionuclides).map(([type2, nuclidesOfType]) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("optgroup", { label: type2.charAt(0).toUpperCase() + type2.slice(1), children: nuclidesOfType.map((n) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: n.name, children: getLocalizedNuclideName(n.name, t) }, n.name)) }, type2)) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("select", { value: type, onChange: (e) => setType(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: "", children: t("selectType") }),
-            sourceTypes.map((st) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: st.key, children: st.description }, st.key))
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "number", value: referenceActivity, onChange: (e) => setReferenceActivity(parseFloat(e.target.value)), min: "0", step: "any", required: true, className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceActivityUncertainty") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "number", value: referenceActivityUncertainty, onChange: (e) => setReferenceActivityUncertainty(parseFloat(e.target.value)), min: "0", step: "any", className: "w-full bg-gray-700 p-2 rounded-md font-mono text-right text-white" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("sourceMgmt_referenceDate") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "date", value: referenceDate, onChange: (e) => setReferenceDate(e.target.value), required: true, className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("label", { className: "text-sm text-gray-300 mb-1 block", children: t("certificateNumber") }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("input", { type: "text", value: certificateNumber, onChange: (e) => setCertificateNumber(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { type: "submit", className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("save") })
-      ] })
-    ] }) }) }) });
-  };
-  var AddSourceModal_default = AddSourceModal;
-
-  // components/source-management/SourceTooltip.tsx
-  var import_react_dom5 = __toESM(require_react_dom());
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-  var SourceTooltip = ({ source, position, t }) => {
-    const nuclideData = Object.entries(radionuclides).flatMap(
-      ([type, nuclides]) => nuclides.map((n) => ({ ...n, type }))
-    ).find((n) => n.name === source.nuclide);
-    const gammaData = nuclideLibrary.find((n) => n.name === source.nuclide);
-    const halfLifeYears = nuclideData ? nuclideData.halfLifeSeconds / (365.25 * 24 * 3600) : 0;
-    const formatHalfLife = (years) => {
-      if (years > 1e3)
-        return `${(years / 1e6).toPrecision(3)} M years`;
-      if (years > 0.1)
-        return `${years.toPrecision(3)} years`;
-      return `${(years * 365.25).toPrecision(3)} days`;
-    };
-    const mainGammaLines = gammaData?.lines.filter((line) => line.type === "gamma").sort((a, b) => b.intensity_percent - a.intensity_percent).slice(0, 4);
-    const tooltipStyle = {
-      position: "fixed",
-      top: position.y + 15,
-      left: position.x + 15,
-      transform: "translate(0, 0)",
-      pointerEvents: "none",
-      zIndex: 100
-    };
-    const localizedNuclideName = getLocalizedNuclideName(source.nuclide, t);
-    return (0, import_react_dom5.createPortal)(
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
-        "div",
-        {
-          style: tooltipStyle,
-          className: "w-72 bg-gray-900 text-white text-xs rounded py-2 px-3 border border-cyan-500 shadow-lg",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h4", { className: "font-bold text-sm text-cyan-400 mb-2 border-b border-gray-700 pb-1", children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "space-y-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
-                  t("sourceMgmt_nuclide"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: "font-mono", children: localizedNuclideName })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
-                  t("halfLife"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: "font-mono", children: nuclideData ? formatHalfLife(halfLifeYears) : "N/A" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
-                  t("radiationType"),
-                  ":"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { className: "font-mono capitalize", children: nuclideData?.type || "N/A" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "pt-1 mt-1 border-t border-gray-700", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("h5", { className: "text-gray-400 mb-1", children: [
-                  t("mainEnergyLines"),
-                  ":"
-                ] }),
-                mainGammaLines && mainGammaLines.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("ul", { className: "space-y-0.5", children: mainGammaLines.map((line) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("li", { className: "flex justify-between font-mono", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { children: [
-                    line.energy_keV.toFixed(1),
-                    " keV"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { className: "text-gray-400", children: [
-                    "(",
-                    line.intensity_percent.toFixed(2),
-                    "%)"
-                  ] })
-                ] }, line.energy_keV)) }) : /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { className: "text-gray-500", children: t("noSignificantGamma") })
-              ] })
-            ] })
-          ]
-        }
-      ),
-      document.body
-    );
-  };
-  var SourceTooltip_default = SourceTooltip;
-
-  // components/source-management/ImportReviewModal.tsx
-  var import_react29 = __toESM(require_react());
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
-  var ImportReviewModal = ({
-    isOpen,
-    onClose,
-    sourcesFromFile,
-    existingSources,
-    onConfirm,
-    t
-  }) => {
-    const [decisions, setDecisions] = (0, import_react29.useState)(/* @__PURE__ */ new Map());
-    (0, import_react29.useEffect)(() => {
-      if (isOpen) {
-        const newDecisions = /* @__PURE__ */ new Map();
-        const existingIds2 = new Set(existingSources.map((s) => s.id));
-        sourcesFromFile.forEach((source) => {
-          if (existingIds2.has(source.id)) {
-            newDecisions.set(source.id, "skip");
-          } else {
-            newDecisions.set(source.id, "add");
-          }
-        });
-        setDecisions(newDecisions);
-      }
-    }, [isOpen, sourcesFromFile, existingSources]);
-    const handleDecisionChange = (id, decision) => {
-      setDecisions((prev) => new Map(prev).set(id, decision));
-    };
-    const handleSelectAllNew = (e) => {
-      const isChecked = e.target.checked;
-      const newDecisions = new Map(decisions);
-      const existingIds2 = new Set(existingSources.map((s) => s.id));
-      sourcesFromFile.forEach((source) => {
-        if (!existingIds2.has(source.id)) {
-          newDecisions.set(source.id, isChecked ? "add" : "skip");
-        }
-      });
-      setDecisions(newDecisions);
-    };
-    if (!isOpen)
-      return null;
-    const existingIds = new Set(existingSources.map((s) => s.id));
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Card_default, { title: t("importReviewTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-sm text-gray-400", children: t("importInstructions") }),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "max-h-[60vh] overflow-y-auto border border-gray-700 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3 w-8", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("input", { type: "checkbox", title: t("selectAll"), onChange: handleSelectAllNew }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("importStatus") }),
-          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("th", { className: "py-2 px-3", children: t("decision") })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("tbody", { className: "text-gray-200", children: sourcesFromFile.map((source) => {
-          const isConflict = existingIds.has(source.id);
-          const currentDecision = decisions.get(source.id);
-          return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("tr", { className: "border-t border-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: !isConflict && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
-              "input",
-              {
-                type: "checkbox",
-                checked: currentDecision === "add",
-                onChange: (e) => handleDecisionChange(source.id, e.target.checked ? "add" : "skip"),
-                className: "form-checkbox h-4 w-4 text-cyan-600 bg-gray-700 border-gray-600 rounded"
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3 font-semibold", children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${isConflict ? "bg-yellow-900 text-yellow-300" : "bg-green-900 text-green-300"}`, children: isConflict ? t("conflict") : t("new") }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("td", { className: "py-3 px-3", children: isConflict && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex bg-gray-700 rounded-md p-0.5", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDecisionChange(source.id, "skip"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "skip" ? "bg-gray-500 text-white" : "hover:bg-gray-600"}`, children: t("skip") }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { onClick: () => handleDecisionChange(source.id, "overwrite"), className: `flex-1 p-1 text-xs rounded ${currentDecision === "overwrite" ? "bg-red-600 text-white" : "hover:bg-gray-600"}`, children: t("overwrite") })
-            ] }) })
-          ] }, source.id);
-        }) })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { type: "button", onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("button", { type: "button", onClick: () => onConfirm(decisions), className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("confirmImport") })
-      ] })
-    ] }) }) }) });
-  };
-  var ImportReviewModal_default = ImportReviewModal;
-
-  // components/source-management/CsvImportModal.tsx
-  var import_react30 = __toESM(require_react());
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-  var CsvImportModal = ({ isOpen, onClose, onImport, t }) => {
-    const [file, setFile] = (0, import_react30.useState)(null);
-    const [error, setError] = (0, import_react30.useState)(null);
-    const handleFileChange = (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        setFile(e.target.files[0]);
-        setError(null);
-      }
-    };
-    const handleDrop = (0, import_react30.useCallback)((e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        setFile(e.dataTransfer.files[0]);
-        setError(null);
-        e.dataTransfer.clearData();
-      }
-    }, []);
-    const processImport = () => {
-      if (!file) {
-        setError("Please select a file.");
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const csvText = event.target?.result;
-          const lines = csvText.split(/\r?\n/).filter((line) => line.trim() !== "");
-          if (lines.length < 2)
-            throw new Error("CSV must have a header and at least one data row.");
-          const header = lines[0].split(",").map((h) => h.trim());
-          const requiredHeaders = ["id", "name", "nuclide", "referenceActivity", "referenceDate", "referenceActivityUncertainty"];
-          if (!requiredHeaders.every((h) => header.includes(h))) {
-            throw new Error(`CSV header is missing required columns. Required: ${requiredHeaders.join(", ")}`);
-          }
-          const sources = lines.slice(1).map((line, index) => {
-            const values = line.split(",");
-            const sourceObj = {};
-            header.forEach((h, i) => sourceObj[h] = values[i]?.trim());
-            return {
-              id: sourceObj.id,
-              name: sourceObj.name,
-              nuclide: sourceObj.nuclide,
-              referenceActivity: parseFloat(sourceObj.referenceActivity),
-              referenceDate: sourceObj.referenceDate,
-              referenceActivityUncertainty: parseFloat(sourceObj.referenceActivityUncertainty),
-              location: sourceObj.location || "",
-              casier: sourceObj.casier || "",
-              certificateNumber: sourceObj.certificateNumber || "",
-              type: sourceObj.type || ""
-            };
-          });
-          onImport(sources);
-        } catch (err) {
-          setError(err.message || "Failed to parse CSV file.");
-        }
-      };
-      reader.onerror = () => setError("Failed to read file.");
-      reader.readAsText(file);
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "w-full max-w-lg p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Card_default, { title: t("importCsvTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-sm text-gray-400", children: t("importCsvIntro") }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-        "div",
-        {
-          onDragOver: (e) => e.preventDefault(),
-          onDrop: handleDrop,
-          className: "p-6 border-2 border-dashed rounded-lg text-center border-gray-600 hover:border-cyan-500",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("input", { type: "file", id: "csv-upload", className: "hidden", accept: ".csv", onChange: handleFileChange }),
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("label", { htmlFor: "csv-upload", className: "cursor-pointer text-cyan-400 font-semibold", children: file ? file.name : t("selectCsvFile") })
-          ]
-        }
-      ),
-      error && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "text-red-400 text-sm text-center", children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex justify-end space-x-4 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg", children: t("cancel") }),
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { onClick: processImport, disabled: !file, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg disabled:bg-gray-500", children: t("confirmImport") })
-      ] })
-    ] }) }) }) });
-  };
-  var CsvImportModal_default = CsvImportModal;
-
-  // components/source-management/SourceTypesMemoModal.tsx
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
-  var SourceTypesMemoModal = ({ isOpen, onClose, t }) => {
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "w-full max-w-4xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(Card_default, { title: t("sourceTypeMemoTitle"), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "max-h-[70vh] overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "text-gray-400 bg-gray-900/50 sticky top-0", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("typeKey") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("description") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3", children: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3 text-right", children: t("minActivity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "py-2 px-3 text-right", children: t("maxActivity") })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tbody", { className: "text-gray-200", children: sourceTypes.map((type) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { className: "border-t border-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-bold text-cyan-300", children: type.key }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3", children: type.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3", children: type.nuclide }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.minActivityBq.toLocaleString() }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "py-3 px-3 font-mono text-right", children: type.maxActivityBq.toLocaleString() })
-        ] }, type.key)) })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "flex justify-end pt-4 mt-4 border-t border-gray-700", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { onClick: onClose, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300", children: t("close") }) })
-    ] }) }) });
-  };
-  var SourceTypesMemoModal_default = SourceTypesMemoModal;
-
-  // components/ExportModal.tsx
-  var import_react31 = __toESM(require_react());
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
-  var ExportModal = ({ isOpen, onClose, jsonData, t }) => {
-    const [copied, setCopied] = (0, import_react31.useState)(false);
-    const canShare = typeof navigator.share === "function";
-    (0, import_react31.useEffect)(() => {
-      if (!isOpen) {
-        setCopied(false);
-      }
-    }, [isOpen]);
-    const handleCopy = async () => {
-      try {
-        await navigator.clipboard.writeText(jsonData);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2e3);
-      } catch (err) {
-        console.error("Failed to copy text: ", err);
-        alert("Failed to copy text.");
-      }
-    };
-    const handleDownload = () => {
-      const blob = new Blob([jsonData], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "sources-backup.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    };
-    const handleShare = async () => {
-      if (!canShare)
-        return;
-      const blob = new Blob([jsonData], { type: "application/json" });
-      const file = new File([blob], "sources-backup.json", { type: "application/json" });
-      try {
-        await navigator.share({
-          files: [file],
-          title: t("sourceInventory")
-        });
-      } catch (error) {
-        console.error("Error sharing:", error);
-      }
-    };
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "w-full max-w-2xl p-4", onClick: (e) => e.stopPropagation(), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Card_default, { title: t("exportModalTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "text-sm text-gray-300", children: t("exportModalIntro") }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-        "textarea",
-        {
-          readOnly: true,
-          value: jsonData,
-          className: "w-full h-48 bg-gray-900/50 p-2 rounded-md font-mono text-xs text-gray-300 border border-gray-600"
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex flex-wrap justify-end gap-3 pt-4 border-t border-gray-700", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleCopy, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors", children: copied ? t("copied") : t("copyJson") }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleDownload, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg", children: t("downloadFile") }),
-        canShare && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("button", { onClick: handleShare, className: "bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg", children: t("shareFile") })
-      ] })
-    ] }) }) }) });
-  };
-  var ExportModal_default = ExportModal;
-
-  // pages/SourceManagementPage.tsx
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
-  var SourceManagementPage = ({ t }) => {
-    const [sources, setSources] = (0, import_react32.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react32.useState)(true);
-    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react32.useState)(false);
-    const [sourceToEdit, setSourceToEdit] = (0, import_react32.useState)(null);
-    const [searchTerm, setSearchTerm] = (0, import_react32.useState)("");
-    const [hoveredSource, setHoveredSource] = (0, import_react32.useState)(null);
-    const [sortConfig, setSortConfig] = (0, import_react32.useState)({ key: "name", direction: "ascending" });
-    const [isMemoOpen, setIsMemoOpen] = (0, import_react32.useState)(false);
-    const [isImportReviewOpen, setIsImportReviewOpen] = (0, import_react32.useState)(false);
-    const [isCsvImportOpen, setIsCsvImportOpen] = (0, import_react32.useState)(false);
-    const [sourcesToImport, setSourcesToImport] = (0, import_react32.useState)([]);
-    const [isExportModalOpen, setIsExportModalOpen] = (0, import_react32.useState)(false);
-    const [jsonDataToExport, setJsonDataToExport] = (0, import_react32.useState)("");
-    const fetchSources = (0, import_react32.useCallback)(async () => {
-      setIsLoading(true);
-      try {
-        const allSources = await db.getAllSources();
-        setSources(allSources);
-      } catch (error) {
-        console.error("Failed to fetch sources:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }, []);
-    (0, import_react32.useEffect)(() => {
-      fetchSources();
-    }, [fetchSources]);
-    const handleSaveSource = async (source) => {
-      try {
-        if (sourceToEdit) {
-          await db.updateSource(source);
-        } else {
-          await db.addSource(source);
-        }
-        fetchSources();
-      } catch (error) {
-        console.error("Failed to save source:", error);
-      } finally {
-        setIsAddModalOpen(false);
-        setSourceToEdit(null);
-      }
-    };
-    const handleDeleteSource = async (id) => {
-      if (window.confirm(t("confirmDeleteSource"))) {
-        try {
-          await db.deleteSource(id);
-          fetchSources();
-        } catch (error) {
-          console.error("Failed to delete source:", error);
-        }
-      }
-    };
-    const handleEditSource = (source) => {
-      setSourceToEdit(source);
-      setIsAddModalOpen(true);
-    };
-    const handleExport = () => {
-      if (sources.length === 0)
-        return;
-      const headers = [
-        "id",
-        "name",
-        "location",
-        "casier",
-        "nuclide",
-        "referenceActivity",
-        "referenceActivityUncertainty",
-        "referenceDate",
-        "certificateNumber",
-        "type"
-      ];
-      const headerString = headers.join(",");
-      const csvRows = sources.map((source) => {
-        return headers.map((header) => {
-          const value = source[header];
-          let formattedValue = value === void 0 || value === null ? "" : String(value);
-          if (formattedValue.includes(",")) {
-            formattedValue = `"${formattedValue}"`;
-          }
-          return formattedValue;
-        }).join(",");
-      });
-      const csv = [headerString, ...csvRows].join("\n");
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", "iso-assistant-sources.csv");
-      link.style.visibility = "hidden";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
-    const handleImportFromFile = (importedSources) => {
-      setSourcesToImport(importedSources);
-      setIsCsvImportOpen(false);
-      setIsImportReviewOpen(true);
-    };
-    const handleConfirmImport = async (decisions) => {
-      setIsLoading(true);
-      try {
-        for (const [id, decision] of decisions.entries()) {
-          const source = sourcesToImport.find((s) => s.id === id);
-          if (!source)
-            continue;
-          if (decision === "add") {
-            const { id: id2, ...sourceData } = source;
-            await db.addSource(sourceData);
-          } else if (decision === "overwrite") {
-            await db.updateSource(source);
-          }
-        }
-        await fetchSources();
-      } catch (error) {
-        console.error("Failed to process import:", error);
-      } finally {
-        setIsImportReviewOpen(false);
-        setSourcesToImport([]);
-        setIsLoading(false);
-      }
-    };
-    const handleOfflineExport = async () => {
-      try {
-        const allSources = await db.getAllSources();
-        const jsonString = JSON.stringify(allSources, null, 2);
-        setJsonDataToExport(jsonString);
-        setIsExportModalOpen(true);
-      } catch (error) {
-        console.error("Failed to get sources for export:", error);
-        alert("Error preparing data for export.");
-      }
-    };
-    const calculateCurrentActivity = (0, import_react32.useCallback)((source) => {
-      const nuclideData = Object.values(radionuclides).flat().find((n) => n.name === source.nuclide);
-      if (!nuclideData)
-        return source.referenceActivity;
-      const refTime = new Date(source.referenceDate).getTime();
-      const nowTime = (/* @__PURE__ */ new Date()).getTime();
-      const elapsedTimeSeconds = (nowTime - refTime) / 1e3;
-      const lambda = Math.log(2) / nuclideData.halfLifeSeconds;
-      return source.referenceActivity * Math.exp(-lambda * elapsedTimeSeconds);
-    }, []);
-    const filteredSources = (0, import_react32.useMemo)(() => {
-      return sources.filter(
-        (source) => source.name.toLowerCase().includes(searchTerm.toLowerCase()) || source.nuclide.toLowerCase().includes(searchTerm.toLowerCase()) || source.location?.toLowerCase().includes(searchTerm.toLowerCase()) || source.casier?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }, [sources, searchTerm]);
-    const sortedSources = (0, import_react32.useMemo)(() => {
-      let sortableItems = [...filteredSources];
-      if (sortConfig.key) {
-        sortableItems.sort((a, b) => {
-          let aValue;
-          let bValue;
-          if (sortConfig.key === "currentActivity") {
-            aValue = calculateCurrentActivity(a);
-            bValue = calculateCurrentActivity(b);
-          } else {
-            aValue = a[sortConfig.key];
-            bValue = b[sortConfig.key];
-          }
-          if (typeof aValue === "number" && typeof bValue === "number") {
-            return sortConfig.direction === "ascending" ? aValue - bValue : bValue - aValue;
-          }
-          if (typeof aValue === "string" && typeof bValue === "string") {
-            return sortConfig.direction === "ascending" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-          }
-          if (aValue === void 0)
-            return 1;
-          if (bValue === void 0)
-            return -1;
-          return 0;
-        });
-      }
-      return sortableItems;
-    }, [filteredSources, sortConfig, calculateCurrentActivity]);
-    const requestSort = (key) => {
-      let direction = "ascending";
-      if (sortConfig.key === key && sortConfig.direction === "ascending") {
-        direction = "descending";
-      }
-      setSortConfig({ key, direction });
-    };
-    const checkConformity = (source, currentActivity) => {
-      if (!source.type)
-        return "unknown";
-      const typeData = sourceTypes.find((st) => st.key === source.type);
-      if (!typeData)
-        return "unknown";
-      if (currentActivity >= typeData.minActivityBq && currentActivity <= typeData.maxActivityBq) {
-        return "ok";
-      }
-      if (currentActivity < typeData.minActivityBq) {
-        return "warning";
-      }
-      return "error";
-    };
-    const conformityColors = {
-      ok: "bg-green-500",
-      warning: "bg-yellow-500",
-      error: "bg-red-500",
-      unknown: "bg-gray-500"
-    };
-    const handleMouseEnter = (e, source) => {
-      setHoveredSource({ source, position: { x: e.clientX, y: e.clientY } });
-    };
-    const handleMouseLeave = () => {
-      setHoveredSource(null);
-    };
-    const SortableHeader = ({ sortKey, label }) => {
-      const isSorted = sortConfig.key === sortKey;
-      return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("th", { className: "p-3", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => requestSort(sortKey), className: "flex items-center space-x-1 no-print", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: label }),
-          isSorted && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden print:inline", children: label })
-      ] });
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "print-section", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Card_default, { title: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex flex-col sm:flex-row justify-between items-center gap-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("h2", { className: "text-xl font-bold text-gray-200", children: t("sourceInventory") }),
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex items-center gap-2 no-print", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-            "input",
-            {
-              type: "text",
-              placeholder: t("searchSource"),
-              value: searchTerm,
-              onChange: (e) => setSearchTerm(e.target.value),
-              className: "bg-gray-700 p-2 rounded-md text-sm w-48 text-white"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: handleOfflineExport, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-3 rounded-lg text-sm flex items-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: t("exportBackup") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => setIsCsvImportOpen(true), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("import") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: handleExport, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: t("export") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => setIsMemoOpen(true), title: t("sourceTypeMemo"), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 16c1.255 0 2.443-.29 3.5-.804V4.804zM14.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 0114.5 16c1.255 0 2.443-.29 3.5-.804v-10A7.968 7.968 0 0014.5 4z" }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => window.print(), className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z", clipRule: "evenodd" }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => {
-            setSourceToEdit(null);
-            setIsAddModalOpen(true);
-          }, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg text-sm", children: t("addSource") })
-        ] })
-      ] }), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("p", { children: [
-        t("loading"),
-        "..."
-      ] }) : sources.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noSources") }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("table", { className: "w-full text-sm text-left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "name", label: t("sourceName") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "location", label: t("location") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "casier", label: t("casier") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "nuclide", label: t("sourceMgmt_nuclide") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SortableHeader, { sortKey: "type", label: t("sourceType") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("th", { className: "p-3 text-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("button", { onClick: () => requestSort("currentActivity"), className: "flex items-center space-x-1 float-right no-print", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: t("currentActivity") }),
-              sortConfig.key === "currentActivity" && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { children: sortConfig.direction === "ascending" ? "\u25B2" : "\u25BC" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "hidden print:inline float-right", children: t("currentActivity") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3 text-center", children: t("conformity") }),
-          /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("th", { className: "p-3 text-center no-print", children: t("actions") })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tbody", { children: sortedSources.map((source) => {
-          const currentActivity = calculateCurrentActivity(source);
-          const conformity = checkConformity(source, currentActivity);
-          return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 font-semibold text-cyan-300", onMouseEnter: (e) => handleMouseEnter(e, source), onMouseLeave: handleMouseLeave, children: source.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.location }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.casier }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.nuclide }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3", children: source.type }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 font-mono text-right", children: currentActivity.toExponential(3) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { title: conformity, className: `block w-4 h-4 rounded-full mx-auto ${conformityColors[conformity]}` }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("td", { className: "p-3 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => handleEditSource(source), className: "text-cyan-400 hover:text-cyan-300", title: t("editSource"), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" }),
-                /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", clipRule: "evenodd" })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("button", { onClick: () => handleDeleteSource(source.id), className: "text-red-400 hover:text-red-300", title: t("deleteSource"), children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }) })
-            ] }) })
-          ] }, source.id);
-        }) })
-      ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-        AddSourceModal_default,
-        {
-          isOpen: isAddModalOpen,
-          onClose: () => {
-            setIsAddModalOpen(false);
-            setSourceToEdit(null);
-          },
-          onSave: handleSaveSource,
-          t,
-          sourceToEdit
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-        CsvImportModal_default,
-        {
-          isOpen: isCsvImportOpen,
-          onClose: () => setIsCsvImportOpen(false),
-          onImport: handleImportFromFile,
-          t
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-        ImportReviewModal_default,
-        {
-          isOpen: isImportReviewOpen,
-          onClose: () => setIsImportReviewOpen(false),
-          sourcesFromFile: sourcesToImport,
-          existingSources: sources,
-          onConfirm: handleConfirmImport,
-          t
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-        SourceTypesMemoModal_default,
-        {
-          isOpen: isMemoOpen,
-          onClose: () => setIsMemoOpen(false),
-          t
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-        ExportModal_default,
-        {
-          isOpen: isExportModalOpen,
-          onClose: () => setIsExportModalOpen(false),
-          jsonData: jsonDataToExport,
-          t
-        }
-      ),
-      hoveredSource && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(SourceTooltip_default, { source: hoveredSource.source, position: hoveredSource.position, t })
-    ] });
-  };
-  var SourceManagementPage_default = SourceManagementPage;
-
-  // pages/AnalysisHistoryPage.tsx
-  var import_react33 = __toESM(require_react());
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
-  var AnalysisHistoryPage = ({ t, onLoadAnalysis }) => {
-    const [analyses, setAnalyses] = (0, import_react33.useState)([]);
-    const [sources, setSources] = (0, import_react33.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react33.useState)(true);
-    const fetchAllData = async () => {
-      setIsLoading(true);
-      try {
-        const [fetchedAnalyses, fetchedSources] = await Promise.all([
-          db.getAllAnalyses(),
-          db.getAllSources()
-        ]);
-        setAnalyses(fetchedAnalyses);
-        setSources(fetchedSources);
-      } catch (error) {
-        console.error("Failed to load history:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    (0, import_react33.useEffect)(() => {
-      fetchAllData();
-    }, []);
-    const sourceMap = (0, import_react33.useMemo)(() => {
-      return new Map(sources.map((s) => [s.id, s.name]));
-    }, [sources]);
-    const handleDelete = async (id) => {
-      if (window.confirm(t("confirmDeleteAnalysis"))) {
-        await db.deleteAnalysis(id);
-        fetchAllData();
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Card_default, { title: t("analysisHistoryTitle"), children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "overflow-x-auto", children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("p", { children: [
-      t("loading"),
-      "..."
-    ] }) : analyses.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("p", { className: "text-center text-gray-400 py-8", children: t("noAnalysesSaved") }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("table", { className: "w-full text-sm text-left", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("thead", { className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisNameColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisDate") }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("analysisTypeColumn") }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3", children: t("linkedSource") }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("th", { className: "p-3 text-center", children: t("actions") })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("tbody", { children: analyses.map((record) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("tr", { className: "border-t border-gray-700 hover:bg-gray-800/50 text-gray-300", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3 font-semibold text-cyan-300", children: record.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: new Date(record.date).toLocaleString() }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: `px-2 py-1 text-xs font-semibold rounded-full ${record.analysisType === "n42" ? "bg-blue-900 text-blue-300" : "bg-purple-900 text-purple-300"}`, children: record.analysisType.toUpperCase() }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: record.sourceId ? sourceMap.get(record.sourceId) || "N/A" : "-" }),
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("td", { className: "p-3", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "flex items-center justify-center space-x-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => onLoadAnalysis(record), className: "text-cyan-400 hover:text-cyan-300 flex items-center space-x-1", title: t("load"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("load") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("button", { onClick: () => handleDelete(record.id), className: "text-red-400 hover:text-red-300 flex items-center space-x-1", title: t("delete"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("path", { fillRule: "evenodd", d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V9a1 1 0 011-1z", clipRule: "evenodd" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { className: "hidden sm:inline", children: t("delete") })
-          ] })
-        ] }) })
-      ] }, record.id)) })
-    ] }) }) });
-  };
-  var AnalysisHistoryPage_default = AnalysisHistoryPage;
-
-  // pages/AdminPage.tsx
-  var import_react34 = __toESM(require_react());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
-  var projectStructure = [
-    {
-      name: "components",
-      type: "folder",
-      descKey: "folderDesc_components",
-      children: [
-        { name: "n42-analyzer", type: "folder", descKey: "folderDesc_n42_analyzer", children: [
-          { name: "AddPeakModal.tsx", type: "file", descKey: "fileDesc_AddPeakModal" },
-          { name: "ComparisonPlot.tsx", type: "file", descKey: "fileDesc_ComparisonPlot" },
-          { name: "DeconvolutionModal.tsx", type: "file", descKey: "fileDesc_DeconvolutionModal" },
-          { name: "EfficiencyCalibrationModal.tsx", type: "file", descKey: "fileDesc_EfficiencyCalibrationModal" },
-          { name: "SpectrumPlot.tsx", type: "file", descKey: "fileDesc_SpectrumPlot" }
-        ] },
-        { name: "source-management", type: "folder", descKey: "folderDesc_source_management", children: [
-          { name: "AddSourceModal.tsx", type: "file", descKey: "fileDesc_AddSourceModal" },
-          { name: "CsvImportModal.tsx", type: "file", descKey: "fileDesc_CsvImportModal" },
-          { name: "ImportReviewModal.tsx", type: "file", descKey: "fileDesc_ImportReviewModal" },
-          { name: "SourceTooltip.tsx", type: "file", descKey: "fileDesc_SourceTooltip" },
-          { name: "SourceTypesMemoModal.tsx", type: "file", descKey: "fileDesc_SourceTypesMemoModal" }
-        ] },
-        { name: "spectrum-analyzer", type: "folder", descKey: "folderDesc_spectrum_analyzer", children: [
-          { name: "AnalysisResults.tsx", type: "file", descKey: "fileDesc_AnalysisResults" },
-          { name: "CalibrationPointModal.tsx", type: "file", descKey: "fileDesc_CalibrationPointModal" },
-          { name: "CalibrationSidebar.tsx", type: "file", descKey: "fileDesc_CalibrationSidebar" },
-          { name: "CameraCapture.tsx", type: "file", descKey: "fileDesc_CameraCapture" },
-          { name: "ImageUploader.tsx", type: "file", descKey: "fileDesc_ImageUploader" }
-        ] },
-        { name: "Card.tsx", type: "file", descKey: "fileDesc_Card" },
-        { name: "ChartModal.tsx", type: "file", descKey: "fileDesc_ChartModal" },
-        { name: "ChartPanel.tsx", type: "file", descKey: "fileDesc_ChartPanel" },
-        { name: "CollapsibleSection.tsx", type: "file", descKey: "fileDesc_CollapsibleSection" },
-        { name: "DecayCalculatorModal.tsx", type: "file", descKey: "fileDesc_DecayCalculatorModal" },
-        { name: "ExportModal.tsx", type: "file", descKey: "fileDesc_ExportModal" },
-        { name: "GeminiBackupModal.tsx", type: "file", descKey: "fileDesc_GeminiBackupModal" },
-        { name: "GeminiHelper.tsx", type: "file", descKey: "fileDesc_GeminiHelper" },
-        { name: "InfoTooltip.tsx", type: "file", descKey: "fileDesc_InfoTooltip" },
-        { name: "InputPanel.tsx", type: "file", descKey: "fileDesc_InputPanel" },
-        { name: "LanguageSelector.tsx", type: "file", descKey: "fileDesc_LanguageSelector" },
-        { name: "ModeSelector.tsx", type: "file", descKey: "fileDesc_ModeSelector" },
-        { name: "MonteCarloStatsModal.tsx", type: "file", descKey: "fileDesc_MonteCarloStatsModal" },
-        { name: "PeakIdentifierModal.tsx", type: "file", descKey: "fileDesc_PeakIdentifierModal" },
-        { name: "PeakPositionAdjusterModal.tsx", type: "file", descKey: "fileDesc_PeakPositionAdjusterModal" },
-        { name: "ProAccessModal.tsx", type: "file", descKey: "fileDesc_ProAccessModal" },
-        { name: "ReportGeneratorModal.tsx", type: "file", descKey: "fileDesc_ReportGeneratorModal" },
-        { name: "ResultsPanel.tsx", type: "file", descKey: "fileDesc_ResultsPanel" },
-        { name: "SaveAnalysisModal.tsx", type: "file", descKey: "fileDesc_SaveAnalysisModal" },
-        { name: "ThemeSelector.tsx", type: "file", descKey: "fileDesc_ThemeSelector" },
-        { name: "UnitConverterModal.tsx", type: "file", descKey: "fileDesc_UnitConverterModal" },
-        { name: "UpdateNotification.tsx", type: "file", descKey: "fileDesc_UpdateNotification" },
-        { name: "UserGuideModal.tsx", type: "file", descKey: "fileDesc_UserGuideModal" },
-        { name: "WelcomeModal.tsx", type: "file", descKey: "fileDesc_WelcomeModal" }
-      ]
-    },
-    {
-      name: "pages",
-      type: "folder",
-      descKey: "folderDesc_pages",
-      children: [
-        { name: "AdminPage.tsx", type: "file", descKey: "fileDesc_AdminPage" },
-        { name: "AnalysisHistoryPage.tsx", type: "file", descKey: "fileDesc_AnalysisHistoryPage" },
-        { name: "BackgroundSubtractionPage.tsx", type: "file", descKey: "fileDesc_BackgroundSubtractionPage" },
-        { name: "N42AnalyzerPage.tsx", type: "file", descKey: "fileDesc_N42AnalyzerPage" },
-        { name: "SourceManagementPage.tsx", type: "file", descKey: "fileDesc_SourceManagementPage" },
-        { name: "SpectroPage.tsx", type: "file", descKey: "fileDesc_SpectroPage" },
-        { name: "SpectrumAnalyzerPage.tsx", type: "file", descKey: "fileDesc_SpectrumAnalyzerPage" },
-        { name: "SpectrumComparisonPage.tsx", type: "file", descKey: "fileDesc_SpectrumComparisonPage" }
-      ]
-    },
-    {
-      name: "services",
-      type: "folder",
-      descKey: "folderDesc_services",
-      children: [
-        { name: "analysisHelpers.ts", type: "file", descKey: "fileDesc_analysisHelpers" },
-        { name: "dbService.ts", type: "file", descKey: "fileDesc_dbService" },
-        { name: "gammaLibrary.ts", type: "file", descKey: "fileDesc_gammaLibrary" },
-        { name: "geminiService.ts", type: "file", descKey: "fileDesc_geminiService" },
-        { name: "isoCalculations.ts", type: "file", descKey: "fileDesc_isoCalculations" },
-        { name: "monteCarloService.ts", type: "file", descKey: "fileDesc_monteCarloService" },
-        { name: "n42ParserService.ts", type: "file", descKey: "fileDesc_n42ParserService" },
-        { name: "peakIdentifierService.ts", type: "file", descKey: "fileDesc_peakIdentifierService" },
-        { name: "radionuclides.ts", type: "file", descKey: "fileDesc_radionuclides" },
-        { name: "sourceTypes.ts", type: "file", descKey: "fileDesc_sourceTypes" },
-        { name: "spectrumAnalyzerService.ts", type: "file", descKey: "fileDesc_spectrumAnalyzerService" }
-      ]
-    },
-    {
-      name: "electron",
-      type: "folder",
-      descKey: "folderDesc_electron",
-      children: [
-        { name: "main.js", type: "file", descKey: "fileDesc_electron_main" },
-        { name: "preload.js", type: "file", descKey: "fileDesc_electron_preload" }
-      ]
-    },
-    { name: "App.tsx", type: "file", descKey: "fileDesc_App" },
-    { name: "index.tsx", type: "file", descKey: "fileDesc_index_tsx" },
-    { name: "index.html", type: "file", descKey: "fileDesc_index_html" },
-    { name: "index.css", type: "file", descKey: "fileDesc_index_css" },
-    { name: "types.ts", type: "file", descKey: "fileDesc_types" },
-    { name: "translations.ts", type: "file", descKey: "fileDesc_translations" },
-    { name: "manifest.json", type: "file", descKey: "fileDesc_manifest" },
-    { name: "metadata.json", type: "file", descKey: "fileDesc_metadata" },
-    { name: "package.json", type: "file", descKey: "fileDesc_package" },
-    { name: "README.md", type: "file", descKey: "fileDesc_readme" },
-    { name: "service-worker.js", type: "file", descKey: "fileDesc_sw" },
-    { name: "tailwind.config.js", type: "file", descKey: "fileDesc_tailwind" }
-  ];
-  var FileTree = ({ nodes, t, onInfoClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("ul", { className: "text-sm", children: nodes.map((node) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("li", { className: "ml-4 my-1", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: node.type === "folder" ? "\u{1F4C1}" : "\u{1F4C4}" }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono", children: node.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: () => onInfoClick(node), className: "text-cyan-400 hover:text-cyan-300 text-xs", children: "(i)" })
-      ] }),
-      node.children && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: node.children, t, onInfoClick })
-    ] }, node.name)) });
-  };
-  var AdminPage = ({ t, onBack, inputs, results, isProUser, setProUser }) => {
-    const [infoFile, setInfoFile] = (0, import_react34.useState)(null);
-    const handleClearLocalStorage = () => {
-      if (window.confirm("This will reset all application settings, including PRO mode. Are you sure?")) {
-        localStorage.clear();
-        window.location.reload();
-      }
-    };
-    const handleClearDB = async () => {
-      if (window.confirm("This will DELETE all saved sources and analyses. This action is irreversible. Are you sure?")) {
-        try {
-          await db.clearAnalyses();
-          await db.clearSources();
-          alert("Database has been cleared.");
-        } catch (error) {
-          console.error("Failed to clear IndexedDB:", error);
-          alert("Failed to clear database.");
-        }
-      }
-    };
-    const handleGodMode = () => {
-      if (!isProUser) {
-        localStorage.setItem("isProUser", "true");
-        setProUser(true);
-      } else {
-        localStorage.removeItem("isProUser");
-        setProUser(false);
-      }
-    };
-    const inputVars = [
-      "grossCount",
-      "grossCountUnit",
-      "grossTime",
-      "backgroundCount",
-      "backgroundCountUnit",
-      "backgroundTime",
-      "roiGrossCount",
-      "roiChannels",
-      "backgroundTotalCount",
-      "backgroundChannels",
-      "probeEfficiency",
-      "probeArea",
-      "estimatedBackgroundRate",
-      "targetValue",
-      "targetUnit",
-      "conveyorSpeed",
-      "conveyorSpeedUnit",
-      "chamberLength",
-      "chamberWidth",
-      "chamberHeight",
-      "detectors",
-      "chambreLingeTime",
-      "chambreLingeTarget",
-      "chambreLingeTargetUnit",
-      "calibrationFactor",
-      "calibrationFactorUnit",
-      "calibrationFactorUncertainty",
-      "k1alpha",
-      "k1beta",
-      "correlationCoefficient",
-      "monteCarloMode",
-      "useBayesianMode",
-      "numSimulations"
-    ];
-    const resultVars = [
-      "calculationMethod",
-      "currentMode",
-      "primaryResult",
-      "primaryUncertainty",
-      "decisionThreshold",
-      "detectionLimit",
-      "isEffectPresent",
-      "bestEstimate",
-      "bestEstimateUncertainty",
-      "confidenceIntervalLower",
-      "confidenceIntervalUpper",
-      "k1alpha",
-      "k1beta",
-      "alphaProbability",
-      "betaProbability",
-      "meanTimeBetweenFalseAlarms",
-      "uncertaintyAtZero",
-      "uncertaintyAtDetectionLimit",
-      "varianceComponents",
-      "sensitivityCoefficients",
-      "probabilityEffectPresent",
-      "histogramData",
-      "numSimulations",
-      "monteCarloStats"
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex justify-between items-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h2", { className: "text-2xl font-bold text-gray-300", children: t("adminPageTitle") }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("button", { onClick: onBack, className: "text-sm text-cyan-400 hover:text-cyan-300 flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M11 17l-5-5m0 0l5-5m-5 5h12" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: t("backButton") })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-gray-400 mb-6", children: t("adminWelcome") }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 items-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-2 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("projectExplorer"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-500 mb-4", children: t("projectExplorerDesc") }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "max-h-[60vh] overflow-y-auto pr-2", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(FileTree, { nodes: projectStructure, t, onInfoClick: setInfoFile }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-xs text-gray-600 mt-4", children: t("adminStaticStructureWarning") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminVariablesTitle"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: inputVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
-            ] }, v)) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsTitle"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4", children: resultVars.map((v) => /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "flex items-center space-x-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "font-mono text-sm text-gray-300", children: v }),
-              /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InfoTooltip_default, { text: t(`varDesc_${v}`) })
-            ] }, v)) }) })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "lg:col-span-1 sticky top-6 space-y-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("adminLiveStateTitle"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminInputsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(inputs, null, 2) }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(CollapsibleSection_default, { title: t("adminResultsState"), defaultOpen: false, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("pre", { className: "text-xs bg-gray-900 p-2 rounded-md max-h-64 overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("code", { children: JSON.stringify(results, null, 2) }) }) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Card_default, { title: t("fileInfo"), children: infoFile ? /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "p-3 min-h-[120px]", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h4", { className: "font-bold text-cyan-400 mb-2", children: infoFile.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-300", children: t(infoFile.descKey) || "No description available." })
-          ] }) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-400 p-3 min-h-[120px] flex items-center justify-center", children: t("adminInfoPlaceholder") }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(Card_default, { title: t("godMode"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-sm text-gray-400 mb-4", children: t("godModeDesc") }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleGodMode, className: `w-full py-2 px-4 rounded-lg font-bold ${isProUser ? "bg-yellow-600 hover:bg-yellow-700" : "bg-cyan-600 hover:bg-cyan-700"}`, children: isProUser ? t("disableGodMode") : t("enableGodMode") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Card_default, { title: t("dataManagement"), children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "space-y-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearLocalStorage, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearLocalStorage") }),
-            /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { onClick: handleClearDB, className: "w-full bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg", children: t("clearIndexedDB") })
-          ] }) })
-        ] })
-      ] })
-    ] });
-  };
-  var AdminPage_default = AdminPage;
-
-  // components/UpdateNotification.tsx
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
-  var UpdateNotification = ({ isOpen, onUpdate, t }) => {
-    if (!isOpen)
-      return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 border border-cyan-500 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center justify-between z-50 animate-fade-in-up", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { className: "mr-4 text-sm", children: t("updateAvailable") }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-        "button",
-        {
-          onClick: onUpdate,
-          className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-4 rounded-md transition duration-300 text-sm",
-          children: t("refresh")
-        }
-      )
-    ] });
-  };
-  var UpdateNotification_default = UpdateNotification;
-
-  // components/ReportGeneratorModal.tsx
-  var import_react35 = __toESM(require_react());
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
-  var generateGaussianPoints3 = (mean, stdDev, range) => {
-    if (stdDev <= 0)
-      return [];
-    const points = [];
-    const steps = 100;
-    const stepSize = (range.max - range.min) / steps;
-    for (let i = 0; i <= steps; i++) {
-      const x = range.min + i * stepSize;
-      const y = 1 / (stdDev * Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2));
-      points.push({ x, y });
-    }
-    return points;
-  };
-  var formatNumber3 = (num) => {
-    if (num === null || num === void 0)
-      return "N/A";
-    if (typeof num === "string")
-      return num;
-    if (Math.abs(num) < 1e-3 && num !== 0)
-      return num.toExponential(3);
-    const fixed = num.toFixed(3);
-    return fixed.endsWith(".000") ? parseInt(fixed).toString() : fixed;
-  };
-  var ReportChart = ({ results, t }) => {
-    if (typeof results.detectionLimit !== "number" || typeof results.decisionThreshold !== "number")
-      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { children: t("chartNotAvailable") });
-    const { primaryResult, primaryUncertainty, decisionThreshold, detectionLimit, uncertaintyAtZero, uncertaintyAtDetectionLimit } = results;
-    const width = 800;
-    const height = 450;
-    const padding = { top: 30, right: 30, bottom: 50, left: 50 };
-    const xMin = Math.min(0, decisionThreshold - 4 * uncertaintyAtZero, primaryResult - 4 * primaryUncertainty);
-    const xMax = Math.max(detectionLimit + 4 * uncertaintyAtDetectionLimit, primaryResult + 4 * primaryUncertainty, decisionThreshold + 4 * uncertaintyAtZero);
-    const h0Points = generateGaussianPoints3(0, uncertaintyAtZero, { min: xMin, max: xMax });
-    const h1Points = generateGaussianPoints3(detectionLimit, uncertaintyAtDetectionLimit, { min: xMin, max: xMax });
-    const yPoints = generateGaussianPoints3(primaryResult, primaryUncertainty, { min: xMin, max: xMax });
-    const yValues = [...h0Points.map((p) => p.y), ...h1Points.map((p) => p.y), ...yPoints.map((p) => p.y)];
-    const yMax = yValues.length > 0 ? Math.max(...yValues) * 1.1 : 1;
-    const toSvgX = (x) => padding.left + (x - xMin) / (xMax - xMin) * (width - padding.left - padding.right);
-    const toSvgY = (y) => height - padding.bottom - y / yMax * (height - padding.top - padding.bottom);
-    const createPath = (points) => {
-      if (!points.length)
-        return "";
-      let path = `M ${toSvgX(points[0].x)} ${toSvgY(points[0].y)}`;
-      points.forEach((p) => path += ` L ${toSvgX(p.x)} ${toSvgY(p.y)}`);
-      return path;
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "bg-white p-2 border border-gray-300 chart-container", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("svg", { viewBox: `0 0 ${width} ${height}`, className: "w-full h-auto", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: padding.left, y1: height - padding.bottom, x2: width - padding.right, y2: height - padding.bottom, stroke: "#333" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: width / 2, y: height - 15, textAnchor: "middle", fill: "#000", fontSize: "14", children: t("activity") }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(h0Points), stroke: "#007bff", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(h1Points), stroke: "#6f42c1", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("path", { d: createPath(yPoints), stroke: "#28a745", fill: "none", strokeWidth: "2.5" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: toSvgX(decisionThreshold), y1: padding.top, x2: toSvgX(decisionThreshold), y2: height - padding.bottom, stroke: "#dc3545", strokeWidth: "2", strokeDasharray: "5 3" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: toSvgX(decisionThreshold), y: padding.top - 8, textAnchor: "middle", fill: "#dc3545", fontSize: "12", fontWeight: "bold", children: "y*" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("line", { x1: toSvgX(detectionLimit), y1: padding.top, x2: toSvgX(detectionLimit), y2: height - padding.bottom, stroke: "#ffc107", strokeWidth: "2", strokeDasharray: "5 3" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("text", { x: toSvgX(detectionLimit), y: padding.top - 8, textAnchor: "middle", fill: "#ffc107", fontSize: "12", fontWeight: "bold", children: "y#" })
-    ] }) });
-  };
-  var ReportGeneratorModal = ({ isOpen, onClose, inputs, results, t }) => {
-    const [operatorName, setOperatorName] = (0, import_react35.useState)("");
-    const [sampleId, setSampleId] = (0, import_react35.useState)("");
-    const [comments, setComments] = (0, import_react35.useState)("");
-    const handlePrint = () => {
-      const body = document.body;
-      body.classList.add("print-report-active");
-      const handleAfterPrint = () => {
-        body.classList.remove("print-report-active");
-        window.removeEventListener("afterprint", handleAfterPrint);
-      };
-      window.addEventListener("afterprint", handleAfterPrint);
-      window.print();
-    };
-    if (!isOpen)
-      return null;
-    const renderInputTable = () => {
-      const rows = [
-        { label: t("grossCount"), value: `${inputs.grossCount} ${inputs.grossCountUnit}`, mode: ["standard"] },
-        { label: t("measurementTime"), value: `${inputs.grossTime} s`, mode: ["standard", "spectrometry", "surface"] },
-        { label: t("backgroundCount"), value: `${inputs.backgroundCount} ${inputs.backgroundCountUnit}`, mode: ["standard"] },
-        { label: t("measurementTime"), value: `${inputs.backgroundTime} s`, mode: ["standard", "spectrometry"] },
-        { label: t("roiGrossCount"), value: inputs.roiGrossCount, mode: ["spectrometry"] },
-        { label: t("roiChannels"), value: inputs.roiChannels, mode: ["spectrometry"] },
-        { label: t("backgroundTotalCount"), value: inputs.backgroundTotalCount, mode: ["spectrometry"] },
-        { label: t("backgroundChannels"), value: inputs.backgroundChannels, mode: ["spectrometry"] },
-        { label: t("calibrationFactor"), value: `${inputs.calibrationFactor.toPrecision(4)} ${inputs.calibrationFactorUnit}`, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
-        { label: t("relativeUncertainty"), value: `${inputs.calibrationFactorUncertainty} %`, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
-        { label: "k(1-\u03B1)", value: inputs.k1alpha, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] },
-        { label: "k(1-\u03B2)", value: inputs.k1beta, mode: ["standard", "spectrometry", "surface", "chambre", "linge"] }
-      ];
-      return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("tbody", { children: rows.filter((r) => r.mode.includes(results && typeof results !== "string" ? results.currentMode : "standard")).map((row) => /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: row.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: row.value })
-      ] }, row.label)) }) });
-    };
-    const renderResultsTable = (res) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("table", { className: "w-full text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: t("primaryResult") }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: `${formatNumber3(res.primaryResult)} \xB1 ${formatNumber3(res.primaryUncertainty)}` })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("td", { className: "font-semibold p-2", children: [
-          t("decisionThreshold"),
-          " (y*)"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: formatNumber3(res.decisionThreshold) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("td", { className: "font-semibold p-2", children: [
-          t("detectionLimit"),
-          " (y#)"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: formatNumber3(res.detectionLimit) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "font-semibold p-2", children: t("conclusion") }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("td", { className: "p-2", children: res.isEffectPresent ? t("effectPresent") : t("effectNotPresent") })
-      ] })
-    ] }) });
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm report-modal-container", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-gray-800 rounded-lg shadow-2xl w-full max-w-4xl m-4 border border-gray-700 flex flex-col report-modal-content-wrapper", onClick: (e) => e.stopPropagation(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "p-6 border-b border-gray-700 no-print", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-2xl font-bold text-cyan-400", children: t("reportGeneratorTitle") }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "p-6 overflow-y-auto max-h-[75vh] report-modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-white p-8 mx-auto shadow-lg a4-page print-section", style: { width: "210mm", minHeight: "297mm" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "text-black mb-8 pb-4 border-b border-gray-300", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-3xl font-bold mb-2", children: "ISO 11929 Calculation Report" }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "grid grid-cols-2 gap-4 text-sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
-                t("operatorName"),
-                ":"
-              ] }),
-              " ",
-              operatorName || "-"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
-                t("sampleId"),
-                ":"
-              ] }),
-              " ",
-              sampleId || "-"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("strong", { children: [
-                t("reportDate"),
-                ":"
-              ] }),
-              " ",
-              (/* @__PURE__ */ new Date()).toLocaleString()
-            ] })
-          ] })
-        ] }),
-        typeof results !== "string" && results ? /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "space-y-8 text-black", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportInputs") }),
-            renderInputTable()
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("reportResults") }),
-            renderResultsTable(results)
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "page-break-before", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("chartTitle") }),
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ReportChart, { results, t })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { className: "text-xl font-semibold mb-2 border-b pb-1", children: t("comments") }),
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-sm whitespace-pre-wrap min-h-[50px]", children: comments || " - " })
-          ] })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-black", children: t("noResultsToDisplay") })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "bg-gray-900/50 p-6 rounded-b-lg border-t border-gray-700 no-print", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "text", placeholder: t("operatorName"), value: operatorName, onChange: (e) => setOperatorName(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "text", placeholder: t("sampleId"), value: sampleId, onChange: (e) => setSampleId(e.target.value), className: "w-full bg-gray-700 p-2 rounded-md text-white" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("textarea", { placeholder: t("comments"), value: comments, onChange: (e) => setComments(e.target.value), rows: 3, className: "w-full bg-gray-700 p-2 rounded-md text-white mb-4" }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex justify-end space-x-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: onClose, className: "bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg", children: t("close") }),
-          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { onClick: handlePrint, className: "bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg", children: t("printReport") })
-        ] })
-      ] })
-    ] }) });
-  };
-  var ReportGeneratorModal_default = ReportGeneratorModal;
 
   // services/isoCalculations.ts
   var erf = (x) => {
