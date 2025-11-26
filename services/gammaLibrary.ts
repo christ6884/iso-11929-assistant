@@ -112,6 +112,13 @@ export const nuclideLibrary: NuclideData[] = [
     ],
   },
   {
+    name: 'Lead-210 (Pb-210)',
+    halfLife_s: 22.23 * year,
+    lines: [
+        { energy_keV: 46.54, intensity_percent: 4.25, type: 'gamma' },
+    ],
+  },
+  {
     name: 'Manganese-54 (Mn-54)',
     halfLife_s: 312.13 * day, // BIPM-5
     lines: [

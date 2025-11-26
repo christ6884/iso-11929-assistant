@@ -1,5 +1,4 @@
 
-
 import { Radionuclide } from '../types.ts';
 
 const year = 31556926;
@@ -45,6 +44,7 @@ export const radionuclides: Record<string, Radionuclide[]> = {
     { name: 'Iron-59 (Fe-59)', halfLifeSeconds: 44.495 * day, gammaConstant: 171, effectiveEnergy_MeV: 1.099 },
     { name: 'Krypton-85 (Kr-85)', halfLifeSeconds: 10.752 * year, effectiveEnergy_MeV: 0.514 },
     { name: 'Lanthanum-140 (La-140)', halfLifeSeconds: 1.67850 * day, gammaConstant: 280, effectiveEnergy_MeV: 1.596 },
+    { name: 'Lead-210 (Pb-210)', halfLifeSeconds: 22.23 * year, gammaConstant: 0.004, effectiveEnergy_MeV: 0.0465 },
     { name: 'Lutetium-177 (Lu-177)', halfLifeSeconds: 6.647 * day, effectiveEnergy_MeV: 0.208 },
     { name: 'Manganese-54 (Mn-54)', halfLifeSeconds: 312.13 * day, gammaConstant: 128.8, effectiveEnergy_MeV: 0.835 },
     { name: 'Manganese-56 (Mn-56)', halfLifeSeconds: 2.57878 * hour, effectiveEnergy_MeV: 0.847 },
