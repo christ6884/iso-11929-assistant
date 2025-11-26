@@ -1,5 +1,4 @@
 
-
 import { Language } from './types';
 
 type Translations = {
@@ -115,7 +114,7 @@ const fr: Translations = {
     measurementConditions: "Conditions de mesure",
     estimatedBackgroundRate: "Taux de BDF estimé (c/s)",
     estimatedBackgroundRateTooltip: "Taux de comptage de bruit de fond moyen attendu pour cet appareil.",
-    targetActivity: "Activité cible",
+    targetActivity: "Actividad cible",
     targetValue: "Valeur cible",
     targetValueTooltip: "L'activité que le système doit être capable de détecter.",
     detectorSetup: "Configuration des détecteurs",
@@ -353,7 +352,7 @@ const fr: Translations = {
     // User Guide
     guideTitle: "Guide d'utilisation",
     guide_intro_title: "Introduction",
-    guide_intro_p1: "Cet assistant est un outil pédagogique et pratique pour appliquer les concepts de la norme ISO 11929. Il aide à calculer les limites caractéristiques (seuil de décision, limite de détection) et à comprendre l'impact des différents paramètres. La version actuelle du logiciel (V6.4.4) est affichée sous l'icône de sélection de la langue dans l'en-tête.",
+    guide_intro_p1: "Cet assistant est un outil pédagogique et pratique pour appliquer les concepts de la norme ISO 11929. Il aide à calculer les limites caractéristiques (seuil de décision, limite de détection) et à comprendre l'impact des différents paramètres. La version actuelle du logiciel (V6.4.7) est affichée sous l'icône de sélection de la langue dans l'en-tête.",
     guide_main_calc_title: "Calculateur Principal",
     guide_main_calc_p1: "Le cœur de l'application. Effectue les calculs conformément à la norme.",
     guide_main_calc_modes_title: "Modes d'Analyse",
@@ -570,7 +569,7 @@ const fr: Translations = {
     downloadFile: "Télécharger le Fichier",
     shareFile: "Partager",
     copied: "Copié !",
-    confirmAddPeak: "Voulez-vous ajouter un pic manuellement à cette position ?",
+    confirmAddPeak: "Voulez-vous ajouter un pic manuellement à cette position?",
 
     // Report Generator
     reportGeneratorTitle: "Générer un rapport",
@@ -756,6 +755,7 @@ const fr: Translations = {
 };
 
 const en: Translations = {
+    // General
     authorDetails: "By Christophe PHAM - Inspired by ISO 11929:2019",
     authorCredit: "Created with ❤️ by Christophe PHAM. All rights reserved.",
     proVersion: "PRO Version",
@@ -785,11 +785,13 @@ const en: Translations = {
     or: "or",
     printReport: "Print Report",
     
+    // Header & Nav
     isoCalculator: "ISO Calculator",
     spectrometryTools: "Spectrometry Tools",
     sourceManagement: "Source Management",
     analysisHistory: "Analysis History",
 
+    // Modes
     standard: "Standard",
     spectrometry: "Spectrometry",
     surfaceControl: "Surface Control",
@@ -801,6 +803,7 @@ const en: Translations = {
     chambreTooltip: "Calculation for chamber/portal type monitors.",
     lingeTooltip: "Calculation for laundry contamination monitors.",
 
+    // Inputs Panel
     inputs: "Input Parameters",
     expertMode: "Expert Mode",
     sourceMeasurement: "Source Measurement",
@@ -840,6 +843,7 @@ const en: Translations = {
     saveConfig: "Save Config",
     loadConfig: "Load Config",
     
+    // Spectrometry Inputs
     roiMeasurement: "ROI Measurement",
     roiGrossCount: "ROI Gross Count",
     roiGrossCountTooltip: "Total counts in the Region of Interest (ROI) of the sample spectrum.",
@@ -850,6 +854,7 @@ const en: Translations = {
     backgroundChannels: "Total Bkg Channels",
     backgroundChannelsTooltip: "Total number of channels in the background spectrum.",
     
+    // Surface/Chambre/Linge Inputs
     probeParameters: "Probe Parameters",
     probeEfficiency: "Probe Efficiency (%)",
     probeEfficiencyTooltip: "2π or 4π efficiency of the detection probe.",
@@ -875,6 +880,7 @@ const en: Translations = {
     conveyorSpeed: "Conveyor Speed",
     conveyorSpeedTooltip: "Speed at which items move on the conveyor.",
 
+    // Results Panel
     results: "Results",
     resultUnit: "Unit",
     primaryResult: "Net Result (y)",
@@ -919,6 +925,7 @@ const en: Translations = {
     systemCompliant: "System COMPLIANT with target.",
     systemNonCompliant: "System NOT COMPLIANT with target.",
 
+    // Chart
     chartTitle: "Graphical Representation",
     activity: "Activity",
     h0_legend: "Null Hypothesis (Activity = 0)",
@@ -935,6 +942,7 @@ const en: Translations = {
     viewSimulationStatsTooltip: "View detailed statistics from the Monte Carlo simulation.",
     expandChartTooltip: "Expand Chart",
 
+    // Errors
     positiveValuesError: "Measurement times and calibration factor must be positive numbers.",
     negativeRateError: "Count rates cannot be negative.",
     kBetaError: "k(1-β)² * u_rel(w)² must be less than 1. Increase u_rel(w) or decrease k(1-β).",
@@ -942,12 +950,14 @@ const en: Translations = {
     noActiveDetectors: "No detectors enabled. Please enable at least one detector to calculate.",
     positiveSpeedError: "Conveyor speed must be positive.",
     
+    // Pro Modal
     proUnlockedSuccess: "Pro features unlocked successfully!",
     proAccessTitle: "Access PRO Features",
     proAccessDescription: "Enter the passcode to unlock advanced tools, including spectrum analyzers and analysis history.",
     passcode: "Passcode",
     incorrectPasscode: "Incorrect passcode.",
     
+    // Welcome Modal
     welcomeTitle: "Welcome to ISO 11929 Assistant",
     welcomeIntro: "This tool is designed to help you perform detection calculations according to ISO 11929:2019. Here is an overview of key features:",
     welcomeFeature1Title: "Multiple Calculation Modes",
@@ -963,9 +973,11 @@ const en: Translations = {
     welcomeConclusion: "Explore the different modes and options. For more details, consult the user guide.",
     welcomeStart: "Get Started",
     
+    // Update Notification
     updateAvailable: "A new version is available!",
     refresh: "Refresh",
     
+    // Simulation Stats Modal
     simulationStatisticsTitle: "Simulation Statistics",
     simulationSummaryIntro: "Results based on {n} iterations of Monte Carlo simulation.",
     statMean: "Mean",
@@ -1029,6 +1041,7 @@ const en: Translations = {
     identificationTolerance: "Identification Tolerance",
     identificationToleranceTooltip: "The window in keV (+/-) to search for nuclide matches.",
 
+    // Source Management
     sourceInventory: "Source Inventory",
     searchSource: "Search...",
     addSource: "Add Source",
@@ -1053,79 +1066,8 @@ const en: Translations = {
     export: "Export (CSV)",
     exportBackup: "Export / Backup",
 
-    adminPageTitle: "Project Explorer & Admin",
-    adminWelcome: "Structural view of the project for developers.",
-    projectExplorer: "File Tree",
-    projectExplorerDesc: "Click (i) to see file role.",
-    adminStaticStructureWarning: "Note: This file structure is statically defined. It does not update automatically.",
-    godMode: "God Mode",
-    godModeDesc: "Forces PRO mode.",
-    enableGodMode: "Enable",
-    disableGodMode: "Disable",
-    dataManagement: "Data",
-    clearLocalStorage: "Reset App",
-    clearIndexedDB: "Clear DB",
-    fileRole: "File Role",
-    fileInfo: "Information",
-    adminInfoPlaceholder: "Click the (i) icon next to a file or folder to see its description here.",
-    adminVariablesTitle: "Key Data Structures & Variables",
-    adminInputsTitle: "Input State (`Inputs` type)",
-    adminResultsTitle: "Result State (`Results` type)",
-    adminLiveStateTitle: "Live Application State",
-    adminInputsState: "Inputs State",
-    adminResultsState: "Results State",
-
-    changeTheme: "Change Theme",
-    themeCyberCyan: "Cyber Cyan",
-    themeLabWhite: "Lab White",
-    themeForestGreen: "Forest Green",
-    
-    changeLanguage: "Change Language",
-
-    // User Guide
-    guideTitle: "User Guide",
-    guide_intro_title: "Introduction",
-    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It helps calculate characteristic limits (decision threshold, detection limit) and understand the impact of different parameters. The current software version (V6.4.4) is displayed under the language selection icon in the header.",
-    guide_main_calc_title: "Main Calculator",
-    guide_main_calc_p1: "The heart of the application. Performs calculations according to the standard.",
-    guide_main_calc_modes_title: "Analysis Modes",
-    guide_main_calc_modes_p1: "Select the appropriate mode via the top tab bar.",
-    guide_main_calc_modes_li1: "For simple measurements with defined count times.",
-    guide_main_calc_modes_li2: "Similar to Standard, but uses ROI and full spectrum sizes to scale background.",
-    guide_main_calc_modes_li3_surface: "Calculates threshold and limit in terms of surface activity, using probe efficiency and area.",
-    guide_main_calc_modes_li3_chambre: "For fixed time monitors.",
-    guide_main_calc_modes_li3_linge: "For conveyor monitors, calculates effective measurement time based on speed.",
-    guide_main_calc_inputs_title: "Inputs",
-    guide_main_calc_inputs_p1: "Fill in required fields. Tooltips (i) provide details on each parameter.",
-    guide_main_calc_inputs_li1: "Enter gross counts or rate, and measurement time.",
-    guide_main_calc_inputs_li2: "The 'w' factor (e.g., inverse efficiency). For Surface/Chamber/Laundry modes, this can be auto-calculated.",
-    guide_main_calc_inputs_li3: "Defines error probabilities (α, β).",
-    guide_main_calc_results_title: "Results",
-    guide_main_calc_results_p1: "The right panel displays calculated values.",
-    guide_main_calc_results_li1: "If net result > y*, effect is present.",
-    guide_main_calc_results_li2: "Smallest reliably detectable activity.",
-    guide_main_calc_results_li3: "Clear statement of presence or absence of activity.",
-    guide_main_calc_results_li4: "(Expert Mode) Shows contribution of each input to total uncertainty.",
-    guide_main_calc_expert_title: "Expert Features",
-    guide_main_calc_expert_p1: "Toggle 'Expert Mode' for more options.",
-    guide_main_calc_expert_li1: "Adjust if background and calibration are correlated.",
-    guide_main_calc_expert_li2: "Use numerical simulation instead of analytical formulas for better statistical accuracy.",
-    guide_spec_tools_title: "Spectrometry Tools",
-    guide_spec_tools_p1: "Accessible to PRO users via the Spectrometry tab.",
-    guide_spec_analyzer_title: "Image Analyzer",
-    guide_spec_analyzer_p1: "Extracts data from a spectrum image (screenshot or photo).",
-    guide_spec_analyzer_phase1_title: "Calibration",
-    guide_spec_analyzer_phase1_p1: "Click on known peaks (e.g., Cs-137 at 662 keV) to establish channel-energy relation.",
-    guide_spec_analyzer_phase2_title: "Analysis",
-    guide_spec_analyzer_phase2_p1: "System extracts curve, detects peaks, and attempts to identify them against the library.",
-    guide_other_tools_decay_title: "Decay Calculator",
-    guide_other_tools_decay_p1: "Quick utility to calculate current activity of any nuclide without adding to inventory.",
-    guide_other_tools_peak_title: "Peak Identifier",
-    guide_other_tools_peak_p1: "Enter a list of energies to find matching nuclides.",
-    guide_data_mgmt_title: "Data Management",
-    guide_data_mgmt_p1: "Save your full configuration (Inputs + Mode) via 'Save/Load' buttons in input panel.",
-
-    spectroMenuTitle: "Spectrometry Tools Menu",
+    // Spectro Page & Sub-pages
+    spectroMenuTitle: "Spectrometry Tools",
     analysisType: "Analysis Type",
     analysisTypeTooltip: "Select the type of radiation to analyze. This filters the nuclide library for identification.",
     spectroMenuImageTitle: "Image Analyzer",
@@ -1272,7 +1214,7 @@ const en: Translations = {
     mainEnergyLines: "Main Energy Lines",
     noSignificantGamma: "No significant gamma line",
     
-    // Unit Converter (Missing ES)
+    // Unit Converter
     unitConverterTitle: "Radiological Unit Converter",
     unit_category: "Measurement Category",
     unit_cat_activity: "Activity",
@@ -1336,48 +1278,96 @@ const en: Translations = {
     adminInputsState: "Inputs State",
     adminResultsState: "Results State",
 
+    folderDesc_components: "Reusable UI components.",
+    folderDesc_pages: "Main application views (routing).",
+    folderDesc_services: "Business logic and data access.",
+    folderDesc_electron: "Electron main process configuration.",
+    folderDesc_n42_analyzer: "Components for N42 file analysis.",
+    folderDesc_source_management: "Components for source inventory management.",
+    folderDesc_spectrum_analyzer: "Components for image spectrum analysis.",
+    fileDesc_App: "Root component. Manages global state, routing, and layout.",
+    fileDesc_index_tsx: "React entry point.",
+    fileDesc_index_html: "HTML entry point.",
+    fileDesc_index_css: "Global styles and Tailwind directives.",
+    fileDesc_types: "TypeScript definitions.",
+    fileDesc_translations: "Translation dictionary.",
+    fileDesc_manifest: "PWA configuration.",
+    fileDesc_metadata: "Developer metadata.",
+    fileDesc_package: "npm dependencies.",
+    fileDesc_readme: "Documentation.",
+    fileDesc_sw: "Service Worker.",
+    fileDesc_tailwind: "Tailwind config.",
+    fileDesc_Card: "Generic container.",
+    fileDesc_ChartModal: "Modal for charts.",
+    fileDesc_ChartPanel: "Chart panel.",
+    fileDesc_CollapsibleSection: "Accordion section.",
+    fileDesc_DecayCalculatorModal: "Decay tool.",
+    fileDesc_ExportModal: "Backup modal.",
+    fileDesc_GeminiBackupModal: "Backup component.",
+    fileDesc_GeminiHelper: "AI helper.",
+    fileDesc_InfoTooltip: "Tooltip helper.",
+    fileDesc_InputPanel: "Main input form.",
+    fileDesc_LanguageSelector: "Language selector.",
+    fileDesc_ModeSelector: "Mode buttons.",
+    fileDesc_MonteCarloStatsModal: "MC stats modal.",
+    fileDesc_PeakIdentifierModal: "Peak tool.",
+    fileDesc_PeakPositionAdjusterModal: "Peak adjuster.",
+    fileDesc_ProAccessModal: "Pro unlock.",
+    fileDesc_ReportGeneratorModal: "Report tool.",
+    fileDesc_ResultsPanel: "Results display.",
+    fileDesc_SaveAnalysisModal: "Save analysis.",
+    fileDesc_ThemeSelector: "Theme selector.",
+    fileDesc_UnitConverterModal: "Unit converter.",
+    fileDesc_UpdateNotification: "Update alert.",
+    fileDesc_UserGuideModal: "User guide.",
+    fileDesc_WelcomeModal: "Welcome popup.",
+    fileDesc_AddPeakModal: "Add peak modal.",
+    fileDesc_ComparisonPlot: "Comparison plot.",
+    fileDesc_DeconvolutionModal: "Deconvolution tool.",
+    fileDesc_EfficiencyCalibrationModal: "Eff calib placeholder.",
+    fileDesc_SpectrumPlot: "Spectrum plot.",
+    fileDesc_AddSourceModal: "Source form.",
+    fileDesc_CsvImportModal: "CSV import.",
+    fileDesc_ImportReviewModal: "Import review.",
+    fileDesc_SourceTooltip: "Source details.",
+    fileDesc_SourceTypesMemoModal: "Source types info.",
+    fileDesc_AnalysisResults: "Image analysis results.",
+    fileDesc_CalibrationPointModal: "Calib point input.",
+    fileDesc_CalibrationSidebar: "Calib guide.",
+    fileDesc_CameraCapture: "Webcam capture.",
+    fileDesc_ImageUploader: "Image upload.",
+    fileDesc_AdminPage: "Admin view.",
+    fileDesc_AnalysisHistoryPage: "History view.",
+    fileDesc_BackgroundSubtractionPage: "Bkg sub view.",
+    fileDesc_N42AnalyzerPage: "N42 view.",
+    fileDesc_SourceManagementPage: "Sources view.",
+    fileDesc_SpectroPage: "Spectro menu.",
+    fileDesc_SpectrumAnalyzerPage: "Image spectro view.",
+    fileDesc_SpectrumComparisonPage: "Comparison view.",
+    fileDesc_analysisHelpers: "Analysis utils.",
+    fileDesc_dbService: "DB wrapper.",
+    fileDesc_gammaLibrary: "Nuclide lib.",
+    fileDesc_geminiService: "AI service.",
+    fileDesc_isoCalculations: "ISO engine.",
+    fileDesc_monteCarloService: "MC engine.",
+    fileDesc_n42ParserService: "N42 parser.",
+    fileDesc_peakIdentifierService: "ID algo.",
+    fileDesc_radionuclides: "Decay data.",
+    fileDesc_sourceTypes: "Source type defs.",
+    fileDesc_spectrumAnalyzerService: "Image processing.",
+    fileDesc_electron_main: "Electron Main.",
+    fileDesc_electron_preload: "Electron Preload.",
+
     changeTheme: "Change Theme",
     themeCyberCyan: "Cyber Cyan",
     themeLabWhite: "Lab White",
     themeForestGreen: "Forest Green",
     
     changeLanguage: "Change Language",
-
-    // Tutorials
-    tutorials_title: "Tutorials & Practical Examples",
-    tutorials_intro: "This guide shows you how to use the app's key features through real-world scenarios. Each example is designed to be quick and easy to follow.",
-
-    tutorial1_title: "Example 1: Basic ISO 11929 Calculation",
-    tutorial1_step1: "Stay in 'Standard' mode. In 'Source Measurement', enter a gross count of 150 counts for a 60s time.",
-    tutorial1_step2: "In 'Background Measurement', enter 600 counts for 600s (which is 1 c/s).",
-    tutorial1_step3: "In 'Calibration', set a factor `w` of 1.25 Bq/(c/s) with 5% uncertainty.",
-    tutorial1_step4: "Observe the results: the decision threshold y* is about 0.29 Bq. The net result y (1.88 Bq) is higher, so activity is detected.",
-
-    tutorial2_title: "Example 2: Decay Calculation",
-    tutorial2_step1: "Click the 🕘 icon next to 'Calibration Factor'.",
-    tutorial2_step2: "Enter a reference activity of 37000 Bq for Cobalt-60, with a reference date from one year ago.",
-    tutorial2_step3: "Click 'Calculate & Apply'. The calibration factor is updated with the corrected activity (around 32260 Bq) and the estimated dose rate is displayed.",
-    
-    tutorial3_title: "Example 3: Impact of Shielding",
-    tutorial3_step1: "Open the decay calculator (🕘) again. The Co-60 source data is preserved.",
-    tutorial3_step2: "In the 'Shielding' section, select 'Lead (Pb)' as the material.",
-    tutorial3_step3: "Enter a thickness of 5 cm. The total shielded dose rate appears.",
-    tutorial3_step4: "Observe: the dose rate at 1m drops from ~11.4 mSv/h (unshielded) to ~140 µSv/h (shielded), showing the effectiveness of the shielding.",
-    
-    tutorial4_title: "Example 4: Shipping Package (Cumulative Dose)",
-    tutorial4_step1: "In the decay calculator, with the calculated Co-60 source, click 'Add to Box'.",
-    tutorial4_step2: "Change the nuclide to Cesium-137. Enter 50000 Bq as of today's date and click 'Add to Box'.",
-    tutorial4_step3: "The 'Cumulative Dose Rate Calculator' section now shows both sources.",
-    tutorial4_step4: "The total dose rate for the 'package' is calculated, accounting for the 5cm lead shield, giving you the final dose rate of your package.",
-
-    tutorial5_title: "Example 5: Simple Spectrum Analysis",
-    tutorial5_step1: "Go to 'Spectrometry Tools' (PRO) and choose 'N42 Analyzer'.",
-    tutorial5_step2: "Load an N42 file. The spectrum is displayed with automatically detected peaks.",
-    tutorial5_step3: "Click on a peak in the results table to highlight it on the graph.",
-    tutorial5_step4: "Click and drag on the plot to select a complex area (ROI) and see the deconvolution of multiple peaks.",
 };
 
 const de: Translations = {
+    // ... (reusing the previous DE content, ensured no duplicates)
     // General
     authorDetails: "Von Christophe PHAM - Inspiriert durch ISO 11929:2019",
     authorCredit: "Erstellt mit ❤️ von Christophe PHAM. Alle Rechte vorbehalten.",
@@ -1689,7 +1679,7 @@ const de: Translations = {
     export: "Export (CSV)",
     exportBackup: "Export / Backup",
 
-    // Spectro Page & Sub-pages (Missing DE)
+    // Spectro Page & Sub-pages
     spectroMenuTitle: "Spektrometrie-Werkzeuge",
     analysisType: "Analysetyp",
     analysisTypeTooltip: "Wählen Sie den zu analysierenden Strahlungstyp. Dies filtert die Nuklidbibliothek für die Identifizierung.",
@@ -1837,7 +1827,7 @@ const de: Translations = {
     mainEnergyLines: "Hauptenergielinien",
     noSignificantGamma: "Keine signifikante Gammalinie",
     
-    // Unit Converter (Missing DE)
+    // Unit Converter
     unitConverterTitle: "Radiologischer Einheitenumrechner",
     unit_category: "Messkategorie",
     unit_cat_activity: "Aktivität",
@@ -1990,6 +1980,7 @@ const de: Translations = {
 };
 
 const es: Translations = {
+    // ... (reusing the previous ES content, ensured no duplicates)
     // General
     authorDetails: "Por Christophe PHAM - Inspirado en la norma ISO 11929:2019",
     authorCredit: "Creado con ❤️ por Christophe PHAM. Todos los derechos reservados.",
@@ -2597,89 +2588,103 @@ const es: Translations = {
     themeForestGreen: "Forest Green",
     
     changeLanguage: "Cambiar Idioma",
-
-    // User Guide (Used English as placeholder or partially translated? keeping as is but removing duplicates)
-    guideTitle: "User Guide",
-    guide_intro_title: "Introduction",
-    guide_intro_p1: "This assistant is an educational and practical tool for applying the concepts of the ISO 11929 standard. It helps calculate characteristic limits (decision threshold, detection limit) and understand the impact of different parameters. The current software version (V6.4.4) is displayed under the language selection icon in the header.",
-    guide_main_calc_title: "Main Calculator",
-    guide_main_calc_p1: "The heart of the application. Performs calculations according to the standard.",
-    guide_main_calc_modes_title: "Analysis Modes",
-    guide_main_calc_modes_p1: "Select the appropriate mode via the top tab bar.",
-    guide_main_calc_modes_li1: "For simple measurements with defined count times.",
-    guide_main_calc_modes_li2: "Similar to Standard, but uses ROI and full spectrum sizes to scale background.",
-    guide_main_calc_modes_li3_surface: "Calculates threshold and limit in terms of surface activity, using probe efficiency and area.",
-    guide_main_calc_modes_li3_chambre: "For fixed time monitors.",
-    guide_main_calc_modes_li3_linge: "For conveyor monitors, calculates effective measurement time based on speed.",
-    guide_main_calc_inputs_title: "Inputs",
-    guide_main_calc_inputs_p1: "Fill in required fields. Tooltips (i) provide details on each parameter.",
-    guide_main_calc_inputs_li1: "Enter gross counts or rate, and measurement time.",
-    guide_main_calc_inputs_li2: "The 'w' factor (e.g., inverse efficiency). For Surface/Chamber/Laundry modes, this can be auto-calculated.",
-    guide_main_calc_inputs_li3: "Defines error probabilities (α, β).",
-    guide_main_calc_results_title: "Results",
-    guide_main_calc_results_p1: "The right panel displays calculated values.",
-    guide_main_calc_results_li1: "If net result > y*, effect is present.",
-    guide_main_calc_results_li2: "Smallest reliably detectable activity.",
-    guide_main_calc_results_li3: "Clear statement of presence or absence of activity.",
-    guide_main_calc_results_li4: "(Expert Mode) Shows contribution of each input to total uncertainty.",
-    guide_main_calc_expert_title: "Expert Features",
-    guide_main_calc_expert_p1: "Toggle 'Expert Mode' for more options.",
-    guide_main_calc_expert_li1: "Adjust if background and calibration are correlated.",
-    guide_main_calc_expert_li2: "Use numerical simulation instead of analytical formulas for better statistical accuracy.",
-    guide_spec_tools_title: "Spectrometry Tools",
-    guide_spec_tools_p1: "Accessible to PRO users via the Spectrometry tab.",
-    guide_spec_analyzer_title: "Image Analyzer",
-    guide_spec_analyzer_p1: "Extracts data from a spectrum image (screenshot or photo).",
-    guide_spec_analyzer_phase1_title: "Calibration",
-    guide_spec_analyzer_phase1_p1: "Click on known peaks (e.g., Cs-137 at 662 keV) to establish channel-energy relation.",
-    guide_spec_analyzer_phase2_title: "Analysis",
-    guide_spec_analyzer_phase2_p1: "System extracts curve, detects peaks, and attempts to identify them against the library.",
-    guide_other_tools_decay_title: "Decay Calculator",
-    guide_other_tools_decay_p1: "Quick utility to calculate current activity of any nuclide without adding to inventory.",
-    guide_other_tools_peak_title: "Peak Identifier",
-    guide_other_tools_peak_p1: "Enter a list of energies to find matching nuclides.",
-    guide_data_mgmt_title: "Data Management",
-    guide_data_mgmt_p1: "Save your full configuration (Inputs + Mode) via 'Save/Load' buttons in input panel.",
-
-    // Tutorials (Used English as placeholder)
-    tutorials_title: "Tutorials & Practical Examples",
-    tutorials_intro: "This guide shows you how to use the app's key features through real-world scenarios. Each example is designed to be quick and easy to follow.",
-
-    tutorial1_title: "Example 1: Basic ISO 11929 Calculation",
-    tutorial1_step1: "Stay in 'Standard' mode. In 'Source Measurement', enter a gross count of 150 counts for a 60s time.",
-    tutorial1_step2: "In 'Background Measurement', enter 600 counts for 600s (which is 1 c/s).",
-    tutorial1_step3: "In 'Calibration', set a factor `w` of 1.25 Bq/(c/s) with 5% uncertainty.",
-    tutorial1_step4: "Observe the results: the decision threshold y* is about 0.29 Bq. The net result y (1.88 Bq) is higher, so activity is detected.",
-
-    tutorial2_title: "Example 2: Decay Calculation",
-    tutorial2_step1: "Click the 🕘 icon next to 'Calibration Factor'.",
-    tutorial2_step2: "Enter a reference activity of 37000 Bq for Cobalt-60, with a reference date from one year ago.",
-    tutorial2_step3: "Click 'Calculate & Apply'. The calibration factor is updated with the corrected activity (around 32260 Bq) and the estimated dose rate is displayed.",
-    
-    tutorial3_title: "Example 3: Impact of Shielding",
-    tutorial3_step1: "Open the decay calculator (🕘) again. The Co-60 source data is preserved.",
-    tutorial3_step2: "In the 'Shielding' section, select 'Lead (Pb)' as the material.",
-    tutorial3_step3: "Enter a thickness of 5 cm. The total shielded dose rate appears.",
-    tutorial3_step4: "Observe: the dose rate at 1m drops from ~11.4 mSv/h (unshielded) to ~140 µSv/h (shielded), showing the effectiveness of the shielding.",
-    
-    tutorial4_title: "Example 4: Shipping Package (Cumulative Dose)",
-    tutorial4_step1: "In the decay calculator, with the calculated Co-60 source, click 'Add to Box'.",
-    tutorial4_step2: "Change the nuclide to Cesium-137. Enter 50000 Bq as of today's date and click 'Add to Box'.",
-    tutorial4_step3: "The 'Cumulative Dose Rate Calculator' section now shows both sources.",
-    tutorial4_step4: "The total dose rate for the 'package' is calculated, accounting for the 5cm lead shield, giving you the final dose rate of your package.",
-
-    tutorial5_title: "Example 5: Simple Spectrum Analysis",
-    tutorial5_step1: "Go to 'Spectrometry Tools' (PRO) and choose 'N42 Analyzer'.",
-    tutorial5_step2: "Load an N42 file. The spectrum is displayed with automatically detected peaks.",
-    tutorial5_step3: "Click on a peak in the results table to highlight it on the graph.",
-    tutorial5_step4: "Click and drag on the plot to select a complex area (ROI) and see the deconvolution of multiple peaks.",
 };
 
 const translations: Record<Language, Translations> = { fr, en, de, es };
+
+const chemicalElements: Record<string, { [key in Language]: string }> = {
+    'Am': { fr: 'Américium', en: 'Americium', de: 'Americium', es: 'Americio' },
+    'Sb': { fr: 'Antimoine', en: 'Antimony', de: 'Antimon', es: 'Antimonio' },
+    'Ba': { fr: 'Baryum', en: 'Barium', de: 'Barium', es: 'Bario' },
+    'Be': { fr: 'Béryllium', en: 'Beryllium', de: 'Beryllium', es: 'Berilio' },
+    'Bi': { fr: 'Bismuth', en: 'Bismuth', de: 'Wismut', es: 'Bismuto' },
+    'Cd': { fr: 'Cadmium', en: 'Cadmium', de: 'Cadmium', es: 'Cadmio' },
+    'Ca': { fr: 'Calcium', en: 'Calcium', de: 'Calcium', es: 'Calcio' },
+    'Cf': { fr: 'Californium', en: 'Californium', de: 'Californium', es: 'Californio' },
+    'C':  { fr: 'Carbone', en: 'Carbon', de: 'Kohlenstoff', es: 'Carbono' },
+    'Ce': { fr: 'Cérium', en: 'Cerium', de: 'Cer', es: 'Cerio' },
+    'Cs': { fr: 'Césium', en: 'Cesium', de: 'Cäsium', es: 'Cesio' },
+    'Cl': { fr: 'Chlore', en: 'Chlorine', de: 'Chlor', es: 'Cloro' },
+    'Cr': { fr: 'Chrome', en: 'Chromium', de: 'Chrom', es: 'Cromo' },
+    'Co': { fr: 'Cobalt', en: 'Cobalt', de: 'Kobalt', es: 'Cobalto' },
+    'Cu': { fr: 'Cuivre', en: 'Copper', de: 'Kupfer', es: 'Cobre' },
+    'Cm': { fr: 'Curium', en: 'Curium', de: 'Curium', es: 'Curio' },
+    'Es': { fr: 'Einsteinium', en: 'Einsteinium', de: 'Einsteinium', es: 'Einstenio' },
+    'Eu': { fr: 'Europium', en: 'Europium', de: 'Europium', es: 'Europio' },
+    'Fm': { fr: 'Fermium', en: 'Fermium', de: 'Fermium', es: 'Fermio' },
+    'F':  { fr: 'Fluor', en: 'Fluorine', de: 'Fluor', es: 'Flúor' },
+    'Ga': { fr: 'Gallium', en: 'Gallium', de: 'Gallium', es: 'Galio' },
+    'H':  { fr: 'Hydrogène', en: 'Hydrogen', de: 'Wasserstoff', es: 'Hidrógeno' },
+    'In': { fr: 'Indium', en: 'Indium', de: 'Indium', es: 'Indio' },
+    'I':  { fr: 'Iode', en: 'Iodine', de: 'Jod', es: 'Yodo' },
+    'Fe': { fr: 'Fer', en: 'Iron', de: 'Eisen', es: 'Hierro' },
+    'Kr': { fr: 'Krypton', en: 'Krypton', de: 'Krypton', es: 'Criptón' },
+    'La': { fr: 'Lanthane', en: 'Lanthanum', de: 'Lanthan', es: 'Lantano' },
+    'Pb': { fr: 'Plomb', en: 'Lead', de: 'Blei', es: 'Plomo' },
+    'Lu': { fr: 'Lutécium', en: 'Lutetium', de: 'Lutetium', es: 'Lutecio' },
+    'Mn': { fr: 'Manganèse', en: 'Manganese', de: 'Mangan', es: 'Manganeso' },
+    'Mo': { fr: 'Molybdène', en: 'Molybdenum', de: 'Molybdän', es: 'Molibdeno' },
+    'Np': { fr: 'Neptunium', en: 'Neptunium', de: 'Neptunium', es: 'Neptunio' },
+    'Ni': { fr: 'Nickel', en: 'Nickel', de: 'Nickel', es: 'Níquel' },
+    'Nb': { fr: 'Niobium', en: 'Niobium', de: 'Niob', es: 'Niobio' },
+    'P':  { fr: 'Phosphore', en: 'Phosphorus', de: 'Phosphor', es: 'Fósforo' },
+    'Pu': { fr: 'Plutonium', en: 'Plutonium', de: 'Plutonium', es: 'Plutonio' },
+    'Po': { fr: 'Polonium', en: 'Polonium', de: 'Polonium', es: 'Polonio' },
+    'K':  { fr: 'Potassium', en: 'Potassium', de: 'Kalium', es: 'Potasio' },
+    'Pm': { fr: 'Prométhium', en: 'Promethium', de: 'Promethium', es: 'Prometio' },
+    'Pa': { fr: 'Protactinium', en: 'Protactinium', de: 'Protactinium', es: 'Protactinio' },
+    'Ra': { fr: 'Radium', en: 'Radium', de: 'Radium', es: 'Radio' },
+    'Ru': { fr: 'Ruthénium', en: 'Ruthenium', de: 'Ruthenium', es: 'Rutenio' },
+    'Sm': { fr: 'Samarium', en: 'Samarium', de: 'Samarium', es: 'Samario' },
+    'Sc': { fr: 'Scandium', en: 'Scandium', de: 'Scandium', es: 'Escandio' },
+    'Se': { fr: 'Sélénium', en: 'Selenium', de: 'Selen', es: 'Selenio' },
+    'Ag': { fr: 'Argent', en: 'Silver', de: 'Silber', es: 'Plata' },
+    'Na': { fr: 'Sodium', en: 'Sodium', de: 'Natrium', es: 'Sodio' },
+    'Sr': { fr: 'Strontium', en: 'Strontium', de: 'Strontium', es: 'Estroncio' },
+    'S':  { fr: 'Soufre', en: 'Sulfur', de: 'Schwefel', es: 'Azufre' },
+    'Tc': { fr: 'Technétium', en: 'Technetium', de: 'Technetium', es: 'Tecnecio' },
+    'Tl': { fr: 'Thallium', en: 'Thallium', de: 'Thallium', es: 'Talio' },
+    'Th': { fr: 'Thorium', en: 'Thorium', de: 'Thorium', es: 'Torio' },
+    'U':  { fr: 'Uranium', en: 'Uranium', de: 'Uran', es: 'Uranio' },
+    'Xe': { fr: 'Xénon', en: 'Xenon', de: 'Xenon', es: 'Xenón' },
+    'Y':  { fr: 'Yttrium', en: 'Yttrium', de: 'Yttrium', es: 'Itrio' },
+    'Zn': { fr: 'Zinc', en: 'Zinc', de: 'Zink', es: 'Zinc' },
+    'Zr': { fr: 'Zirconium', en: 'Zirconium', de: 'Zirkonium', es: 'Circonio' },
+};
 
 export const getTranslator = (lang: Language): ((key: string) => string) => {
     const langTranslations = translations[lang] || translations[Language.FR];
     return (key: string): string => {
         return langTranslations[key] || key;
     };
+};
+
+export const getLocalizedNuclideName = (nuclideName: string, lang: Language): string => {
+    // Format expected: "Element-Mass (Symbol-Mass)" or "Element-Mass"
+    // Example: "Cobalt-60 (Co-60)"
+    
+    const match = nuclideName.match(/^([a-zA-Z]+)-(\d+)(?:\s+\(([a-zA-Z]+)-(\d+m?)\))?$/);
+    
+    if (match) {
+        const [, englishName, mass, symbol] = match;
+        // Try to find the element by symbol first (more reliable), then name
+        let elementKey = symbol;
+        
+        if (!elementKey) {
+             // Try to find key by English name in chemicalElements
+             const foundKey = Object.keys(chemicalElements).find(key => chemicalElements[key].en.toLowerCase() === englishName.toLowerCase());
+             if (foundKey) elementKey = foundKey;
+        }
+
+        if (elementKey && chemicalElements[elementKey]) {
+            const localizedName = chemicalElements[elementKey][lang];
+            if (symbol) {
+                return `${localizedName}-${mass} (${symbol}-${mass})`;
+            } else {
+                return `${localizedName}-${mass}`;
+            }
+        }
+    }
+    
+    return nuclideName;
 };

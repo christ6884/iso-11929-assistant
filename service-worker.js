@@ -1,4 +1,5 @@
-const CACHE_NAME = 'iso-assistant-cache-v6.4.5';
+
+const CACHE_NAME = 'iso-assistant-cache-v6.4.7';
 const urlsToCache = [
   './',
   'index.html',
