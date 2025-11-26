@@ -34,21 +34,24 @@ const DoseRateDisplay: React.FC<{ dose_uSv_h: number, label: string, colorClass:
     };
 
     // SI
-    let si_val: number | string = dose_uSv_h;
+    let si_num = dose_uSv_h;
     let si_unit = 'µSv/h';
-    if (si_val >= 1000) { si_val /= 1000; si_unit = 'mSv/h'; }
-    if (si_val >= 1000) { si_val /= 1000; si_unit = 'Sv/h'; }
+    if (si_num >= 1000) { si_num /= 1000; si_unit = 'mSv/h'; }
+    if (si_num >= 1000) { si_num /= 1000; si_unit = 'Sv/h'; }
+    let si_val: number | string = si_num;
 
     // US (rem)
     const dose_mrem_h = dose_uSv_h * 0.1;
-    let rem_val: number | string = dose_mrem_h;
+    let rem_num = dose_mrem_h;
     let rem_unit = 'mrem/h';
-    if (rem_val >= 1000) { rem_val /= 1000; rem_unit = 'rem/h'; }
+    if (rem_num >= 1000) { rem_num /= 1000; rem_unit = 'rem/h'; }
+    let rem_val: number | string = rem_num;
 
     // US (R) - approx same as rem for gamma
-    let r_val: number | string = dose_mrem_h; // starting from mrem/h which is approx mR/h
+    let r_num = dose_mrem_h; // starting from mrem/h which is approx mR/h
     let r_unit = 'mR/h';
-    if (r_val >= 1000) { r_val /= 1000; r_unit = 'R/h'; }
+    if (r_num >= 1000) { r_num /= 1000; r_unit = 'R/h'; }
+    let r_val: number | string = r_num;
 
     if (dose_uSv_h === 0 || !isFinite(dose_uSv_h)) {
         si_val = '0.00'; rem_val = '0.00'; r_val = '0.00';

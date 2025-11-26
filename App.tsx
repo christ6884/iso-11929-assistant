@@ -377,7 +377,48 @@ const App: React.FC = () => {
     };
     
     const handleApplyDecay = (newActivity: number, newUncertainty: number) => {
-        setInputs(prev => ({...prev, calibrationFactor: newActivity, calibrationFactorUncertainty: newUncertainty}));
+        setInputs(prev => {
+            let r_net = 0;
+            
+            const getRate = (count: number, unit: CountUnit, time: number) => {
+                if (time <= 0) return 0;
+                switch(unit) {
+                    case CountUnit.COUNTS: return count / time;
+                    case CountUnit.CPS: return count;
+                    case CountUnit.CPM: return count / 60;
+                    case CountUnit.C_02S: return count / 0.2;
+                    default: return 0;
+                }
+            };
+
+            if (mode === 'spectrometry') {
+                const t_g = prev.grossTime;
+                const t_0 = prev.backgroundTime;
+                const r_g = t_g > 0 ? prev.roiGrossCount / t_g : 0;
+                
+                const channel_ratio = prev.roiChannels > 0 && prev.backgroundChannels > 0 ? prev.roiChannels / prev.backgroundChannels : 1;
+                const r_0_total = t_0 > 0 ? prev.backgroundTotalCount / t_0 : 0;
+                const r_0 = r_0_total * channel_ratio;
+                
+                r_net = Math.max(0, r_g - r_0);
+            } else {
+                const r_g = getRate(prev.grossCount, prev.grossCountUnit, prev.grossTime);
+                const r_0 = getRate(prev.backgroundCount, prev.backgroundCountUnit, prev.backgroundTime);
+                r_net = Math.max(0, r_g - r_0);
+            }
+
+            let newW = newActivity;
+            // Only apply the formula w = A / R_net if R_net is positive
+            if (r_net > 0) {
+                newW = newActivity / r_net;
+            }
+
+            return {
+                ...prev,
+                calibrationFactor: newW,
+                calibrationFactorUncertainty: newUncertainty
+            };
+        });
         setIsDecayCalculatorOpen(false);
     };
 
