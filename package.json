@@ -1,6 +1,6 @@
 {
   "name": "iso11929-assistant",
-  "version": "2.2.7",
+  "version": "6.4.6",
   "description": "A web application to assist in understanding and applying the ISO 11929 standard for nuclear measurements.",
   "main": "electron/main.js",
   "scripts": {
